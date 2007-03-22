@@ -1,0 +1,16 @@
+#labels Featured,SVN,HowTo
+  * _Before_ you edit a file, type `svn up` to get the latest code. Always. Always.
+  * Edit your file, e.g. `unity.m`.
+  * Go into {{{C:\Workspace\FrameshiftRepo}}} and type `svn status`.
+  * Subversion has detected the change! It wants to *commit* it.
+
+_*This is important: Anything you check into Subversion is permanent. Nobody, absolutely nobody, can selectively delete Subversion history. If you check in a 100 MB file, that file will take up the hosting space for all of eternity unless we reset the repository and lose everything. Also, make sure your changes don't contain sensitive information such as, especially, passwords. `svn status` is your friend.*_
+
+  * Type in `svn ci -m "This is my change. I promise to document all my commits in a concise but thorough manner."` where you replace that message with an actual message that is indeed concise and thorough.
+  * Everything goes OK.
+
+= See also =
+  * HowToPull
+
+
+
