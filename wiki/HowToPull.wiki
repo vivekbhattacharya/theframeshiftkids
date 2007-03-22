@@ -1,0 +1,18 @@
+#labels Featured,HowTo,SVN
+= Obtaining SVN =
+  * [http://subversion.tigris.org/downloads/svn-win32-1.4.3.zip Download Subversion]
+  * Zip to "C:\Program Files\" and rename "svn-win32-1.4.3" to "Subversion"
+  * Control Panel -> System -> Advanced -> Environment Variables -> System Variables -> Edit PATH, which is something like {{{C:\Gobbledegook;C:\ArcaneMagic\;C:\Viruses}}}
+  * Change that to {{{C:\Gobbledegook;C:\ArcaneMagic\;C:\Viruses;C:\Program Files\Subversion\bin}}}
+  * OK, OK, OK, OK until you exit all the dialogs
+  * Go to Command Prompt and type `svn --version`. If you get something, the success is upon you.
+
+= Pulling =
+  * Decide upon your workspace directory. Mine will be {{C:\Workspace\FrameshiftRepo}}.
+  * Open Command Prompt, and `cd` to {{C:\Workspace}}.
+  * Type `svn checkout https://theframeshiftkids.googlecode.com/svn/trunk/ FrameshiftRepo --username bob` where bob is your username (e.g. `nemosupport` or `drvitek`).
+  * Permanently accept the certificate and [http://code.google.com/hosting/settings enter your password.]
+  * Voila! `cd` into `FrameshiftRepo` and you're set to go.
+
+= See also =
+  * HowToPush
