@@ -1,7 +1,3 @@
-                                                                     
-                                                                     
-                                                                     
-                                             
 % --------------------------------------------------------------
 % This function is used to unify the elements in this toolbox so
 % that an mRNA sequence in a text file along with a 12-character
@@ -24,8 +20,7 @@
 function [] = unity(file, leader)
 
 if(isempty(which(file))
-  message = strcat('Cannot find ',file,' in your path');
-  error(message);
+  error(['Cannot find ' file ' in your path']);
 end
 
 % These files need to be in the include path or working directory (GSPdemos).
@@ -33,11 +28,6 @@ load TAV.mat; load Codons.mat;
 
 % Load prfb and convert to lowercase whatever format.
 S = getseq(file);
-% try
-%     S = num2char(char2num(S, 1, 0), 0, 1);
-% catch
-%     error('I cannot run char2num. Ensure your current working directory is correct (e.g. K:).');
-% end
 
 % Generate a fasta file for free2bind.
 Fasta = strcat(file, '.fasta');
@@ -46,16 +36,12 @@ write2fasta(Fasta, [S], 'prfb', 60);
 % Run free2bind. Make sure to include its directory into -I.
 Include = sprintf('-I"%s"', fileparts(which('FreeAlign.pm')));
 [status, Signal] = system(sprintf('perl %s %s -r -e -q -p FREIER auuccuccacuag %s', Include, which('free_scan.pl'), Fasta));
-% fid = fopen('signals.txt', 'w')
-% fwrite(fid, Signal);
-% fclose(fid);
 
 % Simulate load() on a string instead of a file.
 Signal = str2num(Signal);
 
 if(isempty(Signal) && isempty(which('perl.exe')))
-    E = 'I cannot pull signals. Ensure `perl.exe` is in your path (`dos(''path'')`).';
-    error(E);
+    error('I cannot pull signals. Ensure `perl.exe` is in your path (`dos(''path'')`).');
 end
 
 % Magic numbers.
