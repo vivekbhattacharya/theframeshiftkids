@@ -46,22 +46,19 @@ if(isempty(Signal) && isempty(which('perl.exe')))
 end
 
 % Magic numbers.
-cp = 0; phi_sp=-13*(pi/180); initialx = 0.001; C1 = 0.005; C2 = initialx; Nstop=1000; spc=1;
+cp = 0; phi_sp=-13*(pi/180); initialx = 0.001;
+C1 = 0.005; C2 = initialx; Nstop=1000; spc=1;
 
 % For debugging.
 % disp(length(Signal) - length(S));
 
 %%% demo4 code %%%
-% Run it through the model
 [mag,theta,x] = calcmpx(S(13:end),Signal,phi_sp,Names,TAV,C1,C2,Nstop,spc);
 
-% Polar plot
-figure(1); polar(theta,mag);
-
-% Displacement plot
-figure(2); plot(1+cp:length(x)+cp, x);
+figure(1); polar(theta,mag); % Polar plot
+figure(2); plot(1+cp:length(x)+cp, x); % Displacement plot
 axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
 grid; xlabel('Codon Number'); ylabel('x(k)');
 
-% Newline.
+% The toolbox code in demo4 need a newline.
 fprintf('\n');
