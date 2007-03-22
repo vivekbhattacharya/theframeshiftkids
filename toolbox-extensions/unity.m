@@ -27,7 +27,7 @@ end
 % These files need to be in the include path or working directory (GSPdemos).
 load TAV.mat; load Codons.mat;
 
-% Load prfb and convert to lowercase whatever format.
+% Load prfb and make necessary conversions.
 S = getseq(file);
 
 % Generate a fasta file for free2bind.
