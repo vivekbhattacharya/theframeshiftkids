@@ -1,4 +1,3 @@
->prfB as in GENBANK
 agaaaucagaccauguuugaaauuaauccgguaaauaaucgcauucaggaccucacggaa
 cgcuccgacguucuuaggggguaucuuugacuacgacgccaagaaagagcgucuggaaga
 aguaaacgccgagcuggaacagccggaugucuggaacgaacccgaacgcgcacaggcgcu
