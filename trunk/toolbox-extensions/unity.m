@@ -1,3 +1,4 @@
+function unity(file)
 % --------------------------------------------------------------
 % This function is used to unify the elements in this toolbox so
 % that an mRNA sequence in a text file with a 12-character
@@ -17,24 +18,19 @@
 %        that includes the leader
 % --------------------------------------------------------------
 
-function [] = unity(file)
-
 file = which(file);
-file_not_there = isempty(file);
-if(file_not_there); error(['Cannot find ``' file '" in your path']); end;
+if(isempty(file)); error(['Cannot find ``' file '" in your path']); end;
 
-% These files need to be in the include path or working directory (GSPdemos).
-load TAV.mat; load Codons.mat;
 % Load prfb, and generate a fasta file with column width of 60.
-S = getseq(file);
-Fasta = strcat(file, '.fasta');
+S = getseq(file); Fasta = [file, '.fasta'];
 write2fasta(Fasta, S, 'prfb', 60);
 
 % Run free2bind. Make sure to include its directory into -I.
-if(isempty('perl.exe')); error('I cannot find Perl 5.6 or above. Please download it to the VCL C: drive.'); end;
-Include = fileparts(which('FreeAlign.pm'));
-Template = 'perl.exe -I"%s" "%s" -r -e -q -p FREIER auuccuccacuag "%s"';
-Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
+if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
+   'Please download it to the VCL C: drive.']); end;
+   Include = fileparts(which('FreeAlign.pm'));
+   Template = 'perl.exe -I"%s" "%s" -r -e -q -p FREIER auuccuccacuag "%s"';
+   Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
 [status, Signal] = dos(Command);
 
 % Simulate load() on a string instead of a file.
@@ -42,7 +38,7 @@ Signal = str2num(Signal);
 
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl.exe` is outputting the rite stuff.';
-    ensure = [ensure ' Also, ensure Perl is of version 5.6 or above.'];
+    ensure = [ensure '\nAlso, ensure Perl is of version 5.6 or above.'];
     error(ensure);
 end
 
@@ -51,6 +47,8 @@ cp = 0; phi_sp=-13*(pi/180); initialx = 0.001;
 C1 = 0.005; C2 = initialx; Nstop=1000; spc=1;
 
 %%% demo4 code %%%
+% These files need to be in the include path or working directory (GSPdemos).
+load TAV.mat; load Codons.mat;
 [mag,theta,x] = calcmpx(S(13:end),Signal,phi_sp,Names,TAV,C1,C2,Nstop,spc);
 
 figure(1); polar(theta,mag); % Polar plot
