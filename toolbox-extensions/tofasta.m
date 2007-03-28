@@ -19,6 +19,7 @@ if(isempty(file)); error(['Cannot find ``' file '" in your path']); end;
 % Load prfb, and generate a fasta file with column width of 60.
 S = getseq(file);
 S = num2char(char2num(S, 1, 0), 0, 1);
-write2fasta(file, S, file, 60);
+write2fasta(file, S, 'candy', 60);
 
 return_file = file;
+disp(['Now please edit `' file '` to remove the >candy.']);
