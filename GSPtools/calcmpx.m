@@ -83,7 +83,6 @@ for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
     % calculate nloop accordingly
     proust = 3*(k-1) + 3*spc;
-    disp(x(1,k));
     if abs(x(1,k))<1
         codon=seq(proust+1:proust+3);
     elseif x(1,k)<-1
