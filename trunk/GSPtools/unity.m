@@ -5,12 +5,12 @@ function unity(file)
 % leader sequence as a string can output a displacement plot 
 % and a polar plot using calcmpx.
 %
-% It was created by Hao Lian, Vivek Bhattacharya, and Daniel
-% Vitek to compliment Dr. Lalit Ponnala's toolbox.  It uses a
-% modified version of Dr. Josh Starmer's free2bind program's
-% free_scan.pl.  In the for loop at line 490, just add `&& 0'
-% (without quotation marks, of course) to the conditions. This
-% ensures that the output file will only be one line long.
+% It was created by The Frameshift Kids to compliment Dr. Lalit
+% Ponnala's toolbox.  It uses a modified version of Dr. Josh
+% Starmer's free2bind program's free_scan.pl.  In the for loop
+% at line 490, just add `&& 0' (without quotation marks, of
+% course) to the conditions. This ensures that the output file
+% will only be one line long.
 %
 % USAGE:
 % function [] = unity(file)
