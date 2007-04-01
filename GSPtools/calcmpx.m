@@ -82,13 +82,13 @@ Nloop = []; x = [0 C2]; codon = 0;
 for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
     % calculate nloop accordingly
-    proust = 3*(k-1) + 3*spc;
+    initial = 3*(k-1) + 3*spc;
     if abs(x(1,k))<1
-        codon=seq(proust+1:proust+3);
+        codon=seq(initial+1:initial+3);
     elseif x(1,k)<-1
-        codon=seq(proust+0:proust+2);
+        codon=seq(initial+0:initial+2);
     elseif x(1,k)>1
-        codon=seq(proust+2:proust+4);
+        codon=seq(initial+2:initial+4);
     end
     Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
     
