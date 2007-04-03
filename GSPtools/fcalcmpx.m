@@ -1,5 +1,13 @@
 % FCALCMPX: "Function to calculate magnitude, phase, displacement"
-% *** Revised for producing new plots ***
+% Calculates the cummulative magnitude, phase and the
+% displacement vector based on the frameshift model. 
+% Aggregates all useful and desirable features into one function. 
+% 
+% 1. Allows for spacing between the tail and the A-site. 
+% 2. Starts calculating wait-time from codon #2 onwards (since the start codon
+%    is locked into the P-site at translation initiation)
+% 3. Returns the differential vectors (Dvec) and the number of wait-cycles for
+%    each codon (Nloop). 
 % 
 % USAGE: [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx(seq,signal,phi_sp,Names,TAV,C1,C2,Nstop,spc)
 % seq = string containing the RNA sequence in lower case
@@ -11,11 +19,15 @@
 % C2 = estimate of initial displacement
 % Nstop = number of loops at the stop codon
 % spc = number of codons between the 5'-end of the 16S rRNA tail and
-%           the A-site
+%       the A-site
 % 
 % Note: 
 % 1. This function does not check if the signal length is a multiple of 3
 % 2. Code for calculating displacement is taken from xmodel7.m
+%
+% Return values:
+% Mag, Phase: Arrays of data for the polar plot
+% x: Displacement array
 
 function [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx(seq,signal,phi_sp,Names,TAV,C1,C2,Nstop,spc)
 
@@ -42,13 +54,11 @@ numcodons = length(Mag);
 % ------------------------------------------------------------
 % CALCULATE DIFFERENTIAL VECTORS
 % ------------------------------------------------------------    
-L = 3; % input('Enter number of points: ');
-if rem(L,2)==0
-    error('L has to be an odd number');
-end
-P = 1; % input('Enter order of polynomial: ');
+L = 3; % L must be odd
+P = 1; % Order of the polynomial
 for k=1:numcodons
-    index = [min(max(1,k-(L-1)/2),numcodons-L+1):1:min(max(1,k-(L-1)/2),numcodons-L+1)+L-1];
+    x = min(max(1,k-1),numcodons-2);
+    index = [x:x+2];
     polyMag = polyfit(1:L,Mag(index),P);
     polyPhase = polyfit(1:L,Phase(index),P);
     
@@ -66,100 +76,30 @@ end
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
-Nloop = []; % Nloop = 80;
-x = 0; x(1,2) = C2;
-
+Nloop = []; x = [0 C2]; codon = 0; InstPhase = [];
 figure;
-InstPhase=[];
-for k=2:numcodons-3
+for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
-    % calculate nloop accordingly using NLOOPCALC
-    if spc==0
-        if abs(x(1,k))<1
-            codon=seq(3*(k-1)+1:3*(k-1)+3); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
-        elseif x(1,k)<-1
-            codon=seq(3*(k-1):3*(k-1)+2); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
-        elseif x(1,k)>1
-            codon=seq(3*(k-1)+2:3*(k-1)+4); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
-        end    
-    end    
-    if spc==1
-        if abs(x(1,k))<1
-            codon=seq(3*(k-1)+4:3*(k-1)+6); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop); % 1 codon away        
-        elseif x(1,k)<-1
-            codon=seq(3*(k-1)+3:3*(k-1)+5); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop); % 1 codon away
-        elseif x(1,k)>1
-            codon=seq(3*(k-1)+5:3*(k-1)+7); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop); % 1 codon away
-        end        
-    end    
-    if spc==2
-        if abs(x(1,k))<1        
-            codon=seq(3*(k-1)+7:3*(k-1)+9); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop); % 2 codons away        
-        elseif x(1,k)<-1        
-            codon=seq(3*(k-1)+6:3*(k-1)+8); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop); % 2 codons away
-        elseif x(1,k)>1        
-            codon=seq(3*(k-1)+8:3*(k-1)+10); Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop); % 2 codons away
-        end        
+    % calculate nloop accordingly
+    initial = 3*(k-1) + 3*spc;
+    if abs(x(1,k))<1
+        codon=seq(initial+1:initial+3);
+    elseif x(1,k)<-1
+        codon=seq(initial+0:initial+2);
+    elseif x(1,k)>1
+        codon=seq(initial+2:initial+4);
     end
-    
-    %     % Choose appropriate codon, depending on the specified spacing, and
-    %     % calculate nloop accordingly using NLOOPCALC_REVISED
-    %     if spc==0
-    %         if abs(x(1,k))<1
-    %             codon=seq(3*(k-1)+1:3*(k-1)+3); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop);
-    %         elseif x(1,k)<-1
-    %             codon=seq(3*(k-1):3*(k-1)+2); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop);
-    %         elseif x(1,k)>1
-    %             codon=seq(3*(k-1)+2:3*(k-1)+4); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop);
-    %         end    
-    %     end    
-    %     if spc==1
-    %         if abs(x(1,k))<1
-    %             codon=seq(3*(k-1)+4:3*(k-1)+6); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop); % 1 codon away        
-    %         elseif x(1,k)<-1
-    %             codon=seq(3*(k-1)+3:3*(k-1)+5); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop); % 1 codon away
-    %         elseif x(1,k)>1
-    %             codon=seq(3*(k-1)+5:3*(k-1)+7); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop); % 1 codon away
-    %         end        
-    %     end    
-    %     if spc==2
-    %         if abs(x(1,k))<1        
-    %             codon=seq(3*(k-1)+7:3*(k-1)+9); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop); % 2 codons away        
-    %         elseif x(1,k)<-1        
-    %             codon=seq(3*(k-1)+6:3*(k-1)+8); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop); % 2 codons away
-    %         elseif x(1,k)>1        
-    %             codon=seq(3*(k-1)+8:3*(k-1)+10); Nloop(k)=nloopcalc_revised(codon,0,1,Names,TAV,Nstop); % 2 codons away
-    %         end        
-    %     end    
-    
-    %     % Uncomment this part first, and check if the right codon is being used
-    %     % Use values of k that correspond to a few codons before the frameshift location
-    %     if (k>21)&(k<27)
-    %         fprintf('\n\n---- k = %d, codon = %s ----',k,codon);
-    %         fprintf('\nDiffVecMag = %f, DiffVecPhase = %f, Nloop(k) = %d',Dvec(k,1),(180/pi)*Dvec(k,2),floor(Nloop(k)));
-    %     end
+    Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
     
     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
     for wt=1:Nloop(k)
         phi_dx = ((pi/3)*x_temp)-phi_sp;
         dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
-
-        % plot(k,(180/pi)*(phi_signal(1,k) + phi_dx),'-'); hold on;
-        %         % Check this part next, make sure arg of sin() exceeds 180 degrees
-        %         % Use values of k that correspond to a few codons before the frameshift location
-        %         if (k>21)&(k<27)
-        %             fprintf('\nArg of sin() = %f',(180/pi)*(phi_signal(1,k) + phi_dx));
-        %         end
-        
         x_temp = dx + x_temp;
     end
 
     InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
-    % if ge(InstPhase,-180)&le(InstPhase,180)
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
-
-    % plot(k,InstPhase,'*'); hold on;    
-    % plot(k,(180/pi)*(phi_signal(1,k) + phi_dx),'-'); hold on;
     x(1,k+1) = x_temp;             
 end
 hold off
