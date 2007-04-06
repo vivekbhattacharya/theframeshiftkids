@@ -66,7 +66,6 @@ for k=1:numcodons
     dphi_dc(1,k) = polyval(polyder(polyPhase),k);
     
     D = exp(j*Phase(1,k))*(dA_dc(1,k) + j*(Mag(1,k)*dphi_dc(1,k)));
-    
     Dvec(k,1) = abs(D); 
     % Dvec(k,1) = sqrt(dA_dc(1,k)^2+(Mag(1,k)*dphi_dc(1,k))^2);
     Dvec(k,2) = phase(D); 
@@ -77,35 +76,31 @@ end
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
 Nloop = []; x = [0 C2]; codon = 0; InstPhase = [];
-figure; k = 1;
-    probs = [];
-    choices = [];
-while 1
+figure;
+for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
     % calculate nloop accordingly
-        n1 = nloopcalc(seq(k:k+2), 0, 1, Names, TAV, 1000);
-        n2 = nloopcalc(seq(k+3:k+5), 0, 1, Names, TAV, 1000);
-        [choice, prob] = probe(k + 0.2, n1, n2);
-        if(choice == 1); k = k + 1; end;
-        if(choice == 0); k = k + 3; end;
-        if(k >= length(x)); break; end;
-        probs = [probs prob];
-        choices = [choices choice];
+    initial = 3*(k-1) + 3*spc;
+    codon1 = seq(initial:initial+2);
+    codon2 = seq(initial+1:initial+3);
+    n1 = nloopcalcify(codon1); n2 = nloopcalcify(codon2);
+    [choice, prob] = probe(x(1,k), n1, n2);
+    if (choice == 0); codon = codon1;
+    elseif(choice == 1); codon = codon2; end
+    
     Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
     
     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
-%     for wt=1:Nloop(k)
-%         phi_dx = ((pi/3)*x_temp)-phi_sp;
-%         dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
-%         x_temp = dx + x_temp;
-%     end
+    for wt=1:Nloop(k)
+        phi_dx = ((pi/3)*x_temp)-phi_sp;
+        dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
+        x_temp = dx + x_temp;
+    end
 
     InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
-    x(1,k+1) = x_temp;         
+    x(1,k+1) = x_temp;
 end
-    disp(probs);
-    disp(choices);
 hold off
 xlabel('Codon number, k');
 ylabel('Total angle');
