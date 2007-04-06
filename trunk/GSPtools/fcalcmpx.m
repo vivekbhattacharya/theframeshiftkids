@@ -77,31 +77,35 @@ end
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
 Nloop = []; x = [0 C2]; codon = 0; InstPhase = [];
-figure;
-for k=2:numcodons-1
+figure; k = 1;
+    probs = [];
+    choices = [];
+while 1
     % Choose appropriate codon, depending on the specified spacing, and
     % calculate nloop accordingly
-    initial = 3*(k-1) + 3*spc;
-    if abs(x(1,k))<1
-        codon=seq(initial+1:initial+3);
-    elseif x(1,k)<-1
-        codon=seq(initial+0:initial+2);
-    elseif x(1,k)>1
-        codon=seq(initial+2:initial+4);
-    end
+        n1 = nloopcalc(seq(k:k+2), 0, 1, Names, TAV, 1000);
+        n2 = nloopcalc(seq(k+3:k+5), 0, 1, Names, TAV, 1000);
+        [choice, prob] = probe(k + 0.2, n1, n2);
+        if(choice == 1); k = k + 1; end;
+        if(choice == 0); k = k + 3; end;
+        if(k >= length(x)); break; end;
+        probs = [probs prob];
+        choices = [choices choice];
     Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
     
     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
-    for wt=1:Nloop(k)
-        phi_dx = ((pi/3)*x_temp)-phi_sp;
-        dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
-        x_temp = dx + x_temp;
-    end
+%     for wt=1:Nloop(k)
+%         phi_dx = ((pi/3)*x_temp)-phi_sp;
+%         dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
+%         x_temp = dx + x_temp;
+%     end
 
     InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
-    x(1,k+1) = x_temp;             
+    x(1,k+1) = x_temp;         
 end
+    disp(probs);
+    disp(choices);
 hold off
 xlabel('Codon number, k');
 ylabel('Total angle');
