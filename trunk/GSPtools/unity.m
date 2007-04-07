@@ -61,15 +61,6 @@ for k=1:length(x)-1
     diffx(k)=x(k+1)-x(k);
 end
 
-%figure(1); polar(theta,mag); % Polar plot
-%figure(2); plot(1+cp:length(x)+cp, x); % Displacement plot
-%	axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
-%	grid; xlabel('Codon Number'); ylabel('x(k)');
-%figure(3); plot(1:length(theta),(180/pi)*theta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of cumulative phase'); 
-%figure(4); plot(1:length(inst_theta),inst_theta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of instantaneous phase'); 
-%figure(5); plot(1:size(Dvec,1),Dvec(:,1)); xlabel('Codon number'); title('Magnitude of the differential vector'); 
-%figure(6); plot(1:length(diffx),diffx); xlabel('Codon number'); title('Plot of "force", i.e. incremental displacement');
-
 figure(1);
 	subplot(321); plot(0,0);polar(theta,mag);
 	
