@@ -1,7 +1,5 @@
-function navigate(char, edit)
-global index prfb;
-
-delta = 0;
+function [delta] = navigate(char, edit)
+global index; delta = 0;
 switch char
    case 'd'; delta = -3;
    case 'f'; delta = -1;
@@ -11,7 +9,8 @@ switch char
    otherwise return;
 end
 set(edit, 'String', disco(index+delta));
-
+index = index + delta;
 
 function [excerpt] = disco(b)
-excerpt = [prfb(b:b+40) ' {{' prfb(b+41:b+43) '}} ' prfb(b+44:b+90)];
+global prfb;
+excerpt = [prfb(b:b+30) ' {{' prfb(b+31:b+33) '}} ' prfb(b+36:b+45)];
