@@ -50,7 +50,7 @@ C1 = 0.005; C2 = initialx;
 % (GSPdemos).
 global TAV Names;
 load TAV.mat; load Codons.mat;
-[mag,theta,InstTheta,x] = fcalcmpx_prob(S(13:end),Signal,phi_sp,C1,C2);
+[mag,theta,InstTheta,x] = slam(S(13:end),Signal,phi_sp,C1,C2);
 
 for k=1:length(theta) % No negative values
     if theta(k)<0; theta(k)=theta(k)+(2*pi); end
