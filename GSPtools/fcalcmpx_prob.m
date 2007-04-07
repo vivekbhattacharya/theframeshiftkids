@@ -77,62 +77,16 @@ end
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
 Nloop = []; x = [0 C2]; codon = 0; InstPhase = [];
-figure;
 choices = [];
 codonsUsed = [];
-% for k=1:numcodons-1
-%     % Choose appropriate codon, depending on the specified spacing, and
-%     % calculate nloop accordingly
-%     initial = 3*(k-1) + 3*spc;
-% %     thisCodon = seq(initial:initial+2);
-% % 	thisFrameshiftCodon = seq(initial+1:initial+3);
-% % 	n1 = getTAV(thisCodon,0,1,Names,TAV,Nstop);
-% % 	n2 = getTAV(thisFrameshiftCodon,0,1,Names,TAV,Nstop);
-% % 	[choice, prob] = probe(x(1,k),n1,n2);
-% % 	if (choice == 2)
-% % 		%error('Nothing done');
-% %         codon = thisCodon;
-% % 	end
-% % 	if (choice==0)
-% % 		codon = thisCodon;
-% % 	end
-% % 	if (choice==1)
-% % 		codon = thisFrameshiftCodon;
-% %     end
-% %     choices = [choices choice]
-% %     codonsUsed = [codonsUsed codon];
-% 	if abs(x(1,k))<1
-%        codon=seq(initial+1:initial+3); choice = 0;
-%    elseif x(1,k)<-1
-%        codon=seq(initial+0:initial+2); choice = -1;
-%    elseif x(1,k)>1
-%        codon=seq(initial+2:initial+4); choice = 1;
-%     end
-%     choices = [choices choice];
-%     codonsUsed = [codonsUsed codon];
-%     Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
-%     
-%     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
-%     for wt=1:Nloop(k)
-%         phi_dx = ((pi/3)*x_temp)-phi_sp;
-%         dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
-%         x_temp = dx + x_temp;
-%     end
-% 
-%     InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
-%     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
-%     x(1,k+1) = x_temp;             
-% end
-% disp(choices);
-% disp(codonsUsed);
 n = 1; %Nucleotide Number
 k = 1; %Counter
 while(1)
    if (k > numcodons-1); break; end;
    thisCodon = seq(n:n+2);
    thisFrameshiftCodon = seq(n+1:n+3);
-   nloop1 = nloopcalc(thisCodon,0,1,Names,TAV,Nstop);
-   nloop2 = nloopcalc(thisFrameshiftCodon,0,1,Names,TAV,Nstop);
+   nloop1 = nloopcalcify(thisCodon);
+   nloop2 = nloopcalcify(thisFrameshiftCodon);
    [choice, prob] = probe(x(1,k),nloop1,nloop2); 
    if(choice == 0)
        codon = thisCodon;
@@ -140,7 +94,6 @@ while(1)
    elseif (choice == 1)
        codon = thisFrameshiftCodon;
        n = n+1;
-      %x(1,k) = x(1,k)+2;
    elseif(choice == 2)
        codon = thisCodon;
        n = n+3;
@@ -161,13 +114,9 @@ while(1)
    if (strcmp(codon,'uag')||strcmp(codon,'uga')||strcmp(codon,'uaa')) 
        break; end;
    disp(k);
-   %disp(x(1,k));
    
    k = k+1;
 end    
 
 disp(choices);
 disp(codonsUsed);
-% hold off
-% xlabel('Codon number, k');
-% ylabel('Total angle');
