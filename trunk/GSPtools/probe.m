@@ -1,9 +1,9 @@
 function [choice, prob] = probe(x, n1, n2)
 
-k = .333;
+k = .666;
 n=2;
 
-x = x - 2*floor(abs(x/2));
+%x = x - 2*floor(abs(x/2));
 disp(x);
 
 % p1 = 1 - (sin(x*pi/4-k*n1)^(2*n));%*(k*n2);

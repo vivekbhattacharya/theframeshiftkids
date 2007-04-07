@@ -142,8 +142,8 @@ while(1)
        n = n+1;
       %x(1,k) = x(1,k)+2;
    elseif(choice == 2)
-       codon = thisFrameshiftCodon;
-       n = n+1;
+       codon = thisCodon;
+       n = n+3;
    end
    Nloop(k) = nloopcalc(codon,0,1,Names,TAV,Nstop);
    codonsUsed = [codonsUsed codon];
