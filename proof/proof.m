@@ -85,14 +85,16 @@ function edit1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+global index prfb;
+prfb = ['                                                                      ' getseq(which('prfb.txt'))];
+index = 0;
 
 % --- Executes on key press over figure1 with no controls selected.
 function figure1_KeyPressFcn(hObject, eventdata, handles)
 % hObject    handle to figure1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-new = navigate(get(hObject, 'CurrentCharacter'), handles.edit1, get(handles.text1, 'String'), get(handles.text2, 'String'));
-set(handles.text1, 'String', new);
+navigate(get(hObject, 'CurrentCharacter'), handles.edit1, get(handles.text1, 'String'), get(handles.text2, 'String'));
 
 
 % --- Executes during object creation, after setting all properties.
@@ -108,4 +110,3 @@ function text2_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to text2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-set(hObject, 'String', ['                                                                      ' getseq(which('prfb.txt'))]);
