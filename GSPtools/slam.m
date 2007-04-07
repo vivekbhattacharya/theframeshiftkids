@@ -7,7 +7,7 @@
 % 2. Starts calculating wait-time from codon #2 onwards (since the start codon
 %    is locked into the P-site at translation initiation)
 % 3. Returns the differential vectors (Dvec) and the number of wait-cycles
-% for each codon (Nloop). 
+%    for each codon (Nloop). 
 % 
 % USAGE: [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx(seq,signal,phi_sp,C1,C2)
 % seq = string containing the RNA sequence in lower case
@@ -22,11 +22,11 @@
 % 2. Code for calculating displacement is taken from xmodel7.m
 %
 % Return values:
-% Mag, Phase: Arrays of data for the polar plot
-% x: Displacement array
+% Mag, Phase are arrays of data for the polar plot.
+% x is the displacement array.
 
-function [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx_prob(seq,signal,phi_sp,C1,C2)
-if length(seq)~=length(signal)
+function [Mag,Phase,InstPhase,x,Dvec,Nloop] = slam(seq,signal,phi_sp,C1,C2)
+if length(seq) ~= length(signal)
     error('Sequence and signal are NOT of the same length!');
 end
 
@@ -34,11 +34,10 @@ end
 % CALCULATE CUMMULATIVE MAGNITUDE AND PHASE
 % ------------------------------------------------------------    
 [Mag, Phase, Err] = cumm_mag_phase(signal);
-I1 = find(Err(1,:));
+I1 = find(Err(1,:)); I2 = find(Err(2,:));
 if ~isempty(I1)
     fprintf(1,'\nMagnitude negative at %d indices:',length(I1));
 end
-I2 = find(Err(2,:)); 
 if ~isempty(I2)
     fprintf(1,'\nEquations not satisfied at %d indices:',length(I2));
 end
@@ -75,7 +74,7 @@ k = 1; %Counter
 while 1
     if (k > numcodons-1); break; end;
     this = seq(n:n+2); next = seq(n+1:n+3);
-    choice = probe(x(1,k),this,next); 
+    choice = probe(x(k), this, next); 
     switch choice
         case {0,2}; codon = this; n = n+3;
         case 1; codon = next; n = n+1;
@@ -85,15 +84,15 @@ while 1
     choices = [choices choice];
    
     % Teflon code.
-    phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
+    phi_signal(1,k) = Dvec(k,2); x_temp = x(k);
     for wt=1:Nloop(k)
-        phi_dx = ((pi/3)*x_temp)-phi_sp;
-        dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
+        phi_dx = ((pi/3)*x_temp) - phi_sp;
+        dx = -C1*Dvec(k,1)*sin(phi_signal(k) + phi_dx);
         x_temp = dx + x_temp;
     end
-	InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
-        if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
-        x(1,k+1) = x_temp; 
+	InstPhase(k) = (180/pi)*(phi_signal(k) + phi_dx);
+        if(InstPhase(k)<0); InstPhase(k) = InstPhase(k) + 360; end
+        x(k+1) = x_temp; 
 
 	% Check for stop codon.
     if (strmatch(codon, ['uag'; 'uaa'; 'uga'])); break; end;
