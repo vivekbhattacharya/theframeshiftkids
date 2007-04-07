@@ -1,23 +1,17 @@
-function [new] = navigate(char, edit, index, prfb)
-index = str2num(index);
-if (char == 'd')
-    set(edit, 'String', disco(prfb, index, -3));
-    new = index - 3;
-elseif (char == 'f')
-    set(edit, 'String', disco(prfb, index, -1));
-    new = index - 1;
-elseif (char == 'j')
-    set(edit, 'String', disco(prfb, index, 1));
-    new = index + 1;
-elseif (char == 'k')
-    set(edit, 'String', disco(prfb, index, 3));
-    new = index + 3;
-elseif (char == 'z')
-    set(edit, 'String', disco(prfb, index, -index + 1));
-    new = 1;
-else
-    new = index;
-end
+function navigate(char, edit)
+global index prfb;
 
-function [excerpt] = disco(prfb, index, delta)
-excerpt = [prfb(index+delta : index+delta+40) ' {{' prfb(index+delta+41:index+delta+43) '}} ' prfb(index+delta+44:index+delta+90)];
+delta = 0;
+switch char
+   case 'd'; delta = -3;
+   case 'f'; delta = -1;
+   case 'j'; delta = 1;
+   case 'k'; delta = 3;
+   case 'z'; delta = -index + 1;
+   otherwise return;
+end
+set(edit, 'String', disco(index+delta));
+
+
+function [excerpt] = disco(b)
+excerpt = [prfb(b:b+40) ' {{' prfb(b+41:b+43) '}} ' prfb(b+44:b+90)];
