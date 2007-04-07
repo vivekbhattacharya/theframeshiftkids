@@ -35,7 +35,6 @@ if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
 
 % Simulate load() on a string instead of a file.
 Signal = str2num(Signal);
-
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl.exe` is outputting the rite stuff.';
     ensure = [ensure '\nAlso, ensure Perl is of version 5.6 or above.'];
@@ -44,35 +43,30 @@ end
 
 % Magic numbers.
 cp = 0; phi_sp=-13*(pi/180); initialx = 0.001;
-C1 = 0.005; C2 = initialx; Nstop=1000; spc=1;
+C1 = 0.005; C2 = initialx;
 
 %%% demo4 code %%%
-% These files need to be in the include path or working directory (GSPdemos).
+% These files need to be in the include path or working directory
+% (GSPdemos).
+global TAV Names;
 load TAV.mat; load Codons.mat;
-[mag,theta,InstTheta,x,Dvec] = fcalcmpx_prob(S(13:end),Signal,phi_sp,Names,TAV,C1,C2,Nstop,spc);
-
+[mag,theta,InstTheta,x] = fcalcmpx_prob(S(13:end),Signal,phi_sp,C1,C2);
 
 for k=1:length(theta) % No negative values
-    if theta(k)<0
-        theta(k)=theta(k)+(2*pi);
-    end
+    if theta(k)<0; theta(k)=theta(k)+(2*pi); end
 end
 for k=1:length(x)-1
     diffx(k)=x(k+1)-x(k);
 end
 
 figure(1);
-	subplot(321); plot(0,0);polar(theta,mag);
-	
-	subplot(322);plot(0,0);plot(1+cp:length(x)+cp, x);
-	axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
-	grid; xlabel('Codon Number'); ylabel('x(k)');
-	
-	subplot(323);plot(0,0);plot(1:length(theta),(180/pi)*theta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of cumulative phase');
-	
-	subplot(324);plot(0,0); plot(1:length(InstTheta),InstTheta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of instantaneous phase'); 
-	subplot(325); plot(0,0);plot(1:size(Dvec,1),Dvec(:,1)); xlabel('Codon number'); ylabel('Magnitude'); title('Magnitude of the differential vector'); 
-	subplot(326); plot(0,0);plot(1:length(diffx),diffx); xlabel('Codon number'); ylabel('Force on ribosome'); title('Plot of "force", i.e. incremental displacement');
+	subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
+    	axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
+    	grid; xlabel('Codon Number'); ylabel('x(k)');    
+    subplot(212); plot(0,0);plot(1:length(diffx),diffx); xlabel('Codon number'); ylabel('Force on ribosome'); title('Plot of "force", i.e. incremental displacement');	
+figure(2);
+    subplot(211); plot(0,0);polar(theta,mag);
+    subplot(212);plot(0,0);plot(1:length(theta),(180/pi)*theta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of cumulative phase');
 
 % The toolbox code in demo4 need a newline.
 fprintf('\n');
