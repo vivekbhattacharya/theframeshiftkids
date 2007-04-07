@@ -1,6 +1,6 @@
 function [choice, prob] = probe(x, n1, n2)
 
-k = 0.4;
+k = exp(-1);
 n=2;
 
 %x = x - 2*floor(abs(x/2));
