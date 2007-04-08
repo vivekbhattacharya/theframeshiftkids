@@ -1,4 +1,4 @@
-% FCALCMPX_PROB: "Function to calculate magnitude, phase, displacement"
+% slam: "Function to calculate magnitude, phase, displacement"
 % Calculates the cummulative magnitude, phase and the
 % displacement vector based on the frameshift model. 
 % Aggregates all useful and desirable features into one function. 
@@ -9,7 +9,7 @@
 % 3. Returns the differential vectors (Dvec) and the number of wait-cycles
 %    for each codon (Nloop). 
 % 
-% USAGE: [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx(seq,signal,phi_sp,C1,C2)
+% USAGE: [Mag,Phase,InstPhase,x,Dvec,Nloop] = slam(seq,signal,phi_sp,C1,C2)
 % seq = string containing the RNA sequence in lower case
 % signal = row vector containing the free energy signal
 % phi_sp = species-specific phase angle, typically the mean of all the
@@ -80,7 +80,7 @@ while 1
         case 1; codon = next; n = n+1;
     end
     Nloop(k) = nloopcalcify(codon);
-    codonsUsed = [codonsUsed codon];
+    codonsUsed = [codonsUsed ':' codon];
     choices = [choices choice];
    
     % Teflon code.
@@ -92,11 +92,11 @@ while 1
     end
 	InstPhase(k) = (180/pi)*(phi_signal(k) + phi_dx);
         if(InstPhase(k)<0); InstPhase(k) = InstPhase(k) + 360; end
-        x(k+1) = x_temp; 
+    x(k+1) = x_temp;
 
 	% Check for stop codon.
     if (strmatch(codon, ['uag'; 'uaa'; 'uga'])); break; end;
     k = k+1;
-end    
+end
 %disp(choices);
 %disp(codonsUsed);
