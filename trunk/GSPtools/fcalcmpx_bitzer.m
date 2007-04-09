@@ -90,9 +90,23 @@ for k=2:numcodons-1
         codon=seq(initial+2:initial+4);
     end
     Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
-        
+    Nloop_floor = ceil(Nloop(k));
+    if(Nloop_floor == 0)
+        disp(Nloop_floor)
+    end;
+    real_loops = (2^(1/Nloop_floor))/(2^(1/Nloop_floor)-1);
+    
     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
     for wt=1:Nloop(k)
+        P_abc = (1-(1-1/real_loops)^wt)*cos(x_temp*pi/4)^2;
+        P_bcd = (1-(1-1/real_loops)^wt)*sin(x_temp*pi/4)^2;
+        P_reloop =1 - P_abc - P_bcd;
+        P = [P_abc P_bcd P_reloop];
+        disp(P);
+        if ((P_reloop < P_abc) || (P_reloop < P_bcd))
+            disp(['life is complete' codon num2str(k)]);
+            break;
+        end;
         phi_dx = ((pi/3)*x_temp)-phi_sp;
         dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
         x_temp = dx + x_temp;
