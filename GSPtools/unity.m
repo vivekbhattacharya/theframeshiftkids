@@ -32,6 +32,7 @@ if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
    Template = 'perl.exe -I"%s" "%s" -r -e -q -p FREIER auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
 [status, Signal] = dos(Command);
+disp(Signal);
 
 % Simulate load() on a string instead of a file.
 Signal = str2num(Signal);
@@ -50,7 +51,7 @@ C1 = 0.005; C2 = initialx;
 % (GSPdemos).
 global TAV Names;
 load TAV.mat; load Codons.mat;
-[mag,theta,InstTheta,x] = slam(S(13:end),Signal,phi_sp,C1,C2);
+[mag,theta,InstTheta,x] = fcalcmpx_bitzer(S(13:end),Signal,phi_sp,Names, TAV, C1,C2, 1000, 1);
 
 for k=1:length(theta) % No negative values
     if theta(k)<0; theta(k)=theta(k)+(2*pi); end
@@ -59,7 +60,7 @@ for k=1:length(x)-1
     diffx(k)=x(k+1)-x(k);
 end
 
-figure(1);
+figure(3);
 	subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
     	axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
     	grid; xlabel('Codon Number'); ylabel('x(k)');    
