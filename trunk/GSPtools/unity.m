@@ -60,7 +60,7 @@ for k=1:length(x)-1
     diffx(k)=x(k+1)-x(k);
 end
 
-figure(3);
+figure(1);
 	subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
     	axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
     	grid; xlabel('Codon Number'); ylabel('x(k)');    

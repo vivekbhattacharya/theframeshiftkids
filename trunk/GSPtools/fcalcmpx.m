@@ -78,6 +78,7 @@ end
 % ------------------------------------------------------------    
 Nloop = []; x = [0 C2]; codon = 0; InstPhase = [];
 figure;
+codons=[];
 for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
     % calculate nloop accordingly
@@ -89,6 +90,7 @@ for k=2:numcodons-1
     elseif x(1,k)>1
         codon=seq(initial+2:initial+4);
     end
+    codons = [codons codon];
     Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
         
     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
@@ -102,6 +104,7 @@ for k=2:numcodons-1
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
     x(1,k+1) = x_temp;             
 end
+disp(codons);
 hold off
 xlabel('Codon number, k');
 ylabel('Total angle');
