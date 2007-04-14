@@ -76,35 +76,73 @@ end
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
-Nloop = []; x = [0 C2]; codon = 0; InstPhase = [];
+Nloop = []; x = [0 C2]; codon = []; InstPhase = [];
 figure;
+shift = 0;
+codons = 0;
 for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
     % calculate nloop accordingly
     initial = 3*(k-1) + 3*spc;
-    if abs(x(1,k))<1
-        codon=seq(initial+1:initial+3);
-    elseif x(1,k)<-1
-        codon=seq(initial+0:initial+2);
-    elseif x(1,k)>1
-        codon=seq(initial+2:initial+4);
-    end
-    Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
-    Nloop_floor = ceil(Nloop(k));
-    if(Nloop_floor == 0)
-        disp(Nloop_floor)
+    try
+        codon=seq(initial+1+shift:initial+3+shift);
+        other_codon=seq(initial+4+shift:initial+6+shift);
+    catch
+        break;
     end;
-    real_loops = (2^(1/Nloop_floor))/(2^(1/Nloop_floor)-1);
+    codons = [codons codon];
+    disp(codons);
+%   if abs(x(1,k))<1
+%       codon=seq(initial+1:initial+3);
+%       other_codon=seq(initial+4:initial+6);
+%   elseif x(1,k)<-1
+%       codon=seq(initial+0:initial+2);
+%       other_codon=seq(initial+3:initial+5);
+%   elseif x(1,k)>1
+%       codon=seq(initial+2:initial+4);
+%       other_codon=seq(initial+5:initial+7);
+%   end
+    Nloop(k)=nloopcalc(codon,0,1,Names,TAV,Nstop);
+    other_nloop=nloopcalc(other_codon,0,1,Names,TAV,Nstop);
+    
+    Nloop_floor = ceil(Nloop(k));
+    other_Nloop_floor = ceil(other_nloop);
+    
+    real_loops = 2^(1/Nloop_floor);
+    real_loops = real_loops / (real_loops - 1);
+    
+    other_real_loops = 2^(1/other_Nloop_floor);
+    other_real_loops = other_real_loops / (other_real_loops - 1);
     
     phi_signal(1,k) = Dvec(k,2); x_temp = x(1,k); 
-    for wt=1:Nloop(k)
-        P_abc = (1-(1-1/real_loops)^wt)*cos(x_temp*pi/4)^2;
-        P_bcd = (1-(1-1/real_loops)^wt)*sin(x_temp*pi/4)^2;
+    
+    phi_dx = ((pi/3)*x_temp)-phi_sp;
+    P_fail_abc = 1;
+    P_fail_bcd = 1;
+    for wt=1:Nstop
+        my_x_temp=x_temp-2*shift;
+        weight_abc = cos(my_x_temp*pi/4)^4;             % Window Function
+        weight_bcd = sin(my_x_temp*pi/4)^4;
+        P_temp_abc = 1/real_loops*weight_abc;
+        P_temp_bcd = 1/other_real_loops*weight_bcd;
+        P_temp_fail_abc = 1-P_temp_abc;
+        P_temp_fail_bcd = 1-P_temp_bcd;
+        P_fail_abc = P_fail_abc * P_temp_fail_abc;
+        P_fail_bcd = P_fail_bcd * P_temp_fail_bcd;
+        P_abc = 1-P_fail_abc;
+        P_bcd = 1-P_fail_bcd;
+%       P_abc = 1-(((1-1/real_loops)*cos(x_temp*pi/4)^2))^wt;
+%       P_bcd = 1-(((1-1/other_real_loops)*sin(x_temp*pi/4)^2))^wt;
         P_reloop =1 - P_abc - P_bcd;
         P = [P_abc P_bcd P_reloop];
-        disp(P);
+        
+        
+        %disp(P);
         if ((P_reloop < P_abc) || (P_reloop < P_bcd))
-            disp(['life is complete' codon num2str(k)]);
+            %disp(['life is complete' codon other_codon num2str(k)]);
+            if max(P) == P_bcd
+                shift = shift + 1;
+            end;
             break;
         end;
         phi_dx = ((pi/3)*x_temp)-phi_sp;
@@ -114,8 +152,10 @@ for k=2:numcodons-1
 
     InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
-    x(1,k+1) = x_temp;             
+    x(1,k+1) = x_temp;  
+    disp(x_temp);
 end
+disp(shift);
 hold off
 xlabel('Codon number, k');
 ylabel('Total angle');
