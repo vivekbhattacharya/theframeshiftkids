@@ -86,7 +86,7 @@ for k=2:numcodons-1
     initial = 3*(k-1) + 3*spc;
     try
         codon=seq(initial+1+shift:initial+3+shift);
-        other_codon=seq(initial+4+shift:initial+6+shift);
+        other_codon=seq(initial+2+shift:initial+4+shift);
     catch
         break;
     end;
