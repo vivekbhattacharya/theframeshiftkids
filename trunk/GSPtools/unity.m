@@ -51,7 +51,7 @@ C1 = 0.005; C2 = initialx;
 % (GSPdemos).
 global TAV Names;
 load TAV.mat; load Codons.mat;
-[mag,theta,InstTheta,x] = fcalcmpx_bitzer(S(13:end),Signal,phi_sp,Names, TAV, C1,C2, 1000, 1);
+[mag,theta,InstTheta,x] = fcalcmpx_bitzerv2(S(13:end),Signal,phi_sp,Names, TAV, C1,C2, 1000, 1);
 
 for k=1:length(theta) % No negative values
     if theta(k)<0; theta(k)=theta(k)+(2*pi); end
@@ -65,9 +65,9 @@ figure(1);
     	axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
     	grid; xlabel('Codon Number'); ylabel('x(k)');    
     subplot(212); plot(0,0);plot(1:length(diffx),diffx); xlabel('Codon number'); ylabel('Force on ribosome'); title('Plot of "force", i.e. incremental displacement');	
-figure(2);
-    subplot(211); plot(0,0);polar(theta,mag);
-    subplot(212);plot(0,0);plot(1:length(theta),(180/pi)*theta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of cumulative phase');
+% figure(2);
+%     subplot(211); plot(0,0);polar(theta,mag);
+%     subplot(212);plot(0,0);plot(1:length(theta),(180/pi)*theta); xlabel('Codon number'); ylabel('Phase angle (degrees)'); title('Plot of cumulative phase');
 
 % The toolbox code in demo4 need a newline.
 fprintf('\n');
