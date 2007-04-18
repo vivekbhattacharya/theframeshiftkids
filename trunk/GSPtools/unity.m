@@ -62,7 +62,7 @@ end
 
 figure(1);
 	subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
-    	axis([1 length(x)+cp min(-4,min(x)) max(4,max(x))]);
+    	axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
     	grid; xlabel('Codon Number'); ylabel('x(k)');    
     subplot(212); plot(0,0);plot(1:length(diffx),diffx); xlabel('Codon number'); ylabel('Force on ribosome'); title('Plot of "force", i.e. incremental displacement');	
 figure(2);
