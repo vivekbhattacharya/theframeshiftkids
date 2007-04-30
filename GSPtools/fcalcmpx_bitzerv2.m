@@ -114,8 +114,8 @@ for k=2:numcodons-1
     P_fail_bcd = 1;
     for wt=1:Nstop
         my_x_temp=x_temp-2*shift;
-        weight_abc = abs(cos(my_x_temp*pi/4))^7;             % Window Function
-        weight_bcd = abs(sin(my_x_temp*pi/4))^7;
+        weight_abc = cos(my_x_temp*pi/4)^8;             % Window Function
+        weight_bcd = sin(my_x_temp*pi/4)^8;
         P_temp_fail_abc = 1- (1/real_loops*weight_abc);
         P_temp_fail_bcd = 1- (1/other_real_loops*weight_bcd);
         P_fail_abc = P_fail_abc * P_temp_fail_abc;
@@ -161,5 +161,7 @@ if (P_reloop < P_abc) || (P_reloop < P_bcd)
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
     x(1,k+1) = x_temp;
 end
-disp(shift);
+global shoals sands;
+sands = sands + 1;
 disp(ants);
+if(strcmp(ants, ' uga,25;')), shoals = shoals + 1; end;
