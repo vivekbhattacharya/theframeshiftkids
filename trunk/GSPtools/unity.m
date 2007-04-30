@@ -32,7 +32,6 @@ if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
    Template = 'perl.exe -I"%s" "%s" -r -e -q -p FREIER auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
 [status, Signal] = dos(Command);
-disp(Signal);
 
 % Simulate load() on a string instead of a file.
 Signal = str2num(Signal);

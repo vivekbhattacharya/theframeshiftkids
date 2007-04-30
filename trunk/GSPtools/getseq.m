@@ -29,7 +29,4 @@ if ~fid
 end
 fclose(fid);
 
-fprintf(1,'\nLoading sequence\n');
-tic 
 S=perl('getseq.pl',SEQFILE);
-toc
