@@ -48,7 +48,7 @@ I2 = find(Err(2,:));
 if ~isempty(I2)
     fprintf(1,'\nEquations not satisfied at %d indices:',length(I2));
 end
-fprintf(1,'\nNumber of codons: %d',length(Mag));
+%fprintf(1,'\nNumber of codons: %d',length(Mag));
 numcodons = length(Mag);
 
 % ------------------------------------------------------------
@@ -113,7 +113,7 @@ for k=2:numcodons-1
     P_fail_abc = 1;
     P_fail_bcd = 1;
     for wt=1:Nstop
-        my_x_temp=x_temp-2*shift;
+        my_x_temp = x_temp-2*shift;
         weight_abc = cos(my_x_temp*pi/4)^8;             % Window Function
         weight_bcd = sin(my_x_temp*pi/4)^8;
         P_temp_fail_abc = 1- (1/real_loops*weight_abc);
@@ -124,43 +124,28 @@ for k=2:numcodons-1
         P_bcd = 1-P_fail_bcd;
         P_reloop =1 - P_abc - P_bcd;
         P = [P_abc P_bcd P_reloop];
-%         P_abc_vec = [P_abc_vec P_abc];
-%         P_bcd_vec = [P_bcd_vec P_bcd];
-%         P_reloop_vec = [P_reloop_vec P_reloop];
         
-r = rand;
+        r = rand; % Mersenne Twister
+        if (P_reloop < P_abc) || (P_reloop < P_bcd)
+            if(r < P_abc)
+                break;
+            elseif (r < P_abc + P_bcd)
+                shift = shift + 1;
+                ants = [ants ' ' codon ',' num2str(k) ';'];
+                break;
+            end;
+        end;
 
-if (P_reloop < P_abc) || (P_reloop < P_bcd)
-        if(r < P_abc)
-            break;
-        elseif (r < P_abc + P_bcd)
-            shift = shift + 1;
-            ants = [ants ' ' codon ',' num2str(k) ';'];
-            break;
-        end; end;
-        
-        %disp(P);
-%         if (P_reloop < P_abc) || (P_reloop < P_bcd)
-%             if (max(P) == P_bcd)
-%                 shift = shift + 1;
-%                 ants = [ants ' ' codon ',' num2str(k) ';'];
-%             end;
-% %             P_abc_sum_vec = [P_abc_sum_vec prod(P_abc_vec)];
-% %             P_bcd_sum_vec = [P_bcd_sum_vec prod(P_bcd_vec)];
-%             break;
-%         end;
         phi_dx = ((pi/3)*x_temp)-phi_sp;
-        dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx); % Correct
+        dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx);
         x_temp = dx + x_temp;
     end
-
-%     P_abc_sum_vec = [P_abc_sum_vec prod(P_abc_vec)];
-%     P_bcd_sum_vec = [P_bcd_sum_vec prod(P_bcd_vec)];
     
     InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
     if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
     x(1,k+1) = x_temp;
 end
+
 global shoals sands;
 sands = sands + 1;
 disp(ants);
