@@ -42,15 +42,17 @@ if(isempty(Signal))
 end
 
 % Magic numbers.
-cp = 0; phi_sp=-13*(pi/180); initialx = 0.001;
-C1 = 0.005; C2 = initialx;
+
 
 %%% demo4 code %%%
 % These files need to be in the include path or working directory
 % (GSPdemos).
 global TAV Names;
 load TAV.mat; load Codons.mat;
-[mag,theta,InstTheta,x] = fcalcmpx_bitzerv2(S(13:end),Signal,phi_sp,Names, TAV, C1,C2, 1000, 1);
+
+[Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
+[Dvec] = diff_vectors(Mag, Phase, numcodons);
+[theta,x] = displacement(S(13:end),1000,1,Phase,numcodons,Dvec);
 
 for k=1:length(theta) % No negative values
     if theta(k)<0; theta(k)=theta(k)+(2*pi); end
@@ -59,6 +61,7 @@ for k=1:length(x)-1
     diffx(k)=x(k+1)-x(k);
 end
 
+cp = 0;
 figure(1);
 	subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
     	axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);

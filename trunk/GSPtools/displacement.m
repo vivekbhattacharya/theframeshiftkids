@@ -29,60 +29,16 @@
 % Mag, Phase: Arrays of data for the polar plot
 % x: Displacement array
 
-function [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx(seq,signal,phi_sp,Names,TAV,C1,C2,Nstop,spc)
+function [Phase,x] = fcalcmpx(seq,Nstop,spc,Phase,numcodons,Dvec)
 
-% Make sure sequence and signal are of the same length!
-if length(seq)~=length(signal)
-    error('Sequence and signal are NOT of the same length!');
-end
-
-% ------------------------------------------------------------
-% CALCULATE CUMMULATIVE MAGNITUDE AND PHASE
-% ------------------------------------------------------------    
-[Mag, Phase, Err] = cumm_mag_phase(signal);
-I1 = find(Err(1,:));
-if ~isempty(I1)
-    fprintf(1,'\nMagnitude negative at %d indices:',length(I1));
-end
-I2 = find(Err(2,:)); 
-if ~isempty(I2)
-    fprintf(1,'\nEquations not satisfied at %d indices:',length(I2));
-end
-%fprintf(1,'\nNumber of codons: %d',length(Mag));
-numcodons = length(Mag);
-
-% ------------------------------------------------------------
-% CALCULATE DIFFERENTIAL VECTORS
-% ------------------------------------------------------------    
-L = 3; % L must be odd
-P = 1; % Order of the polynomial
-for k=1:numcodons
-    x = min(max(1,k-1),numcodons-2);
-    index = [x:x+2];
-    polyMag = polyfit(1:L,Mag(index),P);
-    polyPhase = polyfit(1:L,Phase(index),P);
-    
-    dA_dc(1,k) = polyval(polyder(polyMag),k);
-    dphi_dc(1,k) = polyval(polyder(polyPhase),k);
-    
-    D = exp(j*Phase(1,k))*(dA_dc(1,k) + j*(Mag(1,k)*dphi_dc(1,k)));
-    
-    Dvec(k,1) = abs(D); 
-    % Dvec(k,1) = sqrt(dA_dc(1,k)^2+(Mag(1,k)*dphi_dc(1,k))^2);
-    Dvec(k,2) = phase(D); 
-    % Dvec(k,2) = Phase(1,k) + atan2(Mag(1,k)*dphi_dc(1,k),dA_dc(1,k));   
-end
-
+phi_sp=-30*(pi/180); initialx = 0.1;
+C1 = 0.005; C2 = initialx;
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
 Nloop = []; x = [0 C2]; codon = []; InstPhase = [];
 ants = [];
-% P_reloop_vec = [];
-% P_abc_vec = [];
-% P_bcd_vec = [];
-% P_abc_sum_vec = [];
-% P_bcd_sum_vec = [];
+
 shift = 0; codons = 0;
 for k=2:numcodons-1
     % Choose appropriate codon, depending on the specified spacing, and
@@ -114,8 +70,8 @@ for k=2:numcodons-1
     P_fail_bcd = 1;
     for wt=1:Nstop
         my_x_temp = x_temp-2*shift;
-        weight_abc = cos(my_x_temp*pi/4)^8;             % Window Function
-        weight_bcd = sin(my_x_temp*pi/4)^8;
+        weight_abc = cos(my_x_temp*pi/4)^10;             % Window Function
+        weight_bcd = sin(my_x_temp*pi/4)^10;
         P_temp_fail_abc = 1- (1/real_loops*weight_abc);
         P_temp_fail_bcd = 1- (1/other_real_loops*weight_bcd);
         P_fail_abc = P_fail_abc * P_temp_fail_abc;
