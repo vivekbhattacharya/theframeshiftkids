@@ -20,15 +20,15 @@ function unity(file)
 
 file = which(file);
 if(isempty(file)); error(['Cannot find ``' file '" in your path']); end;
+if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
+   'Please download it to the VCL C: drive.']); end;
 
 % Load prfb, and generate a fasta file with column width of 60.
 S = getseq(file); Fasta = [file, '.fasta'];
 write2fasta(Fasta, S, 'prfb', 60);
 
 % Run free2bind. Make sure to include its directory into -I.
-if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
-   'Please download it to the VCL C: drive.']); end;
-   Include = fileparts(which('FreeAlign.pm'));
+Include = fileparts(which('FreeAlign.pm'));
    Template = 'perl.exe -I"%s" "%s" -r -e -q -p FREIER auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
 [status, Signal] = dos(Command);
