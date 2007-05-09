@@ -1,2 +1,1 @@
-$a = reverse($ARGV[0]);
-print $a;
+print scalar reverse($ARGV[0]);
