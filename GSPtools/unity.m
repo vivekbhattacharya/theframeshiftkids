@@ -29,12 +29,13 @@ write2fasta(Fasta, S, 'prfb', 60);
 
 % Run free2bind. Make sure to include its directory into -I.
 Include = fileparts(which('FreeAlign.pm'));
-   Template = 'perl.exe -I"%s" "%s" -r -e -q -p FREIER auuccuccacuag "%s"';
+   Template = 'perl.exe -I"%s" "%s" -e -q -p FREIER auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
 [status, Signal] = dos(Command);
 
 % Simulate load() on a string instead of a file.
 Signal = str2num(Signal);
+Signal = Signal';
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl.exe` is outputting the rite stuff.';
     ensure = [ensure '\nAlso, ensure Perl is of version 5.6 or above.'];
