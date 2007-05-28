@@ -18,6 +18,6 @@ for k=1:numcodons
     
     Dvec(k,1) = abs(D); 
     % Dvec(k,1) = sqrt(dA_dc(1,k)^2+(Mag(1,k)*dphi_dc(1,k))^2);
-    Dvec(k,2) = phase(D); 
+    Dvec(k,2) = angle(D);
     % Dvec(k,2) = Phase(1,k) + atan2(Mag(1,k)*dphi_dc(1,k),dA_dc(1,k));   
 end
