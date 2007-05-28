@@ -1,35 +1,4 @@
-% FCALCMPX: "Function to calculate magnitude, phase, displacement"
-% Calculates the cummulative magnitude, phase and the
-% displacement vector based on the frameshift model. 
-% Aggregates all useful and desirable features into one function. 
-% 
-% 1. Allows for spacing between the tail and the A-site. 
-% 2. Starts calculating wait-time from codon #2 onwards (since the start codon
-%    is locked into the P-site at translation initiation)
-% 3. Returns the differential vectors (Dvec) and the number of wait-cycles for
-%    each codon (Nloop). 
-% 
-% USAGE: [Mag,Phase,InstPhase,x,Dvec,Nloop] = fcalcmpx(seq,signal,phi_sp,Names,TAV,C1,C2,Nstop,spc)
-% seq = string containing the RNA sequence in lower case
-% signal = row vector containing the free energy signal
-% phi_sp = species-specific phase angle, typically the mean of all the
-%          individual signal phase angles
-% Names,TAV = pre-calculated tRNA availability
-% C1 = step-size of the incremental displacement
-% C2 = estimate of initial displacement
-% Nstop = number of loops at the stop codon
-% spc = number of codons between the 5'-end of the 16S rRNA tail and
-%       the A-site
-% 
-% Note: 
-% 1. This function does not check if the signal length is a multiple of 3
-% 2. Code for calculating displacement is taken from xmodel7.m
-%
-% Return values:
-% Mag, Phase: Arrays of data for the polar plot
-% x: Displacement array
-
-function [Phase,x] = fcalcmpx(seq,Nstop,spc,Phase,numcodons,Dvec)
+function [Phase,x,diffx] = displacement(seq,Nstop,spc,Phase,numcodons,Dvec)
 
 phi_sp=-30*(pi/180); initialx = 0.1;
 C1 = 0.005; C2 = initialx;
@@ -102,7 +71,14 @@ for k=2:numcodons-1
     x(1,k+1) = x_temp;
 end
 
+for k=1:length(Phase)
+    if Phase(k)<0; Phase(k)=Phase(k)+(2*pi); end
+end
+for k=1:length(x)-1
+    diffx(k)=x(k+1)-x(k);
+end
+
+%% Counters for megaunity
 global shoals sands;
-sands = sands + 1;
-disp(ants);
+sands = sands + 1; disp(ants);
 if(strcmp(ants, ' uga,25;')), shoals = shoals + 1; end;
