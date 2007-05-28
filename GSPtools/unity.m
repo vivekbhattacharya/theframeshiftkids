@@ -38,12 +38,10 @@ Signal = str2num(Signal);
 Signal = Signal';
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl.exe` is outputting the rite stuff.';
-    ensure = [ensure '\nAlso, ensure Perl is of version 5.6 or above.'];
+    ensure = [ensure sprintf('\n') 'Also, ensure Perl is of version 5.6 or above.'];
+    ensure = [ensure sprintf('\n') 'Also, ensure free2bind is in the path.'];
     error(ensure);
 end
-
-% Magic numbers.
-
 
 %%% demo4 code %%%
 % These files need to be in the include path or working directory
