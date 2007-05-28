@@ -1,4 +1,4 @@
-function [Phase,x,diffx] = displacement(seq,Nstop,spc,Phase,numcodons,Dvec)
+function [Phase,x,diffx] = displacement(seq,Nstop,spc,Phase,numcodons,Dvec,love)
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
@@ -8,7 +8,7 @@ phi_sp=-30*(pi/180); initialx = 0.1;
 C1 = 0.005; C2 = initialx;
 
 Nloop = []; x = [0 C2]; codon = []; InstPhase = [];
-ants = [];
+ants = '';
 
 shift = 0;
 for k=2:numcodons-1
@@ -62,7 +62,7 @@ for k=1:length(x)-1; diffx(k)=x(k+1)-x(k); end;
 %% Counters for megaunity
 global shoals sands;
 sands = sands + 1; disp(ants);
-if(strcmp(ants, ' uga,25;')), shoals = shoals + 1; end;
+if(strcmp(ants, love)), shoals = shoals + 1; end;
 
 function [n] = real_loops(codon, index)
 n = ceil(nloopcalcify(codon));
