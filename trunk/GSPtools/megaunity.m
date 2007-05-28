@@ -1,7 +1,7 @@
 % 0.50667 (150)
 % 0.46825 (126) --shifted prfb
 
-function megaunity(file)
+function megaunity(file, str1)
 % --------------------------------------------------------------
 % This function is used to simulate repeated calls to unity
 % in order to assess the "yield" of a given sequence (file)
@@ -10,9 +10,11 @@ function megaunity(file)
 %
 %
 % USAGE:
-% function [] = megaunity(file)
+% function [] = megaunity(file, str1)
 % file = string with the name of the text file, with extension,
 %        that includes the leader
+% str1 = string with list of desired frameshifts
+%        ex. 'uga,25; cau,73'
 % --------------------------------------------------------------
 
 [Signal, S] = get_signal(file);
@@ -26,7 +28,7 @@ load TAV.mat; load Codons.mat;
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 global shoals sands; shoals = 0; sands = 0;
 while 1
-    [theta,x,diffx] = displacement(S(13:end),1000,1,Phase,numcodons,Dvec);
+    [theta,x,diffx] = displacement(S(13:end),1000,1,Phase,numcodons,Dvec,str1);
 
     cp = 0;
     figure(1);
