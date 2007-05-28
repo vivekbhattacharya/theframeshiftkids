@@ -2,11 +2,40 @@
 % 0.46825 (126) --shifted prfb
 
 function megaunity(file)
+% --------------------------------------------------------------
+% This function is used to simulate repeated calls to unity
+% in order to assess the "yield" of a given sequence (file)
+% based on whether or not the stochastic model frameshifts
+% completely correctly. --Frameshift Kids
+%
+%
+% USAGE:
+% function [] = megaunity(file)
+% file = string with the name of the text file, with extension,
+%        that includes the leader
+% --------------------------------------------------------------
 
-global shoals sands;
-shoals = 0;
-sands = 0;
+[Signal, S] = get_signal(file);
+
+% These files need to be in the include path or working directory
+% (GSPdemos).
+global TAV Names;
+load TAV.mat; load Codons.mat;
+
+[Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
+[Dvec] = diff_vectors(Mag, Phase, numcodons);
+global shoals sands; shoals = 0; sands = 0;
 while 1
-    unity(file);
-    disp(['ZE CURRENT PROBABBILIBIBIBLBYT ESZ: ' num2str(shoals/sands) ' (' num2str(sands) ')']);
+    [theta,x,diffx] = displacement(S(13:end),1000,1,Phase,numcodons,Dvec);
+
+    cp = 0;
+    figure(1);
+        subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
+            axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
+            grid; xlabel('Codon Number'); ylabel('x(k)');    
+        subplot(212); plot(0,0);plot(1:length(diffx),diffx);
+            xlabel('Codon number'); ylabel('Force on ribosome');
+            title('Plot of "force", i.e. incremental displacement');
+    disp(['Yield so far: ' num2str(shoals/sands) ' (' num2str(sands) ')']);
+    fprintf('\n');
 end
