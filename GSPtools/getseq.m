@@ -29,4 +29,4 @@ if ~fid
 end
 fclose(fid);
 
-[status, S] = system(['perl ' which('getseq.pl') ' ' which(SEQFILE)]);
+[status, S] = system(['perl "' which('getseq.pl') '" "' which(SEQFILE) '"']);
