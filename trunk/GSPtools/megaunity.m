@@ -11,8 +11,7 @@ function megaunity(file, frameshift_genes)
 % file = string with the name of the text file, with extension,
 %        that includes the leader
 % frameshift_genes = string with list of desired frameshifts
-%        ex. ' uga,25; cau,73' or ''
-%        unless it is '', there must be a space at the beginning
+%        ex. ['uga,25','cau,73'] or '[]'
 % --------------------------------------------------------------
 
 [Signal, S] = get_signal(file);
