@@ -33,7 +33,7 @@ sub find_bounds {
 
 # Page 43-6 of _Programming Perl for Bioinformatics_ by James D. Tisdall
 sub reverse_complement {
-	local $_ = shift and tr/atcg/uagc/ and return scalar reverse $_;
+	for(shift) { tr/atcg/uagc/; return scalar reverse; }
 }
 
 our $o;
@@ -52,10 +52,9 @@ sub main {
    $o = getseq('ecoli-k12.txt');
    
    my (@sequences, @names);   
-   find_bounds($locations,
+   find_bounds $locations,
       sub { push @sequences, &extract; },
-      sub { push @names, shift; }
-   );
+      sub { push @names, shift; };
    
    # Output
    mkdir('proteins'); chdir('proteins');
@@ -66,6 +65,8 @@ sub main {
          print $handle reverse_complement $_;
       }
    } @sequences;
+   
+   print 'Done', $/;
 }
 
 __PACKAGE__->main() unless caller;
