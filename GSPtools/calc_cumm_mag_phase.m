@@ -8,6 +8,7 @@ I1 = find(Err(1,:));
 if ~isempty(I1)
     fprintf(1,'\nMagnitude negative at %d indices:',length(I1));
 end
+
 I2 = find(Err(2,:)); 
 if ~isempty(I2)
     fprintf(1,'\nEquations not satisfied at %d indices:',length(I2));

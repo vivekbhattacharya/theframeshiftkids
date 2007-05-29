@@ -33,21 +33,16 @@ for j = 1:3:length(x)
 end    
 
 % The averaging calculation works only for the case when length(x) is a multiple of 3    
-if avg_choice==1
-    M = (M-mean(M))/(length(x)/3);            									
-else
-    M = (M-mean(M)); 
-end
+if avg_choice==1, M = (M-mean(M))/(length(x)/3);            									
+else M = (M-mean(M)); end;
 
 % Calculate magnitude and phase using formulae
 if (M(1) ~= 0)
     theta = atan2( M(1)*sqrt(3),(M(1) + 2*M(2)) ); 
     A = M(1)/sin(theta);
-else
-    if((M(3)+M(2))~=0)
-        theta = atan2( (M(3)+M(2))*sqrt(3),(M(3)-M(2)) );
-        A = -(M(3)+M(2))/sin(theta); 
-    end
+elseif((M(3)+M(2))~=0)
+    theta = atan2( (M(3)+M(2))*sqrt(3),(M(3)-M(2)) );
+    A = -(M(3)+M(2))/sin(theta);
 end
 
 % Check if magnitude is negative
