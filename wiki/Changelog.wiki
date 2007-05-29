@@ -1,4 +1,4 @@
-#summary The three-pronged arrow of time.
+#summary The three-pronged arrow of times.
 #labels Featured,changes
 
 == What's New in Version ... ==
