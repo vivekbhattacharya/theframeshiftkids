@@ -2,7 +2,7 @@
 #labels Featured,changes
 
 == What's New in Version ... ==
-  * Three: Unused functions deleted;
+  * Three: Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives];
     ** `fcalcmpx` split up;
     ** `megaunity` now several times faster;
     ** new `cornerstone.pl` parses Genbank search results; and
