@@ -39,7 +39,7 @@ for k=2:numcodons-1
             if(r < here), break;
             elseif (r < here + there)
                 shift = shift + 1;
-                ants = [ants; [codon ',' num2str(k)]];
+                ants = strvcat(ants, [codon ',' num2str(k)]);
                 break;
             end;
         end;
@@ -66,7 +66,9 @@ sands = sands + 1;
 
 % Handles edge case (which is quite often) where
 % both `ants` and `love` is [].
-if strcmp([ants; 'o'], [love; 'o']), shoals = shoals + 1; end; 
+if strcmp(strvcat(ants, 'o'), strvcat(love, 'o'))
+   shoals = shoals + 1;
+end; 
    
 if size(ants) ~= size([])
    pigs = cellstr(ants);
