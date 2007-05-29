@@ -8,4 +8,4 @@ sub getseq {
    }
 }
 
-print getseq(shift @ARGV) unless caller;
+print getseq(shift @ARGV) if __FILE__ eq $0; 1;
