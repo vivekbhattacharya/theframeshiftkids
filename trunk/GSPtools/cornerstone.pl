@@ -32,15 +32,17 @@ sub find_bounds {
 	}
 }
 
-# Page 43-6 of _Programming Perl for Bioinformatics_ by James D. Tisdall
+# Cf. page 43-6 of _Programming Perl for Bioinformatics_
+# by James D. Tisdall
 sub reverse_complement {
-	for(shift) { tr/atcg/uagc/; return scalar reverse; }
+	for(shift) { tr/atcg/uagc/; scalar reverse; }
 }
 
+# The entire genome in a dainty little variable.
 our $o;
 sub extract {
 	my ($start, $end) = @_;
-	return substr($o, $start, $end - $start + 1);
+	substr($o, $start, $end - $start + 1);
 }
 
 sub main {
@@ -52,17 +54,22 @@ sub main {
    # for quick access.
    $o = getseq($genome);
    
-   my (@sequences, @names);   
+   my (@sequences, @names);
+   # The first anonymous function pushes yielded bounds
+   # into the @sequences array after extracting the
+   # sequences with `extract`.
+   # The second anonymous function pushes it
+   # without any processing.
    find_bounds $locations,
       sub { push @sequences, &extract; },
       sub { push @names, shift; };
    
-   # Output
+   # Output: store to file with special filenames
    mkdir('proteins'); chdir('proteins');
    map {
       my $name = shift @names; {
          open(my $handle, ">$name.txt") or
-            die("cornerstone cannot open $name for writing");
+            die("Cornerstone cannot open $name for writing");
          print $handle reverse_complement $_;
       }
    } @sequences;
