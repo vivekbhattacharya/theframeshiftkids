@@ -23,7 +23,7 @@ load TAV.mat; load Codons.mat;
 
 [Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
-[theta,x,diffx] = displacement(S(13:end),1000,1,Phase,numcodons,Dvec);
+[theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,[]);
 
 cp = 0;
 figure(1);

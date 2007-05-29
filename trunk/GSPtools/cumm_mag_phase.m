@@ -10,7 +10,7 @@
 function [Mag, Phase, Err] = cumm_mag_phase(x)
 
 if rem(length(x),3)~=0
-%    fprintf('\ncumm_mag_phase: Signal rounded off to a codon multiple');
+%   fprintf('\ncumm_mag_phase: Signal rounded off to a codon multiple');
     x = x(1:(length(x)-rem(length(x),3)));
 end
 
