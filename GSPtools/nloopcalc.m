@@ -23,12 +23,8 @@ x = num2char(numcodon,0,1);
 
 % Stop codons should have high wait times, Manually set values for E.coli,
 % since the TAV will be zero for these codons
-if strcmp(x,'uaa')==1
+if strcmp(x,'uaa') == 1 || strcmp(x,'uag') == 1|| strcmp(x,'uga') == 1
     N = Nstop;        
-elseif strcmp(x,'uag')==1
-    N = Nstop;
-elseif strcmp(x,'uga')==1
-    N = Nstop;
 else
     % Compare x with Names and extract abundance ratio
     I=strmatch(x,Names,'exact');

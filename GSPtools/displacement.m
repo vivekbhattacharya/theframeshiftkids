@@ -1,14 +1,14 @@
-function [Phase,x,diffx] = displacement(seq,Nstop,spc,Phase,numcodons,Dvec,love)
+function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,love)
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
 
 % Magic numbers
 phi_sp=-30*(pi/180); initialx = 0.1;
-C1 = 0.005; C2 = initialx;
+C1 = 0.005; C2 = initialx; spc = 1;
 
 Nloop = []; x = [0 C2]; codon = []; InstPhase = [];
-ants = '';
+ants = [];
 
 shift = 0;
 for k=2:numcodons-1
@@ -28,7 +28,7 @@ for k=2:numcodons-1
     phi_dx = ((pi/3)*x0)-phi_sp;
 
     here_fail = 1; there_fail = 1;
-    for wt=1:Nstop
+    for wt=1:1000
         a = (x0 - 2*shift)*pi/4; % Window function follows     
         [here_fail, here] = probabilities(here_loops, cos(a)^10, here_fail);
         [there_fail, there] = probabilities(there_loops, sin(a)^10, there_fail);        
@@ -39,7 +39,7 @@ for k=2:numcodons-1
             if(r < here), break;
             elseif (r < here + there)
                 shift = shift + 1;
-                ants = [ants ' ' codon ',' num2str(k) ';'];
+                ants = [ants, [codon ',' num2str(k)]];
                 break;
             end;
         end;
