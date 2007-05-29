@@ -13,14 +13,16 @@ write2fasta(Fasta, S, 'prfb', 60);
 Include = fileparts(which('FreeAlign.pm'));
    Template = 'perl.exe -I"%s" "%s" -e -q -p FREIER auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
-[status, Signal] = dos(Command);
+[status, raw_signal] = dos(Command);
 
 % Simulate load() on a string instead of a file.
-Signal = str2num(Signal);
+Signal = str2num(raw_signal);
 Signal = Signal';
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl.exe` is outputting the rite stuff.';
     ensure = [ensure sprintf('\n') 'Also, ensure Perl is of version 5.6 or above.'];
     ensure = [ensure sprintf('\n') 'Also, ensure free2bind is in the path.'];
+    ensure = [ensure sprintf('\n') sprintf('\n') 'Perl says: ' raw_signal];
+    ensure = [ensure sprintf('\n') 'Your sequence was: ' S];
     error(ensure);
 end

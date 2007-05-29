@@ -35,7 +35,7 @@ sub find_bounds {
 # Cf. page 43-6 of _Programming Perl for Bioinformatics_
 # by James D. Tisdall
 sub reverse_complement {
-	for(shift) { tr/atcg/uagc/; scalar reverse; }
+	for(shift) { tr/atcg/uagc/; return scalar reverse; }
 }
 
 # The entire genome in a dainty little variable.
