@@ -2,4 +2,9 @@
 #labels Featured,changes
 
 == What's New in Version ... ==
-* Three: Unused functions deleted; `fcalcmpx` split up; `megaunity` now several times faster; new `cornerstone.pl` parses Genbank search results; no more fudging with free2bind
+  * Three: Unused functions deleted;
+    ** `fcalcmpx` split up;
+    ** `megaunity` now several times faster;
+    ** new `cornerstone.pl` parses Genbank search results; and
+    ** no more fudging with free2bind
+    ** Several boosts to clarity in code
