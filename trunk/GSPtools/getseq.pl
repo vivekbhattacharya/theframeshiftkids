@@ -1,7 +1,11 @@
 # Extracts ONLY the character sequence from manually-created file
-
 use strict;
-my $file = shift @ARGV; {
-        open(my $handle, $file) or die "Cannot open file \"$file\" for reading!\n\n";
-        $_ = join '', <$handle> and s/[\s0-9]//g; print $_;
+
+sub getseq {
+   my $file = shift; {
+      open(my $handle, $file) or die "getseq cannot open \"$file\" for reading\n\n";
+      for(join '', <$handle>) { s/[\s0-9]//g and return $_; }
+   }
 }
+
+print getseq(shift @ARGV) unless caller;
