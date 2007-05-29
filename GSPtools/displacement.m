@@ -39,7 +39,7 @@ for k=2:numcodons-1
             if(r < here), break;
             elseif (r < here + there)
                 shift = shift + 1;
-                ants = [ants, [codon ',' num2str(k)]];
+                ants = [ants; [codon ',' num2str(k)]];
                 break;
             end;
         end;
@@ -59,10 +59,19 @@ for k=1:length(Phase)
 end
 for k=1:length(x)-1; diffx(k)=x(k+1)-x(k); end;
 
-%% Counters for megaunity
+%%% Counters for megaunity, a treatise into the
+%%% failings of Matlab's strings
 global shoals sands;
-sands = sands + 1; disp(ants);
-if(strcmp(ants, love)), shoals = shoals + 1; end;
+sands = sands + 1;
+
+% Handles edge case (which is quite often) where
+% both `ants` and `love` is [].
+if strcmp([ants; 'o'], [love; 'o']), shoals = shoals + 1; end; 
+   
+if size(ants) ~= size([])
+   pigs = cellstr(ants);
+   for i=1:length(pigs), fprintf([pigs{i} ';']); end;
+end
 
 function [n] = real_loops(codon, index)
 n = ceil(nloopcalcify(codon));
