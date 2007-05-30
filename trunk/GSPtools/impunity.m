@@ -9,8 +9,11 @@
 % ----------------------------------------------------------------
 function impunity(folder, frameshift_genes, limit)
 d = dir([folder '\*.txt']); % Ignore .fasta files laying around
+
+%% Print the header. %%
 fid = fopen('results.txt', 'a+'); % Append
-fwrite(fid, ['------ [' limit ' iterations] ------']);
+fwrite(fid, ['------ [' num2str(limit) ' iterations] ------']);
+fprintf('\n');
 
 for i = 1:length(d)
    if(strmatch(d(i).name, ['. ';'..'])), continue; end;
@@ -18,6 +21,8 @@ for i = 1:length(d)
    % Num2str is required by fwrite.
    disp(['---------- [' d(i).name '] ----------']);
    yield = num2str(find_yield(d(i).name, frameshift_genes, limit));
+   
+   %% Print the data. %%
    fwrite(fid, [d(i).name '          ' yield]);
    fprintf(fid, '\n');
 end
