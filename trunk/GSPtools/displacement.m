@@ -39,7 +39,7 @@ for k=2:numcodons-1
             if(r < here), break;
             elseif (r < here + there)
                 shift = shift + 1;
-                ants = strvcat(ants, [codon ',' num2str(k)]);
+                ants =  strvcat(ants, [codon ',' num2str(k)]);
                 break;
             end;
         end;
@@ -85,5 +85,5 @@ n = n / (n - 1);
 % weight: cos/sin factor
 % sofar: acc fed back to us
 function [acc, p] = probabilities(loops, weight, sofar)
-acc = sofar * (1 - (1/loops*weight));
+acc = sofar * (1 - (weight/loops));
 p = 1 - acc;
