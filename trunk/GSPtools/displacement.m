@@ -80,6 +80,10 @@ n = ceil(nloopcalcify(codon));
 n = 2^(1/n);
 n = n / (n - 1);
 
+%% parameters bling
+% loops: from real_loops
+% weight: cos/sin factor
+% sofar: acc fed back to us
 function [acc, p] = probabilities(loops, weight, sofar)
 acc = sofar * (1 - (1/loops*weight));
 p = 1 - acc;
