@@ -6,21 +6,25 @@
 %
 % Results file will ultimately end up in Matlab's work folder,
 % appended.
+%
+% Usage: impunity(work folder, list of genes that should
+%   frameshift a la megaunity, number of iterations to run
+%   the model before recording yield)
 % ----------------------------------------------------------------
-function impunity(folder, frameshift_genes, limit)
+function impunity(folder, frameshifters, limit)
 d = dir([folder '\*.txt']); % Ignore .fasta files laying around
 
 %% Print the header. %%
 fid = fopen('results.txt', 'a+'); % Append
 fwrite(fid, ['------ [' num2str(limit) ' iterations] ------']);
-fprintf('\n');
+fprintf(fid, '\n');
 
 for i = 1:length(d)
    if(strmatch(d(i).name, ['. ';'..'])), continue; end;
    
    % Num2str is required by fwrite.
    disp(['---------- [' d(i).name '] ----------']);
-   yield = num2str(find_yield(d(i).name, frameshift_genes, limit));
+   yield = num2str(find_yield(d(i).name, frameshifters, limit));
    
    %% Print the data. %%
    fwrite(fid, [d(i).name '          ' yield]);
@@ -42,7 +46,9 @@ load TAV.mat; load Codons.mat;
 
 [Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
-global shoals sands; shoals = 0; sands = 0;
+global shoals sands beached_whale;
+    % Disable verbosity with beached_whale
+    shoals = 0; sands = 0; beached_whale = 1;
 for i=1:limit
     [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,frameshift_genes);
     fprintf('\n');
