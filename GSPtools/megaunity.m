@@ -35,6 +35,8 @@ while 1
         subplot(212); plot(0,0);plot(1:length(diffx),diffx);
             xlabel('Codon number'); ylabel('Force on ribosome');
             title('Plot of "force", i.e. incremental displacement');
+    
+    fprintf('\n');
     disp(['Yield so far: ' num2str(shoals/sands) ' (' num2str(sands) ')']);
     fprintf('\n');
 end
