@@ -51,7 +51,6 @@ global shoals sands beached_whale;
     shoals = 0; sands = 0; beached_whale = 1;
 for i=1:limit
     [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,frameshift_genes);
-    fprintf('\n');
 end
 
 yield = shoals/sands;
