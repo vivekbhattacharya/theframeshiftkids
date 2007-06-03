@@ -11,6 +11,7 @@ subfolder = 'thepictureshow';
 mkdir(fullfile(folder, subfolder));
 
 for i = 1:length(d)
+   disp(fullfile(folder, d(i).name))
    disp(['---------- [' d(i).name '] ----------']);
    hyperplot(fullfile(folder, d(i).name), subfolder, limit);
 end
@@ -23,7 +24,6 @@ end
 %   'pictures', 5)
 % ------------------------------------------------
 function hyperplot(file, subfolder, limit)
-
 %%%%% Same old, same old
 [Signal, S] = get_signal(file);
 global TAV Names;
