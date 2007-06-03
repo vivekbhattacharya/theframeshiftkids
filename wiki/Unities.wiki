@@ -1,0 +1,18 @@
+#summary What all those *unity files do
+#labels docs,unity,megaunity,matlab,Featured,overviews
+
+  * unity.m
+    ** unity.m, given a sequence, will produce a displacement and "force" plot in addition to spitting out the genes where the model detected a frameshift, which may or may not be the actual frameshift sites. For example, prfB will sometimes frameshift on `{'cua,26'}` instead of `{'uga,25'}`.
+
+  * megaunity.m
+    ** megaunity.m, given a sequence and a cell array of correct frameshifts, will output a yield where yield is the probability that a ribosome will correctly read and frameshift the sequence according to the model. For example, prfB has a yield of approximately 93%, which is an A.
+
+  * impunity.m
+    ** impunity.m, given a work folder, a cell array of correct frameshifts, and an iteration limit, will calculate yield for all the sequences in that folder and store those results in a `results.txt` file in the current work folder.
+
+  * opportunity.m
+    ** opportunity.m, given a work folder and an iteration limit, will generate superimposed displacement plots as PNG files into a `thepictureshow` subdirectory of the work folder. How many superimposed images? The iteration limit.
+
+
+== See Also ==
+  * UnityAndMegaunity
