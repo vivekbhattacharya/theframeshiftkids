@@ -22,7 +22,7 @@ fprintf(fid, '\n');
 for i = 1:length(d)
    disp(['---------- [' d(i).name '] ----------']);
    % Num2str is required by fwrite.
-   yield = num2str(find_yield(d(i).name, frameshifters, limit));
+   yield = num2str(find_yield(fullfile(folder, d(i).name), frameshifters, limit));
    
    %% Print the data. %%
    fwrite(fid, [d(i).name '          ' yield]);
