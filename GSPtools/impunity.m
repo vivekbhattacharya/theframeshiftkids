@@ -20,10 +20,8 @@ fwrite(fid, ['------ [' num2str(limit) ' iterations] ------']);
 fprintf(fid, '\n');
 
 for i = 1:length(d)
-   if(strmatch(d(i).name, ['. ';'..'])), continue; end;
-   
-   % Num2str is required by fwrite.
    disp(['---------- [' d(i).name '] ----------']);
+   % Num2str is required by fwrite.
    yield = num2str(find_yield(d(i).name, frameshifters, limit));
    
    %% Print the data. %%

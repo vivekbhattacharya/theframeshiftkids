@@ -28,7 +28,7 @@ while 1
     [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,frameshift_genes);
 
     cp = 0;
-    figure(1);
+    h = figure(1); set(h, 'Renderer', 'OpenGL');
         subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
             axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
             grid; xlabel('Codon Number'); ylabel('x(k)');    
