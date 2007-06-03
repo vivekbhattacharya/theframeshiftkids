@@ -18,6 +18,8 @@
 %       .....................................................................
 %       4639621 gcatgatatt gaaaaaaata tcaccaaata aaaaacgcct tagta
 % 
+% WARNING: SEQFILE must be a full path. Use `which` to find full paths of
+% relative paths.
 
 function S = getseq(SEQFILE)
-[status, S] = system(['perl "' which('getseq.pl') '" "' which(SEQFILE) '"']);
+[status, S] = system(['perl "' which('getseq.pl') '" "' SEQFILE '"']);

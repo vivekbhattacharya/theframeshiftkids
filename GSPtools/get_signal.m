@@ -1,7 +1,13 @@
-function [Signal, S] = get_signal(file)
+function [Signal, S] = get_signal(f)
 
-file = which(file);
-if(isempty(file)); error(['Cannot find ``' file '" in your path']); end;
+file = which(f);
+if(isempty(file))
+    if exist(f) == 2, file = f;
+    else
+        error(['Cannot find ``' file '" in your path']);
+    end;
+end;
+
 if(isempty('perl.exe')); error(['I cannot find Perl 5.6 or above.' ...
    'Please download it to the VCL C: drive.']); end;
 
