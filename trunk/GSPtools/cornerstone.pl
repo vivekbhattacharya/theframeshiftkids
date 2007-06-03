@@ -19,35 +19,35 @@ package Cornerstone;
 ### This is a generator. It yields beginning and ending
 ### indices first, then the protein names.
 sub find_bounds {
-	my ($file, $push_bounds, $push_name) = @_;
-	open(my $handle, $file) or
+   my ($file, $push_bounds, $push_name) = @_;
+   open(my $handle, $file) or
       die "Cornerstone::find_bounds cannot open file \"$file\" for reading\n";
-	while(<$handle>) {
-		if ($_ =~ /(\d*)\.\.(\d*)/) {
-			my ($start, $end) = ($1, $2);         
+   while(<$handle>) {
+      if ($_ =~ /(\d*)\.\.(\d*)/) {
+         my ($start, $end) = ($1, $2);         
          # Quirk: Genbank sometimes reverses the indices
-			($start, $end) = ($end, $start) if ($start > $end);
+         ($start, $end) = ($end, $start) if ($start > $end);
          # Leader sequence of 12 before `tac/uag` starts
-			&$push_bounds($start, $end + 12);
-		} elsif ($_ =~ /^\d*?: (.*)$/) {
-			my $hair = $1; # Vivek's hairy
-			$hair =~ s/\s//g;
-			&$push_name($hair);
-		}
-	}
+         &$push_bounds($start, $end + 12);
+      } elsif ($_ =~ /^\d*?: (.*)$/) {
+         my $hair = $1; # Vivek's hairy
+         $hair =~ s/\s//g;
+         &$push_name($hair);
+      }
+   }
 }
 
 # Cf. page 43-6 of _Programming Perl for Bioinformatics_
 # by James D. Tisdall
 sub reverse_complement {
-	for(shift) { tr/atcg/uagc/; return scalar reverse; }
+   for(shift) { tr/atcg/uagc/; return scalar reverse; }
 }
 
 # The entire genome in a dainty little variable.
 our $o;
 sub extract {
-	my ($start, $end) = @_;
-	substr($o, $start, $end - $start + 1);
+   my ($start, $end) = @_;
+   substr($o, $start, $end - $start + 1);
 }
 
 sub main {
