@@ -1,8 +1,8 @@
-#summary Calculating probabilities in stochastically
+#summary Calculating probabilities stochastically
 #labels math,docs,frameshifting
 
 There are three probabilities to be computed: P.abc, P.bcd, and P.reloop where "abc" is the current codon, "bcd" is the next codon (if a frameshift occurs), and "reloop" is the action that occurs when we recalculate the probabilities, simulating the ribosome's staying in one place.
 
-We know P.abc = 1 - P.fail.abc, so all we have to do is compute P.fail.abc, which obeys this simple equation: `P.fail' = P.fail * (1 - cos(displacement)^10/(Nloop at current))` where P.fail' is the probability of failure at the next codon and P.fail was the probability at the previous codon. Thus, this is a cumulative model and is awesome.
+We know P.abc = 1 - P.fail.abc, so all we have to do is compute P.fail.abc, which obeys this simple equation: `P.fail' = P.fail * (1 - cos(displacement)^10/loops)` where P.fail' is the probability of failure at the next codon and P.fail was the probability at the previous codon. Thus, this is a cumulative model and is awesome. (Nloop is how long the ribosome stays at the codon.) In addition, `cos(displacement)^10`--or any even number--represents the window function. Nloops is regulated by the algorithm `loops = l/(l-1) where l = 2^(1/Nloop)` (cf. `real_loops` function in `displacement.m`).
 
-Nloop is how long the ribosome stays at the codon.
+We compute this once for P.abc and P.bcd.
