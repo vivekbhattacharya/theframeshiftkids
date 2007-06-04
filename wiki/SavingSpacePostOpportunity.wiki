@@ -1,7 +1,7 @@
 #summary Optipng
 #labels opportunity,tips,optipng,command-prompt
 
-Say you've called `opportunity('C:\proteins')` and now you have a folder `C:\proteins\thepictureshow\` brimming with PNG files. Did you know you can halve the folder space?
+Say you've called `opportunity('C:\proteins', 10)` and now you have a folder `C:\proteins\thepictureshow\` brimming with PNG files. Did you know you can halve the folder space?
 
   * Download [http://optipng.sourceforge.net/ OptiPNG] and place that in your `C:\Windows`.
   * Open Command Prompt and `cd C:\proteins\thepictureshow`.
