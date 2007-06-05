@@ -21,5 +21,7 @@
 % WARNING: SEQFILE must be a full path. Use `which` to find full paths of
 % relative paths.
 
-function S = getseq(SEQFILE)
-[status, S] = system(['perl "' which('getseq.pl') '" "' SEQFILE '"']);
+function S = getseq(file)
+% Matlab does not sync well with system, so I aid
+% its module-finding skills w/r/t Smooth.pm.
+[status, S] = system(sprintf('perl -I"%s" "%s" "%s"', dirname(which('Smooth.pm')), which('getseq.pl'), file));

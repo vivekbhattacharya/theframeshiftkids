@@ -51,13 +51,13 @@ sub extract {
 }
 
 sub main {
-   require 'getseq.pl';
+   use Smooth qw(getseq);
    my ($dir, $locations,$genome) = @ARGV;
    chdir($dir);
    
    # Slurp the E. Coli genome as a huge text file
    # for quick access.
-   $o = getseq($genome);
+   $o = Smooth::getseq($genome);
    
    my (@sequences, @names);
    # The first anonymous function pushes yielded bounds
