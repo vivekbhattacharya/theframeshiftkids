@@ -1,1 +1,0 @@
-print scalar reverse($ARGV[0]);
