@@ -24,4 +24,5 @@
 function S = getseq(file)
 % Matlab does not sync well with system, so I aid
 % its module-finding skills w/r/t Smooth.pm.
-[status, S] = system(sprintf('perl -I"%s" "%s" "%s"', dirname(which('Smooth.pm')), which('getseq.pl'), file));
+dire = fileparts(which('Smooth.pm'));
+[status, S] = system(sprintf('perl -I"%s" "%s" "%s"', dire, which('getseq.pl'), file));
