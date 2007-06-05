@@ -1,10 +1,25 @@
 #summary The three-pronged arrow of times.
 #labels Featured,changes
 
+== Terminology ==
+  * [Unities]
+  * [Pearls]
+
 == What's New in Version ... ==
   * Three: Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives];
-    ** `fcalcmpx` split up;
-    ** `megaunity` now several times faster;
-    ** new `cornerstone.pl` parses Genbank search results; and
-    ** no more fudging with free2bind
-    ** Several boosts to clarity in code
+   * `fcalcmpx` split up;
+   * `megaunity` now several times faster;
+   * new `cornerstone.pl` parses Genbank search results; and
+   * no more fudging with free2bind
+   * Several boosts to clarity in code
+   * 3.1
+    * `opportunity.m`: Spits out superimposed displacement plots for rainy day family slideshows
+    * `impunity.m`: Puts the yields for all sequences in a folder into a `results.txt` file
+    * `unity.m` and `megaunity.m` and `cornerstone.pl` now web-enabled
+    * `fabio.pl` (web-enabled): Parses TAV frequencies and spits them back out in the order of `Codons.mat`, i.e. spits out new `TAV.mat` for new species
+    * Better documentation all around
+    * All the unities should be slightly faster now that we're using OpenGL
+
+
+
+
