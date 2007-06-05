@@ -3,14 +3,30 @@
 package Smooth;
 use LWP::Simple qw(get);
 
-sub webopen {
+# Yields an array of lines from $file to $func,
+# be it on the Internet or not.
+sub webget {
     my ($file, $func) = @_;
     if ($file =~ m|^http://|) {
-        map &$func, split($/, get($file));
+        &$func(split($/, get $file));
     } else {
-        open(my $handle, $file) or die "webopen: Cannot open file `$file`";
-        map &$func, <$handle>;
+        open(my $handle, $file) or die "webget: Cannot open file `$file`";
+        &$func(<$handle>);
     }
 }
 
+# Maps $func to the lines of the $file,
+# be it on the Internet or not.
+sub webopen {
+    my ($file, $func) = @_;
+    # The following rates 9/10 on the Awesome Scale.
+    webget $file, sub { map &$func, @_; };
+}
+
+sub getseq {
+    my $file = shift;
+    webget $file, sub {
+        for(join '', @_) { s/[\s0-9]//g; tr/A-Z/a-z/; return $_; }
+    };
+}
 1;

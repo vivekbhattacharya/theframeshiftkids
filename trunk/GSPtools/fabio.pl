@@ -16,7 +16,7 @@ use Smooth;
 package Fabio;
 
 sub frequencies {
-    my $freq = shift @_;
+    my $freq = shift;
     my @everything = ();
     
     # Remove parenthetical numbers and parse.
