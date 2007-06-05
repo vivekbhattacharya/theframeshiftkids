@@ -7,33 +7,35 @@
 
 use strict;
 use warnings;
+use Smooth;
 package Fabio;
 
 sub frequencies {
     my $freq = shift @_;
-    open(my $handle, $freq) or die 'Cannot open frequencies';
-    
     my @everything = ();
-    while(<$handle>) {
+    
+    # Remove parenthetical numbers and parse.
+    Smooth::webopen $freq, sub {
         s/\(.*?\)//g;
         my @a = split /\s+/;
         grep !/^\s*$/, @a;
+        # Take advantage of Perl's array-as-hash hack.
         push @everything, @a;
-    }
+    };
     
+    # This is how you convert an array
+    # to a hash reference?
     scalar {@everything};
 }
 
 sub plump {
     my ($info, $names) = @_;
-    my %info = %$info;
 
-    open my $handle, $names or die 'Cannot open names file';
-    while (<$handle>) {
+    Smooth::webopen $names, sub {
         s/\s//g; tr/a-z/A-Z/;
-        print $info{$_}/1000, $/;
-    }
-    return;
+        # Convert hash reference to hash first.
+        print ${%$info}{$_}/1000, $/;
+    };
 }
 
 sub main {
