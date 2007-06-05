@@ -19,7 +19,7 @@ function unity(file)
 % These files need to be in the include path or working directory
 % (GSPdemos).
 global TAV Names;
-load TAV.mat; load Codons.mat;
+load senterica.tav.mat; load Codons.mat;
 
 [Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);

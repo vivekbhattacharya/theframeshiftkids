@@ -26,7 +26,7 @@ sub webopen {
 sub getseq {
     my $file = shift;
     webget $file, sub {
-        for(join '', @_) { s/[\s0-9]//g; tr/A-Z/a-z/; return $_; }
+        for(join '', @_) { s/[\s0-9]//g; tr/A-Z/a-z/; tr/t/u/; return $_; }
     };
 }
 1;
