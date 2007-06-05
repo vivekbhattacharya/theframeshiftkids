@@ -1,9 +1,14 @@
-# 537444, 537676
+# Frequency example: http://shadytrees.pastebin.ca/raw/537444
+# Codon names example: http://shadytrees.pastebin.ca/raw/537676
 # Usage:
 #   * Obtain a list of frequencies.
 #   * Convert Codons.mat to a text file with each codon separated by a newline.
 #   * Pass the frequencies list and the codons list into fabio.pl.
 #   * E.g. `fabio.pl frequencies.txt names.txt`
+#   * Alternatively, post them on the Internet as text files (pastebins),
+#     and pass the URLs.
+# Output:
+#   * TAV values in the order given by `names.txt`
 
 use strict;
 use warnings;
@@ -28,12 +33,16 @@ sub frequencies {
     scalar {@everything};
 }
 
+# Glorified print
 sub plump {
     my ($info, $names) = @_;
 
+    # Convert to uppercase because frequencies
+    # come in uppercase format.
     Smooth::webopen $names, sub {
         s/\s//g; tr/a-z/A-Z/;
-        # Convert hash reference to hash first.
+        # Convert hash reference to hash first,
+        # for those of you not fluent in sigilism.
         print ${%$info}{$_}/1000, $/;
     };
 }
