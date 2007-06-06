@@ -33,22 +33,20 @@ if strcmp(mode, 'superimpose')
             grid; xlabel('Codon Number'); ylabel('x(k)');
     saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
 elseif strcmp(mode, 'errorbars')
-    a = cell(1, limit);
+	upper = ceil(numcodons);
+    a = zeros(limit, upper);
     for i=1:limit
         [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{});
-        a(i) = {x};
+		maxiderm = size(x, 2);
+        for j=1:upper
+			if j <= maxiderm, a(i,j) = x(j);
+			else a(i,j) = -3.14;
+			end;
+		end
     end
-	upper = size(a{1}, 2) * 1.5;
-    b = zeros(1, upper); c = zeros(1, upper);
-    for i=1:limit % Which array?
-        y = a{i};
-        for j=1:size(y,2) % Which element?
-			b(j) = b(j) + y(j);
-			c(j) = c(j) + 1;
-        end
-    end
-	avg = b ./ c;
+	[folder, file, ext] = fileparts(file);
+	[avg, stddev] = exmean(a);
 	h = figure(1); set(h, 'Renderer', 'OpenGL');
-	plot(0,0); plot(1:length(x), avg(1:length(x))); title(file);
-		grid; xlabel('Codon Number'); ylabel('x(k)');
+	plot(0,0); errorbar(1:upper, avg, stddev); title(file);
+	grid; xlabel('Codon Number'); ylabel('x(k)');
 end
