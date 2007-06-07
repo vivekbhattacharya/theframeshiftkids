@@ -30,7 +30,7 @@ for k=2:numcodons-1
     for wt=1:1000
         a = (x0 - 2*shift)*pi/4; % Window function follows     
         [here_fail, here] = probabilities(here_loops, cos(a)^10, here_fail);
-        [there_fail, there] = probabilities(there_loops, sin(a)^10, there_fail);        
+        [there_fail, there] = probabilities(there_loops, exsinx(a)^10, there_fail);        
         reloop = 1 - here - there;
 
         r = rand; % Mersenne Twister
