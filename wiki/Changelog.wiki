@@ -6,6 +6,8 @@
   * [Pearls]
 
 == What's New in Version ... ==
+  * One: Easter release using a tentative but broken sinusoidal model.
+   * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
   * Three: Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives];
    * `fcalcmpx` split up;
    * `megaunity` now several times faster;
