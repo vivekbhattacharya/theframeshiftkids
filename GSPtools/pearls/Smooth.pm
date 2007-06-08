@@ -4,14 +4,23 @@ package Smooth;
 use LWP::Simple qw(get);
 
 # Yields an array of lines from $file to $func,
-# be it on the Internet or not.
+# be it on the Internet or not. The array
+# is NOT a reference.
 sub webget {
     my ($file, $func) = @_;
     if ($file =~ m|^http://|) {
-        &$func(split($/, get $file));
+        # LWP::Simple
+        my $contents = get $file;
+        my @lines = split($/, $contents);
+        # Handle Windows line endings.
+        map { s/\r|\n//g } @lines;
+        &$func(@lines);
     } else {
         open(my $handle, $file) or die "webget: Cannot open file `$file`";
-        &$func(<$handle>);
+        my @lines = <$handle>;
+        # Handle Windows line endings.
+        map { s/\r|\n//g } @lines;
+        &$func(@lines);
     }
 }
 
@@ -53,6 +62,12 @@ my %expression = (
     'Y' => 'uau,uac',
 );
 
+my %repression = ();
+while (my ($key, $value) = each(%expression)) {
+    my @codons = split /,/, $value;
+    map { $repression{$_} = $key; } @codons;
+}
+
 # Randomly pulls the equivalent codon given a
 # one-character uppercase 
 sub cupid {
@@ -62,5 +77,9 @@ sub cupid {
     
     # Scalar context goodness
     $codons[rand @codons];
+}
+
+sub reverse_cupid {
+    $repression{shift @_};
 }
 1;
