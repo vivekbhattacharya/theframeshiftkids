@@ -1,4 +1,4 @@
-function megaunity(file, frameshift_genes)
+function megaunity(file, frameshift_genes_forward, frameshift_genes_back)
 % --------------------------------------------------------------
 % This function is used to simulate repeated calls to unity
 % in order to assess the "yield" of a given sequence (file)
@@ -25,7 +25,7 @@ load TAV.mat; load Codons.mat;
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 global shoals sands; shoals = 0; sands = 0;
 while 1
-    [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,frameshift_genes);
+    [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,frameshift_genes_forward, frameshift_genes_back);
 
     cp = 0;
     h = figure(1); set(h, 'Renderer', 'OpenGL');
