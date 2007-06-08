@@ -25,12 +25,24 @@ if strcmp(mode, 'superimpose')
         plots(i*2 - 1) = {1:length(x)};
         plots(i*2) = {x};
     end
+    
+    top = 3;
+    if max(x) > 3
+        top = floor(max(x)) + 1;
+    end
+    
+    bottom = -3;
+    if min(x) < -3
+        bottom = floor(min(x));
+    end
+    
+    max_dom = 50*(ceil(length(x)/50));
 
     [folder, file, ext] = fileparts(file);
     h = figure(1); set(h, 'Renderer', 'OpenGL');
         set(h, 'Visible', 'off');
         plot(0,0); plot(plots{:}); title(file);
-            grid; xlabel('Codon Number'); ylabel('x(k)');
+            grid; xlabel('Codon Number'); ylabel('x(k)'); axis([0, max_dom, bottom, top]);
     saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
 elseif strcmp(mode, 'errorbars')
 	upper = ceil(numcodons);
