@@ -21,7 +21,7 @@ global beached_whale; beached_whale = 1;
 if strcmp(mode, 'superimpose')
     plots = cell(1, limit*2);
     for i=1:limit
-        [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{});
+        [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
         plots(i*2 - 1) = {1:length(x)};
         plots(i*2) = {x};
     end
@@ -36,7 +36,7 @@ elseif strcmp(mode, 'errorbars')
 	upper = ceil(numcodons);
     a = zeros(limit, upper);
     for i=1:limit
-        [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{});
+        [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
 		maxiderm = size(x, 2);
         for j=1:upper
 			if j <= maxiderm, a(i,j) = x(j);
