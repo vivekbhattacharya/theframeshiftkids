@@ -5,22 +5,31 @@
   * [Unities]
   * [Pearls]
 
-== What's New in Version ... ==
-  * One: Easter release using a tentative but broken sinusoidal model.
-   * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
-  * Three: Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives];
+== What's New in Version One ==
+Easter release using a tentative but broken sinusoidal model.
+  * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
+
+== What's New in Version Three ==
+  * 3.0
+   * Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives];
    * `fcalcmpx` split up;
    * `megaunity` now several times faster;
    * new `cornerstone.pl` parses Genbank search results; and
    * no more fudging with free2bind
    * Several boosts to clarity in code
-   * 3.1
+  * 3.1
     * `opportunity.m`: Spits out superimposed displacement plots for rainy day family slideshows
     * `impunity.m`: Puts the yields for all sequences in a folder into a `results.txt` file
     * `unity.m` and `megaunity.m` and `cornerstone.pl` now web-enabled
     * `fabio.pl` (web-enabled): Parses TAV frequencies and spits them back out in the order of `Codons.mat`, i.e. spits out new `TAV.mat` for new species
     * Better documentation all around
     * All the unities should be slightly faster now that we're using OpenGL
+  * 3.14
+    * Back frameshifts detected. Every function that took a forward frameshift parameter now takes a back frameshift parameter as well.
+    * `dysentery.pl` will convert amino acid primary structure sequences to codon sequences, randomly choosing codons. In addition, it verifies hand-customized codon sequences against a primary structure sequence.
+    * Update to the stochastic model: sine and cosine bounded for more accurate results.
+    * `jejunity.m` plots the average path taken by the codon in addition to error bars. It takes the same commands as `opportunity.m` as they both convey the same information in two different, cool ways.
+
 
 
 
