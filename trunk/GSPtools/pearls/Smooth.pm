@@ -76,15 +76,10 @@ while (my ($key, $value) = each(%expression)) {
 # Randomly pulls the equivalent codon given a
 # one-character uppercase 
 sub prot2codon {
-    my $char = shift;
-    my $codons = $expression{$char};
-    my @codons = split /,/, $codons;
-    
+    my @codons = split /,/, $expression{shift @_};
     # Scalar context goodness
     $codons[rand @codons];
 }
 
-sub codon2prot {
-    $repression{shift @_};
-}
+sub codon2prot { $repression{shift @_} }
 1;
