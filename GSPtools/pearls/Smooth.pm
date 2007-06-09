@@ -1,6 +1,9 @@
 # All the functions we'll never call from the command
 # line but need anyway.
 package Smooth;
+require Exporter;
+@ISA = qw(Exporter);
+@EXPORT_OK = qw(prot2codon codon2prot);
 use LWP::Simple qw(get);
 
 # Yields an array of lines from $file to $func,
@@ -39,6 +42,7 @@ sub getseq {
     };
 }
 
+# http://en.wikipedia.org/wiki/List_of_standard_amino_acids
 my %expression = (
     'A' => 'gcu,gcc,gca,gcg',
     'C' => 'ugu,ugc',
@@ -62,6 +66,7 @@ my %expression = (
     'Y' => 'uau,uac',
 );
 
+# Generate a reverse hashmap forthwith!
 my %repression = ();
 while (my ($key, $value) = each(%expression)) {
     my @codons = split /,/, $value;
@@ -70,7 +75,7 @@ while (my ($key, $value) = each(%expression)) {
 
 # Randomly pulls the equivalent codon given a
 # one-character uppercase 
-sub cupid {
+sub prot2codon {
     my $char = shift;
     my $codons = $expression{$char};
     my @codons = split /,/, $codons;
@@ -79,7 +84,7 @@ sub cupid {
     $codons[rand @codons];
 }
 
-sub reverse_cupid {
+sub codon2prot {
     $repression{shift @_};
 }
 1;

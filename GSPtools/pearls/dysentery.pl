@@ -1,74 +1,79 @@
-use Smooth;
-use warnings;
-use strict;
+use warnings; use strict;
+use Smooth qw(prot2codon codon2prot);
 
-sub printo {
-    my $codons = shift;
-    my @codons = @$codons;
-    
-    my $i = 0;
-    my $total = scalar @codons;
-    while(1) {
+# Takes an array (not a reference to an array) of
+# codons--the array @_--and prints them neatly in
+# rows of ten.
+sub print_run {
+    for (my $i = 0; $i < @_; $i += 10) {
         my $end = $i + 9;
         # In the common case the last codon doesn't
         # end on a multiple of 10, Perl will slice
         # some undefs for us.
-        $end = $total % 10 + $i - 1 if $end >= $total;
+        $end = @_ % 10 + $i - 1 if $end >= @_;
         
-        my @subcodons = @codons[$i .. $end];
-        print join ' ', @subcodons, $/;
-        
-        $i += 10;
-        last if $i > @codons;
+        my @codons = @_[$i .. $end];
+        print join ' ', @codons, $/;
     }
 }
 
+# Returns a fabulous list of randomly selected codons
+# that jive with the given protein sequence. Automates
+# what the frameshift kids did on the board on Thursday
+# and Friday.
 sub run {
+    if ($#ARGV == 1)
+        { die "Perhaps you meant to use --check.$/" }
     my @codons = ();
     Smooth::webopen shift @ARGV, sub {
-        my $line = $_;
-        
-        # http://en.wikipedia.org/wiki/List_of_standard_amino_acids#Gene_expression_and_biochemistry
-        # Sanitize and check for empty lines.
-        $line =~ s/[^A-Z]//g;
-        my @chars = split //, $line;
-        return unless $line;
-        
-        map { push @codons, Smooth::cupid($_); } @chars;
+        # Sanitize and check for empty lines, upon which
+        # I return.
+        local $_ = $_;
+        s/[^A-Z]//g;
+        return unless $_;
+        # Parse each and every character and store.
+        map { push @codons, prot2codon($_) } split //;
     };
-    push @codons, 'uga';
+    # Arbitrary stop codon and 12-leader sequence
+    # chosen by Vivek.
     print 'gcc aua ggc uau', $/;
-    printo(\@codons);
+    push @codons, 'uga'; @codons;
 }
 
+# Returns 1 if the codon sequence matches the
+# protein sequence. Else returns 0.
+#
+# In addition, it returns both protein
+# sequences.
 sub check {
-    ## Get a list of codons.
-    my @codons = ();
-    Smooth::webopen shift @ARGV, sub {
-        my $line = $_;
-        push @codons, split(/\s+/, $line);
-    };
+    ##### Get a list of codons.
+    my @codons = (); my $proteins;
+    Smooth::webopen shift @ARGV,
+        sub { push @codons, split /\s+/ };
+    
     # -2 because the last codon is the stop codon.
     @codons = @codons[4 .. @codons-2];
+    map { $proteins .= codon2prot($_) } @codons;
     
-    ## Convert that list to proteins.
-    my $proteins = '';
-    map {
-        $proteins .= Smooth::reverse_cupid($_);
-    } @codons;
-    
-    ## Get actual list of proteins.
+    ##### Get actual list of proteins.
     my $actual = '';
-    Smooth::webget shift @ARGV, sub {
-        $actual = join '', @_;
-    };
+    Smooth::webget shift @ARGV,
+        sub { $actual = join '', @_ };
     $actual =~ s/[^A-Z]//g;
     
-    if ($actual eq $proteins) { print "# They are equal. Congratulations.", $/; }
-    else { print "# They are not equal.", $/; }
-    
-    print "Codons: $actual$/";
-    print "Actual: $proteins$/";
+    return (1,$proteins,$actual) if $actual eq $proteins;
+    (0,$proteins,$actual);
+}
+
+# Takes a truth value and prints the news accordingly.
+sub print_check {
+    my ($truth, $given, $actual) = @_;
+    ##### Output results with strings for eye comparison
+    ##### since wdiff is out of the question.
+    if ($truth) { print "$/# They are EQUAL. Congratulations.$/" }
+    else { print "$/# They are NOT EQUAL.$/" }    
+    print " Given: $given$/$/";
+    print "Actual: $actual$/";
 }
 
 if ($0 eq __FILE__) {
@@ -83,6 +88,7 @@ USAGE
         `perl dysentery.pl [url/path to codons] [url/path to proteins]`
 END
     if (!@ARGV or $ARGV[0] eq '--help') { print $help; }
-    elsif ($ARGV[0] eq '--check') { shift @ARGV; check(); }
-    else { run(); }
+    elsif ($ARGV[0] eq '--check') { shift @ARGV; print_check check; }
+    else { print_run run; }
 }
+1;
