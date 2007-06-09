@@ -26,15 +26,9 @@ if strcmp(mode, 'superimpose')
         plots(i*2) = {x};
     end
     
-    top = 3;
-    if max(x) > 3
-        top = floor(max(x)) + 1;
-    end
-    
-    bottom = -3;
-    if min(x) < -3
-        bottom = floor(min(x));
-    end
+    top = 3; bottom = -3;
+    if max(x) > 3, top = ceil(max(x)); end;
+    if min(x) < -3, bottom = floor(min(x)); end;
     
     max_dom = 50*(ceil(length(x)/50));
 

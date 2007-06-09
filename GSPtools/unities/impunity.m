@@ -11,7 +11,7 @@
 %   frameshift +1 a la megaunity, frameshifters -1, number of 
 %   iterations to run the model before recording yield)
 % ----------------------------------------------------------------
-function impunity(folder, frameshifters_front, frameshifters_back, limit)
+function impunity(folder, fshifts, bshifts, limit)
 d = dir([folder '\*.txt']); % Ignore .fasta files laying around
 
 %% Print the header. %%
@@ -22,7 +22,7 @@ fprintf(fid, '\n');
 for i = 1:length(d)
    disp(['---------- [' d(i).name '] ----------']);
    % Num2str is required by fwrite.
-   yield = num2str(find_yield(fullfile(folder, d(i).name), frameshifters_front, frameshifters_back, limit));
+   yield = num2str(find_yield(fullfile(folder, d(i).name), fshifts, bshifts, limit));
    
    %% Print the data. %%
    fwrite(fid, [d(i).name '          ' yield]);
@@ -36,7 +36,7 @@ fclose(fid);
 % or the infinite loop, instead capped at `limit`. In addition,
 % it returns the yield instead of displaying it.
 % ----------------------------------------------------------------
-function [yield] = find_yield(file, frameshifters_front, frameshifters_back, limit)
+function [yield] = find_yield(file, frontshifts, backshifts, limit)
 [Signal, S] = get_signal(file);
 
 global TAV Names;
@@ -48,7 +48,7 @@ global shoals sands beached_whale;
     % Disable verbosity with beached_whale
     shoals = 0; sands = 0; beached_whale = 1;
 for i=1:limit
-    [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,frameshifters_front, frameshifters_back);
+    [theta,x,diffx] = displacement(S(13:end), Phase, numcodons, Dvec, frontshifts, backshifts);
 end
 
 yield = shoals/sands;
