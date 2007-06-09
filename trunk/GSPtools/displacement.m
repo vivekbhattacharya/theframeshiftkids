@@ -1,4 +1,4 @@
-function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,love,backF)
+function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshifts)
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT 
 % ------------------------------------------------------------    
@@ -31,9 +31,9 @@ for k=2:numcodons-1
     here_fail = 1; there_fail = 1; back_fail=1;
     for wt=1:1000
         a = (x0 - 2*shift)*pi/4; % Window function follows
-        [back_fail, back] = probabilities(back_loops, backsin(a)^10, back_fail);
+        [back_fail, back] = probabilities(back_loops, exsin(a, '<')^10, back_fail);
         [here_fail, here] = probabilities(here_loops, excos(a)^10, here_fail);
-        [there_fail, there] = probabilities(there_loops, exsin(a)^10, there_fail);        
+        [there_fail, there] = probabilities(there_loops, exsin(a, '>')^10, there_fail);        
         reloop = 1 - here - there - back;
 
         r = rand; % Mersenne Twister
@@ -73,18 +73,24 @@ global shoals sands beached_whale;
 sands = sands + 1;
 
 % Handles edge case (which is quite often) where
-% both `ants` and `love` is [].
-if strcmp(char(ants), char(love)) && strcmp(char(termites), char(backF)), shoals = shoals + 1; end;
+% both `ants` and `frontshifts` and `backshifts` is [].
+if strcmp(char(ants), char(frontshifts))
+    if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
+end
 
 % Is verbosity disabled?
 if (beached_whale), return; end;
-if size(ants) ~= size([])
-   for i=1:length(ants), fprintf([ants{i} ';']); end; fprintf('\n')
-end
+fprintf('> '); disp_shifts(ants, '+1 frameshifts');
+fprintf('< '); disp_shifts(termites, '-1 frameshifts');
 
-if size(termites) ~= size([])
-   for i=1:length(termites), fprintf([termites{i} ';']); end;
+% Iterate over the cell array and print the results
+% sanely. If only Matlab had a join function like
+% every other modern language in the world.
+function disp_shifts(insects, id)
+if size(insects) ~= size({})
+    for i=1:length(insects), fprintf([insects{i} ';']); end;
 end
+fprintf('\n');
 
 function [n] = real_loops(codon)
 n = ceil(nloopcalcify(codon));

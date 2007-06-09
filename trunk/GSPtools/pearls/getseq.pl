@@ -1,3 +1,3 @@
 # Extracts ONLY the character sequence from manually-created file
-use Smooth qw(getseq);
+use Smooth;
 print Smooth::getseq(shift @ARGV);
