@@ -3,13 +3,20 @@
 
 import numpy
 def signal(file):
-    import os
-    seq = get_seq(file)
-    signal = os.system('perl get_signal.pl')
+    import os, popen2
+    
+    file = os.path.abspath(file);
+    os.chdir('pearls')
+    
+    seq_cmd = 'perl.exe getseq.pl "%s"'
+    signal_cmd = 'perl.exe free_scan.pl -e -q -p FREIER auuccuccacuag "%s"'
+    seq = popen2.popen2(seq_cmd % file)[0].read()
+    # Todo: write2fasta
+    signal = popen2.popen2(signal_cmd % (file + '.fasta'))[0].readlines()
+    # float can't handle empty lines.
+    signal = [float(line.strip()) for line in signal if line.strip()]
+    signal = numpy.matrix(signal)
     return (signal, seq)
-
-def seq(file):
-    return os.system('perl get_seq.pl')
 
 def diff_vectors(mag, phase, count):
     (L, P) = (3, 1)
@@ -20,8 +27,13 @@ def diff_vectors(mag, phase, count):
         index = slice(x, x + 2)
         
         # P = 1 implies a linear regression.
-        poly_mag = numpy.polyfit(arange(1, L), Mag[index], P)
-        poly_phase = numpy.polyfit(arange(1, L), Phase[index], P)
+        poly_mag = numpy.polyfit(arange(1, L), mag[index], P)
+        poly_phase = numpy.polyfit(arange(1, L), phase[index], P)
 
 def displacement(seq, phase, count, diff_vectors, fshifts, bshifts):
     pass
+
+if __name__ == '__main__':
+    import sys
+    (signal,seq) = signal(sys.argv[1])
+    print signal.T
