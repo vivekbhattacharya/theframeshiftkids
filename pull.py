@@ -2,17 +2,18 @@
     Perl scripts for heavy lifting """
 
 import numpy
+
+seq_cmd = r'perl.exe getseq.pl "%s"'
+signal_cmd = r'perl.exe free_scan.pl -e -q -p FREIER auuccuccacuag "%s.fasta"'
 def signal(file):
-    import os, popen2
-    
-    file = os.path.abspath(file);
+    import os, ghost    
+    file = os.path.abspath(file)
     os.chdir('pearls')
     
-    seq_cmd = 'perl.exe getseq.pl "%s"'
-    signal_cmd = 'perl.exe free_scan.pl -e -q -p FREIER auuccuccacuag "%s"'
-    seq = popen2.popen2(seq_cmd % file)[0].read()
     # Todo: write2fasta
-    signal = popen2.popen2(signal_cmd % (file + '.fasta'))[0].readlines()
+    seq = ghost.steal_out(seq_cmd % file).read()
+    signal = ghost.steal_out(signal_cmd % file).readlines()
+    
     # float can't handle empty lines.
     signal = [float(line.strip()) for line in signal if line.strip()]
     signal = numpy.matrix(signal)
@@ -30,10 +31,11 @@ def diff_vectors(mag, phase, count):
         poly_mag = numpy.polyfit(arange(1, L), mag[index], P)
         poly_phase = numpy.polyfit(arange(1, L), phase[index], P)
 
-def displacement(seq, phase, count, diff_vectors, fshifts, bshifts):
+def displacement(seq, phase, count, diff_vectors, fshifts=(), bshifts=()):
     pass
 
 if __name__ == '__main__':
     import sys
     (signal,seq) = signal(sys.argv[1])
     print signal.T
+    print seq
