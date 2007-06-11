@@ -74,12 +74,15 @@ while (my ($key, $value) = each(%expression)) {
 }
 
 # Randomly pulls the equivalent codon given a
-# one-character uppercase 
+# one-character uppercase
+#
+# Test protein sequence: http://shadytrees.pastebin.ca/raw/551240
+# Test gene sequence: http://shadytrees.pastebin.ca/raw/551246
 sub prot2codon {
-    my @codons = split /,/, $expression{shift @_};
+    my @codons = split /,/, $expression{+shift};
     # Scalar context goodness
     $codons[rand @codons];
 }
 
-sub codon2prot { $repression{shift @_} }
+sub codon2prot { $repression{+shift} }
 1;

@@ -1,5 +1,6 @@
 use warnings; use strict;
 use Smooth qw(prot2codon codon2prot);
+package Dysentery;
 
 # Takes an array (not a reference to an array) of
 # codons--the array @_--and prints them neatly in
