@@ -13,7 +13,7 @@
 
 use strict;
 use warnings;
-use Smooth qw(getseq webopen);
+use Smooth;
 package Cornerstone;
 
 # find_bounds(filename, block for bounds, block for names)
@@ -49,8 +49,25 @@ sub extract {
     substr($o, $start, $end - $start + 1);
 }
 
+our $help = <<END;
+NAME
+    cornerstone.pl
+
+USAGE
+    perl cornerstone.pl [work directory]
+        [list of locations (file name)]
+        [genome (file name)]
+    
+    Retrieves the gene sequences specified in a Genbank
+    search results (text file format) from the genome
+    given. Stores each gene sequence in a text file under
+    a 'proteins' directory in the working directory. Each
+    text file is named after the gene sequence name e.g.
+    prfB.txt.
+END
 sub main {
-    my ($dir, $locations,$genome) = @ARGV;
+    if (!@ARGV or $ARGV[0] eq '--help') { print $help; return }
+    my ($dir, $locations, $genome) = @ARGV;
     chdir($dir);
     
     # Slurp the E. Coli genome as a huge text file
