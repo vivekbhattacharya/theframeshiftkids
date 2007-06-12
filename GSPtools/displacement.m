@@ -1,13 +1,27 @@
 function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshifts)
 % ------------------------------------------------------------
-% CALCULATE DISPLACEMENT 
+% CALCULATE DISPLACEMENT
+% The function takes a sequence (without the 12-leader
+% sequence), a phase array, the number of codons, the
+% differential vector calculated by diff_vector, a list
+% of +1 frameshifts to match against, and a list of -1
+% frameshifts to match against.
+% 
+% This is the equivalent of an OOP private method. Its primary
+% purpose is to aid in the development of unities. Prior to
+% refactoring the old GSPtools, this function existed as
+% part of calcmpx.m. Not intended for user consumption.
 % ------------------------------------------------------------    
 
 % Magic numbers
+% Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
+% for meanings and derivations.
 phi_sp=-30*(pi/180); initialx = 0.1;
 C1 = 0.005; C2 = initialx; spc = 1;
 
 % Initiate InstPhase array if so felt
+% ants: List of +1 frameshifts encountered.
+% termites: List of -1 frameshifts encountered.
 x = [0 C2]; ants = {}; termites = {};
 
 shift = 0;
@@ -25,9 +39,12 @@ for k=2:numcodons-1
     here_loops = real_loops(codon);
     there_loops = real_loops(other_codon);
     
+    % Again, refer to papers.
     phi_signal(1,k) = Dvec(k,2); x0 = x(1,k);    
     phi_dx = (pi/3)*x0 - phi_sp;
-
+    
+    % Refer to <http://code.google.com/p/theframeshiftkids/wiki/
+    % MathBehindTheModel> for explanation.
     here_fail = 1; there_fail = 1; back_fail=1;
     for wt=1:1000
         a = (x0 - 2*shift)*pi/4; % Window function follows
@@ -67,18 +84,23 @@ end
 diffx = zeros(length(x));
 for k=1:length(x)-1; diffx(k) = x(k+1) - x(k); end;
 
-%%% Counters for megaunity, a treatise into the
-%%% failings of Matlab's strings
+% Counters for unities, a treatise into the
+% failings of Matlab's strings. They tally
+% the number of times the gene sequence
+% correctly frameshifted in addition to the
+% total number of iterations.
 global shoals sands beached_whale;
-sands = sands + 1;
-
+sands = sands + 1; % How many times is displacement called?
+                   % The answer? Within!
 % Handles edge case (which is quite often) where
 % both `ants` and `frontshifts` and `backshifts` is [].
 if strcmp(char(ants), char(frontshifts))
     if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
 end
 
-% Is verbosity disabled?
+% beached_whale is a Boolean value that toggles
+% verbosity, i.e. whether we ever print `ants` and
+% `termites` via `disp_shifts`.
 if (beached_whale), return; end;
 fprintf('> '); disp_shifts(ants, '+1 frameshifts');
 fprintf('< '); disp_shifts(termites, '-1 frameshifts');
@@ -92,15 +114,21 @@ if size(insects) ~= size({})
 end
 fprintf('\n');
 
+% Calculates Nloops per <http://code.google.com/p/
+% theframeshiftkids/wiki/MathBehindTheModel> for
+% the given codon.
 function [n] = real_loops(codon)
 n = ceil(nloopcalcify(codon));
 n = 2^(1/n);
 n = n / (n - 1);
 
-%% parameters bling
-% loops: from real_loops
-% weight: cos/sin factor
-% sofar: acc fed back to us
+% Calculates probability per <http://code.google.com/p/
+% theframeshiftkids/wiki/MathBehindTheModel> for
+% any given "thinking" time slice.
+% Parameters:
+%   loops: from real_loops
+%   weight: cos/sin factor
+%   sofar: acc fed back to us
 function [acc, p] = probabilities(loops, weight, sofar)
 acc = sofar * (1 - (weight/loops));
 p = 1 - acc;
