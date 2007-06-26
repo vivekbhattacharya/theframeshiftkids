@@ -11,7 +11,7 @@ def unity(file):
     (mag, phase, codon_count) = pull.polarity(signal)
     diff_vectors = pull.diff_vectors(mag, phase, codon_count)
     (thetas, placements, forces) = pull.displacement(seq[13:], \
-        phase, codon_count, diff_vectors, [], [])
+        phase, codon_count, diff_vectors)
     
     figure(1);
     plot(arange(1, len(placements)), placements)
