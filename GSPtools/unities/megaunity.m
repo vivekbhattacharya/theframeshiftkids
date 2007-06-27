@@ -21,7 +21,7 @@ function megaunity(file, fshifts, bshifts)
 global TAV Names;
 load TAV.mat; load Codons.mat;
 
-[Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
+[Mag, Phase, numcodons] = cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 global shoals sands; shoals = 0; sands = 0;
 while 1
@@ -35,8 +35,6 @@ while 1
         subplot(212); plot(0,0);plot(1:length(diffx),diffx);
             xlabel('Codon number'); ylabel('Force on ribosome');
             title('Plot of "force", i.e. incremental displacement');
-    
-    fprintf('\n');
     disp(['Yield so far: ' num2str(shoals/sands) ' (' num2str(sands) ')']);
     fprintf('\n');
 end
