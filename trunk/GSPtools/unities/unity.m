@@ -21,7 +21,7 @@ function unity(file)
 global TAV Names;
 load TAV.mat; load Codons.mat;
 
-[Mag, Phase, numcodons] = calc_cumm_mag_phase(Signal);
+[Mag, Phase, numcodons] = cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
 
