@@ -15,6 +15,7 @@ use warnings;
 use Smooth;
 package Fabio;
 
+# Builds a map between codon and frequency.
 sub frequencies {
     my $freq = shift;
     my @everything = ();
@@ -23,7 +24,7 @@ sub frequencies {
     Smooth::webopen $freq, sub {
         s/\(.*?\)//g;
         my @a = split /\s+/;
-        grep !/^\s*$/, @a;
+        @a = grep !/^\s*$/, @a;
         # Take advantage of Perl's array-as-hash hack.
         push @everything, @a;
     };

@@ -16,9 +16,8 @@ use warnings;
 use Smooth;
 package Cornerstone;
 
-# find_bounds(filename, block for bounds, block for names)
-### This is a generator. It yields beginning and ending
-### indices first, then the protein names.
+# This is a generator. It yields beginning and ending
+# indices first, then the protein names.
 sub find_bounds {
     my ($file, $push_bounds, $push_name) = @_;
     Smooth::webopen $file, sub {
@@ -65,7 +64,7 @@ USAGE
     text file is named after the gene sequence name e.g.
     prfB.txt.
 END
-sub main {
+if (__FILE__ eq $0) {
     if (!@ARGV or $ARGV[0] eq '--help') { print $help; return }
     my ($dir, $locations, $genome) = @ARGV;
     chdir($dir);
@@ -86,13 +85,14 @@ sub main {
     
     # Output: store to file with special filenames
     mkdir('proteins'); chdir('proteins');
-    map { my $name = shift @names; {
+    map {
+        my $name = shift @names;
         open(my $handle, ">$name.txt") or
             die("Cornerstone cannot open $name for writing");
         print $handle reverse_complement $_;
-    } } @sequences;
+    } @sequences;
     
     print 'Done', $/;
 }
 
-main() if __FILE__ eq $0; 1;
+1;

@@ -3,28 +3,26 @@
 package Smooth;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT_OK = qw(prot2codon codon2prot);
+@EXPORT_OK = qw(prot2codon codon2prot getseq);
 use LWP::Simple qw(get);
 
 # Yields an array of lines from $file to $func,
 # be it on the Internet or not. The array
 # is NOT a reference.
-sub webget {
+sub mooch {
     my ($file, $func) = @_;
+    my @lines = ();
+    
     if ($file =~ m|^http://|) {
-        # LWP::Simple
         my $contents = get $file;
-        my @lines = split($/, $contents);
-        # Handle Windows line endings.
-        map { s/\r|\n//g } @lines;
-        &$func(@lines);
+        @lines = split($/, $contents);
     } else {
         open(my $handle, $file) or die "webget: Cannot open file `$file`";
-        my @lines = <$handle>;
-        # Handle Windows line endings.
-        map { s/\r|\n//g } @lines;
-        &$func(@lines);
+        @lines = <$handle>;
     }
+    # Handle Windows line endings.
+    map { s/\r|\n//g } @lines;
+    &$func(@lines);
 }
 
 # Maps $func to the lines of the $file,
@@ -32,14 +30,30 @@ sub webget {
 sub webopen {
     my ($file, $func) = @_;
     # The following rates 9/10 on the Awesome Scale.
-    webget $file, sub { map { &$func(shift); } @_; };
+    mooch $file, sub {
+        map { $func->($_) } @_;
+    };
+}
+
+# Read the file/url and return the contents.
+sub webslurp {
+    use Data::Dumper;
+    mooch shift, sub {
+        return join('', @_);
+    };
 }
 
 sub getseq {
     my $file = shift;
-    webget $file, sub {
-        for(join '', @_) { s/[\s0-9]//g; tr/A-Z/a-z/; tr/t/u/; return $_; }
+    mooch $file, sub {
+        for(join '', @_) { return sanitize($_) }
     };
+}
+
+# Convert all gene sequences to this normalized form.
+sub sanitize {
+    $_ = shift;
+    s/[\s0-9]//g; tr/A-Z/a-z/; tr/t/u/; $_;
 }
 
 # http://en.wikipedia.org/wiki/List_of_standard_amino_acids
@@ -64,6 +78,8 @@ my %expression = (
     'V' => 'guu,guc,gua,gug',
     'W' => 'ugg',
     'Y' => 'uau,uac',
+    # Stop codons
+    '.' => 'uga,uaa,uag',
 );
 
 # Generate a reverse hashmap forthwith!
