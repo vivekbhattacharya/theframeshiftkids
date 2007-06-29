@@ -90,14 +90,15 @@ sub rcheck {
 our $help = <<END;
 NAME
     dysentery.pl
-
+    (web-enabled)
+    
 USAGE
     1) Convert protein sequence (1-letter abbreviation standard) to codons.
-        `perl dysentery.pl [url/path to protein sequence]`
+        `perl dysentery.pl [path to protein sequence]`
     2) Check if a codon sequence produces a protein sequence.
-        `perl dysentery.pl --check [url/path to codons] [url/path to proteins]`
+        `perl dysentery.pl --check [path to codons] [path to proteins]`
     3) Check if two codon sequences produce the same protein sequence.
-        `perl dysentery.pl --rcheck [url/path to codons] [url/path to codons]`
+        `perl dysentery.pl --rcheck [path to codons] [path to codons]`
 END
 if ($0 eq __FILE__) {
     if (!@ARGV or $ARGV[0] eq '--help') { print $help; }

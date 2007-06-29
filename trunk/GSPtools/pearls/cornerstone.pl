@@ -51,6 +51,7 @@ sub extract {
 our $help = <<END;
 NAME
     cornerstone.pl
+    (web enabled)
 
 USAGE
     perl cornerstone.pl [work directory]

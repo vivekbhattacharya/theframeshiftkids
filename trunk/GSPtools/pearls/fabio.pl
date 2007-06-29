@@ -1,14 +1,5 @@
 # Frequency example: http://shadytrees.pastebin.ca/raw/537444
 # Codon names example: http://shadytrees.pastebin.ca/raw/537676
-# Usage:
-#   * Obtain a list of frequencies.
-#   * Convert Codons.mat to a text file with each codon separated by a newline.
-#   * Pass the frequencies list and the codons list into fabio.pl.
-#   * E.g. `fabio.pl frequencies.txt names.txt`
-#   * Alternatively, post them on the Internet as text files (pastebins),
-#     and pass the URLs.
-# Output:
-#   * TAV values in the order given by `names.txt`
 
 use strict;
 use warnings;
@@ -48,7 +39,23 @@ sub plump {
     };
 }
 
+our $help = <<END;
+NAME
+    fabio.pl
+    (web-enabled)
+
+USAGE
+    perl fabio.pl [path to frequencies] [path to codons]
+    See http://shadytrees.pastebin.ca/raw/537444 and
+    http://shadytrees.pastebin.ca/raw/537676 for examples
+    of the formats for these two files.
+    
+    This returns a list of frequencies that is suitable
+    for creating TAV.mats. The list will follow the same
+    order as the list of codons.
+END
 sub main {
+    if (!@ARGV or $ARGV[0] eq '--help') { print $help; return }
     my ($freq, $names) = @ARGV;
     plump(frequencies($freq), $names);
 }
