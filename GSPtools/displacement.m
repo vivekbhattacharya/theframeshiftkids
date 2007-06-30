@@ -49,9 +49,9 @@ function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,bac
         here_fail = 1; there_fail = 1; back_fail=1;
         for wt=1:1000
             a = (x0 - 2*shift)*pi/4; % Window function follows
-            [back_fail, back] = probabilities(back_loops, exsin(a, '<')^power);
+            [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power);
             [here_fail, here] = probabilities(here_loops, excos(a)^10);
-            [there_fail, there] = probabilities(there_loops, exsin(a, '>')^power);
+            [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power);
             reloop = 1 - here - there - back;
     
             r = rand; % Mersenne Twister
