@@ -16,9 +16,7 @@ function megaunity(file, fshifts, bshifts)
 
 % These files need to be in the include path or working directory.
 % See code.google.com website for copies.
-global TAV Codon2Index beached_whale;
-disp(beached_whale);
-load TAV.mat; load Codon2Index.mat;
+global Travel; load Travel.mat;
 
 [Signal, S] = get_signal(file);
 [Mag, Phase, numcodons] = cumm_mag_phase(Signal);

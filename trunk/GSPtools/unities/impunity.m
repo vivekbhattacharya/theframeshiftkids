@@ -39,8 +39,7 @@ end
 % it returns the yield instead of displaying it.
 % ----------------------------------------------------------------
 function [yield] = find_yield(file, fshifts, bshifts, limit)
-    global TAV Codon2Index;
-    load TAV.mat; load Codon2Index.mat;
+    global Travel; load Travel.mat;
 
     [Signal, S] = get_signal(file);
     [Mag, Phase, n] = cumm_mag_phase(Signal);
