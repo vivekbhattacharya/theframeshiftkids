@@ -6,18 +6,18 @@
 %   'pictures', 5)
 % ------------------------------------------------
 function hyperplot(file, subfolder, limit, mode)
-%%%%% Same old, same old
-[Signal, S] = get_signal(file);
-global TAV Names;
-load TAV.mat; load Codons.mat;
+% These files need to be in the include path or working directory.
+% See code.google.com website for copies.
+global TAV Codon2Index beached_whale;
+disp(beached_whale);
+load TAV.mat; load Codon2Index.mat;
 
+[Signal, S] = get_signal(file);
 [Mag, Phase, n] = cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 
 % Disable verbosity with beached_whale
 global beached_whale; beached_whale = 1;
-%%%%% Same old ends right now
-
 if strcmp(mode, 'superimpose')
     plots = cell(1, limit*2);
     for i=1:limit

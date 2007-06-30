@@ -1,9 +1,9 @@
 % ------------------------------------------------
-% Superimposes 5 iterations and saves that plot
+% Plots errorbars for displacmenet and saves it
 % to a file for all files in a given folder where
 % each file contains a gene sequence
 % 
-% Usage: opportunity('C:\folder')
+% Usage: jejunity('C:\folder')
 % ------------------------------------------------
 function jejunity(folder, limit)
 d = dir([folder '\*.txt']); % Ignore .fasta files laying around

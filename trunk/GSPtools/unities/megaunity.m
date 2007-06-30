@@ -14,13 +14,13 @@ function megaunity(file, fshifts, bshifts)
 %        ex. ['uga,25';'cau,73'] or '[]'
 % --------------------------------------------------------------
 
+% These files need to be in the include path or working directory.
+% See code.google.com website for copies.
+global TAV Codon2Index beached_whale;
+disp(beached_whale);
+load TAV.mat; load Codon2Index.mat;
+
 [Signal, S] = get_signal(file);
-
-% These files need to be in the include path or working directory
-% (GSPdemos).
-global TAV Names;
-load TAV.mat; load Codons.mat;
-
 [Mag, Phase, numcodons] = cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 global shoals sands; shoals = 0; sands = 0;
