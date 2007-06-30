@@ -1,4 +1,4 @@
-function N = nloopcalc(x)
+function N = nloopcalcify(x)
 % NLOOPCALC : "Calculate number of loops"
 % This function calculates the looping number for a specified input codon. 
 % Contains an additional input parameter (Nstop) compared to nloopcalc
@@ -14,16 +14,22 @@ if length(x) ~= 3
     error('Codon is not of length 3.');
 end
 
-TAV2 = TAV(find(TAV));
-% Stop codons should have high wait times, Manually set values for E.coli,
-% since the TAV will be zero for these codons
-if strmatch(x, ['uaa'; 'uga'; 'uga']) >= 1
-    N = Nstop;        
+global maxTAV minTAV;
+if isempty(maxTAV), maxTAV = max(TAV); end;
+if isempty(minTAV), minTAV = min(TAV(find(TAV))); end;
+
+% Stop codons should have high wait times.
+% I manually set values for E.coli since the TAV will
+% be zero for these codons.
+I = getfield(Codon2Index, x);
+if I >= 37 && I <= 39
+    N = Nstop;
 else
-    % Compare x with Names and extract abundance ratio
-    I = getfield(Codon2Index, x);
+    % Extract abundance ratio, but first find out
+    % where codon is in TAV. We don't have a hashmap
+    % in Matlab, so here's how we fudge it.
     if length(I) ~= 1
         error('No unique match for the codon');
     end
-    N = (max(TAV2)/min(TAV2))-floor(TAV(I)/min(TAV2));
+    N = (maxTAV/minTAV) - floor(TAV(I)/minTAV);
 end
