@@ -15,7 +15,8 @@ function impunity(folder, fshifts, bshifts, limit)
     d = dir([folder '\*.txt']); % Ignore .fasta files laying around
     
     %% Print the header. %%
-    fid = fopen('results.txt', 'a+'); % Append
+    % Note that we are appending.
+    fid = fopen('results.txt', 'a+');
     fwrite(fid, ['------ [' num2str(limit) ' iterations] ------']);
     fprintf(fid, '\n');
     
@@ -38,18 +39,18 @@ end
 % it returns the yield instead of displaying it.
 % ----------------------------------------------------------------
 function [yield] = find_yield(file, fshifts, bshifts, limit)
-[Signal, S] = get_signal(file);
+    global TAV Codon2Index;
+    load TAV.mat; load Codon2Index.mat;
 
-global TAV Names;
-load TAV.mat; load Codons.mat;
-
-[Mag, Phase, n] = cumm_mag_phase(Signal);
-[Dvec] = diff_vectors(Mag, Phase, n);
-global shoals sands beached_whale;
-    % Disable verbosity with beached_whale
-    shoals = 0; sands = 0; beached_whale = 1;
-for i=1:limit
-    [theta,x,diffx] = displacement(S(13:end), Phase, n, Dvec, fshifts, bshifts);
+    [Signal, S] = get_signal(file);
+    [Mag, Phase, n] = cumm_mag_phase(Signal);
+    [Dvec] = diff_vectors(Mag, Phase, n);
+    global shoals sands beached_whale;
+        % Disable verbosity with beached_whale
+        shoals = 0; sands = 0; beached_whale = 1;
+    for i=1:limit
+        [theta,x,diffx] = displacement(S(13:end), Phase, n, Dvec, fshifts, bshifts);
+    end
+    
+    yield = shoals/sands;
 end
-
-yield = shoals/sands;

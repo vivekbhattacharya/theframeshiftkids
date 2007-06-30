@@ -20,7 +20,7 @@ write2fasta(Fasta, S, 'prfb', 60);
 Include = fileparts(which('FreeAlign.pm'));
    Template = 'perl.exe -I"%s" "%s" -e -q -p FREIER auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
-[status, raw_signal] = dos(Command);
+[status, raw_signal] = system(Command);
 
 % Simulate load() on a string instead of a file.
 Signal = str2num(raw_signal);

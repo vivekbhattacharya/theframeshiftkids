@@ -14,13 +14,12 @@ function unity(file)
 %        that includes the leader
 % --------------------------------------------------------------
 
+% These files need to be in the include path or working directory.
+% See code.google.com website for copies.
+global TAV Codon2Index beached_whale;
+load TAV.mat; load Codon2Index.mat;
+
 [Signal, S] = get_signal(file);
-
-% These files need to be in the include path or working directory
-% (GSPdemos).
-global TAV Names;
-load TAV.mat; load Codons.mat;
-
 [Mag, Phase, numcodons] = cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);
 [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
@@ -32,12 +31,5 @@ figure(1);
     	grid; xlabel('Codon Number'); ylabel('x(k)');    
     subplot(212); plot(0,0);plot(1:length(diffx),diffx);
         xlabel('Codon number'); ylabel('Force on ribosome');
-        title('Plot of "force", i.e. incremental displacement');	
-% figure(2);
-%     subplot(211); plot(0,0);polar(theta,mag);
-%     subplot(212);plot(0,0);plot(1:length(theta),(180/pi)*theta);
-%     xlabel('Codon number'); ylabel('Phase angle (degrees)');
-%     title('Plot of cumulative phase');    
-
-% The toolbox code in demo4 need a newline.
+        title('Plot of "force", i.e. incremental displacement');
 fprintf('\n');
