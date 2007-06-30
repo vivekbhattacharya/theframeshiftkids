@@ -44,7 +44,8 @@ sub run {
         map { push @codons, prot2codon($_) } split //;
     };
     # Arbitrary stop codon and 12-leader sequence
-    print 'gcc aua ggc uau', $/;
+    use Data::Dumper;
+    print $ARGV[1], $/;
     push @codons, 'uga'; @codons;
 }
 
@@ -94,7 +95,7 @@ NAME
     
 USAGE
     1) Convert protein sequence (1-letter abbreviation standard) to codons.
-        `perl dysentery.pl [path to protein sequence]`
+        `perl dysentery.pl [path to protein sequence] "[leader sequence]"`
     2) Check if a codon sequence produces a protein sequence.
         `perl dysentery.pl --check [path to codons] [path to proteins]`
     3) Check if two codon sequences produce the same protein sequence.
