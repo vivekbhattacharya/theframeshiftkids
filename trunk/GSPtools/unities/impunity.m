@@ -39,8 +39,6 @@ end
 % it returns the yield instead of displaying it.
 % ----------------------------------------------------------------
 function [yield] = find_yield(file, fshifts, bshifts, limit)
-    global Travel; load Travel.mat;
-
     [Signal, S] = get_signal(file);
     [Mag, Phase, n] = cumm_mag_phase(Signal);
     [Dvec] = diff_vectors(Mag, Phase, n);

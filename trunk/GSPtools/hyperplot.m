@@ -6,10 +6,6 @@
 %   'pictures', 5)
 % ------------------------------------------------
 function hyperplot(file, subfolder, limit, mode)
-% These files need to be in the include path or working directory.
-% See code.google.com website for copies.
-global Travel; load Travel.mat;
-
 [Signal, S] = get_signal(file);
 [Mag, Phase, n] = cumm_mag_phase(Signal);
 [Dvec] = diff_vectors(Mag, Phase, numcodons);

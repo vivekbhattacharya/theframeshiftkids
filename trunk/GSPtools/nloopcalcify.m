@@ -1,4 +1,4 @@
-function N = nloopcalcify(x)
+function N = nloopcalcify(x, TAV)
 % NLOOPCALC : "Calculate number of loops"
 % This function calculates the looping number for a specified input codon. 
 % Contains an additional input parameter (Nstop) compared to nloopcalc
@@ -9,7 +9,7 @@ function N = nloopcalcify(x)
 % Names = cell array or character array of the codons in lower-case RNA format
 % Nstop = number of loops for the stop codon (set using prfB)
 % Note: Elements of TAV should have a one-to-one match with those of Names
-global Travel; Nstop = 1000;
+Nstop = 1000;
 if length(x) ~= 3
     error('Codon is not of length 3.');
 end
@@ -17,12 +17,12 @@ end
 % Stop codons should have high wait times.
 % I manually set values for E.coli since the TAV will
 % be zero for these codons.
-I = getfield(Travel, x);
+I = getfield(TAV, x);
 if I == 0
     N = Nstop;
 else
     % Extract abundance ratio, but first find out
     % where codon is in TAV. We don't have a hashmap
     % in Matlab, so here's how we fudge it.
-    N = (Travel.max/Travel.min) - floor(I/Travel.min);
+    N = (TAV.max/TAV.min) - floor(I/TAV.min);
 end
