@@ -45,8 +45,8 @@ function [A, theta] = helper(x)
         theta = atan2(M(1)*sqrt(3), M(1) + 2*M(2)); 
         A = M(1)/sin(theta);
     elseif grass ~= 0
-        theta = atan2(x*sqrt(3), M(3) - M(2));
-        A = -x/sin(theta);
+        theta = atan2(grass*sqrt(3), M(3) - M(2));
+        A = -grass/sin(theta);
     else A = 0; theta = 0;
     end
 end
