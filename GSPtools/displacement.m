@@ -19,6 +19,9 @@ function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,bac
     phi_sp=-30*(pi/180); initialx = 0.1;
     C1 = 0.005; C2 = initialx; spc = 1;
     
+    global Travel;
+    if isempty(Travel), load Travel.mat; end
+    
     % Initiate InstPhase array if so felt
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
@@ -114,7 +117,8 @@ end
 % theframeshiftkids/wiki/MathBehindTheModel> for
 % the given codon.
 function [n] = real_loops(codon)
-    n = ceil(nloopcalcify(codon));
+    global Travel;
+    n = ceil(getfield(Travel, codon));
     n = 2^(1/n);
     n = n / (n - 1);
 end
