@@ -94,10 +94,14 @@ while (my ($key, $value) = each(%expression)) {
 # Test protein sequence: http://shadytrees.pastebin.ca/raw/551240
 # Test gene sequence: http://shadytrees.pastebin.ca/raw/551246
 sub prot2codon {
-    my @codons = split /,/, $expression{+shift};
-    # Scalar context goodness
-    $codons[rand @codons];
+    map {
+        my @codons = split /,/, $expression{$_};
+        # Scalar context goodness
+        $codons[rand @codons];
+    } @_;
 }
 
-sub codon2prot { $repression{+shift} }
+sub codon2prot {
+    map { $repression{$_} } @_;
+}
 1;
