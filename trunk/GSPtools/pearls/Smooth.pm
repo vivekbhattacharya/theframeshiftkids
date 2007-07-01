@@ -37,7 +37,6 @@ sub webopen {
 
 # Read the file/url and return the contents.
 sub webslurp {
-    use Data::Dumper;
     mooch shift, sub {
         return join('', @_);
     };
