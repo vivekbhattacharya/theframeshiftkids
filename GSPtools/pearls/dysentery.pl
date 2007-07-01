@@ -41,7 +41,7 @@ sub run {
         # Then parse every character and store.
         s/[^A-Z]//g;
         return unless $_;
-        map { push @codons, prot2codon($_) } split //;
+        push @codons, prot2codon(split //);
     };
     # Arbitrary stop codon and 12-leader sequence
     use Data::Dumper;
@@ -74,8 +74,7 @@ sub seq2proteins {
     # Split the sequence into threes using a nasty
     # trick involving exclamation points and intrigue.
     $seq =~ s/(...)/$1!/g;
-    my @codons = map { codon2prot $_ }
-        split('!', $seq);
+    my @codons = codon2prot split('!', $seq);
     return join('', @codons);
 };
 
