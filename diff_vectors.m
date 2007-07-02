@@ -21,3 +21,4 @@ for k=1:numcodons
     Dvec(k,2) = angle(D);
     % Dvec(k,2) = Phase(1,k) + atan2(Mag(1,k)*dphi_dc(1,k),dA_dc(1,k));   
 end
+clear global sands shoals;
