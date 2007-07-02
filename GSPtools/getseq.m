@@ -21,7 +21,7 @@
 % WARNING: SEQFILE must be a full path. Use `which` to find full paths of
 % relative paths.
 
-function S = getseq(file)
+function S = getseq(file, fasta)
 % Matlab does not sync well with system, so I aid
 % its module-finding skills w/r/t Smooth.pm.
-S = pearl('getseq.pl', ['"' file '"']);
+S = pearl('getseq.pl', ['"' file '" "' fasta '"']);

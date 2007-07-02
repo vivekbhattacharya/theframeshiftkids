@@ -13,6 +13,7 @@
 % ----------------------------------------------------------------
 function impunity(folder, fshifts, bshifts, limit)
     d = dir([folder '\*.txt']); % Ignore .fasta files laying around
+    global beached_whale; beached_whale = 1;
     
     %% Print the header. %%
     % Note that we are appending.
@@ -41,13 +42,11 @@ end
 function [yield] = find_yield(file, fshifts, bshifts, limit)
     [Signal, S] = get_signal(file);
     [Mag, Phase, n] = cumm_mag_phase(Signal);
-    [Dvec] = diff_vectors(Mag, Phase, n);
-    global shoals sands beached_whale;
-        % Disable verbosity with beached_whale
-        shoals = 0; sands = 0; beached_whale = 1;
-    for i=1:limit
-        [theta,x,diffx] = displacement(S(13:end), Phase, n, Dvec, fshifts, bshifts);
-    end
+    Dvec = diff_vectors(Mag, Phase, n);
     
+    global shoals sands;
+    for i=1:limit
+        [x,diffx] = displacement(S(13:end), Phase, n, Dvec, fshifts, bshifts);
+    end
     yield = shoals/sands;
 end
