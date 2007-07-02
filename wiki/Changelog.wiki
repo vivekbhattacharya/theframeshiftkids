@@ -29,8 +29,10 @@ Easter release using a tentative but broken sinusoidal model.
     * `dysentery.pl` will convert amino acid primary structure sequences to codon sequences, randomly choosing codons. In addition, it verifies hand-customized codon sequences against a primary structure sequence.
     * Update to the stochastic model: sine and cosine bounded for more accurate results.
     * `jejunity.m` plots the average path taken by the codon in addition to error bars. It takes the same commands as `opportunity.m` as they both convey the same information in two different, cool ways.
-
-
-
-
-
+  * 3.141 (r156)
+    * `cumm_mag_phase` is the result of merging all those confusing mag_phase files.
+    * `Travel.mat` memoizes `nloopcalc.m` and combines `TAV.mat` and `Codons.mat`, making it redundant. Huge performance increases resulted because `nloopcalc` was called so many times.
+    * -1 frameshifts are now accounted for.
+    * `excos` and `exsin` functions now properly handle certain edge cases.
+    * `dysentery.pl --rcheck`
+    * `_readme.txt` added
