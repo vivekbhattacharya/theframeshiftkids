@@ -53,22 +53,24 @@ function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshift
         here_fail = 1; there_fail = 1; back_fail=1;
         for wt=1:1000
             a = (x0 - 2*shift)*pi/4; % Window function follows
-            [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power);
-            [here_fail, here] = probabilities(here_loops, excos(a)^10);
-            [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power);
+            [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);
+            [here_fail, here] = probabilities(here_loops, excos(a)^10, here_fail);
+            [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power, there_fail);
             reloop = 1 - here - there - back;
     
             r = rand; % Mersenne Twister
-            if(r < here), break;
-            elseif (r < here + there)
-                shift = shift + 1;
-                ants(end+1) = {[codon ',' num2str(k)]};
-                break;
-            elseif (r < here + there + back)
-                 shift = shift - 1;
-                 termites(end+1) = {[codon ',' num2str(k)]};
-                 break;
-            end;
+            if (reloop < here) || (reloop < there) || (reloop < back)
+                if(r < here), break;
+                elseif (r < here + there)
+                    shift = shift + 1;
+                    ants(end+1) = {[codon ',' num2str(k)]};
+                    break;
+                elseif (r < here + there + back)
+                     shift = shift - 1;
+                     termites(end+1) = {[codon ',' num2str(k)]};
+                     break;
+                end;
+            end
     
             phi_dx = ((pi/3)*x0) - phi_sp;
             dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx);
@@ -91,7 +93,9 @@ function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshift
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
     global shoals sands beached_whale;
-    if isempty(sands), shoals = 0; sands = 0; end
+    % Avoid re-using a stale shoals/sand.
+    persistent john;
+    if isempty(john), shoals = 0; sands = 0; john = [1]; end
     sands = sands + 1;
     if strcmp(char(ants), char(frontshifts))
         if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
@@ -132,7 +136,7 @@ end
 %   loops: from real_loops
 %   weight: cos/sin factor
 %   sofar: acc fed back to us
-function [acc, p] = probabilities(loops, weight)
-    acc = (1 - (weight/loops));
+function [acc, p] = probabilities(loops, weight, acc)
+    acc = acc * (1 - (weight/loops));
     p = 1 - acc;
 end
