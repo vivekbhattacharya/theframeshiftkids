@@ -91,9 +91,7 @@ function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshift
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
     global shoals sands beached_whale;
-    % Avoid re-using a stale shoals/sand.
-    persistent john;
-    if isempty(john), shoals = 0; sands = 0; john = [1]; end
+    if isempty(sands), shoals = 0; sands = 0; end
     sands = sands + 1;
     if strcmp(char(ants), char(frontshifts))
         if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
