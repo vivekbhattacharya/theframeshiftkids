@@ -13,8 +13,7 @@ if(isempty('perl')); error(['I cannot find Perl 5.6 or above.' ...
    'Please download it to the VCL C: drive.']); end;
 
 % Load prfb, and generate a fasta file with column width of 60.
-S = getseq(file); Fasta = tempname;
-write2fasta(Fasta, S, 'prfb', 60);
+Fasta = tempname; S = getseq(file, Fasta);
 
 % Run free2bind. Make sure to include its directory into -I.
 Include = fileparts(which('FreeAlign.pm'));

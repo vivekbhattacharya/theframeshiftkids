@@ -8,7 +8,7 @@
 function hyperplot(file, subfolder, limit, mode)
 [Signal, S] = get_signal(file);
 [Mag, Phase, n] = cumm_mag_phase(Signal);
-[Dvec] = diff_vectors(Mag, Phase, numcodons);
+Dvec = diff_vectors(Mag, Phase, numcodons);
 
 % Disable verbosity with beached_whale
 global beached_whale; beached_whale = 1;

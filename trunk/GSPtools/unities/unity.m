@@ -14,12 +14,15 @@ function unity(file)
 %        that includes the leader
 % --------------------------------------------------------------
 
+global beached_whale;
+beached_whale = 0;
+
 % These files need to be in the include path or working directory.
 % See code.google.com website for copies.
 [Signal, S] = get_signal(file);
 [Mag, Phase, numcodons] = cumm_mag_phase(Signal);
-[Dvec] = diff_vectors(Mag, Phase, numcodons);
-[theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
+Dvec = diff_vectors(Mag, Phase, numcodons);
+[x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
 
 cp = 0;
 figure(1);

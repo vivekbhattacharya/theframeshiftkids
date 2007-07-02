@@ -1,4 +1,4 @@
-function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshifts)
+function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshifts)
 % ------------------------------------------------------------
 % CALCULATE DISPLACEMENT
 % The function takes a sequence (without the 12-leader
@@ -25,6 +25,7 @@ function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,bac
     % Initiate InstPhase array if so felt
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
+    global ants termites;
     x = [0 C2]; ants = {}; termites = {};
     
     shift = 0;
@@ -61,11 +62,11 @@ function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,bac
             if(r < here), break;
             elseif (r < here + there)
                 shift = shift + 1;
-                ants(length(ants)+1) = {[codon ',' num2str(k)]};
+                ants(end+1) = {[codon ',' num2str(k)]};
                 break;
-             elseif (r < here + there + back)
+            elseif (r < here + there + back)
                  shift = shift - 1;
-                 termites(length(termites) + 1) = {[codon ',' num2str(k)]};
+                 termites(end+1) = {[codon ',' num2str(k)]};
                  break;
             end;
     
@@ -90,6 +91,7 @@ function [Phase,x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,bac
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
     global shoals sands beached_whale;
+    if isempty(sands), shoals = 0; sands = 0; end
     sands = sands + 1;
     if strcmp(char(ants), char(frontshifts))
         if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
@@ -118,7 +120,7 @@ end
 % the given codon.
 function [n] = real_loops(codon)
     global Travel;
-    n = ceil(getfield(Travel, codon));
+    n = ceil(Travel.(codon));
     n = 2^(1/n);
     n = n / (n - 1);
 end

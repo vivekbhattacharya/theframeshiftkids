@@ -18,19 +18,16 @@ function megaunity(file, fshifts, bshifts)
 % See code.google.com website for copies.
 [Signal, S] = get_signal(file);
 [Mag, Phase, numcodons] = cumm_mag_phase(Signal);
-[Dvec] = diff_vectors(Mag, Phase, numcodons);
-global shoals sands; shoals = 0; sands = 0;
+Dvec = diff_vectors(Mag, Phase, numcodons);
+global shoals sands;
 while 1
-    [theta,x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,fshifts,bshifts);
+    [x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,fshifts,bshifts);
 
     cp = 0;
     h = figure(1); set(h, 'Renderer', 'OpenGL');
-        subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
-            axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
-            grid; xlabel('Codon Number'); ylabel('x(k)');    
-        subplot(212); plot(0,0);plot(1:length(diffx),diffx);
-            xlabel('Codon number'); ylabel('Force on ribosome');
-            title('Plot of "force", i.e. incremental displacement');
+        plot(0,0);plot(1+cp:length(x)+cp, x);
+        axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
+        grid; xlabel('Codon Number'); ylabel('x(k)');    
     disp(['Yield so far: ' num2str(shoals/sands) ' (' num2str(sands) ')']);
     fprintf('\n');
 end
