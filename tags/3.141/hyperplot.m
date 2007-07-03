@@ -8,14 +8,14 @@
 function hyperplot(file, subfolder, limit, mode)
 [Signal, S] = get_signal(file);
 [Mag, Phase, n] = cumm_mag_phase(Signal);
-Dvec = diff_vectors(Mag, Phase, numcodons);
+Dvec = diff_vectors(Mag, Phase, n);
 
 % Disable verbosity with beached_whale
 global beached_whale; beached_whale = 1;
 if strcmp(mode, 'superimpose')
     plots = cell(1, limit*2);
     for i=1:limit
-        [theta,x,diffx] = displacement(S(13:end),Phase,n,Dvec,{},{});
+        [x,diffx] = displacement(S(13:end),Phase,n,Dvec,{},{});
         plots(i*2 - 1) = {1:length(x)};
         plots(i*2) = {x};
     end
@@ -36,7 +36,7 @@ elseif strcmp(mode, 'errorbars')
 	upper = ceil(numcodons);
     a = zeros(limit, upper);
     for i=1:limit
-        [theta,x,diffx] = displacement(S(13:end),Phase,n,Dvec,{},{});
+        [x,diffx] = displacement(S(13:end),Phase,n,Dvec,{},{});
 		maxiderm = size(x, 2);
         for j=1:upper
 			if j <= maxiderm, a(i,j) = x(j);
