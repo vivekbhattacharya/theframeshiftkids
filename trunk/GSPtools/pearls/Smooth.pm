@@ -1,10 +1,13 @@
 # All the functions we'll never call from the command
 # line but need anyway.
 package Smooth;
-require Exporter;
-@ISA = qw(Exporter);
-@EXPORT_OK = qw(prot2codon codon2prot getseq);
 use LWP::Simple qw(get);
+use strict; use warnings;
+BEGIN {
+    require Exporter;
+    our @ISA = qw(Exporter);
+    our @EXPORT_OK = qw(prot2codon codon2prot getseq);
+}
 
 # Yields an array of lines from $file to $func,
 # be it on the Internet or not. The array
@@ -56,7 +59,7 @@ sub sanitize {
 }
 
 # http://en.wikipedia.org/wiki/List_of_standard_amino_acids
-my %expression = (
+our %expression = (
     'A' => 'gcu,gcc,gca,gcg',
     'C' => 'ugu,ugc',
     'D' => 'gau,gac',
@@ -82,7 +85,7 @@ my %expression = (
 );
 
 # Generate a reverse hashmap forthwith!
-my %repression = ();
+our %repression = ();
 while (my ($key, $value) = each(%expression)) {
     my @codons = split /,/, $value;
     map { $repression{$_} = $key; } @codons;
@@ -103,5 +106,18 @@ sub prot2codon {
 
 sub codon2prot {
     map { $repression{$_} } @_;
+}
+
+sub permute {
+    use List::Util qw(reduce);
+    no warnings 'once';
+    # Note: we have to store a temporary
+    # $x to access $_ after it's been shadowed.
+    reduce {[
+        map {
+            my $x = $_;
+            map "$_  $x", @$a;
+        } @$b
+    ]} @_;
 }
 1;
