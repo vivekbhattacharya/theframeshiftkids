@@ -42,7 +42,9 @@ sub webslurp {
 }
 
 sub getseq {
-    sanitize(join '', mooch shift);
+    # FASTA files are so annoying.
+    my @lines = grep !/^>/, mooch shift;
+    sanitize(join '', @lines);
 }
 
 sub seq2codons {
