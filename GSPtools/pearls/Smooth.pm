@@ -13,9 +13,9 @@ BEGIN {
 # be it on the Internet or not. The array
 # is NOT a reference.
 sub mooch {
-    my ($file, $func) = @_;
-    my @lines = ();
+    my $file = shift;
     
+    my @lines = ();
     if ($file =~ m|^http://|) {
         my $contents = get $file;
         @lines = split($/, $contents);
@@ -25,7 +25,7 @@ sub mooch {
     }
     # Handle Windows line endings.
     map { s/\r|\n//g } @lines;
-    &$func(@lines);
+    @lines;
 }
 
 # Maps $func to the lines of the $file,
@@ -33,23 +33,24 @@ sub mooch {
 sub webopen {
     my ($file, $func) = @_;
     # The following rates 9/10 on the Awesome Scale.
-    mooch $file, sub {
-        map { $func->($_) } @_;
-    };
+    map { $func->($_) } mooch($file);
 }
 
 # Read the file/url and return the contents.
 sub webslurp {
-    mooch shift, sub {
-        return join('', @_);
-    };
+    return join('', mooch shift);
 }
 
 sub getseq {
-    my $file = shift;
-    mooch $file, sub {
-        for(join '', @_) { return sanitize($_) }
-    };
+    sanitize(join '', mooch shift);
+}
+
+sub seq2codons {
+    my $seq = shift;
+    # Split the sequence into threes using a nasty
+    # trick involving exclamation points and intrigue.
+    $seq =~ s/(...)/$1!/g;
+    split '!', $seq;
 }
 
 # Convert all gene sequences to this normalized form.
