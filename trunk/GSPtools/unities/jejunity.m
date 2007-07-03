@@ -7,10 +7,10 @@
 % ------------------------------------------------
 function jejunity(folder, limit)
 d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
-subfolder = 'thepictureshow';
+subfolder = 'carnivale';
 mkdir(fullfile(folder, subfolder));
 
 for i = 1:length(d)
-   disp(['---------- [' d(i).name '] ----------']);
+   disp(d(i).name);
    hyperplot(fullfile(folder, d(i).name), subfolder, limit, 'errorbars');
 end

@@ -11,6 +11,6 @@ subfolder = 'thepictureshow';
 mkdir(fullfile(folder, subfolder));
 
 for i = 1:length(d)
-   disp(['---------- [' d(i).name '] ----------']);
+   disp(d(i).name);
    hyperplot(fullfile(folder, d(i).name), subfolder, limit, 'superimpose');
 end
