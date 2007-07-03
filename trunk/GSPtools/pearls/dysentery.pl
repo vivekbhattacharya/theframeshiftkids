@@ -70,11 +70,7 @@ sub check {
 # Returns a list of proteins, converted from
 # a gene sequence.
 sub seq2proteins {
-    my $seq = getseq shift @_;
-    # Split the sequence into threes using a nasty
-    # trick involving exclamation points and intrigue.
-    $seq =~ s/(...)/$1!/g;
-    my @codons = codon2prot split('!', $seq);
+    my @codons = codon2prot Smooth::seq2codons getseq shift;
     return join('', @codons);
 };
 
@@ -102,13 +98,14 @@ USAGE
 END
 if ($0 eq __FILE__) {
     if (!@ARGV or $ARGV[0] eq '--help') { print $help; }
-    # Shift out the --argument so it's business as usual.
     elsif ($ARGV[0] eq '--check') {
         print_check check($ARGV[1], $ARGV[2]);
     }
     elsif ($ARGV[0] eq '--rcheck') {
         print_check rcheck($ARGV[1], $ARGV[2]);
     }
-    else { print_run run($ARGV[0]); }
+    elsif ($ARGV[0] eq '--run') {
+        print_run run($ARGV[0]);
+    }
 }
 1;
