@@ -12,7 +12,7 @@
 %   iterations to run the model before recording yield)
 % ----------------------------------------------------------------
 function impunity(folder, fshifts, bshifts, limit)
-    d = dir([folder '\*.txt']); % Ignore .fasta files laying around
+    d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
     global beached_whale; beached_whale = 1;
     
     %% Print the header. %%
@@ -22,13 +22,16 @@ function impunity(folder, fshifts, bshifts, limit)
     fprintf(fid, '\n');
     
     for i = 1:length(d)
-       disp(['---------- [' d(i).name '] ----------']);
-       % Num2str is required by fwrite.
-       yield = num2str(find_yield(fullfile(folder, d(i).name), fshifts, bshifts, limit));
-       
-       %% Print the data. %%
-       fwrite(fid, [d(i).name '          ' yield]);
-       fprintf(fid, '\n');
+        if strcmp(d(i).name, '.') || strcmp(d(i).name, '..')
+            continue;
+        end
+        disp(['---------- [' d(i).name '] ----------']);
+        % Num2str is required by fwrite.
+        yield = num2str(find_yield(fullfile(folder, d(i).name), fshifts, bshifts, limit));
+        
+        %% Print the data. %%
+        fwrite(fid, [d(i).name '          ' yield]);
+        fprintf(fid, '\n');
     end
     fprintf(fid, '\n\n\n');
     fclose(fid);

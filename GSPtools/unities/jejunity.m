@@ -6,7 +6,7 @@
 % Usage: jejunity('C:\folder')
 % ------------------------------------------------
 function jejunity(folder, limit)
-d = dir([folder '\*.txt']); % Ignore .fasta files laying around
+d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
 subfolder = 'thepictureshow';
 mkdir(fullfile(folder, subfolder));
 
