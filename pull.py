@@ -1,35 +1,37 @@
 """ Data retrieval module that mainly calls
     Perl scripts for heavy lifting """
 
-import numpy
+import numpy, ghost, os
+from nloops import nloops
+from tempfile import mkstemp as tempfile
 
-seq_cmd = r'perl.exe getseq.pl "%s"'
-signal_cmd = r'perl.exe free_scan.pl -e -q -p FREIER auuccuccacuag "%s.fasta"'
+_, fasta = tempfile()
+seq_cmd = r'perl.exe getseq.pl "%s" "%s"'
+signal_cmd = r'perl.exe free_scan.pl -e -q -p FREIER auuccuccacuag "%s"'
 def signal(file):
-    import os, ghost    
     file = os.path.abspath(file)
     os.chdir('pearls')
     
     # Todo: write2fasta
-    seq = ghost.steal_out(seq_cmd % file).read()
-    signal = ghost.steal_out(signal_cmd % file).readlines()
+    seq = ghost.steal_out(seq_cmd % (file, fasta)).read()
+    signal = ghost.steal_out(signal_cmd % fasta).readlines()
     
     # float can't handle empty lines.
     signal = [float(line.strip()) for line in signal if line.strip()]
-    signal = numpy.matrix(signal)
     return (signal, seq)
 
 #################################################################
 
 # I do not compute error, because nobody ever uses it.
-from numpy import zeros, arctan2, sin, sqrt, mean
+from numpy import zeros, arctan2, sin, sqrt, mean, round
 def magphase(signal):
     L = len(signal)
     # Round signal to a multiple of 3.
     if L % 3: signal = signal[0:L - (L % 3)]
     
-    Mag, Phase = zeros(L/3), zeros(L/3)
-    for i in xrange(0, L/3):
+    limit = L/3
+    Mag, Phase = zeros(limit), zeros(limit)
+    for i in xrange(0, limit):
         # +1 comes from Python's indexing, which starts at zero,
         # that conflates with `i` in that it's also used for
         # creating a sequence of endpoints here.
@@ -75,65 +77,73 @@ def diff_vectors(mag, phase, count):
         D = exp(1j*phase[i]) * (magic.der + 1j*mag[i]*phaser.der)
         
         vec += [[abs(D), angle(D)]]
-    return numpy.matrix(vec)
+    return vec
         
 #################################################################
 
 # http://code.google.com/p/theframeshiftkids/wiki/MathBehindTheModel
+from numpy import ceil, round
 class Codon(object):
     def __init__(self, codon):
         self.codon = codon
         self.loops = Codon.calcloops(codon)
-        self.fail = 1.
+        self.fail = 1.0
     
+    @staticmethod
     def calcloops(codon):
         # Implement nloops
-        #n = ceil(nloops(codon))
-        n = pow(2., 1./n)
+        n = ceil(nloops[codon])
+        n = 2. ** (1./n)
         return n/(n-1)
     
-    def nudge(weight):
+    def nudge(self, weight):
+        print round([self.fail, weight, self.loops], 2)
         self.fail = self.fail * (1 - weight/self.loops)
         return 1 - self.fail
 
 from ghost import fxsin, xcos, bxsin
 from random import random
-from math import sin, pi
+from numpy import sin, pi
 def displacement(seq, phase, count, diffs, fshifts=(), bshifts=()):
     ants, termites = [], []
-    species = -30*(pi/180)
-    x, C1 = [0, 0.1], 0.005
+    species = -30.*(pi/180.)
+    x, C1 = [0.0, 0.1], 0.005
     
     def cheese(self, *args): self.append('%s,%s' % args)
-    def delphi(x0): (pi/3)*x0 - species
-    for k in xrange(2, count):
-        i = 3*k
+    def delphi(x0): return (pi/3)*x0 - species
+    phi_signal = [0]
+    shift = 0
+    for k in xrange(1, 3):
+        i = 3*k + 2 + shift
         if i + 4 > len(seq): break
         codons = [Codon(j) for j in (seq[i:i+3], seq[i+1:i+4], seq[i+2:i+5])]
         
-        phi_signal[k-1] = diffs[k,1]; x0 = x[k-1]
+        phi_signal += [diffs[k][1]]
+        x0 = x[k]
         phi_dx = delphi(x0)
         for persian in xrange(1, 1000):
-            a = x0*pi/4;
+            a = x0*pi/(4.0)
             # Window function
-            weights = [func(a) for func in (fxsin, xcos, bxsin)]
+            weights = [func(a)**10 for func in (fxsin, xcos, bxsin)]
             back, here, there = [c.nudge(w) for (c, w) in zip(codons, weights)]
             reloop = 1 - (back + here + there)
             
-            r = random() # Mersenne Twister
-            if all([reloop < p for p in (back, here, there)]):
-                if r < here: break
-                elif r < (here + there):
+            # r = random() # Mersenne Twister
+            if (reloop < here) or (reloop < there) or (reloop < back):
+                if (here > there) and (here > back): break
+                elif (there > here) and (there > back):
                     shift += 1; cheese(ants, codons[1].codon, k)
                     break
-                elif r < (here + there + back):
+                elif (back > here) and (back > there):
                     shift -= 1; cheese(termites, codons[1].codon, k)
                     break
             
+            
             phi_dx = delphi(x0)
-            dx = -C1 * diffs[k-1,0] * sin(phi_signal[k-1] + phi_dx)
+            dx = -C1 * diffs[k][0] * sin(phi_signal[k] + phi_dx)
             x0 += dx
-    x[k] = x0
+        x += [x0]
+    return x
 
 if __name__ == '__main__':
     import sys

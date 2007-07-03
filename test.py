@@ -8,13 +8,13 @@ def unity(file):
     (signal, seq) = pull.signal(file)
     
     # Synthesize all the data.
-    (mag, phase, codon_count) = pull.polarity(signal)
+    mag, phase, codon_count = pull.magphase(signal)
     diff_vectors = pull.diff_vectors(mag, phase, codon_count)
-    (thetas, placements, forces) = pull.displacement(seq[13:], \
-        phase, codon_count, diff_vectors)
+    places = pull.displacement(seq[12:], phase, codon_count, diff_vectors)
     
     figure(1);
-    plot(arange(1, len(placements)), placements)
+    plot(arange(0, len(places)), places)
+    show()
 
 if __name__ == '__main__':
     import sys
