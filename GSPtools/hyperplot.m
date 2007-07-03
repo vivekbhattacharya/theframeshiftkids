@@ -30,10 +30,11 @@ if strcmp(mode, 'superimpose')
     h = figure(1); set(h, 'Renderer', 'OpenGL');
         set(h, 'Visible', 'off');
         plot(0,0); plot(plots{:}); title(file);
-            grid; xlabel('Codon Number'); ylabel('x(k)'); axis([0, max_dom, bottom, top]);
+            grid; xlabel('Codon Number'); ylabel('x(k)');
+            axis([0, max_dom, bottom, top]);
     saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
 elseif strcmp(mode, 'errorbars')
-	upper = ceil(numcodons);
+	upper = ceil(n);
     a = zeros(limit, upper);
     for i=1:limit
         [x,diffx] = displacement(S(13:end),Phase,n,Dvec,{},{});
@@ -47,6 +48,8 @@ elseif strcmp(mode, 'errorbars')
 	[folder, file, ext] = fileparts(file);
 	[avg, stddev] = exmean(a);
 	h = figure(1); set(h, 'Renderer', 'OpenGL');
-	plot(0,0); errorbar(1:upper, avg, stddev); title(file);
-	grid; xlabel('Codon Number'); ylabel('x(k)');
+        set(h, 'Visible', 'off');
+        plot(0,0); errorbar(1:upper, avg, stddev); title(file);
+        grid; xlabel('Codon Number'); ylabel('x(k)');
+    saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
 end

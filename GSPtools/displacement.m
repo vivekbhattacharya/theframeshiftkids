@@ -52,7 +52,7 @@ function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshift
         % MathBehindTheModel> for explanation.
         here_fail = 1; there_fail = 1; back_fail=1;
         for wt=1:1000
-            a = (x0 - 2*shift)*pi/4; % Window function follows
+            a = (x0 - 2*shift); % Window function follows
             [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power);
             [here_fail, here] = probabilities(here_loops, excos(a)^10);
             [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power);
@@ -131,8 +131,8 @@ end
 % Parameters:
 %   loops: from real_loops
 %   weight: cos/sin factor
-%   sofar: acc fed back to us
-function [acc, p] = probabilities(loops, weight)
-    acc = 1 - (weight/loops);
-    p = 1 - acc;
+function [acc, p] = probabilities(loops, weight, acc)
+    p = weight/loops;
+    acc = 1 - p;
+    % p = 1 - acc;
 end
