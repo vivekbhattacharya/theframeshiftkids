@@ -6,13 +6,17 @@ function find_problems(file)
     global beached_whale;
     global ants termites;
     beached_whale = 1;
-    s = struct();
-    for i=1:10
-        [x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
-        s = helper(s, ants);
-        s = helper(s, termites);
+    
+    start = 0;
+    while start > -1
+        s = struct();
+        for i=1:10
+            [x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
+            s = helper(s, ants);
+            s = helper(s, termites);
+        end
+        start = pearl('jovial.pl', [num2str(start) ' J:\plebes ' stringify(s)]);
     end
-    pearl('jovial.pl', stringify(s))
 end
 
 function [s] = helper(s, insect)
