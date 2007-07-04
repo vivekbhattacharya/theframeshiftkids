@@ -3,12 +3,11 @@ package Jovial;
 use Smooth qw(prot2codon codon2prot getseq);
 
 sub parse {
-    my $garbage = shift;
     return sort { $a->[2] <=> $b->[2] }
         map {
             my ($codon, $loc, $times) = split '_';
             [$times, $codon, $loc];
-        } split /\s+/, $garbage;
+        } @_;
 }
 
 # Return the codon sequence the comes before
@@ -38,6 +37,12 @@ sub beforehand {
     }
 }
 
+sub pick {
+    my $start = shift;
+    print Dumper($_[0]);
+    $_[0];
+}
+
 sub seq2permutations {
     my $seq = shift;
     my @proteins = codon2prot Smooth::seq2codons $seq;
@@ -47,10 +52,34 @@ sub seq2permutations {
 }
         
 use Data::Dumper;
+our $help = <<END;
+NAME
+    jovial.pl
+    (part of ThrushBaby)
+
+USAGE
+    Give me a
+        1) Gene sequence
+        2) Work folder (already existing)
+        3) Start position for `pick`ing
+        4) and a list of triplets[1]
+    
+    I will fill the work folder with permutations
+    of the four[2] codons behind the most "common"
+    frameshifter after the start, including of
+    course all the codons surrounding that area.
+    
+    [1]: In the form of codon_location_occurrence
+    [2]: Anything more than four is expensive but
+        possible Contact the authors if you have
+        an extremely fast machine :).
+END
 if ($0 eq __FILE__) {
-    my ($file, $folder, $garbage) = @ARGV;
-    my @data = parse $garbage;
-    my ($critical, $before, $after) = beforehand $data[0], $file, 4;
+    if (!@ARGV or $ARGV[0] eq '--help') { print $help; exit }
+    
+    my ($start, $file, $folder, @rest) = @ARGV;
+    my @data = parse @rest;
+    my ($critical, $before, $after) = beforehand pick($start, @data), $file, 4;
     
     my $i = 1;
     map {

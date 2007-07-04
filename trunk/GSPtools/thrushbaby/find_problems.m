@@ -10,12 +10,15 @@ function find_problems(file)
     start = 0;
     while start > -1
         s = struct();
-        for i=1:10
+        for i=1:50
             [x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
             s = helper(s, ants);
             s = helper(s, termites);
         end
-        start = pearl('jovial.pl', [num2str(start) ' J:\plebes ' stringify(s)]);
+        %stringify(s)
+        pearl('jovial.pl', [num2str(start) ' "' which(file) '" J:\Frameshift\tb1 ' stringify(s)])
+        impunity('J:\Frameshift\tb1', {}, {}, 100);
+        pause;
     end
 end
 
