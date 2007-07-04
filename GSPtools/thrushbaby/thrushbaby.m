@@ -4,25 +4,27 @@ function thrushbaby(file, work_folder, times)
     
     disp(['I''m about to obliterate ' work_folder '. Proceed?']); pause;
     preparedir(work_folder);
-    [folder, name, ext] = fileparts(which(file));
-    contents = struct('name', [name ext]);
+    copyfile(which(file), work_folder);
+    
     codon = '_';
+    folder = fullfile(work_folder, num2str(start)); preparedir(folder);
+    temp_folder = fullfile(work_folder, 'temp');
+    copyfile(which(file), folder);
     while start > -1
-        [file, s] = runner(folder, times, codon, [contents]);
+        [file, s] = runner(folder, times, codon);
+        
+        disp(['Now running Perl on: ' file]);
+        preparedir(temp_folder);
+        a = pearl('starling.pl', [num2str(start) ' "' file '" "' temp_folder '" ' stringify(s)]);
+        
+        disp(['Perl says: ' a]);
+        a = eval(a); start = a{1}; codon = a{2};
         
         % J:\work\0, J:\work\25, J:\work\200, etc.
         folder = fullfile(work_folder, num2str(start));
-        preparedir(folder);
-        
-        disp(['Now running Perl on: ' file]);
-        a = pearl('starling.pl', [num2str(start) ' "' file '" "' folder '" ' stringify(s)]);
-        
-        disp(['Perl says: ' a]);
-        a = eval(a);
-        start = a{1}; codon = a{2};
+        movefile(temp_folder, folder);
         
         disp(['Next codon target: ' codon sprintf('\n')]);
-        contents = [dir(fullfile(folder, '/*.txt')); dir(fullfile(folder, '*.fasta'))];
     end
 end
 
@@ -31,7 +33,8 @@ function preparedir(folder)
     mkdir(folder);
 end
 
-function [best_name, best_struct] = runner(folder, times, codon, d)
+function [best_name, best_struct] = runner(folder, times, codon)
+    d = [dir(fullfile(folder, '/*.txt')); dir(fullfile(folder, '*.fasta'))];
     best_time = times*2;
     best_struct = struct();
     global ants termites;
@@ -39,12 +42,10 @@ function [best_name, best_struct] = runner(folder, times, codon, d)
         name = d(i).name;
         
         % Print the data.
-        [Signal, S] = get_signal([folder '/' name]);
-        [Mag, Phase, n] = cumm_mag_phase(Signal);
-        Dvec = diff_vectors(Mag, Phase, n);
+        [S, n, Dvec] = walrus_surprise(fullfile(folder, name));
         time = 0; s = struct();
         for i=1:times
-            displacement(S(13:end), Phase, n, Dvec, {}, {});
+            displacement(S(13:end), n, Dvec, {}, {});
             insects = horzcat(ants, termites);
             s = helper(s, insects);
             if strmatch(codon, insects)
