@@ -1,5 +1,5 @@
 use strict; use warnings;
-package Jovial;
+package Starling;
 use Smooth qw(prot2codon codon2prot getseq);
 
 sub parse {
@@ -39,7 +39,7 @@ sub beforehand {
 
 sub pick {
     my $start = shift;
-    print Dumper($_[0]);
+    printf q/{%s '%s,%s' %s}/, $_[0]->[2], $_[0]->[1];
     $_[0];
 }
 
@@ -58,10 +58,10 @@ NAME
     (part of ThrushBaby)
 
 USAGE
-    Give me a
-        1) Gene sequence
-        2) Work folder (already existing)
-        3) Start position for `pick`ing
+    jovial.pl (1) (2) (3) (4)
+        1) Start position for `pick`ing
+        2) Gene sequence file
+        3) Work folder (already existing)
         4) and a list of triplets[1]
     
     I will fill the work folder with permutations
@@ -79,7 +79,7 @@ if ($0 eq __FILE__) {
     
     my ($start, $file, $folder, @rest) = @ARGV;
     my @data = parse @rest;
-    my ($critical, $before, $after) = beforehand pick($start, @data), $file, 4;
+    my ($critical, $before, $after) = beforehand pick($start, @data), $file, 2;
     
     my $i = 1;
     map {
