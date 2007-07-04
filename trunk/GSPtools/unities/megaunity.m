@@ -16,12 +16,10 @@ function megaunity(file, fshifts, bshifts)
 
 % These files need to be in the include path or working directory.
 % See code.google.com website for copies.
-[Signal, S] = get_signal(file);
-[Mag, Phase, numcodons] = cumm_mag_phase(Signal);
-Dvec = diff_vectors(Mag, Phase, numcodons);
+[S, n, Dvec] = walrus_surprise(file);
 global shoals sands;
 while 1
-    [x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,fshifts,bshifts);
+    [x,diffx] = displacement(S(13:end),n,Dvec,fshifts,bshifts);
 
     cp = 0;
     h = figure(1); set(h, 'Renderer', 'OpenGL');

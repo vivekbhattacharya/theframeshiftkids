@@ -1,17 +1,17 @@
-function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshifts)
-% ------------------------------------------------------------
-% CALCULATE DISPLACEMENT
-% The function takes a sequence (without the 12-leader
-% sequence), a phase array, the number of codons, the
-% differential vector calculated by diff_vector, a list
-% of +1 frameshifts to match against, and a list of -1
-% frameshifts to match against.
-% 
-% This is the equivalent of an OOP private method. Its primary
-% purpose is to aid in the development of unities. Prior to
-% refactoring the old GSPtools, this function existed as
-% part of calcmpx.m. Not intended for user consumption.
-% ------------------------------------------------------------    
+function [x,diffx] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
+    % ------------------------------------------------------------
+    % CALCULATE DISPLACEMENT
+    % The function takes a sequence (without the 12-leader
+    % sequence), a phase array, the number of codons, the
+    % differential vector calculated by diff_vector, a list
+    % of +1 frameshifts to match against, and a list of -1
+    % frameshifts to match against.
+    % 
+    % This is the equivalent of an OOP private method. Its primary
+    % purpose is to aid in the development of unities. Prior to
+    % refactoring the old GSPtools, this function existed as
+    % part of calcmpx.m. Not intended for user consumption.
+    % ------------------------------------------------------------    
     
     % Magic numbers
     % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
@@ -78,10 +78,6 @@ function [x,diffx] = displacement(seq,Phase,numcodons,Dvec,frontshifts,backshift
         %InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
         %if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
         x(1,k+1) = x0;
-    end
-    
-    for k=1:length(Phase)
-        if Phase(k)<0; Phase(k)=Phase(k)+(2*pi); end
     end
     
     diffx = zeros(length(x));
