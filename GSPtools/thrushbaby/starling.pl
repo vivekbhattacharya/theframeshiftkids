@@ -3,7 +3,10 @@ package Starling;
 use Smooth qw(prot2codon codon2prot getseq);
 
 sub parse {
-    return sort { $a->[2] <=> $b->[2] }
+    my $start = shift;
+    return
+        grep { $_->[2] > $start }
+        sort { $a->[2] <=> $b->[2] }
         map {
             my ($codon, $loc, $times) = split '_';
             [$times, $codon, $loc];
@@ -38,8 +41,10 @@ sub beforehand {
 }
 
 sub pick {
-    my $start = shift;
-    printf q/{%s '%s,%s' %s}/, $_[0]->[2], $_[0]->[1];
+    if ($#_ < 0) { print q/{-1 -1}/; exit }
+    
+    # Communicate with Matlab via ... now!
+    printf q/{%s '%s,%s'}/, $_[0]->[2], $_[0]->[1], $_[0]->[2];
     $_[0];
 }
 
@@ -78,8 +83,8 @@ if ($0 eq __FILE__) {
     if (!@ARGV or $ARGV[0] eq '--help') { print $help; exit }
     
     my ($start, $file, $folder, @rest) = @ARGV;
-    my @data = parse @rest;
-    my ($critical, $before, $after) = beforehand pick($start, @data), $file, 2;
+    my @data = parse $start, @rest;
+    my ($critical, $before, $after) = beforehand pick(@data), $file, 2;
     
     my $i = 1;
     map {

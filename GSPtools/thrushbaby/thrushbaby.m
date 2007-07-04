@@ -1,35 +1,32 @@
-function thrushbaby(file)
-    [Signal, S] = get_signal(file);
-    [Mag, Phase, numcodons] = cumm_mag_phase(Signal);
-    Dvec = diff_vectors(Mag, Phase, numcodons);
-    
-    global beached_whale;
-    global ants termites;
-    beached_whale = 1;
-    
+function thrushbaby(file, work_folder, times)
+    global beached_whale; beached_whale = 1;
     start = 0;
-    %while start > -1
-        s = struct();
-        for i=1:15
-            [x,diffx] = displacement(S(13:end),Phase,numcodons,Dvec,{},{});
-            s = helper(s, ants);
-            s = helper(s, termites);
-        end
-        folder = 'J:\Frameshift\tb1';
-        a = pearl('starling.pl', [num2str(start) ' "' which(file) '" "' folder '" ' stringify(s)]);
-        a = eval(a)
-        start = a{1};
-        codon = a{2};
-        runner(folder, 10, codon);
-        pause;
-    %end
+
+    [folder, name, ext] = fileparts(which(file));
+    contents = struct('name', [name ext]);
+    codon = '_';
+    while start > -1
+        [file, s] = runner(folder, times, codon, [contents]);
+        
+        % J:\work\0, J:\work\25, J:\work\200, etc.
+        folder = fullfile(work_folder, num2str(start));
+        if isdir(folder), rmdir(folder, 's'); end;
+        disp(['New folder: ' folder]);
+        mkdir(folder);
+        
+        disp(['Now running Perl on: ' file]);
+        a = pearl('starling.pl', [num2str(start) ' "' file '" "' folder '" ' stringify(s)]);
+        disp(['Perl says: ' a]);
+        a = eval(a);
+        start = a{1}; codon = a{2};
+        disp(['Next codon target: ' codon sprintf('\n')]);
+        contents = [dir(fullfile(folder, '/*.txt')); dir(fullfile(folder, '*.fasta'))];
+    end
 end
 
-function [best_name] = runner(folder, limit, codon)
-    d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
-    global beached_whale; beached_whale = 1;
-    
-    best_name = ''; best_time = limit*2;
+function [best_name, best_struct] = runner(folder, times, codon, d)
+    best_time = times*2;
+    best_struct = struct();
     global ants termites;
     for i = 1:length(d)
         name = d(i).name;
@@ -38,10 +35,11 @@ function [best_name] = runner(folder, limit, codon)
         [Signal, S] = get_signal([folder '/' name]);
         [Mag, Phase, n] = cumm_mag_phase(Signal);
         Dvec = diff_vectors(Mag, Phase, n);
-        time = 0;
-        for i=1:limit
+        time = 0; s = struct();
+        for i=1:times
             displacement(S(13:end), Phase, n, Dvec, {}, {});
             insects = horzcat(ants, termites);
+            s = helper(s, insects);
             if strmatch(codon, insects)
                 time = time + 1;
             end
@@ -50,9 +48,12 @@ function [best_name] = runner(folder, limit, codon)
         if time < best_time
             best_time = time;
             best_name = name;
+            best_struct = s;
             if time == 0, break; end;
         end
     end
+    best_name = fullfile(folder, best_name);
+    disp(['I choose ' best_name]);
 end
 
 function [s] = helper(s, insect)
