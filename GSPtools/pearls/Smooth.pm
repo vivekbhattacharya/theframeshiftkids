@@ -119,7 +119,7 @@ sub permute {
     reduce {[
         map {
             my $x = $_;
-            map "$_  $x", @$a;
+            map "$_$x", @$a;
         } @$b
     ]} @_;
 }
