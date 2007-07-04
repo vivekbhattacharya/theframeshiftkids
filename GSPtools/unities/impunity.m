@@ -21,13 +21,10 @@ function impunity(folder, fshifts, bshifts, limit)
         % or the infinite loop, instead capped at `limit`. In addition,
         % it returns the yield instead of displaying it.
         % ----------------------------------------------------------------
-        [Signal, S] = get_signal(file);
-        [Mag, Phase, n] = cumm_mag_phase(Signal);
-        Dvec = diff_vectors(Mag, Phase, n);
-        
+        [S, n, Dvec] = walrus_surprise(file);        
         global shoals sands;
         for i=1:limit
-            [x,diffx] = displacement(S(13:end), Phase, n, Dvec, fshifts, bshifts);
+            [x,diffx] = displacement(S(13:end), n, Dvec, fshifts, bshifts);
         end
         yield = shoals/sands;
     end
