@@ -1,7 +1,9 @@
 function thrushbaby(file, work_folder, times)
     global beached_whale; beached_whale = 1;
     start = 0;
-
+    
+    disp(['I''m about to obliterate ' work_folder '. Proceed?']); pause;
+    preparedir(work_folder);
     [folder, name, ext] = fileparts(which(file));
     contents = struct('name', [name ext]);
     codon = '_';
@@ -10,18 +12,23 @@ function thrushbaby(file, work_folder, times)
         
         % J:\work\0, J:\work\25, J:\work\200, etc.
         folder = fullfile(work_folder, num2str(start));
-        if isdir(folder), rmdir(folder, 's'); end;
-        disp(['New folder: ' folder]);
-        mkdir(folder);
+        preparedir(folder);
         
         disp(['Now running Perl on: ' file]);
         a = pearl('starling.pl', [num2str(start) ' "' file '" "' folder '" ' stringify(s)]);
+        
         disp(['Perl says: ' a]);
         a = eval(a);
         start = a{1}; codon = a{2};
+        
         disp(['Next codon target: ' codon sprintf('\n')]);
         contents = [dir(fullfile(folder, '/*.txt')); dir(fullfile(folder, '*.fasta'))];
     end
+end
+
+function preparedir(folder)
+    if isdir(folder), rmdir(folder, 's'); end;
+    mkdir(folder);
 end
 
 function [best_name, best_struct] = runner(folder, times, codon, d)

@@ -41,11 +41,22 @@ sub beforehand {
 }
 
 sub pick {
+    # Time to end ThrushBaby.
     if ($#_ < 0) { print q/{-1 -1}/; exit }
     
-    # Communicate with Matlab via ... now!
-    printf q/{%s '%s,%s'}/, $_[0]->[2], $_[0]->[1], $_[0]->[2];
-    $_[0];
+    # Gobble up neighboring frameshifts
+    # if they're only one away.
+    my $data = shift;
+    foreach my $wombat (@_) {
+        if ($wombat->[2] - $data->[2] == 1) {
+            $data = $wombat;
+        } else { +last }
+    }
+    
+    # Communicate with Matlab ... now!
+    my (undef, $codon, $loc) = @$data;
+    printf q/{%s '%s,%s'}/, $loc, $codon, $loc;
+    return $data;
 }
 
 sub seq2permutations {
