@@ -3,7 +3,7 @@
 % to a file for all files in a given folder where
 % each file contains a gene sequence
 % 
-% Usage: opportunity('C:\folder')
+% Usage: opportunity('C:\folder', 10)
 % ------------------------------------------------
 function opportunity(folder, limit)
 d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
