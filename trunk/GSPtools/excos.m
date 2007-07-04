@@ -1,6 +1,6 @@
 function [n] = excos(x)
 
-period = 4.5;
+period = 4;
 x = x * pi/period;
 
 if (x > -period/2) && (x < period/2), n = cos(x);

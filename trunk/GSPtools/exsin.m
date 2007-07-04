@@ -1,6 +1,6 @@
 function [n] = exsin(x, dir)
 
-period = 3;
+period = 4;
 x = x * pi/period;
 phase1 = pi/2 - 2*pi/period;
 phase2 = pi/2 + 2*pi/period;

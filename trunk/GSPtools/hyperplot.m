@@ -3,7 +3,7 @@
 % and saves it to a file in a work folder
 % 
 % Usage: hyperplot('C:\folder\prfb.txt',
-%   'pictures', 5)
+%   'pictures', 5, 'superimpose')
 % ------------------------------------------------
 function hyperplot(file, subfolder, limit, mode)
 [Signal, S] = get_signal(file);
