@@ -84,7 +84,7 @@ if ($0 eq __FILE__) {
     
     my ($start, $file, $folder, @rest) = @ARGV;
     my @data = parse $start, @rest;
-    my ($critical, $before, $after) = beforehand pick(@data), $file, 2;
+    my ($critical, $before, $after) = beforehand pick(@data), $file, 4;
     
     my $i = 1;
     map {
