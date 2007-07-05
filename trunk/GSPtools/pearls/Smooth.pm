@@ -110,17 +110,4 @@ sub prot2codon {
 sub codon2prot {
     map { $repression{$_} } @_;
 }
-
-sub permute {
-    use List::Util qw(reduce);
-    no warnings 'once';
-    # Note: we have to store a temporary
-    # $x to access $_ after it's been shadowed.
-    reduce {[
-        map {
-            my $x = $_;
-            map "$_$x", @$a;
-        } @$b
-    ]} @_;
-}
 1;
