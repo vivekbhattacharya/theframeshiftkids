@@ -5,7 +5,7 @@ use Smooth qw(prot2codon codon2prot getseq);
 sub parse {
     my $start = shift;
     return
-        grep { $_->[2] > $start }
+        grep { $_->[2] > $start + 9 }
         sort { $a->[2] <=> $b->[2] }
         map {
             my ($codon, $loc, $times) = split '_';
