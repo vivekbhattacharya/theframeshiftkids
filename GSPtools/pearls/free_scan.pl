@@ -138,11 +138,10 @@ Options:
    0 position) in the first column and Delta G values in the second column.
    This option assumes that the rna_seq is the 3\' 16S rRNA tail.
 
--p FREIER|SANTALUCIA|XIA_MATHEWS
+-p FREIER|XIA_MATHEWS
    Allows you to determine which set of parameters are used to simulate binding
    between the to strands of nucleotides.  The default value is XIA_MATEHWS.
    FREIER - RNA binding parameters from 1986
-   SANTALUCIA - DNA binding parameters from 1998
    XIA_MATHEWS - RNA binding parameters from 1998
 
 -t temperature
@@ -187,6 +186,7 @@ sub print_headers {
 }
 
 
+use Smooth;
 ## "main"
 {
     
@@ -245,8 +245,6 @@ sub print_headers {
 
     if ($gDoubletID eq "FREIER") {
 	$align_obj->select_parameters($align_obj->FREIER);
-    } elsif ($gDoubletID eq "SANTALUCIA") {
-	$align_obj->select_parameters($align_obj->SANTALUCIA);
     } elsif ($gDoubletID eq "XIA_MATHEWS") {
 	$align_obj->select_parameters($align_obj->XIA_MATHEWS);
     } else {
@@ -300,7 +298,7 @@ sub print_headers {
 	}
     }
 
-    my ($full_seq) =  $align_obj->load_fasta($gSeqFile);
+    my ($full_seq) =  Smooth::getseq($gSeqFile);
 
     my $first_pass = TRUE;
     my @output_matrix;
