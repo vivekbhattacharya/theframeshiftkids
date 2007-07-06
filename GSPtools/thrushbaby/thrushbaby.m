@@ -1,3 +1,6 @@
+% Optimizes a gene sequence to produce one
+% with no frameshifts, theoretically anyway.
+% Arguments: file, work folder, number of iterations
 function thrushbaby(file, work_folder, times)
     global beached_whale; beached_whale = 1;
     start = 0;
@@ -61,7 +64,6 @@ function [best_name, best_struct] = runner(folder, times, codon)
         end
     end
     best_name = fullfile(folder, best_name);
-    disp(['I choose ' best_name]);
 end
 
 function [s] = helper(s, insect)

@@ -1,8 +1,6 @@
 use warnings; use strict;
 package FreeAlign;
-## This is a perl module or class that implements some common 
-## subroutines that free energy calculations by dynamic programming may want
-## to use
+## This module does free energy calculations.
 ##
 ## Authors: Joshua Starmer <jdstarme@unity.ncsu.edu>, 2004
 ##	The Frameshift Kids, 2007
