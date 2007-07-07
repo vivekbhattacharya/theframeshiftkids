@@ -139,10 +139,11 @@ if ($0 eq __FILE__) {
     my ($before, $critical, $after) = beforehand pick(@data), $file, 4;
     
     my $i = 1;
+    use List::Util qw(shuffle);
     map {
         open(my $handle, ">$folder/$i.txt");
         print $handle ($before . $_ . $after);
         $i++;
-    } @{seq2permutations $critical};
+    } shuffle @{seq2permutations $critical};
 }
 1;
