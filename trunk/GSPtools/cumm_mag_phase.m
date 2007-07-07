@@ -18,21 +18,20 @@ function [Mag, Phase, numcodons] = cumm_mag_phase(x)
     numcodons = length(Mag);
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This function calculates the magnitude and phase
-% of a given length of signal using sine-wave
-% interpolation.
-% 
-% INPUTS: 
-%   x = signal upto a certain number of codons
-%   The length of the signal must be a codon multiple
-% 
-% USAGE:
-%   [A,theta,Err] = helper(x, avg_choice);
-%   theta = phase angle in radians
 function [A, theta] = helper(x)
-    % Fill up the memory registers
-    M = zeros(1,3);
+    % This function calculates the magnitude and phase
+    % of a given length of signal using sine-wave
+    % interpolation.
+    % 
+    % INPUTS: 
+    %   x = signal upto a certain number of codons
+    %   The length of the signal must be a codon multiple
+    % 
+    % USAGE:
+    %   [A,theta,Err] = helper(x, avg_choice);
+    %   theta = phase angle in radians
+
+    M = zeros(1,3); % Fill memory registers
     for j = 1:3:length(x)
         M(1:3) = M(1:3) + x(j:j+2);
     end    
