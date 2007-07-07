@@ -31,10 +31,10 @@ sub new {
 	my $self = {};
 	# Are terminal/internal bulges allowed?
 	$self->{NoBulge} = FALSE;
-	$self->{InternalBulge} = TRUE;
+	$self->{InternalBulge} = FALSE;
 	
 	# Allow loops?
-	$self->{Loop} = TRUE;
+	$self->{Loop} = FALSE;
 	
 	# Binding temperature (K), related to dH and dS
 	$self->{Temp} = 37 + 237.15;
@@ -61,8 +61,7 @@ sub select_parameters {
 	# Helix initiation penalty, see Xia (1998).
 	elsif ($self->{Parameter} == XIA_MATHEWS) {
 		my ($dH, $dS) = (3.61, -1.5);
-		$self->{InitPenalty} = $dH -
-			$self->{Temp}*($dS/1000);
+		$self->{InitPenalty} = $dH - $self->{Temp}*($dS/1000);
     }
 }
 
@@ -101,10 +100,9 @@ sub internal_loop {
     # are we allowed to consider loops in an optimal binding?    
     if (!$self->{Loop}) { return BIG_NUM; }
     if ($length == 0) { return 0; }
+    # Single base bulge
     if ($length == 1) {
-		# Single base bulge
-		print STDERR "internal_loop: Loop length of one is not a real loop";
-		return BIG_NUM;
+		die 'internal_loop: Loop length of one is not a real loop';
     }
 
 	for ($self->{Parameter}) {
@@ -181,26 +179,26 @@ sub doublet_freier {
 		!$self->valid_pair($t3, $b5)) { return BIG_NUM; }
 
 	my %scores = (
-		'AU' => {
+		AU => {
 			# Watson/Crick matches
-			'AU' => -0.9, 'UA' => -0.9, 'GC' => -1.7, 'CG' => -2.1,
+			AU => -0.9, UA => -0.9, GC => -1.7, CG => -2.1,
 			# G/U mismatches
-			'GU' => -0.5, 'UG' => -0.7
-		}, 'UA' => {
-			'AU' => -1.1, 'UA' => -0.9, 'GC' => -1.8, 'CG' => -2.3,
-			'GU' => -0.7, 'UG' => -0.5
-		}, 'CG' => {
-			'AU' => -1.8, 'UA' => -1.7, 'GC' => -2.9, 'CG' => -2.0,
-			'GU' => -1.5, 'UG' => -1.5
-		}, 'GC' => {
-			'AU' => -2.3, 'UA' => -2.1, 'GC' => -2.9, 'CG' => -3.4,
-			'GU' => -1.3, 'UG' => -1.9
-		}, 'GU' => {
-			'AU' => -0.5, 'UA' => -0.7, 'GC' => -1.5, 'CG' => -1.9,
-			'GU' => -0.5, 'UG' => -0.5
-		}, 'UG' => {
-			'AU' => -0.7, 'UA' => -0.5, 'GC' => -1.5, 'CG' => -1.3,
-			'GU' => -0.6, 'UG' => -0.5
+			GU => -0.5, UG => -0.7
+		}, UA => {
+			AU => -1.1, UA => -0.9, GC => -1.8, CG => -2.3,
+			GU => -0.7, UG => -0.5
+		}, CG => {
+			AU => -1.8, UA => -1.7, GC => -2.9, CG => -2.0,
+			GU => -1.5, UG => -1.5
+		}, GC => {
+			AU => -2.3, UA => -2.1, GC => -2.9, CG => -3.4,
+			GU => -1.3, UG => -1.9
+		}, GU => {
+			AU => -0.5, UA => -0.7, GC => -1.5, CG => -1.9,
+			GU => -0.5, UG => -0.5
+		}, UG => {
+			AU => -0.7, UA => -0.5, GC => -1.5, CG => -1.3,
+			GU => -0.6, UG => -0.5
 		},
 	);
     my $score = $scores{$t5 . $b3}->{$t3 . $b5};
@@ -219,14 +217,14 @@ sub doublet_santalucia {
     }
 	
 	my %scores = (
-		'AT' => {
-			'AT' => -1.00, 'TA' => -0.88, 'GC' => -1.28, 'CG' => -1.44
-		}, 'TA' => {
-			'AT' => -0.58, 'TA' => -1.00, 'GC' => -1.45, 'CG' => -1.30
-		}, 'CG' => {
-			'AT' => -1.45, 'TA' => -1.28, 'GC' => -2.17, 'CG' => -1.42
-		}, 'GC' => {
-			'AT' => -1.30, 'TA' => -1.44, 'GC' => -1.42, 'CG' => -1.84
+		AT => {
+			AT => -1.00, TA => -0.88, GC => -1.28, CG => -1.44
+		}, TA => {
+			AT => -0.58, TA => -1.00, GC => -1.45, CG => -1.30
+		}, CG => {
+			AT => -1.45, TA => -1.28, GC => -2.17, CG => -1.42
+		}, GC => {
+			AT => -1.30, TA => -1.44, GC => -1.42, CG => -1.84
 		},
 	);
     my $score = $scores{$t5 . $b3}->{$t3 . $b5};
@@ -245,30 +243,30 @@ sub doublet_xia_mathews {
     }
     
 	my %scores = (
-		'AU' => {
-			'AU' => [-6.82, -19.0], 'UA' => [-9.38, -26.7],
-			'GC' => [-10.48, -27.1], 'CG' => [-11.40, -29.5],
-			'GU' => [-3.21, -8.6], 'UG' => [-8.81, -24.0],
-		}, 'UA' => {
-			'AU' => [-7.69, -20.5], 'UA' => [-6.82, -19.0],
-			'GC' => [-10.44, -26.9], 'CG' => [-12.44, -32.5],
-			'GU' => [-6.99, -19.3], 'UG' => [-12.83, -37.3],
-		}, 'CG' => {
-			'AU' => [-10.44, -26.9], 'UA' => [-10.48, -27.1],
-			'GC' => [-10.64, -26.7], 'CG' => [-13.39, -32.7],
-			'GU' => [-5.61, -13.5], 'UG' => [-12.11, -32.2],
-		}, 'GC' => {
-			'AU' => [-12.44, -32.5], 'UA' => [-11.40, -29.5],
-			'GC' => [-13.39, -32.7], 'CG' => [-14.88, -36.9],
-			'GU' => [-8.33, -21.9], 'UG' => [-12.59, -32.5],
-		}, 'GU' => {
-			'GU' => [-13.47, -41.82], 'UG' => [-14.59, -51.2],
-			'UA' => [-8.81, -24.0], 'AU' => [-12.83, -37.3],
-			'GC' => [-12.11, -32.3], 'CG' => [-12.59, -32.5],
-		}, 'UG' => {
-			'GU' => [-9.26, -30.8], 'UG' => [-13.47, -41.82],
-			'UA' => [-3.21, -8.6], 'AU' => [-6.99, -19.3],
-			'GC' => [-5.61, -13.5], 'CG' => [-8.33, -21.9],
+		AU => {
+			AU => [-6.82, -19.0], UA => [-9.38, -26.7],
+			GC => [-10.48, -27.1], CG => [-11.40, -29.5],
+			GU => [-3.21, -8.6], UG => [-8.81, -24.0],
+		}, UA => {
+			AU => [-7.69, -20.5], UA => [-6.82, -19.0],
+			GC => [-10.44, -26.9], CG => [-12.44, -32.5],
+			GU => [-6.99, -19.3], UG => [-12.83, -37.3],
+		}, CG => {
+			AU => [-10.44, -26.9], UA => [-10.48, -27.1],
+			GC => [-10.64, -26.7], CG => [-13.39, -32.7],
+			GU => [-5.61, -13.5], UG => [-12.11, -32.2],
+		}, GC => {
+			AU => [-12.44, -32.5], UA => [-11.40, -29.5],
+			GC => [-13.39, -32.7], CG => [-14.88, -36.9],
+			GU => [-8.33, -21.9], UG => [-12.59, -32.5],
+		}, GU => {
+			GU => [-13.47, -41.82], UG => [-14.59, -51.2],
+			UA => [-8.81, -24.0], AU => [-12.83, -37.3],
+			GC => [-12.11, -32.3], CG => [-12.59, -32.5],
+		}, UG => {
+			GU => [-9.26, -30.8], UG => [-13.47, -41.82],
+			UA => [-3.21, -8.6], AU => [-6.99, -19.3],
+			GC => [-5.61, -13.5], CG => [-8.33, -21.9],
 		},
 	);
 
@@ -345,33 +343,33 @@ sub terminal_doublet_freier {
 	# is not a G/U mismatch.
     if (!$self->wc_pair($t5, $b3)) { return BIG_NUM; }
 	my %scores = (
-		'AU' => {
+		AU => {
 			# Watson/Crick matches
-			'AU' => -0.9, 'UA' => -0.9, 'GC' => -1.7, 'CG' => -2.1,
+			AU => -0.9, UA => -0.9, GC => -1.7, CG => -2.1,
 			# G/U mismatches
-			'GU' => -0.9, 'UG' => -0.9,
+			GU => -0.9, UG => -0.9,
 			# Mismatches
-			'AA' => -0.8, 'CC' => -0.7, 'GG' => -1.0, 'UU' => -0.8,
-			'AC' => -1.0, 'AG' => -1.0, 'CA' => -0.7, 'GA' => -0.8,
-			'UC' => -0.8, 'CU' => -0.7,
-		}, 'UA' => {
-			'AU' => -1.1, 'UA' => -0.9, 'GC' => -1.8, 'CG' => -2.3,
-			'GU' => -0.9, 'UG' => -1.0,
-			'AA' => -1.0, 'CC' => -0.6, 'GG' => -1.2, 'UU' => -0.5,
-			'AC' => -0.8, 'AG' => -1.1, 'CA' => -0.7, 'GA' => -1.1,
-			'UC' => -0.6, 'CU' => -0.5,
-		}, 'CG' => {
-			'AU' => -1.8, 'UA' => -1.7, 'GC' => -2.0, 'CG' => -2.9,
-			'GU' => -1.6, 'UG' => -1.9,
-			'AA' => -1.9, 'CC' => -1.1, 'GG' => -1.9, 'UU' => -1.2,
-			'AC' => -2.0, 'AG' => -1.9, 'CA' => -1.0, 'GA' => -1.0,
-			'UC' => -1.5, 'CU' => -0.8,
-		}, 'GC' => {
-			'AU' => -2.3, 'UA' => -2.1, 'GC' => -2.9, 'CG' => -3.4,
-			'GU' => -1.4, 'UG' => -2.3,
-			'AA' => -1.1, 'CC' => -0.6, 'GG' => -1.4, 'UU' => -0.7,
-			'AC' => -1.7, 'AG' => -1.3, 'CA' => -1.1, 'GA' => -1.6,
-			'UC' => -0.8, 'CU' => -0.5,
+			AA => -0.8, CC => -0.7, GG => -1.0, UU => -0.8,
+			AC => -1.0, AG => -1.0, CA => -0.7, GA => -0.8,
+			UC => -0.8, CU => -0.7,
+		}, UA => {
+			AU => -1.1, UA => -0.9, GC => -1.8, CG => -2.3,
+			GU => -0.9, UG => -1.0,
+			AA => -1.0, CC => -0.6, GG => -1.2, UU => -0.5,
+			AC => -0.8, AG => -1.1, CA => -0.7, GA => -1.1,
+			UC => -0.6, CU => -0.5,
+		}, CG => {
+			AU => -1.8, UA => -1.7, GC => -2.0, CG => -2.9,
+			GU => -1.6, UG => -1.9,
+			AA => -1.9, CC => -1.1, GG => -1.9, UU => -1.2,
+			AC => -2.0, AG => -1.9, CA => -1.0, GA => -1.0,
+			UC => -1.5, CU => -0.8,
+		}, GC => {
+			AU => -2.3, UA => -2.1, GC => -2.9, CG => -3.4,
+			GU => -1.4, UG => -2.3,
+			AA => -1.1, CC => -0.6, GG => -1.4, UU => -0.7,
+			AC => -1.7, AG => -1.3, CA => -1.1, GA => -1.6,
+			UC => -0.8, CU => -0.5,
 		},
 	);
 	my $score = $scores{$t5 . $b3}->{$t3 . $b5};
@@ -394,10 +392,8 @@ sub dangling_3pdrime {
     if ($self->{Parameter} == FREIER) {
 		return $self->dangling_3prime_freier($t5, $t3, $b3);
     } elsif ($self->{Parameter} == XIA_MATHEWS) {
-		# CURRENTLY USING THE FREIER PARAMETERS... SHOULD USE PARAMETERS
-		# FOUND IN...
-		# Serra and Turner, 1995 - Predicting thermodyamic properties of RNA.
-		#  Methods in Enzymology 259, 242-261
+		# Serra and Turner, 1995. "Predicting thermodyamic properties of RNA."
+		# _Methods in Enzymology_. 259, 242-261.
 		return $self->dangling_3prime_freier($t5, $t3, $b3);
     }
 }
@@ -405,20 +401,20 @@ sub dangling_3pdrime {
 sub dangling_3prime_freier {
     my ($self, $t5, $t3, $b3) = @_;
 
-    # We need the Watson-Crick pair to match.
+    # I need the Watson-Crick pair to match.
     return BIG_NUM if !$self->wc_pair($t5, $b3);
     # Do we allow terminal bulges?
     return BIG_NUM if $self->{NoBulge};
 	
 	my %scores = (
-		'AU' => {
-			'A' => -0.8, 'C' => -0.5, 'G' => -0.8, 'U' => -0.6,
-		}, 'CG' => {
-			'A' => -1.7, 'C' => -0.8, 'G' => -1.7, 'U' => -1.2,
-		}, 'GC' => {
-			'A' => -1.1, 'C' => -0.4, 'G' => -1.3, 'U' => -0.6,
-		}, 'UA' => {
-			'A' => -0.7, 'C' => -0.1, 'G' => -0.7, 'U' => -0.1,
+		AU => {
+			A => -0.8, C => -0.5, G => -0.8, U => -0.6,
+		}, CG => {
+			A => -1.7, C => -0.8, G => -1.7, U => -1.2,
+		}, GC => {
+			A => -1.1, C => -0.4, G => -1.3, U => -0.6,
+		}, UA => {
+			A => -0.7, C => -0.1, G => -0.7, U => -0.1,
 		},
 	);
 	my $score = $scores{$t5 . $b3}->{$t3};
@@ -426,93 +422,12 @@ sub dangling_3prime_freier {
     return BIG_NUM;
 }
 
-
-sub dangling_5prime {
-    my ($self, $t5, $t3, $b5) = @_;
-
-    # we need the pair to match (and no G/U mismatches)...
-    if (!($self->wc_pair($t3, $b5))) {
-	return BIG_NUM;
-    }    
-    
-    # are we allowing terminal bulges?
-    if ($self->{NoBulge}) {
-	return BIG_NUM;
-    }
-    
-    if (($t3 eq 'A') && ($b5 eq 'U')) {
-	if ($t5 eq 'A') {                # AA
-	    return -0.3; # Freier (1986)    U
-	}
-	if ($t5 eq 'C') {                # CA
-	    return -0.3; # Freier (1986)    U
-	}
-	if ($t5 eq 'G') {                # GA
-	    return -0.4; # Freier (1986)    U
-	}
-	if ($t5 eq 'U') {                # UA
-	    return -0.2; # Freier (1986)    U
-	}
-    }
-
-    if (($t3 eq 'C') && ($b5 eq 'G')) {
-	if ($t5 eq 'A') {                # AC
-	    return -0.5; # Freier (1986)    G
-	}
-	if ($t5 eq 'C') {                # CC
-	    return -0.2; # Freier (1986)    G
-	}
-	if ($t5 eq 'G') {                # GC
-	    return -0.2; # Freier (1986)    G
-	}
-	if ($t5 eq 'U') {                # UC
-	    return -0.1; # Freier (1986)    G
-	}
-    }
-
-    if (($t3 eq 'G') && ($b5 eq 'C')) {
-	if ($t5 eq 'A') {                # AG
-	    return -0.2; # Freier (1986)    C
-	}
-	if ($t5 eq 'C') {                # CG
-	    return -0.3; # Freier (1986)    C
-	}
-	if ($t5 eq 'G') {                # GG
-	    return -0.0; # Freier (1986)    C
-	}
-	if ($t5 eq 'U') {                # UG
-	    return -0.0; # Freier (1986)    C
-	}
-    }
-
-    if (($t3 eq 'U') && ($b5 eq 'A')) {
-	if ($t5 eq 'A') {                # AU
-	    return -0.3; # Freier (1986)    A
-	}
-	if ($t5 eq 'C') {                # CU
-	    return -0.2; # Freier (1986)    A
-	}
-	if ($t5 eq 'G') {                # GU
-	    return -0.2; # Freier (1986)    A
-	}
-	if ($t5 eq 'U') {                # UU
-	    return -0.2; # Freier (1986)    A
-	}
-    }
-
-    print STDERR "ERROR: FreeAlign::dangling_5prime()\n";
-    print STDERR "ERROR: 5' dangle $t5$t3\n";
-    print STDERR "                    $b5 not scored yet...\n";	    
-    return BIG_NUM;
-}
-
-
 ## Returns true if two characters form a valid helix pair,
 ## i.e. a standard Watson-Crick pair or a G-U mismatch.
 sub valid_pair {
     my ($self, $a, $b) = @_;
 	my $ab = $a . $b;
-	return scalar grep /$ab/, qw/GC CG AU AT UA TA GU UG/;
+	scalar grep /$ab/, qw/GC CG AU AT UA TA GU UG/;
 }
 
 
@@ -520,34 +435,33 @@ sub valid_pair {
 sub wc_pair {
     my ($self, $a, $b) = @_;
 	my $ab = $a . $b;
-	return scalar grep /$ab/, qw/GC CG AU AT UA TA/;
+	scalar grep /$ab/, qw/GC CG AU AT UA TA/;
 }
 
 ## Defines some substr calls used in force_bind. See
 ## force_bind() for more details.
+##
+## Note: fivethree is threefive for a y doublet and
+## similarly ->{context} is switched.
 package Strand;
+use Data::Dumper;
 sub new {
 	my ($class, $seq, $i, $length) = @_;
 	my $self = {};
 	
-	$self->{fivethree} = [substr($seq, $i, 1), substr($seq, $i+1, 1)];
-	$self->{context} =
-		($i < $length-2) ? 
-		[substr($seq, $i-1, 1), substr($seq, $i+2, 1)] :
-		['', ''];
+    # Asterisk needed to workaround substr's handling
+    # of negative numbers. That is, we want $i-1 to
+    # still work even when it doesn't produce s55.
+    my ($s55, $s5, $s3, $s33) = split '', substr('*' . $seq, $i, 3);
+	$self->{fivethree} = [$s5, $s3];
+	$self->{context} = ($i > 0 && $i < $length-2) ? 
+		[$s55, $s33] : ['', ''];
 	
 	bless $self, $class;
 }
 
-sub all {
-	my $self = shift;
-	return @{$self->{fivethree}};
-}
-
-sub context {
-	my $self = shift;
-	return @{$self->{context}};
-}
+sub all { @{shift->{fivethree}} }
+sub context { @{shift->{context}} }
 
 ## force_bind() forces an alignment between the two strands, 
 ## assuming that they both pair together from their first bases on.  
@@ -569,17 +483,14 @@ sub force_bind {
 	# I need at least two bases in each sequence in order to form
 	# a structure between them.
     if ($length != length($seq_y)) {
-		die 'force_bind(): Unequal sequence lengths', $/;
+		die 'force_bind(): Unequal sequence lengths';
     } if ($length < 2) {
-		die 'force_bind(): Sequences are too short', $/;
+		die 'force_bind(): Sequences are too short';
     }
 
-    my $score = 0;
-    my $best_score = 0;
-
-    my $helix_start = 0;
-    my $best_start;
-    my $helix_end = 0;
+    my $best_score = my $score = 0;
+    my $helix_start = my $helix_end = 0;
+    my $best_start = -1;
     for my $i (0 .. $length-2) {
 		my $x = Strand->new($seq_x, $i, $length);
 		my $y = Strand->new($seq_y, $i, $length);
@@ -598,9 +509,9 @@ sub force_bind {
 			$helix_start = $i + 1;
 			$score = 0;
 		} elsif ($score < $best_score) {
-			$helix_end = $i;
-			$best_score = $score;
 			$best_start = $helix_start;
+			$best_score = $score;
+			$helix_end = $i;
 		}
     }
 
@@ -609,8 +520,8 @@ sub force_bind {
 	# We have to do this now because we cannot know in advance
 	# where this terminal doublet is going to be.
     if ($best_score < 0) {
-		my $x = Strand->new($seq_x, $helix_end, 0, 0);
-		my $y = Strand->new($seq_y, $helix_end, 0, 0);
+		my $x = Strand->new($seq_x, $helix_end, 0);
+		my $y = Strand->new($seq_y, $helix_end, 0);
 		
 		my $internal_score = $self->internal_doublet($x->all, $y->all);
 		my $terminal_score = $self->terminal_doublet($x->all, $y->all, FALSE);
@@ -626,8 +537,8 @@ sub force_bind {
     }
 
     $self->{BestScore} = $best_score;
-    my $helix_length =
-		(defined $best_start) ? ($helix_end - $best_start + 2) : 0;
-    return ($best_score, $best_start, $helix_length);
+    my $helix_length = ($best_start == -1) ?
+        ($helix_end - $best_start + 2) : 0;
+    ($best_score, $best_start, $helix_length);
 }
 1;
