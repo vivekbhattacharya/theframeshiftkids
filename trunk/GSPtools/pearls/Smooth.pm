@@ -61,6 +61,12 @@ sub sanitize {
     s/[\s0-9]//g; tr/A-Z/a-z/; tr/t/u/; $_;
 }
 
+# Cf. page 43-6 of _Programming Perl for Bioinformatics_
+# by James D. Tisdall
+sub reverse_complement {
+    for(shift) { tr/atcg/uagc/; return scalar reverse; }
+}
+
 # http://en.wikipedia.org/wiki/List_of_standard_amino_acids
 our %expression = (
     'A' => 'gcu,gcc,gca,gcg',
@@ -109,5 +115,12 @@ sub prot2codon {
 
 sub codon2prot {
     map { $repression{$_} } @_;
+}
+
+use Pod::Usage;
+sub helpcheck {
+    if (!@ARGV or $ARGV[0] eq '--help') {
+        pod2usage(-verbose => 3); exit;
+    }
 }
 1;
