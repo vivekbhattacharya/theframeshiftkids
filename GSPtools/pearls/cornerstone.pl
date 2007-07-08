@@ -95,6 +95,13 @@ I<work folder> I<search results> I<genome file>
 
 =head1 DESCRIPTION
 
+Cornerstone will look at all the proteins specified in the
+search results and pull those sequences from the genome file.
+Each gene sequence will be saved in a text file with filename
+C<$protein.txt> in the C<proteins> folder mentioned above.
+
+=head1 FUNCTIONS AND VARIABLES
+
 =over
 
 =item $Cornerstone::o
@@ -154,13 +161,6 @@ This comes from a Genbank Genome search. It should be a huge
 list of nucleotides with or without numbers starting each line.
 
 =back
-
-=head1 DESCRIPTION
-
-Cornerstone will look at all the proteins specified in the
-search results and pull those sequences from the genome file.
-Each gene sequence will be saved in a text file with filename
-C<$protein.txt> in the C<proteins> folder mentioned above.
 
 =head1 SEE ALSO
 
