@@ -8,8 +8,10 @@ package Kidnap::Freier;
 use constant BIG_NUM => 30000;
 
 sub new {
+    my ($class) = @_;
     my $self = {InitPenalty => 3.4};
     bless($self, shift);
+    return $self;
 }
 
 # Freier 1986

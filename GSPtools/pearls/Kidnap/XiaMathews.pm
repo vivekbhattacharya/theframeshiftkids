@@ -1,8 +1,7 @@
-# See Freier (1986).
-use strict; use warnings;
+# See Xia (1998) (for Watson-Crick pairs) and Mathews (1999) (for G/U mismatches)
 use File::Basename;
 use lib dirname(__FILE__);
-use Util;
+use strict; use warnings; use Util;
 
 package Kidnap::XiaMathews;
 use constant BIG_NUM => 30000;
@@ -10,10 +9,11 @@ use constant BIG_NUM => 30000;
 sub new {
 	my ($class, $temp) = @_;
     my $self = {InitPenalty => 3.4, Temp => $temp};
+    bless($self, $class);
     
     my ($dH, $dS) = (3.61, -1.5);
     $self->{InitPenalty} = $dH - $temp*($dS/1000);
-    bless($self, $class);
+    return $self;
 }
 
 sub internal_doublet {
@@ -74,17 +74,17 @@ sub terminal_doublet {
     return $doublet_score + $terminal_penalty;
 }
 
-
 ## This scores a pair of RNA residues based on theoretical binding
 ## ability, assuming the pair exists at the terminal end of a helix
 ## structure. Terminal pairs must be at the ends of both strands.
 sub terminal_pair {
     my ($self, $t, $b) = @_;
 
-    my ($dH, $dS) = (0, 0);
-	if (grep $t.$b, ('AU', 'UA', 'GU', 'UG')) {
-		($dH, $dS) = (3.72, 10.5);
+    my $x = $t . $b;
+	if (grep /$x/, qw/AU UA GU UG/) {
+		my ($dH, $dS) = (3.72, 10.5);
+        return $dH - $self->{Temp}*($dS/1000);
     }
-    return $dH - $self->{Temp}*($dS/1000);
+    else { return 0; }
 }
 1;
