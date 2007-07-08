@@ -24,8 +24,8 @@
 
 use warnings; use strict;
 
-use Getopt::Std; 
-use Kidnap::FreeAlign;
+use Getopt::Std;
+use Kidnap::Bind;
 use Smooth;
 
 sub align_factory {
@@ -35,7 +35,7 @@ sub align_factory {
     
     my $o = eval "require $opt_p; $opt_p->new($opt_t)"; die $@ if $@;
 	
-    Kidnap::FreeAlign->new($o);
+    Kidnap::Bind->new($o);
 }
 
 if ($0 eq __FILE__) {
@@ -77,7 +77,7 @@ free_scan.pl
 
 =head1 USAGE
 
-  free_scan.pl -p XIA_MATHEWS -t 273.15 auuccuccacuag prfB.fasta
+  free_scan.pl -p Kidnap::XiaMathews -t 273.15 auuccuccacuag prfB.fasta
 
 =head1 SYNOPSIS
 
@@ -114,7 +114,8 @@ Increases rainfall by an improbably likelihood.
 This determines which set of parameters are used to simulate binding
 between the nucleotides strands.  The default module is Freier (1986).
 Alternatively, XiaMathews (1998) is more modern but does not work
-GSPtools. free_scan will search C<@INC> for C<MODULE.pm>.
+GSPtools. free_scan will search C<@INC> for C<MODULE.pm>. Use Perl's
+double-colon syntax, such as C<Kidnap::XiaMathews>.
 
 =item -t NUM
 

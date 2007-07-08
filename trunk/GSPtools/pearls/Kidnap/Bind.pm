@@ -1,5 +1,8 @@
+use File::Basename;
+use lib dirname(__FILE__);
+
 use warnings; use strict;
-package Kidnap::FreeAlign;
+package Kidnap::Bind;
 ## This module does free energy calculations.
 ##
 ## Authors: Joshua Starmer <jdstarme@unity.ncsu.edu>, 2004
@@ -89,35 +92,6 @@ sub terminal_doublet {
     return $self->{Cat}->terminal_doublet(@_);
 }
 
-## Defines some substr calls used in force_bind. See
-## force_bind() for more details.
-##
-## Note: fivethree is threefive for a y doublet and
-## similarly ->{context} is switched.
-package Strand;
-use Data::Dumper;
-# Asterisk needed to workaround substr's handling
-# of negative numbers. That is, we want $i-1 to
-# still work even when it doesn't produce s55.
-sub new {
-	my ($class, $seq, $length) = @_;
-	my $self = {seq => '*'.$seq, length => $length};
-	
-    #helper($self, $i);
-	bless $self, $class;
-}
-
-sub update {
-    my ($self, $i) = @_;
-    my ($s55, $s5, $s3, $s33) = split '', substr($self->{seq}, $i, 3);
-	$self->{fivethree} = [$s5, $s3];
-	$self->{context} = ($i > 0 && $i < $self->{length}-2) ? 
-		[$s55, $s33] : ['', ''];
-}
-
-sub all { @{shift->{fivethree}} }
-sub context { @{shift->{context}} }
-
 ## force_bind() forces an alignment between the two strands, 
 ## assuming that they both pair together from their first bases on.  
 ## It ignores both loops and bulges as possibilities.  Only bases 
@@ -129,7 +103,7 @@ sub context { @{shift->{context}} }
 ##
 ## We also return the the position in the sequences where the best sub-helix
 ## begins (best_start) and its length (helix_length).
-package Kidnap::FreeAlign;
+use Strand;
 sub bind {
     my ($self, $seq_x, $seq_y) = @_;    
     $self->{BestScore} = 0;
