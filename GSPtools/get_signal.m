@@ -16,8 +16,8 @@ if(isempty('perl')); error(['I cannot find Perl 5.6 or above.' ...
 Fasta = tempname; S = getseq(file, Fasta);
 
 % Run free2bind. Make sure to include its directory into -I.
-Include = fileparts(which('FreeAlign.pm'));
-   Template = 'perl -I"%s" "%s" -e -q -p FREIER auuccuccacuag "%s"';
+Include = fileparts(which('Smooth.pm'));
+   Template = 'perl -I"%s" "%s" auuccuccacuag "%s"';
    Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
 [status, raw_signal] = system(Command);
 
