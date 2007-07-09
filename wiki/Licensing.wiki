@@ -1,0 +1,8 @@
+#summary Boring
+#labels licensing,boring
+
+Fill in the New BSD License variables with the following:
+
+  * <OWNER> = Hao Lian
+  * <ORGANIZATION> = (none)
+  * <YEAR> = 2007
