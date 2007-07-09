@@ -1,39 +1,19 @@
 #!/usr/bin/perl
 
-##========================================================================
-##
-## Author: Joshua Starmer <jdstarme@unity.ncsu.edu>, 2004
-## 
-## Copyright (C) 2004, Joshua Starmer
-##
-## This program is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License
-## as published by the Free Software Foundation; either version 2
-## of the License, or (at your option) any later version.
-##
-## This program is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-## GNU General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with this program; if not, write to the Free Software
-## Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-## 
-##========================================================================
-
 use warnings; use strict;
 
 use Getopt::Std;
 use Kidnap::Bind;
 use Smooth;
 
+require Kidnap::Freier;
 sub align_factory {
     our ($opt_p, $opt_t); getopts('p:t:');
-	$opt_p ||= 'Kidnap::Freier';
     $opt_t ||= 37 + 273.15;
     
-    my $o = eval "require $opt_p; $opt_p->new($opt_t)"; die $@ if $@;
+    my $o = $opt_p ? eval "require $opt_p; $opt_p->new($opt_t)" :
+        Kidnap::Freier->new($opt_t);
+    die $@ if $@;
 	
     Kidnap::Bind->new($o);
 }
@@ -165,5 +145,32 @@ auuacuag (8 bases)
 
 The sequence data contained in FASTA file must be in a 5'->3'
 orientation. The RNA sequence must be in a 3'->5' orientation.
+
+=head1 AUTHOR
+
+Originally by Joshua Starmer, scan_brightly has since then
+been heavily modified by Hao Lian.
+
+=head1 COPYRIGHT AND LICENSE
+
+This code is part of Kidnap. Kidnap originates from Joshua
+Starmer's free2bind project as of July 2007. Original code
+copyright Joshua Starmer, 2004. All modifications copyright
+Hao Lian, 2007.
+
+Kidnap is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+Help me, I'm trapped Richard Stallman's hair.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =cut

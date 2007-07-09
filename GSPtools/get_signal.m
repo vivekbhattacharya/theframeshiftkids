@@ -17,8 +17,8 @@ Fasta = tempname; S = getseq(file, Fasta);
 
 % Run free2bind. Make sure to include its directory into -I.
 Include = fileparts(which('Smooth.pm'));
-   Template = 'perl -I"%s" "%s" auuccuccacuag "%s"';
-   Command = sprintf(Template, Include, which('free_scan.pl'), Fasta);
+   Template = 'perl -I"%s" "%s" -p Kidnap::XiaMathews auuccuccacuag "%s"';
+   Command = sprintf(Template, Include, which('scan_brightly.pl'), Fasta);
 [status, raw_signal] = system(Command);
 
 % Simulate load() on a string instead of a file.
