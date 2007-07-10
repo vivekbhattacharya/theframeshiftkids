@@ -1,6 +1,7 @@
 package Hansel;
 use strict; use warnings;
-use lib '../pearls';
+use File::Basename;
+use lib dirname(__FILE__) . '/../pearls';
 
 use Smooth qw(getseq);
 use Getopt::Long;
@@ -40,13 +41,10 @@ sub backtrack {
 use File::Path;
 sub rite {
     my ($old, $new, $i, $folder) = @_;
+    if ($i == -1) { print "{-1 -1}"; exit }
+    
     $folder .= "/$i";
     mkpath $folder;
-    
-    if ($i == -1) {
-        print "{-1 -1}";
-        exit;
-    }
     
     open my $cat, ">$folder/old.txt";
     print $cat $old;

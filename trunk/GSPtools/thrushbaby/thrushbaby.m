@@ -31,11 +31,6 @@ function thrushbaby(file, work_folder, times)
     end
 end
 
-function preparedir(folder)
-    if isdir(folder), rmdir(folder, 's'); end;
-    mkdir(folder);
-end
-
 function [best_name, best_struct] = runner(folder, times, codon)
     d = [dir(fullfile(folder, '/*.txt')); dir(fullfile(folder, '*.fasta'))];
     best_time = times*2;
