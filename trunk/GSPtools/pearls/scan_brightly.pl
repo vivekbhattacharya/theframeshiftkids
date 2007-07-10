@@ -55,11 +55,9 @@ __END__
 
 free_scan.pl
 
-=head1 USAGE
-
-  free_scan.pl -p Kidnap::XiaMathews -t 273.15 auuccuccacuag prfB.fasta
-
 =head1 SYNOPSIS
+
+    free_scan.pl -p Kidnap::XiaMathews -t 273.15 auuccuccacuag prfB.fasta
 
 =over 20
 
