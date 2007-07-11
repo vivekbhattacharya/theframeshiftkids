@@ -2,7 +2,7 @@
 % a lower yield sequence and a newer yield sequence
 % to modify the worse sequence into a sequence of
 % the same yield of the newer sequence. Very compatible
-% with ThrushBaby.
+% with ThrushBaby. Also, I need the number of iterations.
 %
 % backtrack('rpoS.txt', 'rpoSshiny.txt', 'C:\Work folder', 327)
 %
