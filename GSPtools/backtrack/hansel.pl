@@ -30,26 +30,27 @@ sub backtrack {
     my @new = Smooth::seq2codons getseq $new;
     my $i = diff \@old, \@new, $start;
 
-    my $janet = join $/, @old;
+    my $janet = join $/, @new;
+    my $old_codon = $new[$i];
     
-    $old[$i] = $new[$i];
-    my $reno = join $/, @old;
+    $new[$i] = $old[$i];
+    my $reno = join $/, @new;
     
-    ($janet, $reno, $i, $folder);
+    ($janet, $reno, $i, $folder, $old_codon, $new[$i]);
 }
 
 use File::Path;
 sub rite {
-    my ($old, $new, $i, $folder) = @_;
+    my ($old, $new, $i, $folder, $old_codon, $new_codon) = @_;
     if ($i == -1) { print "{-1 -1}"; exit }
     
     $folder .= "/$i";
     mkpath $folder;
     
-    open my $cat, ">$folder/old.txt";
+    open my $cat, ">$folder/$old_codon.txt";
     print $cat $old;
     
-    open my $dead_cat_store,  ">$folder/new.txt";
+    open my $dead_cat_store,  ">$folder/$new_codon.txt";
     print $dead_cat_store $new;
     
     # Talk with Matlab
@@ -73,13 +74,10 @@ sub print_diff {
 
 if ($0 eq __FILE__) {
     my ($help, $diff, $backtrack);
-    GetOptions('help|?' => \$help, 'diff' => \$diff,
-        'backtrack' => \$backtrack) or pod2usage(-verbose => 3);
+    GetOptions('help|?' => \$help) or pod2usage(-verbose => 3);
     pod2usage(-verbose => 3) if ($help || !@ARGV);
     
-    if ($diff) { print_diff @ARGV }
-    elsif ($backtrack) { rite backtrack @ARGV }
-    else { pod2usage(-verbose => 1) }
+    rite backtrack @ARGV;
 }
 
 1;
@@ -92,6 +90,6 @@ hansel.pl
 
 =head1 SYNOPSIS
 
-    hansel.pl --backtrack old-rpoS.txt new-rpoS.txt 46 "C:\Work folder"
+    hansel.pl old-rpoS.txt new-rpoS.txt 46 "C:\Work folder"
 
 =cut
