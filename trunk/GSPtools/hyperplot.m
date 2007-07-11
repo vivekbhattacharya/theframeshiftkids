@@ -8,8 +8,6 @@
 function hyperplot(file, subfolder, limit, mode)
 [S, n, Dvec] = walrus_surprise(file);
 
-% Disable verbosity with beached_whale
-global beached_whale; beached_whale = 1;
 if strcmp(mode, 'superimpose')
     plots = cell(1, limit*2);
     for i=1:limit

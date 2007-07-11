@@ -14,20 +14,18 @@ function unity(file)
 %        that includes the leader
 % --------------------------------------------------------------
 
-global beached_whale;
-beached_whale = 0;
-
 % These files need to be in the include path or working directory.
 % See code.google.com website for copies.
 [S, n, Dvec] = walrus_surprise(file);
-[x,diffx] = displacement(S(13:end),n,Dvec,{},{});
+x = displacement(S(13:end),n,Dvec,{},{});
 
-cp = 0;
+disp_shifts;
+
+%diffx = zeros(length(x));
+%for k=1:length(x)-1; diffx(k) = x(k+1) - x(k); end;
+
 figure(1);
-	subplot(211);plot(0,0);plot(1+cp:length(x)+cp, x);
-    	axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
+	plot(0,0);plot(1:length(x), x);
+    	axis([1 length(x) min(0,min(x)) max(3,max(x))]);
     	grid; xlabel('Codon Number'); ylabel('x(k)');    
-    subplot(212); plot(0,0);plot(1:length(diffx),diffx);
-        xlabel('Codon number'); ylabel('Force on ribosome');
-        title('Plot of "force", i.e. incremental displacement');
 fprintf('\n');

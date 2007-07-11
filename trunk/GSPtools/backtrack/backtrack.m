@@ -11,13 +11,11 @@ function backtrack(old, new, folder, times)
     disp(['I''m about to obliterate ' folder '. Proceed?']); pause;
     preparedir(folder);
     
-    global beached_whale; beached_whale = 1;
-    
     start = 0;
     new = which(new);
     while (start > -1)
         disp('');
-        mold = pearl('hansel.pl', sprintf('"%s" "%s" %s "%s"', which(old), new, num2str(start), folder));
+        mold = pearl('hansel.pl', sprintf('"%s" "%s" %g "%s"', which(old), new, start, folder));
         mold = eval(mold);
         start = mold{1}; start_folder = mold{2};
         

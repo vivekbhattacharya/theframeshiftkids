@@ -13,7 +13,6 @@
 % ----------------------------------------------------------------
 function impunity(folder, fshifts, bshifts, limit)
     d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
-    global beached_whale; beached_whale = 1;
     
     function [yield] = find_yield(file)
         % ----------------------------------------------------------------
@@ -24,7 +23,7 @@ function impunity(folder, fshifts, bshifts, limit)
         [S, n, Dvec] = walrus_surprise(file);        
         global shoals sands;
         for i=1:limit
-            [x,diffx] = displacement(S(13:end), n, Dvec, fshifts, bshifts);
+            x = displacement(S(13:end), n, Dvec, fshifts, bshifts);
         end
         yield = shoals/sands;
     end

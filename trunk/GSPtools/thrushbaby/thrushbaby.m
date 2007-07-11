@@ -2,7 +2,6 @@
 % with no frameshifts, theoretically anyway.
 % Arguments: file, work folder, number of iterations
 function thrushbaby(file, work_folder, times)
-    global beached_whale; beached_whale = 1;
     start = 0;
     
     disp(['I''m about to obliterate ' work_folder '. Proceed?']); pause;
