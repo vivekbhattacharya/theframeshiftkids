@@ -1,4 +1,4 @@
-function [x,diffx] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
+function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
     % ------------------------------------------------------------
     % CALCULATE DISPLACEMENT
     % The function takes a sequence (without the 12-leader
@@ -29,7 +29,7 @@ function [x,diffx] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
     x = [0 C2]; ants = {}; termites = {};
     
     shift = 0;
-    power=10;
+    power = 10;
     for k=2:numcodons-1
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
@@ -80,35 +80,15 @@ function [x,diffx] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
         x(1,k+1) = x0;
     end
     
-    diffx = zeros(length(x));
-    for k=1:length(x)-1; diffx(k) = x(k+1) - x(k); end;
-    
     % Tally the number of times the gene sequence
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
-    global shoals sands beached_whale;
+    global shoals sands;
     if isempty(sands), shoals = 0; sands = 0; end
     sands = sands + 1;
     if strcmp(char(ants), char(frontshifts))
         if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
     end
-    
-    % beached_whale is a Boolean value that toggles
-    % verbosity, i.e. whether we ever print `ants` and
-    % `termites` via `disp_shifts`.
-    if (beached_whale), return; end;
-    fprintf('> '); disp_shifts(ants, '+1 frameshifts');
-    fprintf('< '); disp_shifts(termites, '-1 frameshifts');
-end
-
-% Iterate over the cell array and print the results
-% sanely. If only Matlab had a join function like
-% every other modern language in the world.
-function disp_shifts(insects, id)
-    if size(insects) ~= size({})
-        for i=1:length(insects), fprintf([insects{i} ';']); end;
-    end
-    fprintf('\n');
 end
 
 % Calculates Nloops per <http://code.google.com/p/

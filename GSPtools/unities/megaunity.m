@@ -19,13 +19,13 @@ function megaunity(file, fshifts, bshifts)
 [S, n, Dvec] = walrus_surprise(file);
 global shoals sands;
 while 1
-    [x,diffx] = displacement(S(13:end),n,Dvec,fshifts,bshifts);
+    x = displacement(S(13:end),n,Dvec,fshifts,bshifts);
+    disp_shifts;
 
-    cp = 0;
     h = figure(1); set(h, 'Renderer', 'OpenGL');
-        plot(0,0);plot(1+cp:length(x)+cp, x);
-        axis([1 length(x)+cp min(0,min(x)) max(3,max(x))]);
+        plot(0,0);plot(1:length(x), x);
+        axis([1 length(x) min(0,min(x)) max(3,max(x))]);
         grid; xlabel('Codon Number'); ylabel('x(k)');    
-    disp(['Yield so far: ' num2str(shoals/sands) ' (' num2str(sands) ')']);
+    disp(sprintf('Yield so far: %g (%g)', shoals/sands, sands));
     fprintf('\n');
 end

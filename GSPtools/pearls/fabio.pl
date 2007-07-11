@@ -1,3 +1,5 @@
+# TAV and codon names for debugging:
+# http://shadytrees.pastebin.ca/raw/537444 http://shadytrees.pastebin.ca/raw/537676
 package Fabio;
 use strict;
 use warnings;
@@ -33,21 +35,6 @@ sub plump {
     };
 }
 
-our $help = <<END;
-NAME
-    fabio.pl
-    (web-enabled)
-
-USAGE
-    perl fabio.pl [path to frequencies] [path to codons]
-    See http://shadytrees.pastebin.ca/raw/537444 and
-    http://shadytrees.pastebin.ca/raw/537676 for examples
-    of the formats for these two files.
-    
-    This returns a list of frequencies that is suitable
-    for creating TAV.mats. The list will follow the same
-    order as the list of codons.
-END
 if (__FILE__ eq $0) {
     Smooth::helpcheck();
     my ($freq, $names) = @ARGV;
