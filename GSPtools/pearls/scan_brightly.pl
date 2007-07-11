@@ -63,7 +63,7 @@ scan_brightly.pl
 
 =item B<scan_brightly.pl>
 
-[B<-p> I<parameter>] [B<-t> I<temperature (K)>] I<RNA sequence> I<FASTA file>
+[B<-p> I<parameter>] [B<-t> I<temperature (K)>] I<RNA sequence> I<Gene sequence>
 
 =back
 
@@ -95,6 +95,14 @@ double-colon syntax, such as C<Kidnap::XiaMathews>.
 
 This specifies the temperature, in Kelvin, at which the binding occurs.
 The default value is 37 + 273.15, human body temperature.
+
+=item RNA sequence
+
+See below.
+
+=item Gene sequence
+
+This can be in a FASTA format or just the nucleotides.
 
 =back
 
