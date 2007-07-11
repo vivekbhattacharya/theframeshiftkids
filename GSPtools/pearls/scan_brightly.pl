@@ -23,8 +23,8 @@ if ($0 eq __FILE__) {
 	
 	my $align = align_factory();
 	local @_ = @ARGV;
-	my $rna = shift or die 'free_scan: No RNA binding sequence given';
-    my $seq = shift or die 'free_scan: No sequence file given';
+	my $rna = shift or die 'scan_brightly: No RNA binding sequence given';
+    my $seq = shift or die 'scan_brightly: No sequence file given';
     
 	$rna = uc Util::dna2rna($rna);
     $seq = uc Util::dna2rna(Smooth::getseq $seq);
@@ -53,19 +53,15 @@ __END__
 
 =head1 NAME
 
-free_scan.pl
+scan_brightly.pl
 
 =head1 SYNOPSIS
 
-    free_scan.pl -p Kidnap::XiaMathews -t 273.15 auuccuccacuag prfB.fasta
+    scan_brightly.pl -p Kidnap::XiaMathews -t 273.15 auuccuccacuag prfB.fasta
 
 =over 20
 
-=item B<free_scan.pl>
-
-[B<--help>]
-
-=item B<cornerstone.pl>
+=item B<scan_brightly.pl>
 
 [B<-p> I<parameter>] [B<-t> I<temperature (K)>] I<RNA sequence> I<FASTA file>
 
@@ -73,7 +69,7 @@ free_scan.pl
 
 =head1 DESCRIPTION
 
-free_scan takes an RNA binding sequence (like the 3 prime tail on the 16s 
+scan_brightly takes an RNA binding sequence (like the 3 prime tail on the 16s 
 rRNA) and calculates the free energy signals that determine how well it
 will bind to the sequence (DNA or RNA) at every point, outputting it.
 Each signal is separated by a newline, allowing Matlab to store the result
@@ -92,7 +88,7 @@ Increases rainfall by an improbably likelihood.
 This determines which set of parameters are used to simulate binding
 between the nucleotides strands.  The default module is Freier (1986).
 Alternatively, XiaMathews (1998) is more modern but does not work
-GSPtools. free_scan will search C<@INC> for C<MODULE.pm>. Use Perl's
+GSPtools. scan_brightly will search C<@INC> for C<MODULE.pm>. Use Perl's
 double-colon syntax, such as C<Kidnap::XiaMathews>.
 
 =item -t NUM
