@@ -2,32 +2,26 @@
 % with no frameshifts, theoretically anyway.
 % Arguments: file, work folder, number of iterations
 function thrushbaby(file, work_folder, times)
-    start = 0;
+    start = 0; codon = '_';
     
     disp(['I''m about to obliterate ' work_folder '. Proceed?']); pause;
     preparedir(work_folder);
-    copyfile(which(file), work_folder);
     
-    codon = '_';
     folder = fullfile(work_folder, num2str(start)); preparedir(folder);
-    temp_folder = fullfile(work_folder, 'temp');
     copyfile(which(file), folder);
     while start > -1
+        folder = fullfile(work_folder, num2str(start));
+        disp(['Next codon target: ' codon sprintf('\n')]);
+        
         [file, s] = runner(folder, times, codon);
         
         disp(['Now running Perl on: ' file]);
-        preparedir(temp_folder);
-        a = pearl('starling.pl', [num2str(start) ' "' file '" "' temp_folder '" ' stringify(s)]);
+        a = pearl('starling.pl', sprintf('%g "%s" "%s" %s', start, file, work_folder, stringify(s)));
         
         disp(['Perl says: ' a]);
         a = eval(a); start = a{1}; codon = a{2};
-        
-        % J:\work\0, J:\work\25, J:\work\200, etc.
-        folder = fullfile(work_folder, num2str(start));
-        movefile(temp_folder, folder);
-        
-        disp(['Next codon target: ' codon sprintf('\n')]);
     end
+    disp(sprintf('\nThe final file is %s\n', file));
 end
 
 function [best_name, best_struct] = runner(folder, times, codon)
@@ -60,6 +54,8 @@ function [best_name, best_struct] = runner(folder, times, codon)
     best_name = fullfile(folder, best_name);
 end
 
+% Update the tabulation struct `s` with
+% counts of codon frameshifts
 function [s] = helper(s, insect)
     for i=1:length(insect)
         key = strrep(insect{i}, ',', '_');
@@ -69,6 +65,8 @@ function [s] = helper(s, insect)
     end
 end
 
+% Parse the tabulation struct `s` into
+% something usable for starling.pl
 function [sorrow] = stringify(s)
     f = fieldnames(s);
     sorrow = [];
