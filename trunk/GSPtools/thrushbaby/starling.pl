@@ -7,12 +7,9 @@ use Smooth qw(prot2codon codon2prot getseq);
 sub parse {
     my $start = shift;
     return
-        grep { $_->[2] > $start + 9 }
-        sort { $a->[2] <=> $b->[2] }
-        map {
-            my ($codon, $loc, $times) = split '_';
-            [$times, $codon, $loc];
-        } @_;
+        grep { $_->[1] > $start + 9 }
+        sort { $a->[1] <=> $b->[1] }
+        map { [split '_'] } @_;
 }
 
 # Parses and returns the string segments
@@ -50,7 +47,7 @@ sub beforehand {
     #
     # Also, pull back (modulo) to the nearest *actual*
     # codon, ignoring all shifting.
-    my $break = $data->[2]*3 + 12 - 3;
+    my $break = $data->[1]*3 + 12 - 3;
     for (substr $seq, $break) {
         $break += index $_, $data->[1];
         $break -= $break % 3;
@@ -67,13 +64,13 @@ sub pick {
     # if they're only one away.
     my $data = shift;
     foreach my $wombat (@_) {
-        if ($wombat->[2] - $data->[2] == 1) {
+        if ($wombat->[1] - $data->[1] == 1) {
             $data = $wombat;
         } else { +last }
     }
     
     # Communicate with Matlab ... now!
-    my (undef, $codon, $loc) = @$data;
+    my ($codon, $loc) = @$data;
     printf q/{%s '%s,%s'}/, $loc, $codon, $loc;
     $location = $loc;
     return $data;
@@ -101,6 +98,8 @@ sub seq2permutations {
 }
         
 use Data::Dumper;
+use List::Util qw(shuffle);
+use File::Path qw(mkpath);
 if ($0 eq __FILE__) {
     Smooth::helpcheck;
     
@@ -111,8 +110,6 @@ if ($0 eq __FILE__) {
     my ($before, $critical, $after) = beforehand pick(@data), $file, 4;
     
     my $i = 1;
-    use List::Util qw(shuffle);
-    use File::Path qw(mkpath);
     $folder .= "/$location";
     mkpath($folder);
     map {

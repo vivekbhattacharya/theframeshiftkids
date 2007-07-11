@@ -59,9 +59,7 @@ end
 function [s] = helper(s, insect)
     for i=1:length(insect)
         key = strrep(insect{i}, ',', '_');
-        if isfield(s, key), s.(key) = s.(key) + 1;
-        else s = setfield(s, key, 0);
-        end
+        if ~isfield(s, key), s = setfield(s, key, 0); end;
     end
 end
 
@@ -69,9 +67,8 @@ end
 % something usable for starling.pl
 function [sorrow] = stringify(s)
     f = fieldnames(s);
-    sorrow = [];
+    sorrow = '';
     for i=1:length(f)
-        key = f{i}; value = s.(key);
-        if value ~= 0, sorrow = [sorrow key '_' num2str(value) ' ']; end
+        sorrow = [sorrow f{i} ' '];
     end
 end
