@@ -39,13 +39,14 @@ sub run {
     Smooth::webopen shift, sub {
         # Sanitize and check for empty lines.
         # Then parse every character and store.
+        return if /^>/;
         s/[^A-Z]//g;
         return unless $_;
         push @codons, prot2codon(split //);
     };
     # Arbitrary stop codon and 12-leader sequence
     use Data::Dumper;
-    print $ARGV[1], $/;
+    print $ARGV[2], $/;
     push @codons, 'uga'; @codons;
 }
 
@@ -90,7 +91,7 @@ NAME
     
 USAGE
     1) Convert protein sequence (1-letter abbreviation standard) to codons.
-        `perl dysentery.pl [path to protein sequence] "[leader sequence]"`
+        `perl dysentery.pl --run [path to protein sequence] "[leader sequence]"`
     2) Check if a codon sequence produces a protein sequence.
         `perl dysentery.pl --check [path to codons] [path to proteins]`
     3) Check if two codon sequences produce the same protein sequence.
@@ -105,7 +106,7 @@ if ($0 eq __FILE__) {
         print_check rcheck($ARGV[1], $ARGV[2]);
     }
     elsif ($ARGV[0] eq '--run') {
-        print_run run($ARGV[0]);
+        print_run run($ARGV[1]);
     }
 }
 1;
