@@ -5,9 +5,21 @@
   * [Unities]
   * [Pearls]
 
-== What's New in Version One ==
-Easter release using a tentative but broken sinusoidal model.
-  * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
+== What's New in Version Four ==
+=== Essentials ===
+  * reloop and sofar gone, q.v. BecomingHarsher
+  * The ThrushBaby algorithm
+  * free2bind replaced with Kidnap
+
+=== Others ===
+  * 4.0 (r212)
+   * free2bind, renamed to Kidnap, heavily edited (from 9000 lines to 2000)
+    * Now extensible with other parameter modules
+    * !SantaLucia module depreciated due to lack of key subroutines
+    * Code now readable
+    * free2bind no longer a requirement for installation
+   * More documentation everywhere
+   * Performance increase in `diff_vectors.m`
 
 == What's New in Version Three ==
   * 3.0
@@ -36,3 +48,8 @@ Easter release using a tentative but broken sinusoidal model.
     * `excos` and `exsin` functions now properly handle certain edge cases.
     * `dysentery.pl --rcheck`
     * `_readme.txt` added
+
+== What's New in Version One ==
+Easter release using a tentative but broken sinusoidal model.
+  * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
+
