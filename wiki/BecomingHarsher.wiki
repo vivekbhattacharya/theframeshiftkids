@@ -1,4 +1,4 @@
 #summary Why GSPtools 4 is radically different
 #labels docs,algorithm,model,gsptools
 
-Probability of codon choice failure is no longer cumulative. In addition, Vivek removed reloop because he hates success.
+Probability of codon choice failure is no longer cumulative. In addition, we removed reloop because it does not make sense to repeatedly multiply probabilities when the model reloops.
