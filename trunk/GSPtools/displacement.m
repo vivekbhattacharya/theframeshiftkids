@@ -56,7 +56,6 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
             [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power);
             [here_fail, here] = probabilities(here_loops, excos(a)^10);
             [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power);
-            reloop = 1 - here - there - back;
     
             r = rand; % Mersenne Twister
             if(r < here), break;
