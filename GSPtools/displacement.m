@@ -30,6 +30,7 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
     
     shift = 0;
     power = 10;
+    %wts = [];
     for k=2:numcodons-1
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
@@ -51,6 +52,7 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
         % Refer to <http://code.google.com/p/theframeshiftkids/wiki/
         % MathBehindTheModel> for explanation.
         here_fail = 1; there_fail = 1; back_fail=1;
+        wt = 0;
         for wt=1:1000
             a = (x0 - 2*shift); % Window function follows
             [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power);
@@ -73,12 +75,15 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
             dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx);
             x0 = x0 + dx;
         end
+        %   wts = [wts wt];
         
         %InstPhase(k) = (180/pi)*(phi_signal(1,k) + phi_dx);
         %if InstPhase(k)<0, InstPhase(k) = InstPhase(k) + 360; end
         x(1,k+1) = x0;
     end
-    
+%     wts
+%     disp(sum(wts));
+%     
     % Tally the number of times the gene sequence
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
