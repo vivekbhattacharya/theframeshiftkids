@@ -20,16 +20,16 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
     global ants termites;
     x = [0 C2]; ants = {}; termites = {};
     
-    shift = 0; power = 10; % wts = [];
+    shift = 0; power = 10; wts = [];
     for k=2:numcodons-1
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
-        initial = 3*(k-1) + 3*spc;
+        index = 3*(k-1) + 3*spc + shift;
         
-        if(initial+4+shift > size(seq)), break; end;
-        back_codon=seq(initial+shift:initial+2+shift);
-        codon = seq(initial+1+shift:initial+3+shift);
-        other_codon = seq(initial+2+shift:initial+4+shift);
+        if(index + 4 > size(seq)), break; end;
+        back_codon=seq(index:index+2);
+        codon = seq(index+1:index+3);
+        other_codon = seq(index+2:index+4);
     
         back_loops = real_loops(back_codon);
         here_loops = real_loops(codon);
@@ -42,33 +42,40 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
         % Refer to <http://code.google.com/p/theframeshiftkids/wiki/
         % MathBehindTheModel> for explanation.
         here_fail = 1; there_fail = 1; back_fail=1;
-        wt = 0;
-        for wt=1:1000
+        wt = 0; age_limit = 208;
+        for wt=1:age_limit + 1
             a = (x0 - 2*shift); % Window function follows
-            [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power);
-            [here_fail, here] = probabilities(here_loops, excos(a)^10);
-            [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power);
+            [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);
+            [here_fail, here] = probabilities(here_loops, excos(a)^10, here_fail);
+            [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power, there_fail);
+            reloop = 1 * (1 - (here + there + back));
     
             r = rand; % Mersenne Twister
-            if(r < here), break;
-            elseif (r < here + there)
-                shift = shift + 1;
-                ants(end+1) = {[codon ',' num2str(k)]};
-                break;
-            elseif (r < here + there + back)
-                 shift = shift - 1;
-                 termites(end+1) = {[codon ',' num2str(k)]};
-                 break;
-            end;
+            if (reloop < here) || (reloop < there) || (reloop < back)
+                if(r < here), break;
+                elseif (r < here + there)
+                    shift = shift + 1;
+                    ants(end+1) = {[codon ',' num2str(k)]};
+                    break;
+                elseif (r < here + there + back)
+                     shift = shift - 1;
+                     termites(end+1) = {[codon ',' num2str(k)]};
+                     break;
+                end
+            end
     
             phi_dx = ((pi/3)*x0) - phi_sp;
             dx = -C1*Dvec(k,1)*sin(phi_signal(1,k) + phi_dx);
             x0 = x0 + dx;
         end
-        % wts = [wts wt];
+        wts = [wts wt];
+        if (wt > age_limit)
+            fprintf('   %s at %g found Wichita\n', codon, k); break;
+        end;
         
         x(1,k+1) = x0;
     end
+    % wts
      
     % Tally the number of times the gene sequence
     % correctly frameshifted (shoals) in addition to the
@@ -98,7 +105,6 @@ end
 %   loops: from real_loops
 %   weight: cos/sin factor
 function [acc, p] = probabilities(loops, weight, acc)
-    p = weight/loops;
-    acc = 1 - p;
-    % p = 1 - acc;
+    acc = acc * (1 - weight/loops);
+    p = 1 - acc;
 end
