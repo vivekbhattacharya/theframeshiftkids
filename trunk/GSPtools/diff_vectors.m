@@ -1,4 +1,4 @@
-function [Dvec] = diff_vectors(Mag, Phase, numcodons)
+function [Dvec, Phase] = diff_vectors(Mag, Phase, numcodons)
 
 % ------------------------------------------------------------
 % CALCULATE DIFFERENTIAL VECTORS
@@ -15,4 +15,9 @@ for k=1:numcodons
     Dvec(k,1) = abs(D); 
     Dvec(k,2) = angle(D);
 end
+
+for k=1:length(Phase)
+    if Phase(k)<0; Phase(k)=Phase(k)+(2*pi); end
+end
+
 clear global sands shoals;

@@ -4,11 +4,12 @@
 function disp_shifts()
     function beached_whale(insects)
         if size(insects) ~= size({})
-            for i=1:length(insects), fprintf([insects{i} ';']); end;
+            for i=1:length(insects), fprintf([insects{i} '; ']); end;
         end
         fprintf('\n');
     end
     global ants termites;
     fprintf('> '); beached_whale(ants);
     fprintf('< '); beached_whale(termites);
+    fprintf('\n');
 end
