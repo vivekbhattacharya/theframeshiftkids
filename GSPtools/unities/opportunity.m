@@ -17,11 +17,11 @@ function opportunity(folder, limit)
 end
 
 function helper(file, subfolder, limit)
-    [S, n, Dvec] = walrus_surprise(file);
+    displacement = walrus_surprise(file);
 
     plots = cell(1, limit*2);
     for i=1:limit
-        x = displacement(S(13:end),n,Dvec,{},{});
+        x = displacement({}, {});
         plots(i*2 - 1) = {1:length(x)};
         plots(i*2) = {x};
     end

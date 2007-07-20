@@ -16,8 +16,8 @@ function unity(file)
 
 % These files need to be in the include path or working directory.
 % See code.google.com website for copies.
-[S, n, Dvec] = walrus_surprise(file);
-x = displacement(S(13:end),n,Dvec,{},{});
+displacement = walrus_surprise(file);
+x = displacement({}, {});
 
 disp_shifts;
 

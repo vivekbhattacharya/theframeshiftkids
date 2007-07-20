@@ -5,7 +5,7 @@
 % 
 % This is the equivalent of an OOP private method. Its primary
 % purpose is to aid in the development of unities.
-function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
+function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
     % for meanings and derivations. C1 chosen specifically to
     % make prfB work, cf. Lalit et al.
@@ -20,8 +20,8 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
     global ants termites;
     x = [0 C2]; ants = {}; termites = {};
     
-    shift = 0; power = 10; wts = [];
-    for k=2:numcodons-1
+    shift = 0; power = 10; wts = []; upper = length(Dvec) - 1;
+    for k=2:upper
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
         index = 3*(k-1) + 3*spc + shift;
@@ -42,7 +42,7 @@ function [x] = displacement(seq,numcodons,Dvec,frontshifts,backshifts)
         % Refer to <http://code.google.com/p/theframeshiftkids/wiki/
         % MathBehindTheModel> for explanation.
         here_fail = 1; there_fail = 1; back_fail=1;
-        wt = 0; age_limit = 208;
+        wt = 0; age_limit = 130;
         for wt=1:age_limit + 1
             a = (x0 - 2*shift); % Window function follows
             [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);

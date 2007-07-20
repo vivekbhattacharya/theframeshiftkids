@@ -1,11 +1,11 @@
-function [Dvec, Phase] = diff_vectors(Mag, Phase, numcodons)
+function [Dvec, Phase] = diff_vectors(Mag, Phase)
 
 % ------------------------------------------------------------
 % CALCULATE DIFFERENTIAL VECTORS
 % ------------------------------------------------------------    
-L = 3;
-for k=1:numcodons
-    x = min(max(1,k-1),numcodons-2);
+L = 3; upper = length(Mag);
+for k=1:upper
+    x = min(max(1,k-1),upper-2);
     index = [x:x+2];
     dA_dc(1,k) = fakeslope(1:L,Mag(index));
     dphi_dc(1,k) = fakeslope(1:L,Phase(index));

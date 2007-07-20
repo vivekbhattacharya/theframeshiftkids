@@ -16,14 +16,14 @@ function megaunity(file, fshifts, bshifts)
 
 % These files need to be in the include path or working directory.
 % See code.google.com website for copies.
-[S, n, Dvec] = walrus_surprise(file);
+displacement = walrus_surprise(file);
 global shoals sands;
 while 1
-    x = displacement(S(13:end),n,Dvec,fshifts,bshifts);
+    x = displacement(fshifts, bshifts);
     disp_shifts;
 
     h = figure(1); set(h, 'Renderer', 'OpenGL');
-        plot(0,0);plot(1:length(x), x);
+        plot(0,0); plot(1:length(x), x);
         axis([1 length(x) min(0,min(x)) max(3,max(x))]);
         grid; xlabel('Codon Number'); ylabel('x(k)');    
     disp(sprintf('Yield so far: %g (%g)', shoals/sands, sands));

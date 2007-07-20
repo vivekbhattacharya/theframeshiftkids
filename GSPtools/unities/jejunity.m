@@ -17,12 +17,12 @@ function jejunity(folder, limit)
 end
 
 function helper(file, subfolder, limit, mode)
-    [S, n, Dvec] = walrus_surprise(file);
+    displacement = walrus_surprise(file);
 
 	upper = ceil(n);
     a = zeros(limit, upper);
     for i=1:limit
-        x = displacement(S(13:end),n,Dvec,{},{});
+        x = displacement({}, {});
 		maxiderm = size(x, 2);
         for j=1:upper
 			if j <= maxiderm, a(i,j) = x(j);
