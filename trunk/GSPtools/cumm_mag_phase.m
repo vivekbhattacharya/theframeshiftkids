@@ -6,7 +6,7 @@
 %   x is a row vector that contains the free energy values
 %   Phase is in radians
 
-function [Mag, Phase, numcodons] = cumm_mag_phase(x)
+function [Mag, Phase] = cumm_mag_phase(x)
     % Signal rounded off to a codon multiple
     L = length(x);
     if rem(L,3) ~= 0, x = x(1:L-rem(L,3)); end;
@@ -15,7 +15,6 @@ function [Mag, Phase, numcodons] = cumm_mag_phase(x)
     for j=1:L/3
         [Mag(j), Phase(j)] = helper(x(1:j*3));
     end
-    numcodons = length(Mag);
 end
 
 function [A, theta] = helper(x)

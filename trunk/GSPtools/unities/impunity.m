@@ -20,10 +20,10 @@ function impunity(folder, fshifts, bshifts, limit)
         % or the infinite loop, instead capped at `limit`. In addition,
         % it returns the yield instead of displaying it.
         % ----------------------------------------------------------------
-        [S, n, Dvec] = walrus_surprise(file);        
+        displacement = walrus_surprise(file);        
         global shoals sands;
         for i=1:limit
-            x = displacement(S(13:end), n, Dvec, fshifts, bshifts);
+            x = displacement(fshifts, bshifts);
         end
         yield = shoals/sands;
     end
