@@ -21,11 +21,6 @@ x = displacement(S(13:end),n,Dvec,{},{});
 
 disp_shifts;
 
-%diffx = zeros(length(x));
-%for k=1:length(x)-1; diffx(k) = x(k+1) - x(k); end;
-
-figure(1);
-	plot(0,0);plot(1:length(x), x);
-    	axis([1 length(x) min(0,min(x)) max(3,max(x))]);
-    	grid; xlabel('Codon Number'); ylabel('x(k)');    
-fprintf('\n');
+figure(1); plot(0,0);plot(1:length(x), x);
+    axis([1 length(x) min(0,min(x)) max(3,max(x))]);
+    grid; xlabel('Codon Number'); ylabel('x(k)');
