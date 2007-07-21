@@ -1,7 +1,7 @@
 # All the functions we'll never call from the command
 # line but need anyway.
 package Smooth;
-# use LWP::Simple qw(get);
+use LWP::Simple qw(get);
 use strict; use warnings;
 BEGIN {
     require Exporter;
