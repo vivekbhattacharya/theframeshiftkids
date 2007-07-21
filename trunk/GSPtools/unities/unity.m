@@ -14,8 +14,6 @@ function unity(file)
 %        that includes the leader
 % --------------------------------------------------------------
 
-% These files need to be in the include path or working directory.
-% See code.google.com website for copies.
 displacement = walrus_surprise(file);
 x = displacement({}, {});
 
