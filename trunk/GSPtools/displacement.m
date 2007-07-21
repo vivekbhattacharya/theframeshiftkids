@@ -12,19 +12,21 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
     global ants termites;
-    x = [0 0.1]; ants = {}; termites = {};
+    ants = {}; termites = {};
 
     % Length of codon sequence
     upper = length(Dvec) - 1;
     shift = 0; wts = [];
+    
+    global store;
+    store = struct('x', [0 0.1], 'shift', 0, 'wts', []);
     for k=2:upper
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
-        index = 3*k + shift;
+        index = 3*k + store.shift;
         
         if(index + 4 > size(seq)), break; end;
-        [wt, x0, shift, overaged] = loop(shift, x(k), seq(index:index+4), k, Dvec(k, :));
-        wts = [wts wt];
+        overaged = loop(seq(index:index+4), k, Dvec(k, :));
         if (overaged == 1)
             fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
             ants = {'witch'}; termites = {'coven'};
@@ -33,9 +35,8 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
             fprintf('   %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
         end
-        
-        x(k+1) = x0;
     end
+    x = store.x;
     % wts
      
     % Tally the number of times the gene sequence
@@ -59,7 +60,7 @@ function [dead] = is_stopper(codon)
     else dead = false; end;
 end
 
-function [wt, x0, shift, overaged] = loop(shift, x0, fragment, k, diff)
+function [overaged] = loop(fragment, k, diff)
     % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
     % for meanings and derivations. C1 chosen specifically to
     % make prfB work, cf. Lalit et al.
@@ -76,38 +77,41 @@ function [wt, x0, shift, overaged] = loop(shift, x0, fragment, k, diff)
     here_loops = real_loops(codon);
     there_loops = real_loops(there_codon);
     
-    global ants termites;
+    global store ants termites;
+    x0 = store.x(k);
     for wt=1:age_limit + 1
-        a = (x0 - 2*shift); % Window function follows
+        a = (x0 - 2*store.shift); % Window function follows
         [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);
         [here_fail, here] = probabilities(here_loops, excos(a)^10, here_fail);
         [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power, there_fail);
         reloop = 1 * (1 - (here + there + back));
 
-        r = rand; % Mersenne Twister
+        r = rand;
         if (reloop < here) || (reloop < there) || (reloop < back)
             if(r < here)
-                if (is_stopper(codon)), overaged = -1; return; end;
+                if (is_stopper(codon)), overaged = -1; end;
                 break;
             elseif (r < here + there)
-                shift = shift + 1;
+                store.shift = store.shift + 1;
                 ants(end+1) = {[codon ',' num2str(k)]};
-                if (is_stopper(there_codon)), overaged = -1; return; end;
+                if (is_stopper(there_codon)), overaged = -1; end;
                 break;
             elseif (r < here + there + back)
-                shift = shift - 1;
+                store.shift = store.shift - 1;
                 termites(end+1) = {[codon ',' num2str(k)]};
-                if (is_stopper(back_codon)), overaged = -1; return; end;
+                if (is_stopper(back_codon)), overaged = -1; end;
                 break;
             end
         end
-        phi_dx = ((pi/3)*x0) - phi_sp;
         
         % This follows from phi_signal(1,k) = Dvec(k,2)
-        dx = -C1*diff(1)*sin(diff(2) + phi_dx);
+        phi_dx = ((pi/3)*x0) - phi_sp;
+        dx = -C1 * diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + dx;
     end
     if (wt > age_limit), overaged = true; end;
+    store.x(k+1) = x0;
+    store.wts = [store.wts wt];
 end
 
 % Calculates Nloops per <http://code.google.com/p/
