@@ -19,8 +19,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     upper = length(Dvec) - 1;
     store = struct('x', [0 0.1 zeros(1, upper - 1)], 'shift', 0, 'wts', zeros(1, upper-1));
     for k=2:upper
-        % Choose appropriate codon, depending on the specified spacing, and
-        % calculate nloop accordingly
+        % Take the codon and calculate nloop
         index = 3*k + store.shift;
         
         if(index + 4 > size(seq)), break; end;
@@ -50,11 +49,12 @@ end
 
 function [dead] = is_stopper(codon)
     global Travel ants termites;
+    dead = false;
     if (Travel.(codon) == 1000)
         msg = ['died at ' codon];
-        ants(end+1) = {msg}; termites(end+1) = {msg};
+        ants{end+1} = msg; termites{end+1} = msg;
         dead = true;
-    else dead = false; end;
+    end
 end
 
 function [overaged] = loop(fragment, k, diff)
@@ -65,43 +65,38 @@ function [overaged] = loop(fragment, k, diff)
     age_limit = 200; power = 10; phi_sp = -30*(pi/180);
     
     wt = 0; here_fail = 1; back_fail = 1; there_fail = 1;
-    
-    back_codon = fragment(1:3);
-    codon = fragment(2:4);
-    there_codon = fragment(3:5);
-    
-    back_loops = real_loops(back_codon);
-    here_loops = real_loops(codon);
-    there_loops = real_loops(there_codon);
+    back_codon = fragment(1:3); codon = fragment(2:4); there_codon = fragment(3:5);
+    [back_loops, here_loops, there_loops] = real_loops(back_codon, codon, there_codon);
     
     global store ants termites;
     x0 = store.x(k);
     for wt=1:age_limit + 1
-        a = (x0 - 2*store.shift); % Window function follows
+        a = x0 - 2*store.shift; % Window function follows
         [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);
-        [here_fail, here] = probabilities(here_loops, excos(a)^10, here_fail);
+        [here_fail, here] = probabilities(here_loops, excos(a)^power, here_fail);
         [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power, there_fail);
         reloop = 1 * (1 - (here + there + back));
 
         r = rand;
         if (reloop < here) || (reloop < there) || (reloop < back)
-            if(r < here)
+            if r < here
                 if (is_stopper(codon)), overaged = -1; end;
                 break;
-            elseif (r < here + there)
+            elseif r < here + there
                 store.shift = store.shift + 1;
-                ants(end+1) = {[codon ',' num2str(k)]};
+                ants{end+1} = [codon ',' num2str(k)];
                 if (is_stopper(there_codon)), overaged = -1; end;
                 break;
-            elseif (r < here + there + back)
+            elseif r < here + there + back
                 store.shift = store.shift - 1;
-                termites(end+1) = {[codon ',' num2str(k)]};
+                termites{end+1} = [codon ',' num2str(k)];
                 if (is_stopper(back_codon)), overaged = -1; end;
                 break;
             end
         end
         
         % This follows from phi_signal(1,k) = Dvec(k,2)
+        % "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
         phi_dx = ((pi/3)*x0) - phi_sp;
         dx = -C1 * diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + dx;
@@ -114,11 +109,14 @@ end
 % Calculates Nloops per <http://code.google.com/p/
 % theframeshiftkids/wiki/MathBehindTheModel> for
 % the given codon.
-function [n] = real_loops(codon)
+function [varargout] = real_loops(varargin)
     global Travel;
-    n = ceil(Travel.(codon));
-    n = 2^(1/n);
-    n = n / (n - 1);
+    for i = 1:length(varargin)
+        codon = varargin{i};
+        n = ceil(Travel.(codon));
+        n = 2^(1/n);
+        varargout{i} = n / (n - 1);
+    end
 end
 
 % Calculates probability per <http://code.google.com/p/
