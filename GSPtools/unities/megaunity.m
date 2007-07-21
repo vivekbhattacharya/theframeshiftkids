@@ -14,8 +14,6 @@ function megaunity(file, fshifts, bshifts)
 %        ex. ['uga,25';'cau,73'] or '[]'
 % --------------------------------------------------------------
 
-% These files need to be in the include path or working directory.
-% See code.google.com website for copies.
 displacement = walrus_surprise(file);
 global shoals sands;
 while 1

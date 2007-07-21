@@ -20,7 +20,8 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     global ants termites;
     x = [0 C2]; ants = {}; termites = {};
     
-    shift = 0; power = 10; wts = []; upper = length(Dvec) - 1;
+    shift = 0; power = 10; wts = [];
+    upper = length(Dvec) - 1; age_limit = 130;
     for k=2:upper
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
@@ -41,8 +42,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         
         % Refer to <http://code.google.com/p/theframeshiftkids/wiki/
         % MathBehindTheModel> for explanation.
-        here_fail = 1; there_fail = 1; back_fail=1;
-        wt = 0; age_limit = 130;
+        here_fail = 1; there_fail = 1; back_fail = 1; wt = 0;
         for wt=1:age_limit + 1
             a = (x0 - 2*shift); % Window function follows
             [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);
@@ -70,7 +70,9 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         end
         wts = [wts wt];
         if (wt > age_limit)
-            fprintf('   %s at %g found Wichita\n', codon, k); break;
+            fprintf('   %s at %g found Wichita\n', codon, k);
+            ants = {'balls'}; termites = {'balls'};
+            break;
         end;
         
         x(1,k+1) = x0;
@@ -105,6 +107,6 @@ end
 %   loops: from real_loops
 %   weight: cos/sin factor
 function [acc, p] = probabilities(loops, weight, acc)
-    acc = acc * (1 - weight/loops);
+    acc = acc*(1 - weight/loops);
     p = 1 - acc;
 end
