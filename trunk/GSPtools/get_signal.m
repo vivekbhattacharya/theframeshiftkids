@@ -10,7 +10,7 @@ if isempty(file)
 end;
 
 if(isempty('perl')); error(['I cannot find Perl 5.6 or above.' ...
-   'Please download it to the VCL C: drive.']); end;
+   'Please download it or add it to your PATH (see website).']); end;
 
 % Load prfb, and generate a fasta file with column width of 60.
 Fasta = tempname; S = getseq(file, Fasta);
@@ -27,7 +27,6 @@ Signal = Signal';
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl` is outputting the rite stuff.';
     ensure = [ensure sprintf('\n') 'Also, ensure Perl is of version 5.6 or above.'];
-    ensure = [ensure sprintf('\n') 'Also, ensure free2bind is in the path.'];
     ensure = [ensure sprintf('\n') sprintf('\n') 'Perl says: ' raw_signal];
     ensure = [ensure sprintf('\n') 'Your sequence was: ' S];
     error(ensure);
