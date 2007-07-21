@@ -15,11 +15,9 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     ants = {}; termites = {};
 
     % Length of codon sequence
-    upper = length(Dvec) - 1;
-    shift = 0; wts = [];
-    
     global store;
-    store = struct('x', [0 0.1], 'shift', 0, 'wts', []);
+    upper = length(Dvec) - 1;
+    store = struct('x', [0 0.1 zeros(1, upper - 1)], 'shift', 0, 'wts', zeros(1, upper-1));
     for k=2:upper
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
@@ -54,8 +52,7 @@ function [dead] = is_stopper(codon)
     global Travel ants termites;
     if (Travel.(codon) == 1000)
         msg = ['died at ' codon];
-        ants(end+1) = {msg};
-        termites(end+1) = {msg};
+        ants(end+1) = {msg}; termites(end+1) = {msg};
         dead = true;
     else dead = false; end;
 end
