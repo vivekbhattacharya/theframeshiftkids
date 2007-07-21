@@ -23,7 +23,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         index = 3*k + shift;
         
         if(index + 4 > size(seq)), break; end;
-        [wt, x0, shift, overaged] = loop(shift, x(1,k), seq(index:index+4), k, Dvec(k, :));
+        [wt, x0, shift, overaged] = loop(shift, x(k), seq(index:index+4), k, Dvec(k, :));
         wts = [wts wt];
         if (overaged == 1)
             fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
@@ -31,11 +31,10 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
             break;
         elseif (overaged == -1)
             fprintf('   %s at %g found a stop codon\n', seq(index+1:index+3), k);
-            ants = {'stop'}; termites = {'stop'};
             break;
         end
         
-        x(1,k+1) = x0;
+        x(k+1) = x0;
     end
     % wts
      
@@ -57,15 +56,14 @@ function [dead] = is_stopper(codon)
         ants(end+1) = {msg};
         termites(end+1) = {msg};
         dead = true;
-    end
-    dead = false;
+    else dead = false; end;
 end
 
 function [wt, x0, shift, overaged] = loop(shift, x0, fragment, k, diff)
     % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
     % for meanings and derivations. C1 chosen specifically to
     % make prfB work, cf. Lalit et al.
-    C1 = 0.005; overaged = false;
+    C1 = 0.005; overaged = 0;
     age_limit = 200; power = 10; phi_sp = -30*(pi/180);
     
     wt = 0; here_fail = 1; back_fail = 1; there_fail = 1;
@@ -89,17 +87,17 @@ function [wt, x0, shift, overaged] = loop(shift, x0, fragment, k, diff)
         r = rand; % Mersenne Twister
         if (reloop < here) || (reloop < there) || (reloop < back)
             if(r < here)
-                if (is_stopper(codon)), overaged = -1; break; end;
+                if (is_stopper(codon)), overaged = -1; return; end;
                 break;
             elseif (r < here + there)
                 shift = shift + 1;
                 ants(end+1) = {[codon ',' num2str(k)]};
-                if (is_stopper(there_codon)), overaged = -1; break; end;
+                if (is_stopper(there_codon)), overaged = -1; return; end;
                 break;
             elseif (r < here + there + back)
                 shift = shift - 1;
                 termites(end+1) = {[codon ',' num2str(k)]};
-                if (is_stopper(back_codon)), overaged = -1; break; end;
+                if (is_stopper(back_codon)), overaged = -1; return; end;
                 break;
             end
         end
