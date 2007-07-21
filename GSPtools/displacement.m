@@ -21,7 +21,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     x = [0 C2]; ants = {}; termites = {};
     
     shift = 0; power = 10; wts = [];
-    upper = length(Dvec) - 1; age_limit = 130;
+    upper = length(Dvec) - 1; age_limit = 200;
     for k=2:upper
         % Choose appropriate codon, depending on the specified spacing, and
         % calculate nloop accordingly
@@ -31,7 +31,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         back_codon=seq(index:index+2);
         codon = seq(index+1:index+3);
         other_codon = seq(index+2:index+4);
-    
+
         back_loops = real_loops(back_codon);
         here_loops = real_loops(codon);
         there_loops = real_loops(other_codon);
@@ -52,14 +52,30 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     
             r = rand; % Mersenne Twister
             if (reloop < here) || (reloop < there) || (reloop < back)
-                if(r < here), break;
+                if(r < here), 
+                    if (Travel.(codon)==1000)
+                        ants(end+1) = 'died';
+                        termites(end+1) = 'died';
+                        break;
+                    end;                        
+                    break;
                 elseif (r < here + there)
                     shift = shift + 1;
                     ants(end+1) = {[codon ',' num2str(k)]};
+                    if (Travel.(other_codon)==1000)
+                        ants(end+1) = 'died';
+                        termites(end+1) = 'died';
+                        break;
+                    end; 
                     break;
                 elseif (r < here + there + back)
                      shift = shift - 1;
                      termites(end+1) = {[codon ',' num2str(k)]};
+                     if (Travel.(other_codon)==1000)
+                        ants(end+1) = 'died';
+                        termites(end+1) = 'died';
+                        break;
+                     end; 
                      break;
                 end
             end
