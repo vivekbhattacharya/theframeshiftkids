@@ -62,7 +62,7 @@ function [overaged] = loop(fragment, k, diff)
     % for meanings and derivations. C1 chosen specifically to
     % make prfB work, cf. Lalit et al.
     C1 = 0.005; overaged = 0;
-    age_limit = 200; power = 10; phi_sp = -30*(pi/180);
+    age_limit = 150 + 100 * rand; power = 10; phi_sp = -30*(pi/180);
     
     wt = 0; here_fail = 1; back_fail = 1; there_fail = 1;
     back_codon = fragment(1:3); codon = fragment(2:4); there_codon = fragment(3:5);
