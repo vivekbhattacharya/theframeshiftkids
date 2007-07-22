@@ -17,7 +17,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     % Length of codon sequence
     global store;
     upper = length(Dvec) - 1;
-    store = struct('x', [0 0.1 zeros(1, upper - 1)], 'shift', 0, 'wts', zeros(1, upper-1));
+    store = struct('x', [0 0.1 zeros(1, upper - 1)], 'shift', 0, 'wts', zeros(1, upper-2));
     for k=2:upper
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
@@ -34,7 +34,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         end
     end
     x = store.x;
-    % wts
+    % store.wts
      
     % Tally the number of times the gene sequence
     % correctly frameshifted (shoals) in addition to the
@@ -103,7 +103,7 @@ function [overaged] = loop(fragment, k, diff)
     end
     if (wt > age_limit), overaged = true; end;
     store.x(k+1) = x0;
-    store.wts = [store.wts wt];
+    store.wts(k-1) = wt;
 end
 
 % Calculates Nloops per <http://code.google.com/p/
