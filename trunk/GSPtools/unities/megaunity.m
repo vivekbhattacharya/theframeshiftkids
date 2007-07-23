@@ -14,7 +14,7 @@ function megaunity(file, fshifts, bshifts)
 %        ex. ['uga,25';'cau,73'] or '[]'
 % --------------------------------------------------------------
 
-displacement = walrus_surprise(file);
+displacement = walrus_surprise(file, 'polar');
 global shoals sands;
 while 1
     x = displacement(fshifts, bshifts);

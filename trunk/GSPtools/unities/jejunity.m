@@ -1,5 +1,5 @@
 % ------------------------------------------------
-% Plots errorbars for displacmenet and saves it
+% Plots errorbars for displacment and saves it
 % to a file for all files in a given folder where
 % each file contains a gene sequence
 % 
@@ -17,13 +17,13 @@ function jejunity(folder, limit)
 end
 
 function helper(file, subfolder, limit, mode)
-    displacement = walrus_surprise(file);
+    [displacement, n] = walrus_surprise(file);
 
 	upper = ceil(n);
     a = zeros(limit, upper);
     for i=1:limit
         x = displacement({}, {});
-		maxiderm = size(x, 2);
+		maxiderm = length(x);
         for j=1:upper
 			if j <= maxiderm, a(i,j) = x(j);
 			else a(i,j) = -3.14;

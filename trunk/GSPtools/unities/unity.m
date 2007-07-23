@@ -14,11 +14,11 @@ function unity(file)
 %        that includes the leader
 % --------------------------------------------------------------
 
-displacement = walrus_surprise(file);
+displacement = walrus_surprise(file, 'polar');
 x = displacement({}, {});
 
 disp_shifts;
 
-figure(1); plot(0,0);plot(1:length(x), x);
-    axis([1 length(x) min(0,min(x)) max(3,max(x))]);
+figure(1); plot(0,0); plot(1:length(x), x);
+    axis([1 length(x) min(0, min(x)) max(3, max(x))]);
     grid; xlabel('Codon Number'); ylabel('x(k)');
