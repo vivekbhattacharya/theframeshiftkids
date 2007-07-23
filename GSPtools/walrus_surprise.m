@@ -12,18 +12,23 @@
 % Arguments: A file of genes
 % Returns: Those genes, how many there were, and
 %   a vector of differences
-function fantastic = walrus_surprise(file)
+function [fantastic, n] = walrus_surprise(file, varargin)
     [signal, seq] = get_signal(file);
     [mag, theta] = cumm_mag_phase(signal);
     [dvec, theta] = diff_vectors(mag, theta);
+    n = length(dvec) - 1;
     
     function [x] = helper(fs, bs)
         x = displacement(seq(13:end), dvec, fs, bs);
     end
     fantastic = @helper;
 
-    return;
-    figure(2); title('Cumulative phase');
-        plot(0,0); polar(theta, mag);
-        xlabel('Codon'); ylabel('Phase angle (deg)');
+    % Must be two for alopeciaunity to work
+    if length(varargin) > 0
+        if strcmp(varargin{1}, 'polar')
+            figure(2); title('Cumulative phase');
+            plot(0,0); polar(theta, mag);
+            xlabel('Codon'); ylabel('Phase angle (deg)');
+        end
+    end
 end

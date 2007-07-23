@@ -17,7 +17,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     % Length of codon sequence
     global store;
     upper = length(Dvec) - 1;
-    store = struct('x', [0 0.1 zeros(1, upper - 1)], 'shift', 0, 'wts', zeros(1, upper-2));
+    store = struct('x', [0 0.1 zeros(1, upper-2)], 'shift', 0, 'wts', zeros(1, upper-2));
     for k=2:upper
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
