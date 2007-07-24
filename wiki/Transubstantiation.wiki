@@ -1,6 +1,8 @@
 #summary Switching between ++r++s and --r--s
 #labels docs,code,displacement
 
+A note on lexicon: ++r means with `reloop` and ++s means with `sofar/acc`. The minus signs mean without.
+
 Without loss of generality, we'll just consider going from ++r++s to --r--s. All these changes go into `displacement.m`.
 
   * Add a line to set `acc` in `probabilities` to "1" on the very first line.
