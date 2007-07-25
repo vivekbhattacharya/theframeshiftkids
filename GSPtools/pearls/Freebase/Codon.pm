@@ -27,7 +27,7 @@ sub update {
 
 sub is_stop {
     my $self = shift;
-    if ($self->{loops} == STOP) { return -1 }
+    if ($self->{loops} == STOP) { return 1 }
     return 0;
 }
 1;
