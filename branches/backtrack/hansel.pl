@@ -1,7 +1,7 @@
 package Hansel;
 use strict; use warnings;
 use File::Basename;
-use lib dirname(__FILE__) . '/../pearls';
+use lib dirname(__FILE__) . '/GSPtools/pearls';
 
 use Smooth qw(getseq);
 use Getopt::Long;
@@ -58,7 +58,7 @@ sub rite {
 }
 
 sub print_diff {
-    my ($old, $new, $start, $folder) = @_;
+    my ($old, $new) = @_;
     my @old = Smooth::seq2codons getseq $old;
     my @new = Smooth::seq2codons getseq $new;
     
@@ -77,7 +77,8 @@ if ($0 eq __FILE__) {
     GetOptions('help|?' => \$help) or pod2usage(-verbose => 3);
     pod2usage(-verbose => 3) if ($help || !@ARGV);
     
-    rite backtrack @ARGV;
+    # rite backtrack @ARGV;
+    print_diff $ARGV[0], $ARGV[1];
 }
 
 1;
@@ -90,6 +91,12 @@ hansel.pl
 
 =head1 SYNOPSIS
 
+    hansel.pl old-rpoS.txt new-rpoS.txt
+    
     hansel.pl old-rpoS.txt new-rpoS.txt 46 "C:\Work folder"
+
+=head1 DESCRIPTION
+
+L<http://code.google.com/p/theframeshiftkids/wiki/Diffing>
 
 =cut
