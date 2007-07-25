@@ -5,6 +5,9 @@ def steal_out(cmd):
     from subprocess import Popen, PIPE
     return Popen(cmd, stdout=PIPE).stdout
 
+def fakeslope(y):
+    return (y[-1] - y[0])/2;
+
 from numpy import pi, sin, cos
 period = 4.0
 def fxsin(x):
