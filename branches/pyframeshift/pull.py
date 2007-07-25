@@ -1,20 +1,17 @@
-""" Data retrieval module that mainly calls
-    Perl scripts for heavy lifting """
-
 import numpy, ghost, os
 from nloops import nloops
 from tempfile import mkstemp as tempfile
 
 _, fasta = tempfile()
-seq_cmd = r'perl.exe getseq.pl "%s" "%s"'
-signal_cmd = r'perl.exe free_scan.pl -e -q -p FREIER auuccuccacuag "%s"'
+seq_cmd = r'perl.exe getseq.pl "%s"'
+signal_cmd = r'perl.exe scan_brightly.pl auuccuccacuag "%s"'
 def signal(file):
     file = os.path.abspath(file)
     os.chdir('pearls')
     
     # Todo: write2fasta
-    seq = ghost.steal_out(seq_cmd % (file, fasta)).read()
-    signal = ghost.steal_out(signal_cmd % fasta).readlines()
+    seq = ghost.steal_out(seq_cmd % file).read()
+    signal = ghost.steal_out(signal_cmd % file).readlines()
     
     # float can't handle empty lines.
     signal = [float(line.strip()) for line in signal if line.strip()]
@@ -97,56 +94,49 @@ class Codon(object):
         return n/(n-1)
     
     def nudge(self, weight):
-        print round([self.fail, weight, self.loops], 2)
         self.fail = self.fail * (1 - weight/self.loops)
         return 1 - self.fail
 
 from ghost import fxsin, xcos, bxsin
 from random import random
 from numpy import sin, pi
-def displacement(seq, phase, count, diffs, fshifts=(), bshifts=()):
+def displacement(seq, count, diffs, fshifts=(), bshifts=()):
     ants, termites = [], []
     species = -30.*(pi/180.)
     x, C1 = [0.0, 0.1], 0.005
     
     def cheese(self, *args): self.append('%s,%s' % args)
     def delphi(x0): return (pi/3)*x0 - species
-    phi_signal = [0]
     shift = 0
-    for k in xrange(1, 3):
-        i = 3*k + 2 + shift
-        if i + 4 > len(seq): break
+    for k in xrange(1, len(diffs)):
+        i = 3*k + shift + 2
+        if i + 5 > len(seq): break
         codons = [Codon(j) for j in (seq[i:i+3], seq[i+1:i+4], seq[i+2:i+5])]
         
-        phi_signal += [diffs[k][1]]
         x0 = x[k]
-        phi_dx = delphi(x0)
         for persian in xrange(1, 1000):
-            a = x0*pi/(4.0)
+            a = x0 - 2*shift
             # Window function
-            weights = [func(a)**10 for func in (fxsin, xcos, bxsin)]
+            # Careful with the order of the functions
+            weights = [func(a)**10 for func in (bxsin, xcos, fxsin)]
             back, here, there = [c.nudge(w) for (c, w) in zip(codons, weights)]
             reloop = 1 - (back + here + there)
             
-            # r = random() # Mersenne Twister
+            r = random() # Mersenne Twister
             if (reloop < here) or (reloop < there) or (reloop < back):
-                if (here > there) and (here > back): break
-                elif (there > here) and (there > back):
-                    shift += 1; cheese(ants, codons[1].codon, k)
+                if (r < here): break
+                elif (r < here + there):
+                    shift += 1; cheese(ants, codons[1].codon, k+1)
                     break
-                elif (back > here) and (back > there):
-                    shift -= 1; cheese(termites, codons[1].codon, k)
+                elif (r < here + there + back):
+                    shift -= 1; cheese(termites, codons[1].codon, k+1)
                     break
             
             
             phi_dx = delphi(x0)
-            dx = -C1 * diffs[k][0] * sin(phi_signal[k] + phi_dx)
+            dx = -C1 * diffs[k][0] * sin(diffs[k][1] + phi_dx)
             x0 += dx
         x += [x0]
+    print ants
+    print termites
     return x
-
-if __name__ == '__main__':
-    import sys
-    (signal,seq) = signal(sys.argv[1])
-    print signal.T
-    print seq
