@@ -1,4 +1,5 @@
 from pylab import *
+from numpy import min
 import pull, ghost
 
 tav = ghost.read('tav.txt')
@@ -15,6 +16,7 @@ def unity(file):
     figure(1)
     plot(arange(0, len(places)), places, linewidth=1.0)
     grid(True)
+    axis([0, len(places), min(0, min(places)), max(3, max(places))]);
     show()
 
 if __name__ == '__main__':
