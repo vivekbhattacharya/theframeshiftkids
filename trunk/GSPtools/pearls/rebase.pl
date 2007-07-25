@@ -22,24 +22,25 @@ if (__FILE__ eq $0) {
         return -0.005 * $diff1 * sin($thigh);
     };
     
-    my ($overaged, $ant, $termite) = (0, '', '');
-    my $wait;
-    for ($wait = 1; $wait < 150 + 100 * rand; $wait++) {
-        my ($a, $b, $c) = map { $_->update($x0 + 2 * $shift) } ($back, $here, $next);
+    my ($overaged, $type, $ant) = (0, 0, '');
+    my $wait; my $age_limit = 150 + 100 * rand;
+    for ($wait = 1; $wait < $age_limit + 1; $wait++) {
+        my ($a, $b, $c) = map { $_->update($x0 - 2 * $shift) } ($back, $here, $next);
         
+        # Careful with the single letters
         my $reloop = 1 * (1 - ($a + $b + $c));
         if ($reloop < $a or $reloop < $b or $reloop < $c) {
             my $r = rand;
-            if ($r < $a) {
+            if ($r < $b) {
                 $overaged = $here->is_stop;
                 last;
-            } elsif ($r < $a + $b) {
+            } elsif ($r < $b + $c) {
                 $overaged = $next->is_stop;
-                $ant = $codon;
+                ($type, $ant) = (1, $codon);
                 last;
             } elsif ($r < $a + $b + $c) {
                 $overaged = $back->is_stop;
-                $termite = $codon;
+                ($type, $ant) = (2, $codon);
                 last;
             }
         }
@@ -47,7 +48,7 @@ if (__FILE__ eq $0) {
         $x0 += $secret->($x0);
     }
     
-    print $x0, $/;
-    print $wait;
+    $overaged = 2 if $wait > $age_limit;
+    print "{ $x0 $wait $type '$ant' $overaged }", $/;
 }
 1;
