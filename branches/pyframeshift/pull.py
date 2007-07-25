@@ -1,20 +1,20 @@
 import numpy, ghost, os
 from nloops import nloops
-from tempfile import mkstemp as tempfile
 
-_, fasta = tempfile()
-seq_cmd = r'perl.exe getseq.pl "%s"'
-signal_cmd = r'perl.exe scan_brightly.pl auuccuccacuag "%s"'
 def signal(file):
-    file = os.path.abspath(file)
-    os.chdir('pearls')
+    seq_cmd = r'perl.exe getseq.pl "%s"'
+    signal_cmd = r'perl.exe scan_brightly.pl auuccuccacuag "%s"'
     
-    # Todo: write2fasta
+    file = os.path.abspath(file)
+    os.chdir(r'pearls')
+    
+    # Call Perl scripts to obtain the signal and the sequence,
+    # primarily a call to Kidnap and Smooth::getseq
     seq = ghost.steal_out(seq_cmd % file).read()
     signal = ghost.steal_out(signal_cmd % file).readlines()
     
-    # float can't handle empty lines.
-    signal = [float(line.strip()) for line in signal if line.strip()]
+    # float() can't handle empty lines.
+    signal = numpy.array([float(line.strip()) for line in signal if line.strip()])
     return (signal, seq)
 
 #################################################################
@@ -34,9 +34,10 @@ def magphase(signal):
         # creating a sequence of endpoints here.
         #
         # We want 0:3, 0:6, 0:9, 0:12, ...
-        y = signal[0:((i+1)*3)]
+        y = signal[0:(i+1)*3]
         M = zeros(3)
-        for j in xrange(0, len(y), 3): M[0:3] += y[j:j+3]
+        for j in xrange(0, 3*(i+1), 3): M[0:3] += y[j:j+3]
+        
         # Assume avg_choice in the old code is 0.
         M -= mean(M)
         
@@ -48,30 +49,24 @@ def magphase(signal):
             Phase[i] = arctan2(grass*sqrt(3), M[2] - M[1])
             Mag[i] = -grass/sin(Phase[i])
         else: Mag[i], Phase[i] = 0, 0
-    return Mag, Phase, len(Mag)
+    return Mag, Phase, limit
 
 #################################################################
 
-from numpy import polyfit, polyder, polyval
-class PolarPoint(object):
-    def __init__(self, num, index):
-        L, P = 3, 1
-        self.num = num
-        # P = 1 implies a linear regression.
-        self.poly = polyfit(range(1,L+1), num, P)
-        self.der = polyval(polyder(self.poly), index)
-
 from numpy import exp, complex, angle, abs
+from ghost import fakeslope
 def diff_vectors(mag, phase, count):
     vec = []
-    for i in range(0, count-1):
+    for i in xrange(0, count-1):
         # God knows what this does.
         x = min(max(1, i), count-2)
+        
         # Find the codon, remembering that
         # the array index starts at zero.
         index = slice(x - 1, x + 2)
-        magic, phaser = [PolarPoint(data[index], i+1) for data in (mag, phase)]
-        D = exp(1j*phase[i]) * (magic.der + 1j*mag[i]*phaser.der)
+        
+        magic, phaser = [fakeslope(data[index]) for data in (mag, phase)]
+        D = exp(1j*phase[i]) * (magic + 1j*mag[i]*phaser)
         
         vec += [[abs(D), angle(D)]]
     return vec
@@ -81,45 +76,45 @@ def diff_vectors(mag, phase, count):
 # http://code.google.com/p/theframeshiftkids/wiki/MathBehindTheModel
 from numpy import ceil, round
 class Codon(object):
-    def __init__(self, codon):
+    def __init__(self, codon, trig):
         self.codon = codon
         self.loops = Codon.calcloops(codon)
         self.fail = 1.0
+        self.trig = trig
     
     @staticmethod
     def calcloops(codon):
-        # Implement nloops
         n = ceil(nloops[codon])
         n = 2. ** (1./n)
         return n/(n-1)
     
     def nudge(self, weight):
+        weight = self.trig(weight) ** 10
         self.fail = self.fail * (1 - weight/self.loops)
         return 1 - self.fail
 
 from ghost import fxsin, xcos, bxsin
 from random import random
 from numpy import sin, pi
-def displacement(seq, count, diffs, fshifts=(), bshifts=()):
+def displacement(seq, diffs, fshifts=(), bshifts=()):
     ants, termites = [], []
     species = -30.*(pi/180.)
     x, C1 = [0.0, 0.1], 0.005
     
     def cheese(self, *args): self.append('%s,%s' % args)
-    def delphi(x0): return (pi/3)*x0 - species
-    shift = 0
+    shift = 0; maximus = len(seq); nudge = Codon.nudge
     for k in xrange(1, len(diffs)):
         i = 3*k + shift + 2
-        if i + 5 > len(seq): break
-        codons = [Codon(j) for j in (seq[i:i+3], seq[i+1:i+4], seq[i+2:i+5])]
+        if i + 5 > maximus: break
+        
+        codons = [Codon(seq[i:i+3], bxsin), Codon(seq[i+1:i+4], xcos), Codon(seq[i+2:i+5], fxsin)]
         
         x0 = x[k]
         for persian in xrange(1, 1000):
             a = x0 - 2*shift
             # Window function
             # Careful with the order of the functions
-            weights = [func(a)**10 for func in (bxsin, xcos, fxsin)]
-            back, here, there = [c.nudge(w) for (c, w) in zip(codons, weights)]
+            back, here, there = [nudge(c, a) for c in codons]
             reloop = 1 - (back + here + there)
             
             r = random() # Mersenne Twister
@@ -132,8 +127,7 @@ def displacement(seq, count, diffs, fshifts=(), bshifts=()):
                     shift -= 1; cheese(termites, codons[1].codon, k+1)
                     break
             
-            
-            phi_dx = delphi(x0)
+            phi_dx = (pi/3)*x0 - species
             dx = -C1 * diffs[k][0] * sin(diffs[k][1] + phi_dx)
             x0 += dx
         x += [x0]
