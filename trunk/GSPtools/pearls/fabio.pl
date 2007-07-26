@@ -1,9 +1,9 @@
 # TAV and codon names for debugging:
 # http://shadytrees.pastebin.ca/raw/537444 http://shadytrees.pastebin.ca/raw/537676
 package Fabio;
-use strict;
-use warnings;
+use strict; use warnings;
 use Smooth;
+use List::Util qw(min max);
 
 # Builds a map between codon and frequency.
 sub frequencies {
@@ -20,7 +20,27 @@ sub frequencies {
             $everything->{$codon} = shift @a;
         }
     };
+    
+    # All tRNA availabilities for every codon except
+    # the stop codons.
+    my @values = ();
+    for my $key (keys %$everything) {
+        my $skeleton = lc $key;
+        push @values, $everything->{$key} unless
+            $skeleton =~ /uag|uga|uaa/;
+    }
+    
+    our $smallest = min @values;
+    our $biggest = max @values;
     $everything;
+}
+
+use POSIX;
+our ($biggest, $smallest);
+sub loops {
+    my $num = shift;
+    return ($biggest/$smallest - floor($num/$smallest));
+    return ($biggest/$smallest) - floor($num/$smallest);
 }
 
 # Glorified print
@@ -30,8 +50,12 @@ sub plump {
     # Convert to uppercase because frequencies
     # come in uppercase format.
     Smooth::webopen $names, sub {
-        s/\s//g; tr/a-z/A-Z/;
-        print $info->{$_}/1000, $/;
+        s/\s//g; $_ = uc $_;
+        if ($_ =~ /UGA|UAG|UAA/) {
+            print 1000, $/;
+            return;
+        }
+        print loops($info->{$_}), $/;
     };
 }
 
@@ -54,7 +78,7 @@ fabio.pl (web-enabled)
     
 =over 20
 
-=item B<scan_brightly.pl>
+=item B<fabio.pl>
 
 I<list of tRNA availabilites> I<list of codons>
 
