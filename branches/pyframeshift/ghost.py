@@ -11,6 +11,8 @@ def fakeslope(y):
 from numpy import pi, sin, cos
 period = 4.0
 def fxsin(x):
+    """ A piecewise function that computes the window
+        function on +1 frameshifts """
     x *= pi/period
     phase = pi/2 - 2*pi/period
     
@@ -19,6 +21,8 @@ def fxsin(x):
     return 0.0
 
 def xcos(x):
+    """ A piecewise function that computes the window
+        function on the current frame """
     x *= pi/period
     
     if x > (-period/2.0) and x < (period/2.0):
@@ -26,6 +30,8 @@ def xcos(x):
     return 0
 
 def bxsin(x):
+    """ A piecewise function that computes the window
+        function on -1 frameshifts ""
     x *= pi/period
     phase = pi/2.0 + 2.0*pi/period
     

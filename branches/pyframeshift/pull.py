@@ -11,9 +11,12 @@ def signal(file):
     # Call Perl scripts to obtain the signal and the sequence,
     # primarily a call to Kidnap and Smooth::getseq
     seq = ghost.steal_out(seq_cmd % file).read()
+    
+    # Believe it or not, this is faster than not calling readlines.
     signal = ghost.steal_out(signal_cmd % file).readlines()
     
-    # float() can't handle empty lines.
+    # float() can't handle empty lines. numpy.array() introduces
+    # twofold speedup.
     signal = numpy.array([float(line.strip()) for line in signal if line.strip()])
     return (signal, seq)
 
@@ -22,21 +25,19 @@ def signal(file):
 # I do not compute error, because nobody ever uses it.
 from numpy import zeros, arctan2, sin, sqrt, mean, round
 def magphase(signal):
-    L = len(signal)
     # Round signal to a multiple of 3.
+    L = len(signal)
     if L % 3: signal = signal[0:L - (L % 3)]
     
     limit = L/3
     Mag, Phase = zeros(limit), zeros(limit)
     for i in xrange(0, limit):
-        # +1 comes from Python's indexing, which starts at zero,
-        # that conflates with `i` in that it's also used for
-        # creating a sequence of endpoints here.
-        #
-        # We want 0:3, 0:6, 0:9, 0:12, ...
-        y = signal[0:(i+1)*3]
+        # -- +1 comes from Python's indexing, which starts at zero,
+        #    that conflates with `i` in that it's also used for
+        #    creating a sequence of endpoints here.
+        # -- We want 0:3, 0:6, 0:9, 0:12, ...
         M = zeros(3)
-        for j in xrange(0, 3*(i+1), 3): M[0:3] += y[j:j+3]
+        for j in xrange(0, 3*(i+1), 3): M[0:3] += signal[j:j+3]
         
         # Assume avg_choice in the old code is 0.
         M -= mean(M)
@@ -75,23 +76,18 @@ def diff_vectors(mag, phase, count):
 
 # http://code.google.com/p/theframeshiftkids/wiki/MathBehindTheModel
 from numpy import ceil, round
-class Codon(object):
-    def __init__(self, codon, trig):
-        self.codon = codon
-        self.loops = Codon.calcloops(codon)
-        self.fail = 1.0
-        self.trig = trig
-    
-    @staticmethod
-    def calcloops(codon):
-        n = ceil(nloops[codon])
-        n = 2. ** (1./n)
-        return n/(n-1)
-    
-    def nudge(self, weight):
-        weight = self.trig(weight) ** 10
-        self.fail = self.fail * (1 - weight/self.loops)
-        return 1 - self.fail
+def birth(codon, trig):
+    return [codon, calcloops(codon), 1.0, trig]
+
+def calcloops(codon):
+    n = ceil(nloops[codon])
+    n = 2. ** (1./n)
+    return n/(n-1)
+
+def nudge(self, weight):
+    weight = self[3](weight) ** 10
+    self[2] = self[2] * (1 - weight/self[1])
+    return 1 - self[2]
 
 from ghost import fxsin, xcos, bxsin
 from random import random
@@ -102,12 +98,16 @@ def displacement(seq, diffs, fshifts=(), bshifts=()):
     x, C1 = [0.0, 0.1], 0.005
     
     def cheese(self, *args): self.append('%s,%s' % args)
-    shift = 0; maximus = len(seq); nudge = Codon.nudge
+    shift = 0; maximus = len(seq)
     for k in xrange(1, len(diffs)):
         i = 3*k + shift + 2
         if i + 5 > maximus: break
         
-        codons = [Codon(seq[i:i+3], bxsin), Codon(seq[i+1:i+4], xcos), Codon(seq[i+2:i+5], fxsin)]
+        codons = [
+            birth(seq[i:i+3], bxsin),
+            birth(seq[i+1:i+4], xcos),
+            birth(seq[i+2:i+5], fxsin),
+        ]
         
         x0 = x[k]
         for persian in xrange(1, 1000):
@@ -121,10 +121,10 @@ def displacement(seq, diffs, fshifts=(), bshifts=()):
             if (reloop < here) or (reloop < there) or (reloop < back):
                 if (r < here): break
                 elif (r < here + there):
-                    shift += 1; cheese(ants, codons[1].codon, k+1)
+                    shift += 1; cheese(ants, codons[1][0], k+1)
                     break
                 elif (r < here + there + back):
-                    shift -= 1; cheese(termites, codons[1].codon, k+1)
+                    shift -= 1; cheese(termites, codons[1][0], k+1)
                     break
             
             phi_dx = (pi/3)*x0 - species
