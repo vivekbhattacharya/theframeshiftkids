@@ -1,4 +1,4 @@
-import numpy, ghost, os
+import numpy, ghost, os, sequence
 from nloops import nloops
 
 def signal(file):
@@ -10,7 +10,7 @@ def signal(file):
     
     # Call Perl scripts to obtain the signal and the sequence,
     # primarily a call to Kidnap and Smooth::getseq
-    seq = ghost.steal_out(seq_cmd % file).read()
+    seq = sequence.get(file)
     
     # Believe it or not, this is faster than not calling readlines.
     signal = ghost.steal_out(signal_cmd % file).readlines()
@@ -23,7 +23,8 @@ def signal(file):
 #################################################################
 
 # I do not compute error, because nobody ever uses it.
-from numpy import zeros, arctan2, sin, sqrt, mean, round
+from numpy import zeros, mean
+from math import atan2, sin, sqrt
 def magphase(signal):
     # Round signal to a multiple of 3.
     L = len(signal)
@@ -32,30 +33,31 @@ def magphase(signal):
     limit = L/3
     Mag, Phase = zeros(limit), zeros(limit)
     for i in xrange(0, limit):
-        # -- +1 comes from Python's indexing, which starts at zero,
+        # ** +1 comes from Python's indexing, which starts at zero,
         #    that conflates with `i` in that it's also used for
         #    creating a sequence of endpoints here.
-        # -- We want 0:3, 0:6, 0:9, 0:12, ...
+        # ** We want 0:3, 0:6, 0:9, 0:12, ...
         M = zeros(3)
-        for j in xrange(0, 3*(i+1), 3): M[0:3] += signal[j:j+3]
+        for j in xrange(0, 3*(i+1), 3): M += signal[j:j+3]
         
         # Assume avg_choice in the old code is 0.
         M -= mean(M)
         
         grass = M[1] + M[2]
         if not M[0] == 0:
-            Phase[i] = arctan2(M[0]*sqrt(3), M[0] + 2*M[1])
+            Phase[i] = atan2(M[0]*sqrt(3), M[0] + 2*M[1])
             Mag[i] = M[0]/sin(Phase[i])
         elif not grass == 0:
-            Phase[i] = arctan2(grass*sqrt(3), M[2] - M[1])
+            Phase[i] = atan2(grass*sqrt(3), M[2] - M[1])
             Mag[i] = -grass/sin(Phase[i])
-        else: Mag[i], Phase[i] = 0, 0
+        else:
+            Mag[i], Phase[i] = 0, 0
     return Mag, Phase, limit
 
 #################################################################
 
-from numpy import exp, complex, angle, abs
 from ghost import fakeslope
+from cmath import exp, log
 def diff_vectors(mag, phase, count):
     vec = []
     for i in xrange(0, count-1):
@@ -64,21 +66,24 @@ def diff_vectors(mag, phase, count):
         
         # Find the codon, remembering that
         # the array index starts at zero.
-        index = slice(x - 1, x + 2)
+        index = slice(x-1, x+2)
         
         magic, phaser = [fakeslope(data[index]) for data in (mag, phase)]
         D = exp(1j*phase[i]) * (magic + 1j*mag[i]*phaser)
         
-        vec += [[abs(D), angle(D)]]
+        # angle(z) = imag(log(z))
+        vec += [[abs(D), log(D).imag]]
     return vec
         
 #################################################################
 
 # http://code.google.com/p/theframeshiftkids/wiki/MathBehindTheModel
-from numpy import ceil, round
-def birth(codon, trig):
+# Imagine `birth`, `calcloops`, and `nudge` in a class except, for
+# performance reasons, the `self` object is an array and there is no class.
+def b(codon, trig):
     return [codon, calcloops(codon), 1.0, trig]
 
+from math import ceil
 def calcloops(codon):
     n = ceil(nloops[codon])
     n = 2. ** (1./n)
@@ -91,33 +96,31 @@ def nudge(self, weight):
 
 from ghost import fxsin, xcos, bxsin
 from random import random
-from numpy import sin, pi
+from math import sin, pi
 def displacement(seq, diffs, fshifts=(), bshifts=()):
+    def cheese(self, *args): self.append('%s,%s' % args)
+    
     ants, termites = [], []
     species = -30.*(pi/180.)
-    x, C1 = [0.0, 0.1], 0.005
+    x = [0.0, 0.1]
     
-    def cheese(self, *args): self.append('%s,%s' % args)
     shift = 0; maximus = len(seq)
     for k in xrange(1, len(diffs)):
+        # 3(k+1) + shift - 1 expanded because i+1:i+4
+        # must be the +0 codon, starting with the THIRD.
         i = 3*k + shift + 2
         if i + 5 > maximus: break
         
-        codons = [
-            birth(seq[i:i+3], bxsin),
-            birth(seq[i+1:i+4], xcos),
-            birth(seq[i+2:i+5], fxsin),
-        ]
-        
-        x0 = x[k]
+        codons = [b(seq[i:i+3], bxsin), b(seq[i+1:i+4], xcos), b(seq[i+2:i+5], fxsin)]
+        x.append(x[k])
         for persian in xrange(1, 1000):
-            a = x0 - 2*shift
-            # Window function
-            # Careful with the order of the functions
-            back, here, there = [nudge(c, a) for c in codons]
+            # Window function: two units of shift equals on frameshift
+            back, here, there = [nudge(c, x[k+1] - 2*shift) for c in codons]
             reloop = 1 - (back + here + there)
             
-            r = random() # Mersenne Twister
+            # Throw a stone in a rectangle divided into thirds
+            # and find which third it landed on via elifs and math.
+            r = random()
             if (reloop < here) or (reloop < there) or (reloop < back):
                 if (r < here): break
                 elif (r < here + there):
@@ -127,10 +130,10 @@ def displacement(seq, diffs, fshifts=(), bshifts=()):
                     shift -= 1; cheese(termites, codons[1][0], k+1)
                     break
             
-            phi_dx = (pi/3)*x0 - species
-            dx = -C1 * diffs[k][0] * sin(diffs[k][1] + phi_dx)
-            x0 += dx
-        x += [x0]
+            # This follows from phi_signal(1,k) = Dvec(k,2)
+            # "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
+            phi_dx = (pi/3)*x[k+1] - species + diffs[k][1]
+            x[k+1] += -0.005 * diffs[k][0] * sin(phi_dx)
     print ants
     print termites
     return x
