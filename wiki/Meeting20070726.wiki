@@ -1,0 +1,24 @@
+#summary Sparks
+#labels meetings,notes,experiments
+
+==Experiment==
+  * Adding a marker gene upstream of the fusion gene, using beta gals to control the amount of mRNA, which can cause the ribosome complex to dissociate but later come back together (rare)
+  * Use XylE to cleave catechol 
+  * Fuse together sequence of interest, a localized sequence of lysozyme that frameshifts
+  * Format of test sequence: efficient protein upstream verified to work + test linker + *XylE*
+   * Also, {promoter}{*Beta galactosidase*}{stop codon}{fusion sequence}
+   * Total of three reporter genes: 1) message level and 2) able to look at GST and 3) controlling GST (?)
+  * Run through computational analysis first to check for high yield (that's us)
+   * Find pauses and the necessary frameshift
+  * *In vitro* or in vivo? In vitro adds doubt to our process, so quickly shot down by Dr. Stomp
+   * In vitro takes an hour; Dr. Stomp compared in vitro kits to buggy software (Windows Vista in particular)
+  * Beta gals is part of an *operon*, first gene of the three
+  * Ensure we only have one initiation site (don't worry)
+   * Ensure we never cause a *hairpin deformation* or *secondary structure*
+  * GST always at the end terminus until recently (C terminus now a possibility)
+  * Ways of inspecting the gene sequence: HISS (*purity test*), ELIZA, colometric
+  * GST is an epitope (?), bought from the Invitrogen catalog
+  * XylE has been used repeatedly in a fusion protein so it is tested and proven
+  * Robert: Difference between frameshift and dissocation? Dr. Stomp: Don't worry about it.
+
+Alternative experiment idea: Rare codons may cause a pause that Robert can view with a real-time assay and a spectrometer in vitro.
