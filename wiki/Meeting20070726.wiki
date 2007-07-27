@@ -19,7 +19,7 @@
   * Ways of inspecting the gene sequence: HISS (*purity test*), ELISA, colometric
   * GST is an epitope (?), bought from the Invitrogen catalog
   * XylE has been used repeatedly in a fusion protein so it is tested and proven
-  * Robert: Difference between frameshift and dissocation? Dr. Stomp: Don't worry about it.
+  * Robert: Difference between frameshift and dissociation? Dr. Stomp: Don't worry about it.
 
 Alternative experiment idea: Rare codons may cause a pause that Robert can view with a real-time assay and a spectrometer in vitro.
 
@@ -29,3 +29,9 @@ Alternative experiment idea: Rare codons may cause a pause that Robert can view 
   * Hairpin deformation: when mRNA folds upon itself
   * [http://en.wikipedia.org/wiki/Operon Operon]
   * [http://en.wikipedia.org/wiki/ELISA ELISA]
+  * [http://en.wikipedia.org/wiki/Glutathione_S-transferase Gulathione S-transferase]
+
+
+== Questions ==
+  * ELISA detects antibodies and antigens, which contain epitopes like GST. Where is GST added in our experiment?
+  * Does beta-gal have a high yield, and is that why we're using it?
