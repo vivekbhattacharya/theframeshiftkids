@@ -1,4 +1,5 @@
 % Assumptions: x and y are monotone increasing.
 % Linear regression the 5th grade way.
-function [m] = fakeslope(x, y, p)
-m = (y(end) - y(1))/(x(end) - x(1));
+% This assumes L = 3
+function [m] = fakeslope(y)
+m = (y(end) - y(1))/2; % 3 - 1 = 2
