@@ -16,7 +16,7 @@
   * Ensure we only have one initiation site (don't worry)
    * Ensure we never cause a *hairpin deformation* or *secondary structure*
   * GST always at the end terminus until recently (C terminus now a possibility)
-  * Ways of inspecting the gene sequence: HISS (*purity test*), ELIZA, colometric
+  * Ways of inspecting the gene sequence: HISS (*purity test*), ELISA, colometric
   * GST is an epitope (?), bought from the Invitrogen catalog
   * XylE has been used repeatedly in a fusion protein so it is tested and proven
   * Robert: Difference between frameshift and dissocation? Dr. Stomp: Don't worry about it.
@@ -28,3 +28,4 @@ Alternative experiment idea: Rare codons may cause a pause that Robert can view 
   * [http://en.wikipedia.org/wiki/Beta-galactosidase Beta galactosidase]: Not really sure what this is for
   * Hairpin deformation: when mRNA folds upon itself
   * [http://en.wikipedia.org/wiki/Operon Operon]
+  * [http://en.wikipedia.org/wiki/ELISA ELISA]
