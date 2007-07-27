@@ -16,7 +16,7 @@ sub frequencies {
         s/\(.*?\)//g; s/^\s+//; s/\s+$//;
         my @a = split /\s+/;
         while (@a) {
-            my $codon = shift @a;
+            my $codon = lc shift @a;
             $everything->{$codon} = shift @a;
         }
     };
@@ -25,9 +25,7 @@ sub frequencies {
     # the stop codons.
     my @values = ();
     for my $key (keys %$everything) {
-        my $skeleton = lc $key;
-        push @values, $everything->{$key} unless
-            $skeleton =~ /uag|uga|uaa/;
+        push @values, $everything->{$key} unless $key =~ /uag|uga|uaa/;
     }
     
     our $smallest = min @values;
@@ -47,16 +45,17 @@ sub loops {
 sub plump {
     my ($info, $names) = @_;
 
-    # Convert to uppercase because frequencies
-    # come in uppercase format.
+    # Convert to lowercase because that's how
+    # I stored the %everything keys, see above.
+    my $line = 'Travel = struct(';
     Smooth::webopen $names, sub {
-        s/\s//g; $_ = uc $_;
-        if ($_ =~ /UGA|UAG|UAA/) {
-            print 1000, $/;
-            return;
-        }
-        print loops($info->{$_}), $/;
+        s/\s//g; $_ = lc $_;
+        $line .= "'$_', ";
+        if ($_ =~ /uga|uag|uaa/) { $line .= '1000, ' }
+        else { $line .= loops($info->{$_}) . ', ' }
     };
+    $line =~ s/, $/)/;
+    print $line;
 }
 
 if (__FILE__ eq $0) {
@@ -74,7 +73,7 @@ fabio.pl (web-enabled)
 
 =head1 SYNOPSIS
 
-    fabio.pl http://shadytrees.pastebin.ca/raw/537444 http://shadytrees.pastebin.ca/raw/537676
+    fabio.pl http://shadytrees.pastebin.ca/raw/537444 http://shadytrees.pastebin.ca/raw/537676 > temp.txt
     
 =over 20
 
@@ -88,9 +87,10 @@ I<list of tRNA availabilites> I<list of codons>
 
 fabio.pl's primary accomplishment is in parsing the
 list of tRNA availabilities. It then sorts them in the
-codon order specified by the list of codons, making
-this a suitable Matlab vector to run through C<nloopcalcify>
-in order to generate a C<Travel.mat> for GSPtools to use.
+codon order specified by the list of codons, running them through
+a Perl version of C<nloopcalcify> in order to generate a C<Travel.mat>
+for GSPtools to use. Copy the output into a Matlab variable and use
+C<save> to save that variable to a Travel.mat file.
 
 =head1 OPTIONS AND ARGUMENTS
 

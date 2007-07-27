@@ -32,7 +32,7 @@ function [A, theta] = helper(x)
 
     M = zeros(1,3); % Fill memory registers
     for j = 1:3:length(x)
-        M(1:3) = M(1:3) + x(j:j+2);
+        M = M + x(j:j+2);
     end    
     
     % The averaging calculation works only for the case when
