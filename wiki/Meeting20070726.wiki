@@ -22,3 +22,9 @@
   * Robert: Difference between frameshift and dissocation? Dr. Stomp: Don't worry about it.
 
 Alternative experiment idea: Rare codons may cause a pause that Robert can view with a real-time assay and a spectrometer in vitro.
+
+== External Links ==
+  * [http://en.wikipedia.org/wiki/Catechol_dioxygenase Catechol and XylE]: Quantifies yield
+  * [http://en.wikipedia.org/wiki/Beta-galactosidase Beta galactosidase]: Not really sure what this is for
+  * Hairpin deformation: when mRNA folds upon itself
+  * [http://en.wikipedia.org/wiki/Operon Operon]
