@@ -11,12 +11,10 @@ def fxsin(x):
         function on +1 frameshifts """
     period = 4
     magic = 2*pi/period
-    
-    x *= magic
     phase = pi/2 - magic
     
     if x > 4 - period and x < 4 + period:
-        return sin(x/2 + phase)
+        return sin(x*magic/2 + phase)
     return 0.0
 
 def xcos(x):
@@ -24,10 +22,9 @@ def xcos(x):
         function on the current frame """
     period = 4
     magic = 2*pi/period
-    
-    x *= magic
+
     if x > -period and x < period:
-        return cos(x/2)
+        return cos(x*magic/2)
     return 0
 
 def bxsin(x):
@@ -35,10 +32,8 @@ def bxsin(x):
         function on -1 frameshifts """
     period = 4
     magic = 2*pi/period
-    
-    x *= magic
     phase = pi/2 + magic
     
     if x > -4 - period and x < -4 + period:
-        return sin(x/2 + phase)
+        return sin(x*magic/2 + phase)
     return 0.0
