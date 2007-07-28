@@ -1,4 +1,4 @@
-from pylab import *
+from matplotlib.pylab import *
 from numpy import min
 import pull, ghost
 
@@ -9,7 +9,6 @@ def unity(file):
     
     places = pull.displacement(seq[12:], diff_vectors)
     
-    return
     figure(1)
     plot(arange(0, len(places)), places, linewidth=1.0)
     grid(True)
@@ -28,5 +27,5 @@ def megaunity(file):
 if __name__ == '__main__':
     import sys
     import cProfile
-    cProfile.run('unity(sys.argv[1])', 'foo')
-    # unity(sys.argv[1])
+    #cProfile.run('unity(sys.argv[1])', 'foo')
+    unity(sys.argv[1])
