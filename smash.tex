@@ -1,16 +1,30 @@
-\documentclass[10pt,titlepage,draft,twocolumn]{article}
-\usepackage{fullpage, amsmath, vector}
-\linespread{1.5}
-\bibliographystyle{alpha}
+\documentclass[10pt,titlepage,twocolumn, draft]{article}
+\usepackage{fullpage, amsmath, amssymb}
+\bibliographystyle{abbrv}
 
 \begin{document}
-\section{Hello}
+\section*{Hello}
 Vivek, Hao, and Daniel authored this report on August To Be Determined, 2007.
 
-\section{The old model}
-The model~\cite{lalit:mechanics} was deterministic and not very cool.
+\section{The old}
+The old displacement model~\cite{lalit:mechanics}~\cite{lalit:embs} was deterministic
+in which the change in displacement $\Delta x$ arose from the instantaneous energy available at
+each codon with codon choice limited to the -1, +1, and 0 reading frames, depending on
+which interval among $(-\infty, -1]$, $(-1,1)$, and $[1, \infty)$ contained $x$.
+This established a recursive relationship between instantaneous energy,
+which relies on the wait time for a codon, and codon choice.
 
-\section{The new model}
+\section{The new}
+The new model is stochastic, arising from talks with Dr. Bitzer about sinusoidal probability.
+Let the current frame be $f$. The probability of choosing
+$f-1$, remaining at $f$, or choosing $f+1$ depend on sinusoidal piecewise functions defined
+on intervals that correspond to hugs, such as the function
+    \begin{align}
+        f(x) &=  \cos \frac{x \pi}{T}  & \text{if $-\frac{T}{2} < x < \frac{T}{2}$}\\
+        f(x) &=  0 & \text{otherwise}
+    \end{align}
+that describes the probability the model will remain at the $f$ frame. (Under normal conditions
+when no frameshift occurs, $f = 0$.)
 
 \bibliography{wizards}
 \end{document}

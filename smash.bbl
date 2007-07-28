@@ -1,7 +1,13 @@
-\begin{thebibliography}{PBSV06}
+\begin{thebibliography}{1}
 
-\bibitem[PBSV06]{lalit:mechanics}
-Lalit Ponnala, Donald~L. Bitzer, Anne-Marie Stomp, and Mladen~A. Vouk.
+\bibitem{lalit:embs}
+L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
+\newblock A computational model for reading frame maintenance.
+\newblock In {\em EMBS Annual International Conference}, pages 4540--4543.
+  Institute of Electrical and Electronics Engineers, Aug. 2006.
+
+\bibitem{lalit:mechanics}
+L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
 \newblock A model for +1 frameshifts in eubacteria.
 \newblock {\em Bioinformatics}, 2006.
 
