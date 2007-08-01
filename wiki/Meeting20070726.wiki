@@ -28,7 +28,7 @@ Alternative experiment idea: Rare codons may cause a pause that Robert can view 
   * Hairpin deformation: when mRNA folds upon itself
   * [http://en.wikipedia.org/wiki/Operon Operon]
   * [http://en.wikipedia.org/wiki/ELISA ELISA]
-  * [http://en.wikipedia.org/wiki/Glutathione_S-transferase Gulathione S-transferase]
+  * [http://en.wikipedia.org/wiki/Glutathione_S-transferase#GST-tag Gulathione S-transferase]
 
 
 == Questions ==
