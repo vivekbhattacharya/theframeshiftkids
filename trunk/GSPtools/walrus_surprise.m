@@ -23,7 +23,7 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     end
     fantastic = @helper;
 
-    % Must be two for alopeciaunity to work
+    % Must be figure(2) for alopeciaunity to work
     if length(varargin) > 0
         if strcmp(varargin{1}, 'polar')
             figure(2); title('Cumulative phase');
