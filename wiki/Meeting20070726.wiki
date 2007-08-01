@@ -5,8 +5,7 @@
   * Adding a marker gene upstream of the fusion gene, using beta gals to control the amount of mRNA, which can cause the ribosome complex to dissociate but later come back together (rare)
   * Use XylE to cleave catechol 
   * Fuse together sequence of interest, a localized sequence of lysozyme that frameshifts
-  * Format of test sequence: efficient protein upstream verified to work + test linker + *XylE*
-   * Also, {promoter}{*Beta galactosidase*}{stop codon}{fusion sequence}
+  * Format of test sequence: promoter + efficient protein upstream verified to work (*Beta galactosidase*) + test linker + stop codon + *XylE* (fused)
    * Total of three reporter genes: 1) message level and 2) able to look at GST and 3) controlling GST (?)
   * Run through computational analysis first to check for high yield (that's us)
    * Find pauses and the necessary frameshift
