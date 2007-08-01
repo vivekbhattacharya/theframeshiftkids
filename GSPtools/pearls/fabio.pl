@@ -37,18 +37,19 @@ use POSIX;
 our ($biggest, $smallest);
 sub loops {
     my $num = shift;
-    return ($biggest/$smallest - floor($num/$smallest));
-    return ($biggest/$smallest) - floor($num/$smallest);
+    
+    # See tags/2+some/nloopcalc.m for details
+    return $biggest/$smallest - floor($num/$smallest);
 }
 
 # Glorified print
 sub plump {
-    my ($info, $names) = @_;
+    my ($info) = @_;
 
     # Convert to lowercase because that's how
     # I stored the %everything keys, see above.
     my $line = 'Travel = struct(';
-    Smooth::webopen $names, sub {
+    foreach (keys %$info) {
         s/\s//g; $_ = lc $_;
         $line .= "'$_', ";
         if ($_ =~ /uga|uag|uaa/) { $line .= '1000, ' }
@@ -60,8 +61,8 @@ sub plump {
 
 if (__FILE__ eq $0) {
     Smooth::helpcheck();
-    my ($freq, $names) = @ARGV;
-    plump(frequencies($freq), $names);
+    my ($freq) = @ARGV;
+    plump frequencies $freq;
 }
 1;
 
@@ -73,7 +74,7 @@ fabio.pl (web-enabled)
 
 =head1 SYNOPSIS
 
-    fabio.pl http://shadytrees.pastebin.ca/raw/537444 http://shadytrees.pastebin.ca/raw/537676 > temp.txt
+    fabio.pl http://shadytrees.pastebin.ca/raw/537444 > temp.txt
     
 =over 20
 
