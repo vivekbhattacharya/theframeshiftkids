@@ -48,8 +48,15 @@
     * `excos` and `exsin` functions now properly handle certain edge cases.
     * `dysentery.pl --rcheck`
     * `_readme.txt` added
+  * 3.1415
+    * All changes from 4.0 backported
+    * Extensive documentation for the `Kidnap` module (Issue 3)
+    * Optional arguments for `megaunity` (Issue 1); for usage, see in-file documentation
+    * Model now detects stop codons and unusually long wait times (`displacement.m`)
+    * Small bug in `excos` and `exsin` fixed
+    * Slight performance improvement in `cumm_mag_phase`, backported from our `pyframeshift` branch
+    * `alopeciaunity.m` saves polar plots in batches, similar to what `opportunity.m` and `jejunity.m` do for overlay and error bar plots
 
 == What's New in Version One ==
 Easter release using a tentative but broken sinusoidal model.
   * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
-
