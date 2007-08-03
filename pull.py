@@ -1,28 +1,24 @@
 import numpy, ghost, os, sequence
 from nloops import nloops
+from Kidnap.scan import scan
 
 def signal(file):
-    seq_cmd = r'perl.exe getseq.pl "%s"'
-    signal_cmd = r'perl.exe scan_brightly.pl auuccuccacuag "%s"'
-    
     file = os.path.abspath(file)
     os.chdir(r'pearls')
     
-    # Call Perl scripts to obtain the signal and the sequence,
-    # primarily a call to Kidnap and Smooth::getseq
     seq = sequence.get(file)
-    
-    # Believe it or not, this is faster than not calling readlines.
-    signal = ghost.steal_out(signal_cmd % file).readlines()
+    signal = scan('auuccuccacuag', file)
     
     # float() can't handle empty lines. numpy.array() introduces
     # twofold speedup.
-    signal = numpy.array([float(line.strip()) for line in signal if line.strip()])
+    signal = numpy.array([line for line in signal])
     return (signal, seq)
 
 #################################################################
 
-# I do not compute error, because nobody ever uses it.
+# I do not compute error (a Boolean value!), because nobody ever uses it.
+# See mechanics paper for details of and ideas behind magnitude and
+# phase calculations.
 from numpy import zeros, mean
 from math import atan2, sin, sqrt
 def magphase(signal):
@@ -66,12 +62,10 @@ def diff_vectors(mag, phase, count):
         
         # Find the codon, remembering that
         # the array index starts at zero.
-        index = slice(x-1, x+2)
-        
-        magic, phaser = [fakeslope(data[index]) for data in (mag, phase)]
+        magic, phaser = [fakeslope(data[x-1], data[x+1]) for data in (mag, phase)]
         D = exp(1j*phase[i]) * (magic + 1j*mag[i]*phaser)
         
-        # angle(z) = imag(log(z))
+        # angle(z) is equivalent to log(z).imag
         vec += [[abs(D), log(D).imag]]
     return vec
         
@@ -81,6 +75,7 @@ def diff_vectors(mag, phase, count):
 # Imagine `birth`, `calcloops`, and `nudge` in a class except, for
 # performance reasons, the `self` object is an array and there is no class.
 def b(codon, trig):
+    """ Returns [codon, loops, fail probability, trig function] """
     return [codon, calcloops(codon), 1.0, trig]
 
 from math import ceil
@@ -137,3 +132,7 @@ def displacement(seq, diffs, fshifts=(), bshifts=()):
     print ants
     print termites
     return x
+
+if __name__ == '__main__':
+    import sys
+    help(sys.modules[__name__])
