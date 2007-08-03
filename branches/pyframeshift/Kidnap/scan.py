@@ -12,7 +12,7 @@ def scan(rna, seq_file):
     seq = dna2rna(get(seq_file)).lower()
     
     n_seq = len(seq); n_rna = len(rna)
-    for i in xrange(0, n_seq - n_rna+1):
+    for i in xrange(0, n_seq - n_rna + 1):
         segment = seq[i:i + n_rna]
         
         # Free energy values greater than zero represent binding

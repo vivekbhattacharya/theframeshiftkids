@@ -8,6 +8,7 @@ def unity(file):
     
     places = pull.displacement(seq[12:], diff_vectors)
     
+    return
     figure(1)
     plot(arange(0, len(places)), places, linewidth=1.0)
     grid(True)
