@@ -11,7 +11,8 @@ sub align_factory {
     our ($opt_p, $opt_t); getopts('p:t:');
     $opt_t ||= 37 + 273.15;
     
-    my $o = $opt_p ? eval "require $opt_p; $opt_p->new($opt_t)" :
+    my $o = $opt_p ?
+        eval "require $opt_p; $opt_p->new($opt_t)" :
         Kidnap::Freier->new($opt_t);
     die $@ if $@;
 	
@@ -29,20 +30,16 @@ if ($0 eq __FILE__) {
 	$rna = uc Util::dna2rna($rna);
     $seq = uc Util::dna2rna(Smooth::getseq $seq);
 	
-	# Analyze sequence data
-	my $rna_length = length $rna;
-	my $seq_length = length $seq;
+	my $n_rna = length $rna;
+	my $n_seq = length $seq;
 
-	for my $i (0 .. $seq_length - $rna_length) {
-		my $toys = substr($seq, $i, $rna_length);
-		
-		# Get best binding score
-		$align->bind($toys, $rna);
-		my $free_energy = $align->total_free_energy;
+	for my $i (0 .. $n_seq - $n_rna) {
+		my $toys = substr($seq, $i, $n_rna);
 		
 		# Free energy values greater than zero represent binding
 		# that would cannot take place without added energy,
 		# equivalent to as if no binding had taken place
+        my $free_energy = $align->bind($toys, $rna);
 		$free_energy = 0 if $free_energy > 0;
 		print $free_energy, $/;
 	}

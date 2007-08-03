@@ -1,91 +1,52 @@
+package Kidnap::Bind;
+use warnings; use strict;
 use File::Basename;
 use lib dirname(__FILE__);
 
-use warnings; use strict;
-package Kidnap::Bind;
-
-# Define global constants
-use constant TRUE => 1;
-use constant FALSE => 0;
-
-use constant BIG_NUM => 30000;
-
 sub new {
 	my $self = {};
-    my ($class, $cat) = @_;
-	# Are terminal/internal bulges allowed?
-	$self->{NoBulge} = FALSE;
-	$self->{InternalBulge} = FALSE;
+    my ($class, $doublet) = @_;
 	
-	# Allow loops?
-	$self->{Loop} = FALSE;
+    # Parameters module (pluggable)
+    $self->{Doublet} = $doublet;
 	
-	# Binding temperature (K), related to dH and dS
-	$self->{Temp} = 37 + 237.15;
-	
-	# Best score for binding two sequences together
-	$self->{BestScore} = 0;
-    $self->{Cat} = $cat;
-	
-	# Lengths for trace_route
-	$self->{Seq} = {x => 0, y => 0};
-	bless($self, shift);
-}
-
-sub total_free_energy {
-	my $self = shift;
-    $self->{BestScore} + $self->{Cat}->{InitPenalty};
-}
-
-sub internal_doublet {
-	my $self = shift;
-    $self->{Cat}->internal_doublet(@_);
-}
-
-
-sub terminal_doublet {
-	my $self = shift;
-    return $self->{Cat}->terminal_doublet(@_);
+	bless($self, $class);
 }
 
 use Strand;
 sub bind {
-    my ($self, $seq_x, $seq_y) = @_;    
-    $self->{BestScore} = 0;
+    my ($self, $seq, $rna) = @_;    
+    my $doublet = $self->{Doublet};
 
-    my $length = length $seq_x;
 	# I need at least two bases in each sequence in order to form
 	# a structure between them.
-    if ($length != length $seq_y) {
-		die 'force_bind(): Unequal sequence lengths';
+    my $length = length $seq;
+    if ($length != length $rna) {
+		die 'Bind#bind: Unequal sequence lengths';
     } if ($length < 2) {
-		die 'force_bind(): Sequences are too short';
+		die 'Bind#bind: Sequences are too short';
     }
 
     my $best_score = my $score = 0;
-    my $helix_start = my $helix_end = 0;
-    my $best_start = -1;
+    my $helix_end = 0;
     
-    my $x = Strand->new($seq_x, $length);
-    my $y = Strand->new($seq_y, $length);
+    my $x = Strand->new($seq, $length);
+    my $y = Strand->new($rna, $length);
     for my $i (0 .. $length-2) {
         $x->update($i); $y->update($i);
 		
-		# Start each helix structure with a "terminal doublet."
+		# Start each helix structure with a terminal doublet.
 		if ($score == 0) {
-			$score = $self->terminal_doublet($x->all, $y->all, 1);
+			$score = $doublet->terminal($x->all, $y->all, 1);
 		} else {
 			# Some internal "doublets" need more context to
 			# be scored correctly.  See the scoring for GU
-			# in doublet_xia_mathews() for more details.	
-			$score += $self->internal_doublet($x->all, $y->all, $x->context, $y->context);
+			# in XiaMathews#internal for more details.	
+			$score += $doublet->internal($x->all, $y->all, $x->context, $y->context);
 		}
 		
-		if ($score > 0) {
-			$helix_start = $i + 1;
-			$score = 0;
-		} elsif ($score < $best_score) {
-			$best_start = $helix_start;
+		if ($score > 0) { $score = 0 }
+        elsif ($score < $best_score) {
 			$best_score = $score;
 			$helix_end = $i;
 		}
@@ -98,23 +59,18 @@ sub bind {
     if ($best_score < 0) {
 		$x->update($helix_end); $y->update($helix_end);
 		
-		my $internal_score = $self->internal_doublet($x->all, $y->all);
-		my $terminal_score = $self->terminal_doublet($x->all, $y->all, !1);
-
+		my $internal_score = $doublet->internal($x->all, $y->all);
+		my $terminal_score = $doublet->terminal($x->all, $y->all, !1);
 		$best_score -= $internal_score - $terminal_score;
 	
-		# Here is where we should check for "self symmetry." With
-		# the force_bind, we are assuming that the strands are
-		# stretched out, and thus, not stuck to themselves forming
-		# their own hairpin loop.  My understanding is that the "self symmetry"
-		# penalty results from the individual strands being stuck together 
-		# in their own hairpins.
+        # We should check for "self symmetry." With the force_bind,
+        # we are assuming that the strands are stretched out, and thus
+        # not stuck to themselves forming their own hairpin loop. The 
+        # "self symmetry" penalty arises from the individual strands
+        # being stuck together in their own hairpins.
     }
 
-    $self->{BestScore} = $best_score;
-    my $helix_length = ($best_start == -1) ?
-        ($helix_end - $best_start + 2) : 0;
-    ($best_score, $best_start, $helix_length);
+    return $best_score + $doublet->init_penalty;
 }
 
 use Pod::Usage;
@@ -192,18 +148,8 @@ score of the best helix is returned. That is, if there are two
 or more helices formed, separated by gaps, only the score of the
 lowest scoring helix is returned.
 
-This method returns a 3-tuple of C<$best_score>, C<$best_start>,
-and C<$helix_length>. C<$best_score> does not include
-the one-time penalty for initiating a helix, but C<total_free_energy>
-does. C<$best_start> and C<$helix_length> represent where the best sub-helix
-begins and its length, respectively.
-
-=item $o->total_free_energy()
-
-This returns the total amount of free energy given off by
-allowing two sequences of nucleotides to bind to each other. It takes
-no parameters because it uses the field C<$o->{BestScore}> set by
-C<$o->bind>.
+This method returns the total amount of free energy given off by
+allowing two sequences of nucleotides to bind to each other.
 
 For example, C<scan_brightly> prints the return values for all
 subsequences found in a gene sequence and bound to the rRNA sequence

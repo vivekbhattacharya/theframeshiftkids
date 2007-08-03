@@ -1,12 +1,12 @@
+package Util;
 use strict; use warnings;
 
-package Util;
 ## Returns true if two characters form a valid helix pair,
 ## i.e. a standard Watson-Crick pair or a G-U mismatch.
 sub valid_pair {
     my ($a, $b) = @_;
 	my $ab = $a . $b;
-	scalar grep /$ab/, qw/GC CG AU AT UA TA GU UG/;
+	scalar grep /$ab/, qw/GC CG AU UA GU UG/;
 }
 
 
@@ -14,7 +14,7 @@ sub valid_pair {
 sub wc_pair {
     my ($a, $b) = @_;
 	my $ab = $a . $b;
-	scalar grep /$ab/, qw/GC CG AU AT UA TA/;
+	scalar grep /$ab/, qw/GC CG AU UA/;
 }
 
 sub dna2rna {

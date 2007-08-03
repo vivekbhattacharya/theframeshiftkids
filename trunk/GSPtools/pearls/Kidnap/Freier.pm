@@ -1,24 +1,22 @@
-# See Freier (1986).
+# See Freier (1986)
+package Kidnap::Freier;
 use strict; use warnings;
 use File::Basename;
 use lib dirname(__FILE__);
-use Util;
 
-package Kidnap::Freier;
+use Util;
 use constant BIG_NUM => 30000;
 
 sub new {
-    my ($class) = @_;
-    my $self = {InitPenalty => 3.4};
-    bless($self, shift);
-    return $self;
+    bless {};
 }
 
+sub init_penalty { 3.4 }
+
 # Freier 1986
-sub internal_doublet {
+sub internal {
     my ($self, $t5, $t3, $b3, $b5) = @_;
-    unless (Util::valid_pair($t5, $b3) &&
-        Util::valid_pair($t3, $b5)) { return BIG_NUM; }
+    return BIG_NUM unless Util::valid_pair($t5, $b3) && Util::valid_pair($t3, $b5);
 
 	my %scores = (
 		AU => {
@@ -45,9 +43,10 @@ sub internal_doublet {
 	);
     my $score = $scores{$t5 . $b3}->{$t3 . $b5};
     return $score if $score;
+    die "Freier#internal(): Unable to pair top $t5$t3 with bottom $b3$b5";
 }
 
-sub terminal_doublet {
+sub terminal {
 	# Terminal pairs must be at the very ends of both strands.
     my ($self, $t5, $t3, $b3, $b5, $left_side) = @_;
 
@@ -59,12 +58,11 @@ sub terminal_doublet {
 
     # We only need the first pair to match, provided it
 	# is not a G/U mismatch.
-    if (!Util::wc_pair($t5, $b3)) { return BIG_NUM; }
+    return BIG_NUM unless Util::wc_pair($t5, $b3);
 	my %scores = (
 		AU => {
-			# Watson/Crick matches
+			# Watson/Crick matches and G/U mismatches
 			AU => -0.9, UA => -0.9, GC => -1.7, CG => -2.1,
-			# G/U mismatches
 			GU => -0.9, UG => -0.9,
 			# Mismatches
 			AA => -0.8, CC => -0.7, GG => -1.0, UU => -0.8,
@@ -92,5 +90,6 @@ sub terminal_doublet {
 	);
 	my $score = $scores{$t5 . $b3}->{$t3 . $b5};
 	return $score if $score;
+    die "Freier#internal(): Unable to pair top $t5$t3 with bottom $b3$b5";
 }
 1;
