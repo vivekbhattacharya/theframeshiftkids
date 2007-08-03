@@ -4,8 +4,6 @@ from Kidnap.scan import scan
 
 def signal(file):
     file = os.path.abspath(file)
-    os.chdir(r'pearls')
-    
     seq = sequence.get(file)
     signal = scan('auuccuccacuag', file)
     
@@ -24,31 +22,27 @@ from math import atan2, sin, sqrt
 def magphase(signal):
     # Round signal to a multiple of 3.
     L = len(signal)
-    if L % 3: signal = signal[0:L - (L % 3)]
     
     limit = L/3
-    Mag, Phase = zeros(limit), zeros(limit)
+    mag, phase = zeros(limit), zeros(limit)
+    registers = zeros(3)
+    
     for i in xrange(0, limit):
-        # ** +1 comes from Python's indexing, which starts at zero,
-        #    that conflates with `i` in that it's also used for
-        #    creating a sequence of endpoints here.
-        # ** We want 0:3, 0:6, 0:9, 0:12, ...
-        M = zeros(3)
-        for j in xrange(0, 3*(i+1), 3): M += signal[j:j+3]
+        registers += signal[3*i : 3*(i+1)]
         
         # Assume avg_choice in the old code is 0.
-        M -= mean(M)
-        
+        M = registers - mean(registers)
         grass = M[1] + M[2]
+        
         if not M[0] == 0:
-            Phase[i] = atan2(M[0]*sqrt(3), M[0] + 2*M[1])
-            Mag[i] = M[0]/sin(Phase[i])
+            phase[i] = atan2(M[0]*sqrt(3), M[0] + 2*M[1])
+            mag[i] = M[0]/sin(phase[i])
         elif not grass == 0:
-            Phase[i] = atan2(grass*sqrt(3), M[2] - M[1])
-            Mag[i] = -grass/sin(Phase[i])
+            phase[i] = atan2(grass*sqrt(3), M[2] - M[1])
+            mag[i] = -grass/sin(phase[i])
         else:
-            Mag[i], Phase[i] = 0, 0
-    return Mag, Phase, limit
+            mag[i], phase[i] = 0, 0
+    return mag, phase, limit
 
 #################################################################
 
