@@ -1,10 +1,13 @@
+# Local import faster than global import
 def steal_out(cmd):
     from subprocess import Popen, PIPE
     return Popen(cmd, stdout=PIPE).stdout
 
-def fakeslope(y):
-    return (y[-1] - y[0])/2;
+def fakeslope(y1, y2):
+    return (y2 - y1)/2;
 
+# Memoization for the below functions do not
+# yield performance increase.
 from numpy import pi, sin, cos
 def fxsin(x):
     """ A piecewise function that computes the window
