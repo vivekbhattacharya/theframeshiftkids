@@ -10,7 +10,13 @@ def get(file):
     if lines[0].find('>') > -1: del lines[0]
     
     lines = [l.strip() for l in lines]
-    return ''.join(lines)
+    return sanitize(''.join(lines))
+
+def sanitize(seq):
+    import re
+    seq = re.sub('[\s0-9]', '', seq).lower().strip()
+    return seq.translate(maketrans('t', 'u'))
+    
 
 from string import maketrans
 def dna2rna(dna):

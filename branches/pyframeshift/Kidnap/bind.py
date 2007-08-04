@@ -7,7 +7,7 @@ class Bind(object):
         self.best_score = 0
         self.doublet = cat
     
-    def energy(self, rna, seq):
+    def energy(self, seq, rna):
         length = len(rna)
         if not length == len(seq):
             raise BindSequenceException('Unequal sequence lengths')
@@ -19,8 +19,8 @@ class Bind(object):
         
         # I need at least two bases in each sequence in order to form
         # a structure between them.
-        x = Strand(rna, length)
-        y = Strand(seq, length)
+        x = Strand(seq, length)
+        y = Strand(rna, length)
         
         for i in xrange(0, length - 1):
             x.update(i); y.update(i)
