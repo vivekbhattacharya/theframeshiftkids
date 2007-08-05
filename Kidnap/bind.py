@@ -14,25 +14,27 @@ class Bind(object):
         if length < 2:
             raise BindSequenceException('Sequences are too short')
         
-        best_score = score = 0
-        helix_end = 0
+        best_score = score = helix_end = 0
         
         # I need at least two bases in each sequence in order to form
         # a structure between them.
         x = Strand(seq, length)
         y = Strand(rna, length)
         
+        # Optimize away dot access
+        di, dt = self.doublet.internal, self.doublet.terminal
+        
         for i in xrange(0, length - 1):
             x.update(i); y.update(i)
             
             # Start each helix structure with a terminal doublet.
             if score == 0:
-                score = self.doublet.terminal(x.all, y.all, True)
+                score = dt(x.all, y.all, True)
             else:
                 # Some internal "doublets" need more context to
                 # be scored correctly.  See the scoring for GU
                 # in XiaMathews#internal_doublet for more details.
-                score += self.doublet.internal(x.all, y.all, x.context, y.context)
+                score += di(x.all, y.all, x.context, y.context)
             
             if score > 0:
                 score = 0
@@ -52,8 +54,8 @@ class Bind(object):
         if best_score < 0:
             x.update(helix_end); y.update(helix_end)
             
-            internal_score = self.doublet.internal(x.all, y.all)
-            terminal_score = self.doublet.terminal(x.all, y.all, False)
+            internal_score = di(x.all, y.all)
+            terminal_score = dt(x.all, y.all, False)
             best_score -= internal_score - terminal_score
 
         return best_score + self.doublet.init_penalty
