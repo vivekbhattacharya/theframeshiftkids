@@ -16,7 +16,9 @@ sub new {
     return $self;
 }
 
-sub internal_doublet {
+sub init_penalty { shift->{InitPenalty} }
+
+sub internal {
 	my $self = shift;
     my ($t5, $t3, $b3, $b5, $t55, $t33, $b33, $b55) = @_;
     unless (Util::valid_pair($t5, $b3) && Util::valid_pair($t3, $b5)) {
@@ -63,9 +65,9 @@ sub internal_doublet {
     return $dH - $self->{Temp}*($dS/1000);
 }
 
-sub terminal_doublet {
+sub terminal {
 	my $self = shift;
-    my $doublet_score = $self->internal_doublet(@_);
+    my $doublet_score = $self->internal(@_);
 
 	my ($t5, $t3, $b3, $b5, $left_side) = @_;
 	my @chesthair = $left_side ? ($t5, $b3) : ($t3, $b5);
