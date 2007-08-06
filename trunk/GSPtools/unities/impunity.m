@@ -12,7 +12,13 @@
 %   iterations to run the model before recording yield)
 % ----------------------------------------------------------------
 function impunity(folder, fshifts, bshifts, limit)
-    d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
+    d = 0; singleton = 0;
+    if isdir(folder)
+        d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
+    else
+        d = which(folder);
+        singleton = 1;
+    end
     
     function [yield] = find_yield(file)
         % ----------------------------------------------------------------
@@ -26,6 +32,13 @@ function impunity(folder, fshifts, bshifts, limit)
             x = displacement(fshifts, bshifts);
         end
         yield = shoals/sands;
+    end
+    
+    if singleton
+        yield = find_yield(d);
+        disp([d ': ' num2str(yield)]);
+        fprintf('\n');
+        return;
     end
     
     % Print the header.
