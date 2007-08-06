@@ -10,7 +10,7 @@ function [mag, phase] = cumm_mag_phase(signal)
     % Round signal off to a codon multiple
     L = length(signal);
     
-    limit = round(L/3);
+    limit = floor(L/3);
     mag = zeros(1, limit); phase = zeros(1, limit);
     registers = zeros(1,3);
     

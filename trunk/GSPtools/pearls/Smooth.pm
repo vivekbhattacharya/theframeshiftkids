@@ -58,7 +58,7 @@ sub seq2codons {
 # Convert all gene sequences to this normalized form.
 sub sanitize {
     $_ = shift;
-    s/[\s0-9]//g; tr/A-Z/a-z/; tr/t/u/; chomp; $_;
+    s/[\s0-9]//g; $_ = lc $_; tr/t/u/; chomp; $_;
 }
 
 # Cf. page 43-6 of _Programming Perl for Bioinformatics_
