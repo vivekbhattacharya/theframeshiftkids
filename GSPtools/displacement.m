@@ -14,10 +14,13 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
     global ants termites;
     ants = {}; termites = {};
 
-    % Length of codon sequence
-    global store;
+    global store shoals;
+    if isempty(shoals), shoals = 0; end;
     upper = length(Dvec) - 1;
     store = struct('x', [0 0.1], 'shift', 0, 'wts', zeros(1, upper-2));
+    
+    away = 0; actual_shift = 0; patrick = [];
+    criticals = find_criticals(frontshifts, backshifts);
     for k=2:upper
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
@@ -25,25 +28,60 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         if(index + 4 > size(seq)), break; end;
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
         if (overaged == 1)
-            fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
-            ants = {'witch'}; termites = {'coven'};
-            break;
+            %fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
+            %break;
         elseif (overaged == -1)
             fprintf('   %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
         end
+        actual_shift = get_critical(k, criticals);
+        away = away + (store.x(k+1) - actual_shift)^2;
     end
     x = store.x;
+    shoals = shoals + sqrt(away/upper);
     % store.wts
      
     % Tally the number of times the gene sequence
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
-    global shoals sands;
-    if isempty(sands), shoals = 0; sands = 0; end
+    global sands;
+    if isempty(sands), sands = 0; end
     sands = sands + 1;
-    if strcmp(char(ants), char(frontshifts))
-        if strcmp(char(termites), char(backshifts)), shoals = shoals + 1; end;
+end
+
+% An array of actual_shifts. For example, for prfB,
+% this would be [0 0 0 ... 1] where c(25) = 1. Values
+% after the `end` should just take the `end` value;
+% this is an easy performance optimization. Equally
+% important is the conversion of f/bshifts cell arrays
+% into a usable data structure.
+function [c] = find_criticals(f, b)
+    function evil_jasper(str)
+        x = strfind(str, ',');
+        x = str2num(str(x+1:end));
+        c(x) = ecto;
+    end
+    
+    c = [];
+    ecto = 1;
+    cellfun(@evil_jasper, f);
+    ecto = -1;
+    cellfun(@evil_jasper, b);
+    
+    % Very important! Cascade the shifts!
+    c = cumsum(c);
+end
+
+% Embodies the simple logic needed to read a value
+% from the array `find_criticals` returns.
+function [delta] = get_critical(k, criticals)
+    if ~size(criticals)
+        delta = 0; return;
+    end
+
+    % Take the end because shifts cascade.
+    if k > size(criticals), delta = criticals(end);
+    else delta = criticals(k);
     end
 end
 

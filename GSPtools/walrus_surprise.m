@@ -13,6 +13,7 @@
 % Returns: Those genes, how many there were, and
 %   a vector of differences
 function [fantastic, n] = walrus_surprise(file, varargin)
+    clear global sands shoals;
     [signal, seq] = get_signal(file);
     [mag, theta] = cumm_mag_phase(signal);
     [dvec, theta] = diff_vectors(mag, theta);
