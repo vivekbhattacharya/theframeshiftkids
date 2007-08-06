@@ -1,62 +1,49 @@
 #summary The three-pronged arrow of times.
 #labels Featured,changes
 
-== Terminology ==
-  * [Unities]
-  * [Pearls]
+== What's New in Version Three ==
 
-== What's New in Version Four ==
-=== Essentials ===
+=== 3.1415 ===
+  * All changes from 4.0 backported
+  * Extensive documentation for the `Kidnap` module (Issue 3)
+  * Optional arguments for `megaunity` (Issue 1); for usage, see in-file documentation
+  * Model now detects stop codons and unusually long wait times (`displacement.m`)
+  * Mathematical error in `excos` and `exsin` fixed
+  * `alopeciaunity.m` saves polar plots in batches, similar to what `opportunity.m` and `jejunity.m` do for overlay and error bar plots
+  * `impunity.m` handles single files in addition to folders now. Try it out with `impunity('prfb.txt', {'uga,25'}, {}, 100)`.
+  * Performance increase in `cumm_mag_phase.m` and Kidnap
+
+=== 3.141 (r156) ===
+  * `Travel.mat` memoizes `nloopcalc.m` and combines `TAV.mat` and `Codons.mat`, making it redundant. Huge performance increases resulted because `nloopcalc` was called so many times.
+  * `dysentery.pl --rcheck`
+
+=== 3.14 ===
+  * Back frameshifts are now detected. Every function that took a forward frameshift parameter now takes a back frameshift parameter as well.
+  * `dysentery.pl` will convert amino acid primary structure sequences to codon sequences, randomly choosing codons. In addition, it verifies hand-customized codon sequences against a primary structure sequence.
+  * Sine and cosine in calculating window function now bounded for more accurate results.
+  * `jejunity.m` plots the average path taken by the codon in addition to error bars. It takes the same commands as `opportunity.m` as they both convey the same information in two different, cool ways.
+
+=== 3.1 ===
+  * `opportunity.m`: Spits out superimposed displacement plots for rainy day family slideshows
+  * `impunity.m`: Puts the yields for all sequences in a folder into a `results.txt` file
+  * `unity.m` and `megaunity.m` and `cornerstone.pl` now web-enabled
+  * `fabio.pl` (web-enabled): Parses TAV frequencies and spits them back out in the order of `Codons.mat`, i.e. spits out new `TAV.mat` for new species
+
+=== 3 ===
+  * Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives]
+  * `fcalcmpx` split up and `megaunity` now several times faster
+  * new `cornerstone.pl` parses Genbank search results and
+  * no more fudging with free2bind
+
+== What's New in Version Four (r212) ==
   * reloop and sofar gone, q.v. BecomingHarsher
   * The ThrushBaby algorithm
-  * free2bind replaced with Kidnap
 
-=== Others ===
-  * 4.0 (r212)
-   * free2bind, renamed to Kidnap, heavily edited (from 9000 lines to 2000)
-    * Now extensible with other parameter modules
-    * !SantaLucia module depreciated due to lack of key subroutines
-    * Code now readable
-    * free2bind no longer a requirement for installation
-   * More documentation everywhere
-   * Performance increase in `diff_vectors.m`
+  * free2bind, refactored to Kidnap, heavily edited (from 9000 lines to 2000)
+   * Now extensible with other parameter modules and readable
+   * !SantaLucia module depreciated due to lack of key subroutines
+   * free2bind no longer a requirement for installation
+  * Performance increase in `diff_vectors.m`
 
-== What's New in Version Three ==
-  * 3.0
-   * Unused functions deleted but available from [http://theframeshiftkids.googlecode.com/svn/tags/2+some/GSPtools/ the archives];
-   * `fcalcmpx` split up;
-   * `megaunity` now several times faster;
-   * new `cornerstone.pl` parses Genbank search results; and
-   * no more fudging with free2bind
-   * Several boosts to clarity in code
-  * 3.1
-    * `opportunity.m`: Spits out superimposed displacement plots for rainy day family slideshows
-    * `impunity.m`: Puts the yields for all sequences in a folder into a `results.txt` file
-    * `unity.m` and `megaunity.m` and `cornerstone.pl` now web-enabled
-    * `fabio.pl` (web-enabled): Parses TAV frequencies and spits them back out in the order of `Codons.mat`, i.e. spits out new `TAV.mat` for new species
-    * Better documentation all around
-    * All the unities should be slightly faster now that we're using OpenGL
-  * 3.14
-    * Back frameshifts detected. Every function that took a forward frameshift parameter now takes a back frameshift parameter as well.
-    * `dysentery.pl` will convert amino acid primary structure sequences to codon sequences, randomly choosing codons. In addition, it verifies hand-customized codon sequences against a primary structure sequence.
-    * Update to the stochastic model: sine and cosine bounded for more accurate results.
-    * `jejunity.m` plots the average path taken by the codon in addition to error bars. It takes the same commands as `opportunity.m` as they both convey the same information in two different, cool ways.
-  * 3.141 (r156)
-    * `cumm_mag_phase` is the result of merging all those confusing mag_phase files.
-    * `Travel.mat` memoizes `nloopcalc.m` and combines `TAV.mat` and `Codons.mat`, making it redundant. Huge performance increases resulted because `nloopcalc` was called so many times.
-    * -1 frameshifts are now accounted for.
-    * `excos` and `exsin` functions now properly handle certain edge cases.
-    * `dysentery.pl --rcheck`
-    * `_readme.txt` added
-  * 3.1415
-    * All changes from 4.0 backported
-    * Extensive documentation for the `Kidnap` module (Issue 3)
-    * Optional arguments for `megaunity` (Issue 1); for usage, see in-file documentation
-    * Model now detects stop codons and unusually long wait times (`displacement.m`)
-    * Small bug in `excos` and `exsin` fixed
-    * Slight performance improvement in `cumm_mag_phase`, backported from our `pyframeshift` branch
-    * `alopeciaunity.m` saves polar plots in batches, similar to what `opportunity.m` and `jejunity.m` do for overlay and error bar plots
-
-== What's New in Version One ==
-Easter release using a tentative but broken sinusoidal model.
-  * 1.1: Rereleased with Lalit's deterministic model but with all the other changes we've made since then. That is, we've merely written a new `displacement.m` function. We've also removed files made irrelevant with a non-stochastic model such as every single unity file except `unity.m`. Also, it's Web-enabled like 3.1. Hizzy yeah!
+== Why Version 1.1 ==
+We re-released with Lalit's deterministic model merged other changes we've made since 3.1, merely replacing 3.1's `displacement.m`. Therefore it's web-enabled and has 3.1's Perl tools and performance.

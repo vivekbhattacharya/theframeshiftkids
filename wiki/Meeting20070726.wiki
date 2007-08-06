@@ -2,18 +2,17 @@
 #labels meetings,notes,experiments
 
 ==Experiment==
-  * Adding a marker gene upstream of the fusion gene, using beta gals to control the amount of mRNA, which can cause the ribosome complex to dissociate but later come back together (rare)
+  * Add a marker gene upstream of the fusion gene and use beta gals to control the amount of mRNA, which can cause the ribosome complex to dissociate but later come back together (rare)
   * Use XylE to cleave catechol 
-  * Fuse together sequence of interest, a localized sequence of lysozyme that frameshifts
-  * Format of test sequence: promoter + efficient protein upstream verified to work (*Beta galactosidase*) + test linker + stop codon + *XylE* (fused)
+  * Format of fused protein: promoter + *Beta galactosidase* + GST + test linker + *XylE*
    * Total of three reporter genes: 1) message level and 2) able to look at GST and 3) controlling GST (?)
   * Run through computational analysis first to check for high yield (that's us)
    * Find pauses and the necessary frameshift
   * *In vitro* or in vivo? In vitro adds doubt to our process, so quickly shot down by Dr. Stomp
    * In vitro takes an hour; Dr. Stomp compared in vitro kits to buggy software (Windows Vista in particular)
-  * Beta gals is part of an *operon*, first gene of the three
-  * Ensure we only have one initiation site (don't worry)
-   * Ensure we never cause a *hairpin deformation* or *secondary structure*
+  * Beta gals (lacZ) is part of the _lac_ *operon*, first gene of the three
+  * Ensure we only have one initiation site
+   * Ensure we never cause a *hairpin deformation* or *secondary structures* using mfold
   * GST always at the end terminus until recently (C terminus now a possibility)
   * Ways of inspecting the gene sequence: HISS (*purity test*), ELISA, colometric
   * GST is an epitope (?), bought from the Invitrogen catalog
@@ -23,6 +22,7 @@
 Alternative experiment idea: Rare codons may cause a pause that Robert can view with a real-time assay and a spectrometer in vitro.
 
 == External Links ==
+  * [http://www.bioinfo.rpi.edu/applications/hybrid/download.php UNAfold], which replaced mfold
   * [http://en.wikipedia.org/wiki/Catechol_dioxygenase Catechol and XylE]: Quantifies yield
   * [http://en.wikipedia.org/wiki/Beta-galactosidase Beta galactosidase]: Not really sure what this is for
   * Hairpin deformation: when mRNA folds upon itself
