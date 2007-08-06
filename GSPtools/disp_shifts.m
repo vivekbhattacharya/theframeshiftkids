@@ -3,7 +3,7 @@
 % every other modern language in the world.
 function disp_shifts()
     function beached_whale(insects)
-        if size(insects) ~= size({})
+        if length(insects) ~= length({})
             for i=1:length(insects), fprintf([insects{i} '; ']); end;
         end
         fprintf('\n');

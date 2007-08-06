@@ -25,7 +25,7 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
         
-        if(index + 4 > size(seq)), break; end;
+        if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
         if (overaged == 1)
             %fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
@@ -75,12 +75,12 @@ end
 % Embodies the simple logic needed to read a value
 % from the array `find_criticals` returns.
 function [delta] = get_critical(k, criticals)
-    if ~size(criticals)
+    if ~length(criticals)
         delta = 0; return;
     end
 
     % Take the end because shifts cascade.
-    if k > size(criticals), delta = criticals(end);
+    if k > length(criticals), delta = criticals(end);
     else delta = criticals(k);
     end
 end
