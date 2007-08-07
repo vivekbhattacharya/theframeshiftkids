@@ -1,0 +1,134 @@
+\documentclass[10pt,twocolumn,draft]{article}
+\usepackage{amsmath,fullpage,amssymb,vector,graphicx}
+\bibliographystyle{abbrv}
+\newcommand{\degree}{\ensuremath{^\circ}}
+\newcommand{\prfB}{\emph{prfB}}
+\newenvironment{cfigure}{\begin{figure}\begin{center}}{\end{center}\end{figure}}
+\begin{document}
+
+\section{What We Did}
+\label{whatwedid}
+
+Schoner et al.~\cite{schoner:bgh} devised variations of the bovine growth hormone (bGH) sequence.
+We executed them voluptously through the current model, refining our delicate model as we went along.
+
+\subsection{Measuring Deviation}
+\label{whatwedid:lbd}
+
+In theory, a sequence with optimal yield shows a displacement plot very near the predicted reading frame, usually the horizontal axis.
+As such, deviation from the predicted axis offers a measure of ``yield."
+We propose the formula 
+\begin{equation}
+\label{eqn:lbd}
+\sigma = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}}
+\end{equation}
+where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is the displacement at codon $i$, and $N$ is the total number of codons
+to embody this yield. 
+Usually $\beta_i = 0$ unless a biologically verified frameshift exists. For example, for \prfB $(\forall i \geq 25)(\beta_i = 2)$
+because \prfB frameshifts at codon 25 uga.
+
+Thus, $\sigma$ is bounded by $[0,\infty)$, with zero corresponding to high yield and infinity to low yield.
+
+\subsection{Ribosomal Pausing}
+\label{rp}
+
+Research~\cite{gowri:pause} suggests that ribosomes often pause at difficult problem codons. Up until investigating bGH, the model did not
+account for ribosomal pausing, simply letting every ribosome to translate fully from start to finish, boundlessly. With
+bGH, however, the model sets a cycle limit within the range $[150,250]$ that it randomly chooses in order to accurately
+determine the yield when running a sequence repeatedly so the simulated ribosome may only pause for so long before dissociating.
+
+\section{Analyzing Bovine Growth Hormone}
+
+In this section, we present analysis of Schoner et al.'s bGH sequences via the various metrics involved in our model.
+
+\subsection{Polar Plots}
+
+The polar plots for all sequences of bGH look similar after approximately twenty codons.  
+However, \emph{nota bene}, \emph{pcZ101} and \emph{pcZ105} differ in the first few codons.
+While the other sequences jump directly to 15$\degree$, pcZ101 and pcZ105 start at approximately $-30\degree$, the species angle.
+
+It is possible that proximity to the species angle offers a measure for yield.
+For example, \emph{aceF} and \emph{rplE}, both high-yield proteins, have polar plots very close to $\theta = \varphi_{sp}$.
+The idea that following $\theta = \varphi_{sp}$ for even just a few initial codons may improve yield can be supported by the polar plot for 
+\prfB, starts at $\theta = -90\degree$ and cycles clockwise through the species angle before ending up at its final phase.
+
+\subsection{Deviation}
+
+In section~\ref{whatwedid:lbd}, a metric was established for comparing sequences based on their displacement from the predicted axis.
+We apply this metric to the bGH sequences; results are given in table~\ref{deviation}.
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|lc|}\hline
+\textbf{Sequence} & $\mathbf{\sigma}$ \\\hline
+pcZ101 & 0.76719\\
+pcZ105 & 0.76710\\\hline
+pcZ100 & 0.80020\\
+pcZ104 & 0.79729\\
+pcZ108 & 0.79241\\
+pcZ110 & 0.79760\\
+pcZ112 & 0.79419\\
+pcZ115 & 0.79794\\\hline
+\end{tabular}
+\caption{Deviation for bGH Sequences (over 200 iterations)}
+\label{deviation}
+\end{center}
+\end{table}
+
+The two sequences with high yield consistently showed lower deviations; whether this deviation is significantly lower must be investigated.
+
+\subsection{Ribosomal Pausing}
+
+Using the process defined in~\ref{rp}, the number of ribosomal ``pauses" were tabulated for each sequence.
+Results are given in table~\ref{wichita}.
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|lc|}\hline
+\textbf{Sequence} & Pause Dissociations\\\hline
+pcZ101 & 240\\
+pcZ105 & 263\\\hline
+pcZ100 & 247\\
+pcZ104 & 222\\
+pcZ108 & 225\\
+pcZ110 & 238\\
+pcZ112 & 227\\
+pcZ115 & 233\\\hline
+\end{tabular}
+\caption{Pause Dissociations over 500 Iterations}
+\label{wichita}
+\end{center}
+\end{table}
+
+The two high-yield sequences show higher numbers of pause dissociations than the other ones, contrary to intuition.
+Further investigation must be conducted on this issue.
+
+\begin{enumerate}
+
+
+\item bGH sequences were run
+
+\item Looked at polar plot
+    
+    \begin{enumerate}
+    
+    \item 101 and 105 were different
+    
+    \item prompted from paper and cite the paper
+    
+    \end{enumerate}
+
+\item Whichstakes
+
+\item Deviation yields to catch the subtleties 
+
+\end{enumerate}
+\bibliography{wizards}
+
+\appendix
+\section{Bovine Growth Hormone Polar Plots}
+\begin{cfigure}
+    \caption{pcZ101: High yield}
+    \includegraphics[scale=0.4]{pcZ101}
+\end{cfigure}
+\end{document}
