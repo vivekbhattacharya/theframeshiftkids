@@ -63,9 +63,9 @@ function [c] = find_criticals(f, b)
     end
     
     c = [];
-    ecto = 1;
+    ecto = 2;
     cellfun(@evil_jasper, f);
-    ecto = -1;
+    ecto = -2;
     cellfun(@evil_jasper, b);
     
     % Very important! Cascade the shifts!
