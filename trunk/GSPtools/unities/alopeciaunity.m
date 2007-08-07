@@ -13,6 +13,7 @@ function alopeciaunity(folder)
         h = figure(2); set(h, 'Renderer', 'OpenGL');
             set(h, 'Visible', 'off');
             walrus_surprise(fullfile(folder, file), 'polar');
+            title(file);
             set(h, 'Visible', 'off');
         saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
     end
