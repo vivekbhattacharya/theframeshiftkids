@@ -36,7 +36,7 @@ function helper(file, subfolder, limit)
     h = figure(1); set(h, 'Renderer', 'OpenGL');
         set(h, 'Visible', 'off');
         plot(0,0); plot(plots{:}); title(file);
-            grid; xlabel('Codon Number'); ylabel('x(k)');
-            axis([0, max_dom, bottom, top]);
+        grid; xlabel('Codon Number'); ylabel('x(k)');
+        axis([0, max_dom, bottom, top]);
     saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
 end
