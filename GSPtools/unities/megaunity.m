@@ -2,16 +2,17 @@ function megaunity(file, varargin)
 % --------------------------------------------------------------
 % This function is used to simulate repeated calls to unity
 % in order to assess the "yield" of a given sequence (file)
-% based on whether or not the stochastic model frameshifts
-% completely correctly.
+% based on the deviation of the displacement from the predicted
+% frame, which is usually 0.
 %
 %
 % USAGE:
-% function [] = megaunity(file, str1)
-% file = string with the name of the text file, with extension,
-%        that includes the leader
-% frameshift_genes = string with list of desired frameshifts
-%        ex. ['uga,25';'cau,73'] or '[]'
+%   megaunity('rpoS.txt');
+%   megaunity('prfB.txt', {'uga,25'});
+%   megaunity('backshifter.txt', {}, {'backshift,location'});
+%   
+%   % Display the graph each time.
+%   megaunity('prfB.txt', {'uga,25'}, {}, 'graph');
 % --------------------------------------------------------------
 
 displacement = walrus_surprise(file, 'polar');
