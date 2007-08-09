@@ -32,9 +32,16 @@ function helper(file, subfolder, limit, mode)
     end
 	[folder, file, ext] = fileparts(file);
 	[avg, stddev] = exmean(a);
+    
+    top = 3; bottom = -3;
+    if max(x) > 3, top = ceil(max(x)); end;
+    if min(x) < -3, bottom = floor(min(x)); end;
+    
+    max_dom = 50*(ceil(length(x)/50));
 	h = figure(1); set(h, 'Renderer', 'OpenGL');
         set(h, 'Visible', 'off');
         plot(0,0); errorbar(1:upper, avg, stddev); title(file);
         grid; xlabel('Codon Number'); ylabel('x(k)');
+        axis([0, max_dom, bottom, top]);
     saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
 end
