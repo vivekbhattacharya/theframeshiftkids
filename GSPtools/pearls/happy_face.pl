@@ -29,12 +29,18 @@ if (__FILE__ eq $0) {
     Smooth::helpcheck();
     my ($file, $folder) = @ARGV;
     open(my $genehandle, $file) or die('Genes.');
-
+    
+    mkpath($folder);
     while (my $gene = <$genehandle>) {
         chomp $gene;
         my $id = get_id $gene;
         
-        mkpath($folder);
+        if ($id =~ m|[\s/]|) {
+            print "Could not find gene $gene", $/;
+            next;
+        }
+        print $gene, $/;
+        
         open(my $handle, ">$folder/$gene.txt");
         print $handle thehardpart $id;
     }
