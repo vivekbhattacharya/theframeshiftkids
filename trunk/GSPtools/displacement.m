@@ -5,22 +5,23 @@
 % 
 % This is the equivalent of an OOP private method. Its primary
 % purpose is to aid in the development of unities.
-function [x] = displacement(seq,Dvec,frontshifts,backshifts)
+function [x, waits] = displacement(seq, Dvec, fs, bs)
     global Travel;
     if isempty(Travel), load Travel.mat; end
     
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
-    global ants termites;
+    global ants termites store;
     ants = {}; termites = {};
 
-    global store shoals;
-    if isempty(shoals), shoals = 0; end;
     upper = length(Dvec) - 1;
     store = struct('x', [0 0.1], 'shift', 0, 'wts', zeros(1, upper-2));
     
-    away = 0; actual_shift = 0; patrick = [];
-    criticals = find_criticals(frontshifts, backshifts);
+    % For the common case of no actual frameshifts,
+    % avoid computing the deviation ever.
+    away = 0; actual_shift = 0;
+    no_frameshifting = isempty(fs) && isempty(bs);
+    if ~no_frameshifting, criticals = find_criticals(fs, bs); end
     for k=2:upper
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
@@ -34,18 +35,20 @@ function [x] = displacement(seq,Dvec,frontshifts,backshifts)
             fprintf('   %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
         end
-        actual_shift = get_critical(k, criticals);
+        if ~no_frameshifting, actual_shift = get_critical(k, criticals); end;
         away = away + (store.x(k+1) - actual_shift)^2;
     end
     x = store.x;
-    shoals = shoals + sqrt(away/upper);
-    % store.wts
+    waits = store.wts;
      
     % Tally the number of times the gene sequence
     % correctly frameshifted (shoals) in addition to the
     % total number of displacement.m calls (sands).
-    global sands;
+    global sands shoals;
+    if isempty(shoals), shoals = 0; end;
     if isempty(sands), sands = 0; end
+
+    shoals = shoals + sqrt(away/upper);
     sands = sands + 1;
 end
 
@@ -63,10 +66,8 @@ function [c] = find_criticals(f, b)
     end
     
     c = [];
-    ecto = 2;
-    cellfun(@evil_jasper, f);
-    ecto = -2;
-    cellfun(@evil_jasper, b);
+    ecto = 2; cellfun(@evil_jasper, f);
+    ecto = -2; cellfun(@evil_jasper, b);
     
     % Very important! Cascade the shifts!
     c = cumsum(c);
