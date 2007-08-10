@@ -15,7 +15,7 @@ function megaunity(file, varargin)
 %   megaunity('prfB.txt', {'uga,25'}, {}, 'graph');
 % --------------------------------------------------------------
 
-displacement = walrus_surprise(file, 'polar');
+displacement = walrus_surprise(file);
 global shoals sands;
 
 x = length(varargin);
