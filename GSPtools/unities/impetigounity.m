@@ -2,12 +2,12 @@ function impetigounity(folder, times, varargin)
 
     seth = 1; setv = 1;
 
-    if length(varargin) == 1
+    if length(varargin) > 0
         if varargin{1} == 0
             setv = 0;
         end
     elseif length(varargin) < 1
-        setv = 0;
+        seth = 0;
     end;
     
     if length(varargin) == 2
