@@ -16,7 +16,3 @@ if (!@ARGV or $ARGV[0] eq '--help') { print $help; exit }
 use Smooth;
 my $seq = Smooth::getseq($ARGV[0]);
 print $seq;
-
-# Write sequence to a fasta format.
-open(my $handle, qq/>$ARGV[1]/);
-print $handle '>sequence', $/, $seq;

@@ -29,8 +29,8 @@ function [x, waits] = displacement(seq, Dvec, fs, bs)
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
         if (overaged == 1)
-            %fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
-            %break;
+            fprintf('   %s at %g found Wichita\n', seq(index+1:index+3), k);
+            break;
         elseif (overaged == -1)
             fprintf('   %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;

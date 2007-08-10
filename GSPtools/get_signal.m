@@ -13,12 +13,12 @@ if(isempty('perl')); error(['I cannot find Perl 5.6 or above.' ...
    'Please download it or add it to your PATH (see website).']); end;
 
 % Load prfb, and generate a fasta file with column width of 60.
-Fasta = tempname; S = getseq(file, Fasta);
+S = getseq(file);
 
 % Run free2bind. Make sure to include its directory into -I.
 Include = fileparts(which('Smooth.pm'));
    Template = 'perl -I"%s" "%s" auuccuccacuag "%s"';
-   Command = sprintf(Template, Include, which('scan_brightly.pl'), Fasta);
+   Command = sprintf(Template, Include, which('scan_brightly.pl'), file);
 [status, raw_signal] = system(Command);
 
 % Simulate load() on a string instead of a file.
