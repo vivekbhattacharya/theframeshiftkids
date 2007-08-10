@@ -23,16 +23,51 @@ sub thehardpart {
     return substr $site, $begin, $end - $begin;
 }
 
-
+use File::Path qw(mkpath);
+use Smooth;
 if (__FILE__ eq $0) {
-    my ($file) = @ARGV;
+    Smooth::helpcheck();
+    my ($file, $folder) = @ARGV;
     open(my $genehandle, $file) or die('Genes.');
 
     while (my $gene = <$genehandle>) {
         chomp $gene;
         my $id = get_id $gene;
-        print thehardpart $id;
+        
+        mkpath($folder);
+        open(my $handle, ">$folder/$gene.txt");
+        print $handle thehardpart $id;
     }
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+happy_face.pl
+
+=head1 SYNOPSIS
+
+    happy_face.pl genes.txt c:\output
+
+=over 20
+
+=item B<happy_face.pl>
+
+I<list of genes> I<output path>
+
+=back
+
+=head1 DESCRIPTION
+
+happy_face screenscrapes the EcoGene database website for
+genes listed in a file, separated by newlines. It then saves
+the gene sequence to "gene.txt" in the output path, where
+"gene" is actually the gene sequence name, such as aceF or
+boobies.
+
+=head1 CAVEATS
+
+Liable to broken as soon as EcoGene updates its website.
