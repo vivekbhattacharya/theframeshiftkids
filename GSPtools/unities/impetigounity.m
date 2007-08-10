@@ -17,13 +17,14 @@ function impetigounity(folder, times, varargin)
         viveklikes = x_bound;
         tospin = y_bound;
         
-        if x_bound < 0, viveklikes = length(tip); end;
-        if y_bound < 0, tospin = ylim;
-        else tospin = [0 y_bound];
-        end
-        
         h = figure(1); set(h, 'Renderer', 'OpenGL');
+            if x_bound < 0, viveklikes = length(tip); end;
             plot(0,0); bar(1:viveklikes, tip(1:viveklikes)); title(filename);
+        
+            if y_bound < 0, tospin = ylim;
+            else tospin = [0 y_bound];
+            end
+        
             axis([0 viveklikes+1 tospin]);
             grid; xlabel('Codon Number'); ylabel('Wait Time');
         saveas(h, image, 'png');
