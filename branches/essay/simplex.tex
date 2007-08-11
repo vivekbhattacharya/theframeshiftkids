@@ -1,4 +1,4 @@
-\documentclass[10pt,twocolumn,draft]{article}
+\documentclass[10pt,twocolumn]{article}
 \usepackage{amsmath,graphicx,fullpage,booktabs,microtype}
 \usepackage[font={sc,footnotesize}]{caption,subfig}
 \bibliographystyle{abbrv}
@@ -44,7 +44,7 @@ bGH, however, the model imposes a random cycle limit within the range $[150,250]
 determine the yield when running a sequence repeatedly. Upon reaching the limit the simulated ribosome
 halts pausing and sadly dissociates.
 
-\section{Analyzing Bovine Growth Hormone}
+\section{Analyzing bGH}
 
 Through these metrics, the model yielded startling results.
 
@@ -59,7 +59,7 @@ the species angle, a behavior common with many high-yield proteins including rib
 frameshift. Indeed, polar plots of high yield, non-frameshifting proteins obey the attraction to the species
 angle, cf. Figure 1 of Ponnala, et al.~\cite{lalit:mechanics}.
 
-For example, \emph aceF and \emph rplE, both high-yield proteins, have polar plots very close to $\theta = \varphi_{sp}$.
+For example, \emph{aceF} and \emph{rplE}, both high-yield proteins, have polar plots very close to $\theta = \varphi_{sp}$.
 Even \prfB\ begins at $\theta = -90\degree$ and cycles clockwise through the species angle before
 stabilizing around its final phase. The proximity to the species angle and its commonality to
 other high-yield proteins then offers a measure for yield for bovine growth hormone.
@@ -68,9 +68,9 @@ other high-yield proteins then offers a measure for yield for bovine growth horm
 \subsection{Deviation}
 
 Table~\ref{deviation} summarizes the results from calculating the deviation metrics 
-for all bGH sequences. The highlighted low deviations for \emph pcZ101 and \emph pcZ105
+for all bGH sequences. The highlighted low deviations for \emph{pcZ101} and {\it pcZ105}
 indicate possibly higher yields, consistent with already present biological results~\cite{schoner:bgh}.
-Determining the statistical significance of this possible correlation exists as future research.
+Determining the biological significance of this possible correlation exists as future research.
 
 \begin{table}[tbp]
 \begin{center}
@@ -89,7 +89,7 @@ Determining the statistical significance of this possible correlation exists as 
         pcZ115 & 0.79794\\
         \bottomrule
     \end{tabular}
-    \caption{Deviation for bGH Sequences with Sample Size 200}
+    \caption{Deviation for bGH Sequences with Sample Size~200}
     \label{deviation}
 \end{center}
 \end{table}
@@ -117,12 +117,14 @@ dissociations, contrary to intuition, and presents itself as a further topic for
         pcZ115 & 0.466\\
         \bottomrule
     \end{tabular}
-    \caption{Probability of Pause Dissociations with Sample Size 500}
+    \caption{Probability of Pause Dissociations with Sample Size~500}
     \label{wichita}
 \end{center}
 \end{table}
 
+\subsection{Wait Times for Early Codons}
 
+An interesting method of analysis involves 
 
 \bibliography{wizards}
 
@@ -132,7 +134,7 @@ dissociations, contrary to intuition, and presents itself as a further topic for
 
 Note the trend toward $\theta = \varphi_{sp}$ in the Figure~\ref{bgh:high} that does
 not exist in Figure~\ref{bgh:low}. For lack of space, low-yield sequences beside pcZ100 and pcZ104
-are reduced in size due to their extreme similarity to pcZ100 and pcZ104 (Figure~\ref{bgh:low}).
+are reduced in size due to their extreme similarity to \emph{pcZ100} and \emph{pcZ104} (Figure~\ref{bgh:low}).
 
 \begin{figure}[htp]
     \centering
