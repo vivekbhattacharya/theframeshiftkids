@@ -7,7 +7,7 @@
 %
 % Usage: impunity('c:\work folder', {'uga,25'}, {}, sample size)
 % ----------------------------------------------------------------
-function impunity(folder, fshifts, bshifts, limit)
+function impunity(folder, fshifts, limit)
     d = 0; singleton = 0;
     if isdir(folder)
         d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
@@ -25,7 +25,7 @@ function impunity(folder, fshifts, bshifts, limit)
         displacement = walrus_surprise(file);        
         global shoals sands;
         for i=1:limit
-            x = displacement(fshifts, bshifts);
+            x = displacement(fshifts);
         end
         yield = shoals/sands;
     end

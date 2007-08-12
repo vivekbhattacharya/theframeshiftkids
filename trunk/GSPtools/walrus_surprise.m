@@ -19,8 +19,8 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     [dvec, theta] = diff_vectors(mag, theta);
     n = length(dvec) - 1;
     
-    function [x, waits] = helper(fs, bs)
-        [x, waits] = displacement(seq(13:end), dvec, fs, bs);
+    function [x, waits] = helper(fs)
+        [x, waits] = displacement(seq(13:end), dvec, fs);
     end
     fantastic = @helper;
 

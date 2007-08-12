@@ -5,7 +5,7 @@
 % 
 % This is the equivalent of an OOP private method. Its primary
 % purpose is to aid in the development of unities.
-function [x, waits] = displacement(seq, Dvec, fs, bs)
+function [x, waits] = displacement(seq, Dvec, fs)
     global Travel;
     if isempty(Travel), load Travel.mat; end
     
@@ -20,8 +20,8 @@ function [x, waits] = displacement(seq, Dvec, fs, bs)
     % For the common case of no actual frameshifts,
     % avoid computing the deviation ever.
     away = 0; actual_shift = 0;
-    no_frameshifting = isempty(fs) && isempty(bs);
-    if ~no_frameshifting, criticals = find_criticals(fs, bs); end
+    no_frameshifting = isempty(fs);
+    if ~no_frameshifting, criticals = find_criticals(fs); end
     for k=2:upper
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
@@ -58,16 +58,15 @@ end
 % this is an easy performance optimization. Equally
 % important is the conversion of f/bshifts cell arrays
 % into a usable data structure.
-function [c] = find_criticals(f, b)
+function [c] = find_criticals(f)
     function evil_jasper(str)
         x = strfind(str, ',');
         x = str2num(str(x+1:end));
-        c(x) = ecto;
+        c(x) = 2;
     end
     
     c = [];
-    ecto = 2; cellfun(@evil_jasper, f);
-    ecto = -2; cellfun(@evil_jasper, b);
+    cellfun(@evil_jasper, f);
     
     % Very important! Cascade the shifts!
     c = cumsum(c);

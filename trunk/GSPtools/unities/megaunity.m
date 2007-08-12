@@ -9,29 +9,28 @@ function megaunity(file, varargin)
 % USAGE:
 %   megaunity('rpoS.txt');
 %   megaunity('prfB.txt', {'uga,25'});
-%   megaunity('backshifter.txt', {}, {'backshift,location'});
+%   % 300 iterations
+%   megaunity('prfB.txt', {'uga,25'}, 300);
 %   
 %   % Display the graph each time.
-%   megaunity('prfB.txt', {'uga,25'}, {}, 'graph');
+%   megaunity('prfB.txt', {'uga,25'}, 300, 'graph');
 % --------------------------------------------------------------
 
 displacement = walrus_surprise(file);
 global shoals sands;
 
 x = length(varargin);
-fshifts = {}; bshifts = {};
-limit = inf; quiet = 1;
+fshifts = {}; limit = inf; quiet = 1;
 
 if x >= 1, fshifts = varargin{1}; end;
-if x >= 2, bshifts = varargin{2}; end;
-if x >= 3, limit = varargin{3}; end;
-if x >= 4, quiet = 0; end;
+if x >= 2, limit = varargin{2}; end;
+if x >= 3, quiet = 0; end;
 
 i = 0;
 while i < limit
     i = i + 1;
     
-    x = displacement(fshifts, bshifts);
+    x = displacement(fshifts);
     disp_shifts;
     disp(sprintf('Yield so far: %g (%g)', shoals/sands, sands));
     fprintf('\n');
