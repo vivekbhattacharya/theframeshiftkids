@@ -10,7 +10,7 @@
 % impetigo('c:\work folder', N, X, Y)
 function impetigounity(folder, times, varargin)
     l = length(varargin);
-    x_bound = -1; y_bound = -1;
+    x_bound = 0; y_bound = 0;
     if l >= 1, x_bound = varargin{1}; end;
     if l >= 2, y_bound = varargin{2}; end;
 
@@ -24,18 +24,13 @@ function impetigounity(folder, times, varargin)
         end
         tip = mean(waitress);
         
-        viveklikes = x_bound;
-        tospin = y_bound;
-        
         h = figure(1); set(h, 'Renderer', 'OpenGL');
-            if x_bound < 0, viveklikes = length(tip); end;
-            plot(0,0); bar(1:viveklikes, tip(1:viveklikes)); title(filename);
-        
-            if y_bound < 0, tospin = ylim;
-            else tospin = [0 y_bound];
+            if x_bound > 0, bar(1:x_bound, tip(1:x_bound));
+            else bar(1:length(tip), tip);
             end
+            if y_bound > 0, axis([xlim 0 y_bound]); end
         
-            axis([0 viveklikes+1 tospin]);
+            set(h, 'Visible', 'off'); title(filename);
             grid; xlabel('Codon Number'); ylabel('Wait Time');
         saveas(h, image, 'png');
     end
