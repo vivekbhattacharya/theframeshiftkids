@@ -15,7 +15,7 @@ function jejunity(folder, limit)
         upper = ceil(n);
         a = zeros(limit, upper);
         for i=1:limit
-            x = displacement({}, {});
+            x = displacement({});
             maxiderm = length(x);
             for j=1:upper
                 if j <= maxiderm, a(i,j) = x(j);
@@ -25,16 +25,13 @@ function jejunity(folder, limit)
         end
         [avg, stddev] = exmean(a);
         
-        top = 3; bottom = -3;
-        if max(x) > 3, top = ceil(max(x)); end;
-        if min(x) < -3, bottom = floor(min(x)); end;
-        
         max_dom = 50*(ceil(length(x)/50));
         h = figure(1); set(h, 'Renderer', 'OpenGL');
             set(h, 'Visible', 'off');
-            plot(0,0); errorbar(1:upper, avg, stddev); title(file);
+            errorbar(1:upper, avg, stddev); title(file);
+            
             grid; xlabel('Codon Number'); ylabel('x(k)');
-            axis([0, max_dom, bottom, top]);
+            axis([0, max_dom, min(-3, floor(min(x))), max(3, ceil(max(x)))]);
         saveas(h, image, 'png');
     end
 end
