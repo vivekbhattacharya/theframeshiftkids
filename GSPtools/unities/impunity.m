@@ -1,15 +1,11 @@
 % ----------------------------------------------------------------
-% Stores yields to a results.txt file for perusal. `limit`
-% specifies the number of iterations while `folder` is the folder
-% path where `cornerstone.pl` dumped all its proteins. It can be
-% any folder of txt files with protein sequences.
+% Impunity.m calculates the yield for all the genes in a given
+% work folder, storing those results to a results.txt file in the
+% Matlab workspace and also printing them to the standard output.
+% It needs the predicted frameshifts in order to calculate yield
+% and also a sample size.
 %
-% Results file will ultimately end up in Matlab's work folder,
-% appended.
-%
-% Usage: impunity(work folder, list of genes that should
-%   frameshift +1 a la megaunity, frameshifters -1, number of 
-%   iterations to run the model before recording yield)
+% Usage: impunity('c:\work folder', {'uga,25'}, {}, sample size)
 % ----------------------------------------------------------------
 function impunity(folder, fshifts, bshifts, limit)
     d = 0; singleton = 0;

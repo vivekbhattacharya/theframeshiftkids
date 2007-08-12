@@ -1,3 +1,13 @@
+% Draws a wait time bar plot for each gene in the work folder
+% (txt or FASTA), saving that plot to jail\gene.png
+% in the work folder using a sample size of N.
+%
+% If given, X specifies the upper limit of the horizontal
+% axis (codon number) and Y specifies the upper limit
+% of the vertical axis (wait time), both with the minimum
+% at zero.
+%
+% impetigo('c:\work folder', N, X, Y)
 function impetigounity(folder, times, varargin)
     l = length(varargin);
     x_bound = -1; y_bound = -1;

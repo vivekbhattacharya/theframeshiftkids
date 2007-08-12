@@ -1,21 +1,18 @@
-% ------------------------------------------------
-% Polar points become saved inside your folder.
-% 
-% Usage: alopeciaunity('C:\folder')
-% ------------------------------------------------
+% Draws a polar plot for each gene in the work folder
+% (txt or FASTA), saving that plot to merryround\gene.png
+% in the work folder.
+%
+% alopeciaunity('c:\work folder')
 function alopeciaunity(folder)
-    d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
-    subfolder = 'merryround';
-    mkdir(fullfile(folder, subfolder));
-    
-    for i = 1:length(d)
-        file = d(i).name; disp(file);
+    classify(folder, 'merryround', @helper, 'preparation');
+    function helper(path, filename, image)
+        disp(filename);
         h = figure(2); set(h, 'Renderer', 'OpenGL');
             set(h, 'Visible', 'off');
-            walrus_surprise(fullfile(folder, file), 'polar');
-            title(file);
+            walrus_surprise(path, 'polar');
+            title(filename);
             set(h, 'Visible', 'off');
-        saveas(h, fullfile(folder, subfolder, [file '.png']), 'png');
+        saveas(h, image, 'png');
     end
     disp(' ');
 end
