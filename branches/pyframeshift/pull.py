@@ -2,7 +2,7 @@
     representing ribosomal translation and especially frameshifts """
 
 from __future__ import division
-import numpy, ghost, os, sequence
+import numpy, ghost, os.path, sequence
 from nloops import nloops
 from Kidnap.scan import scan
 
@@ -90,7 +90,7 @@ def nudge(self, weight):
 from ghost import fxsin, xcos, bxsin
 from random import random
 from math import sin, pi
-def displacement(seq, diffs, fshifts=(), bshifts=()):
+def displacement(seq, diffs, fs = []):
     """ Uses differential vectors to stochastically generate a displacement
         plot, detecting frameshifts, reloops, stop codons, and pausing """
     def cheese(self, *args): self.append('%s,%s' % args)
@@ -98,6 +98,7 @@ def displacement(seq, diffs, fshifts=(), bshifts=()):
     ants, termites = [], []
     species = -30.*(pi/180.)
     x = [0.0, 0.1]
+    away = 0
     
     shift = 0; maximus = len(seq); diffs.next()
     for k in xrange(1, maximus//3):
@@ -129,8 +130,19 @@ def displacement(seq, diffs, fshifts=(), bshifts=()):
             # "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
             phi_dx = (pi/3)*x[k+1] - species + diff[1]
             x[k+1] += -0.005 * diff[0] * sin(phi_dx)
+    
+    # Calculate deviation yield (by parts if necessary)
+    x = numpy.array(x)
+    away = 0
+    if not fs == []:
+        # fs, the cumulative actuary, stops early in its tabulation of
+        # the predicted shifts e.g. [0 0 0 ... 2] vs. [0 0 0 ... 2 2 2 ...]
+        away = sum((x[0:len(fs)] - fs)**2) + sum((x[len(fs):] - fs[-1])**2)
+    else: away  = sum((x - 0)**2)
+    
     print ants
     print termites
+    print sqrt(away / (maximus//3))
     return x
 
 if __name__ == '__main__':
