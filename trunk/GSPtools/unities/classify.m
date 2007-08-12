@@ -1,4 +1,4 @@
-function classify(folder, subfolder, crusade)
+function classify(folder, subfolder, crusade, varargin)
     subdir = fullfile(folder, subfolder);
     try
         mkdir(subdir);
@@ -7,12 +7,22 @@ function classify(folder, subfolder, crusade)
         return;
     end
     
-    function helper(path)
-        [displacement, n] = walrus_surprise(path);
-        [folder, file] = fileparts(path);
+    helper = @campbag;
+    if length(varargin) > 0, helper = @preparation; end
+    
+    function preparation(path)
+        [folder, file, ext] = fileparts(path);
         
         image = fullfile(subdir, [file '.png']);
-        crusade(displacement, n, file, image);
+        crusade(path, [file ext], image);
+    end
+    
+    function campbag(path)
+        [displacement, n] = walrus_surprise(path);
+        [folder, file, ext] = fileparts(path);
+        
+        image = fullfile(subdir, [file '.png']);
+        crusade(displacement, n, [file ext], image);
     end
     
     if isdir(folder)
