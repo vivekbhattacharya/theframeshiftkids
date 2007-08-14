@@ -4,14 +4,6 @@ use File::Basename;
 use lib dirname(__FILE__) . '/../pearls';
 use Smooth qw(prot2codon codon2prot getseq);
 
-sub parse {
-    my $start = shift;
-    return
-        grep { $_->[1] > $start + 9 }
-        sort { $a->[1] <=> $b->[1] }
-        map { [split '_'] } @_;
-}
-
 # Parses and returns the string segments
 # before and after the needle in the
 # following diagram:
@@ -38,7 +30,7 @@ sub strsmash {
 # $file: path to file
 # $times: number of codons
 sub beforehand {
-    my ($data, $file, $times) = @_;
+    my ($loc, $file, $times) = @_;
     my $seq = getseq($file);
     
     # Fuzzy search (-3) to account for +1/-1 frameshifts.
@@ -47,33 +39,8 @@ sub beforehand {
     #
     # Also, pull back (modulo) to the nearest *actual*
     # codon, ignoring all shifting.
-    my $break = $data->[1]*3 + 12 - 3;
-    for (substr $seq, $break) {
-        $break += index $_, $data->[1];
-        $break -= $break % 3;
-        return strsmash($seq, $break, $times*3);
-    }
-}
-
-our $location;
-sub pick {
-    # Time to end ThrushBaby.
-    if ($#_ < 0) { print q/{-1 -1}/; exit }
-    
-    # Gobble up neighboring frameshifts
-    # if they're only one away.
-    my $data = shift;
-    foreach my $wombat (@_) {
-        if ($wombat->[1] - $data->[1] == 1) {
-            $data = $wombat;
-        } else { +last }
-    }
-    
-    # Communicate with Matlab ... now!
-    my ($codon, $loc) = @$data;
-    printf q/{%s '%s,%s'}/, $loc, $codon, $loc;
-    $location = $loc;
-    return $data;
+    my $break = $loc*3 + 12;
+    return strsmash($seq, $break, $times*3);
 }
 
 sub permute {
@@ -103,14 +70,13 @@ use File::Path qw(mkpath);
 if ($0 eq __FILE__) {
     Smooth::helpcheck;
     
-    my ($start, $file, $folder, @rest) = @ARGV;
-    my @data = parse $start, @rest;
+    my ($file, $folder, $loc) = @ARGV;
     # Increase 4 to a higher value if you're feeling
     # bold and you have a (very) fast computer.
-    my ($before, $critical, $after) = beforehand pick(@data), $file, 4;
+    my ($before, $critical, $after) = beforehand $loc, $file, 4;
     
     my $i = 1;
-    $folder .= "/$location";
+    $folder .= "/$loc";
     mkpath($folder);
     map {
         open(my $handle, ">$folder/$i.txt");
@@ -138,9 +104,9 @@ I<offset> I<sequence file> I<destination> I<codon> [I<codon> ...]
 
 =head2 EXAMPLE
 
-    starling.pl 0 "J:\chill\0\rpoS.txt" "J:\temp" aau_322 cga_179 uga_183
+    starling.pl "J:\chill\0\rpoS.txt" "J:\temp" 322
     
-    starling.pl 179 "J:\chill\179\98.txt" "J:\temp" aau_322 uga_183 butterfly_350
+    starling.pl "J:\chill\179\98.txt" "J:\temp" 350
 
 =head1 
 

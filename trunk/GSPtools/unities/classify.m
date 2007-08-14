@@ -6,13 +6,11 @@ function classify(folder, subfolder, crusade, varargin)
     boulder = folder;
     if ~isdir(boulder), boulder = fileparts(folder); end
     
-    % Conflate making a directory with checking its parent's
-    % existence for now.
-    subdir = fullfile(boulder, subfolder);
-    try, mkdir(subdir);
-    catch
-        disp(sprintf('Folder %s does not exist', folder));
-        return;
+    if subfolder
+        subdir = fullfile(boulder, subfolder);
+        mkdir(subdir);
+    else
+        subdir = boulder;
     end
     
     if isdir(folder)
