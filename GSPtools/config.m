@@ -3,5 +3,5 @@ function config
     Config = struct();
     
     % 0: Deviation. 1: Probability.
-    Config.yield = 1;
+    Config.yield = 0;
 end
