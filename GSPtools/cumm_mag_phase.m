@@ -23,14 +23,18 @@ function [mag, phase] = cumm_mag_phase(signal)
         % The averaging calculation works only for the case when
         % length is a multiple of 3. Let's assume that is true.
         % Then calculate magnitude and phase.
+        %
+        % phase(i) translates into tan(theta). Trust us. We
+        % worked it out. (Given r.1 = M * sin(theta), r.2 = M *
+        % sin(theta + 2*pi/3), r.3 = M * sin(theta + 4*pi/3)).
+        %
+        % We center the free energy wave at zero first.
         M = registers - mean(registers);
         grass = M(3) + M(2);
+        
         if M(1) ~= 0
             phase(i) = atan2(M(1)*sqrt(3), M(1) + 2*M(2)); 
             mag(i) = M(1)/sin(phase(i));
-        elseif grass ~= 0
-            phase(i) = atan2(grass*sqrt(3), M(3) - M(2));
-            mag(i) = -grass/sin(phase(i));
         else mag(i) = 0; phase(i) = 0;
         end
     end
