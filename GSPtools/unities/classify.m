@@ -1,23 +1,27 @@
 function classify(folder, subfolder, crusade, varargin)
-    subdir = fullfile(folder, subfolder);
-    try
-        mkdir(subdir);
+    helper = @campbag;
+    if length(varargin) > 0, helper = @preparation; end
+    
+    % Handle files as if they were folders with magic.
+    boulder = folder;
+    if ~isdir(boulder), boulder = fileparts(folder); end
+    
+    % Conflate making a directory with checking its parent's
+    % existence for now.
+    subdir = fullfile(boulder, subfolder);
+    try, mkdir(subdir);
     catch
         disp(sprintf('Folder %s does not exist', folder));
         return;
     end
     
-    helper = @campbag;
-    if length(varargin) > 0, helper = @preparation; end
-    
-    % Handle files as if they were folders with magic.
     if isdir(folder)
         d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
         for i = 1:length(d)
             file = fullfile(folder, d(i).name);
             helper(file);
         end
-    else, helper(which(folder)); end;
+    else helper(which(folder));end;
     
     % Polar plots, mostly
     function preparation(path)
