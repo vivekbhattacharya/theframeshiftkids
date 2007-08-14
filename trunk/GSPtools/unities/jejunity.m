@@ -15,7 +15,7 @@ function jejunity(folder, limit)
         upper = ceil(n);
         a = zeros(limit, upper);
         for i=1:limit
-            x = displacement({});
+            x = displacement([]);
             maxiderm = length(x);
             for j=1:upper
                 if j <= maxiderm, a(i,j) = x(j);

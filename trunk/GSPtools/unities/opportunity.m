@@ -14,7 +14,7 @@ function opportunity(folder, limit)
         disp(filename);
         
         for i=1:limit
-            x = displacement({});
+            x = displacement([]);
             plots(i*2 - 1) = {1:length(x)};
             plots(i*2) = {x};
         end

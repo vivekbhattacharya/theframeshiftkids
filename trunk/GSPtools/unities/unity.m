@@ -17,7 +17,7 @@ function unity(file, varargin)
 displacement = walrus_surprise(file, 'polar');
 global shoals;
 
-fshifts = {};
+fshifts = [];
 if length(varargin) > 0, fshifts = varargin{1}; end
 x = displacement(fshifts);
 

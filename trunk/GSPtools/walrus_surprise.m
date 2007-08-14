@@ -13,7 +13,9 @@
 % Returns: Those genes, how many there were, and
 %   a vector of differences
 function [fantastic, n] = walrus_surprise(file, varargin)
-    clear global sands shoals;
+    clear global sands shoals Config;
+    config();
+    
     [signal, seq] = get_signal(file);
     [mag, theta] = cumm_mag_phase(signal);
     [dvec, theta] = diff_vectors(mag, theta);
@@ -32,4 +34,7 @@ function [fantastic, n] = walrus_surprise(file, varargin)
             xlabel('Codon'); ylabel('Phase angle (deg)');
         end
     end
+    
+    global Travel;
+    if isempty(Travel), load Travel.mat; end
 end

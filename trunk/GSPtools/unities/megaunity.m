@@ -20,7 +20,7 @@ displacement = walrus_surprise(file);
 global shoals sands;
 
 x = length(varargin);
-fshifts = {}; limit = inf; quiet = 1;
+fshifts = []; limit = inf; quiet = 1;
 
 if x >= 1, fshifts = varargin{1}; end;
 if x >= 2, limit = varargin{2}; end;

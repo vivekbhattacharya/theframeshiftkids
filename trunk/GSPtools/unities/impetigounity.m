@@ -19,7 +19,7 @@ function impetigounity(folder, times, varargin)
         disp(filename);
         waitress = zeros(times, 0);
         for i = 1:times
-            [x, waits] = displacement({});
+            [x, waits] = displacement([]);
             waitress(i, 1:length(waits)) = waits;
         end
         tip = mean(waitress);
