@@ -1,17 +1,17 @@
-\documentclass[10pt,twocolumn,draft]{article}
+\documentclass[10pt,twocolumn]{article}
 \usepackage{candor}
 \begin{document}
 
-\title{{\bf \rpoS}}
+\title{{\bf Fantastic Adventures Involving \rpoS, Baby}}
 \author{{\sc H. Lian, V. Bhattcharya, and D.R. Vitek}}
 \date{{\sc \today}}
 \maketitle
 
 \section{Analyzing \rpoS}
 
-The RNA polymerase sigma factor \rpoS\ is known to be translationally regulated.
-This report aims to analyze potential areas of the sequence where transcriptional regulation can occur.
-It also suggests changes to the sequence that may improve yield for \rpoS.
+We know {\it Escherichia coli} translationally regulates~\cite{rpos:process} RNA polymerase sigma factor \rpoS,
+whence we may analyze potential areas of the sequence where transcriptional regulation can occur and
+suggests sequence changes to improve protein yield.
 
 \subsection{Polar Plot}
 
@@ -28,7 +28,7 @@ it remains near the species angle.
 \subsection{Displacement Plots}
 
 Unexpectedly, the displacement plot for \rpoS\ (Figure~\ref{rpos:disp}) does not show any interesting behavior.
-The displacement stays within the range $[-0.5,0.5]$, which is well outside the trouble region of $-1$ or 1.
+The displacement stays within the range $[-0.5,0.5]$, which is well outside the trouble region of $\pm 1$.
 
 \begin{figure}[htp]
     \centering
@@ -37,8 +37,10 @@ The displacement stays within the range $[-0.5,0.5]$, which is well outside the 
     \includegraphics[scale=0.7]{rpoS/original.png}
 \end{figure}
 
-On a more sensitive model, however, \rpoS\ shows a different displacement plot.  
-Figure~\ref{rpos:sensdisp} graphs ten iterations of \rpoS\ on the sensitive model.
+On a more sensitive but still stochastic model, however, \rpoS\ shows a different displacement plot.  
+Figure~\ref{rpos:sensdisp} shows a graph of ten iterations. It indicates two areas where frameshifts may occur,
+the first approximately at codon 95, when the displacement plot nears one, which one iteration demonstrates
+its exceeding 1.5 in displacement. The other lies approximately at codon 180; where the displacement dips near negative one.
 
 \begin{figure}[htp]
     \centering
@@ -47,20 +49,17 @@ Figure~\ref{rpos:sensdisp} graphs ten iterations of \rpoS\ on the sensitive mode
     \includegraphics[scale=0.7]{rpoS/sensitive.png}
 \end{figure}
 
-Figure~\ref{rpos:sensdisp} indicates that \rpoS\ has two areas where frameshifts may potentially occur.
-The first such point occurs at approximately codon 95, when the displacement plot nears 1.
-In fact, one iteration actually exceeds 1.5 in displacement.
-Another point of interest exists at approximately codon 180; displacement dips close to $-1$ at this point.
+\section{Without Frameshifts}
 
-\section{A Non-Frameshifting Sequence}
-
-A brute-force algorithm was used to substitute synonymous codons in the \rpoS\ sequence to minimize the number of ``frameshifts."
-The sensitive model was used as verificaiton.  A total of 33 codon changes were made.
+With a brute-force algorithm, substituting 33 synonymous codons in the \rpoS\ sequence minimizes
+the deviation of \rpoS\ displacement toward $\pm 1$ on the sensitive model, potentially reducing
+possible mistake frameshifts during translation.
 
 \subsection{Displacement and Polar Plots}
 
-On the less sensitive model, a displacement plot for the improved \rpoS\ sequence (Figure~\ref{rposmax:disp}) shows less variation than the original \rpoS\ sequence (Figure~\ref{rpos:disp}).
-The more sensitive model highlights this difference even more (Figure~\ref{rposmax:sensdisp} versus Figure~\ref{rpos:sensdisp}).
+On the less sensitive model, a displacement plot for the improved sequence (Figure~\ref{rposmax:disp})
+indicates less variation compared to Figure~\ref{rpos:disp}. The more sensitive model accentuates this
+difference (Figure~\ref{rposmax:sensdisp} versus Figure~\ref{rpos:sensdisp}).
 
 \begin{figure}[htp]
     \centering
@@ -76,8 +75,8 @@ The more sensitive model highlights this difference even more (Figure~\ref{rposm
     \includegraphics[scale=0.7]{rpoS/max-sensitive.png}
 \end{figure}
 
-The polar plot for the modified \rpoS\ (Figure~\ref{rposmax:polar}) stays closer to the species angle as well.  
-It avoids the large deviation (starting about halfway down the sequence) shown in the original polar plot (Figure~\ref{rpos:polar}).
+The polar plot (Figure~\ref{rposmax:polar}) stays closer to the species angle as well,  
+avoiding the large deviation starting about halfway down the sequence shown in the original polar plot (Figure~\ref{rpos:polar}).
 
 \begin{figure}[htp]
     \centering
@@ -88,24 +87,29 @@ It avoids the large deviation (starting about halfway down the sequence) shown i
 
 \subsection{Yields}
 
-After 5000 iterations of the sensitive model, the original \rpoS\ sequence ran from start to finish without frameshifts 39.8\% of the time.
-By contrast, the improved sequence ran properly 88.6\% of the time.
-
-Using the sensitive model again, on 5000 iterations, the modified sequence has yield 0.2235 while the original \rpoS\ has 0.3831.
+After 5000 iterations on the sensitive model, the original \rpoS\ sequence
+ran from start to finish without frameshift mistakes 39.8\% of the time compared to
+88.6\% for the improved sequence. The models also reported an average standard deviation from zero of
+0.3831 compared to the 0.2235 for the modified sequence, the lower deviation again
+indicating a smaller likelihood of a mistake frameshift.
 
 \section{A Frameshifting Sequence}
 
-The previous section proposed a sequence to reduced deviation from the zero axis.  
-The deviation was minimized with a minimum of 33 codon changes.
-This section proposes a sequence with a programmed frameshift with only 3 codon changes.
+The previous section proposed a sequence to reduce deviation from the zero axis by changing 33 codons.
+This section proposes a programmed frameshift with only 3 codon changes, tendering similar results.
 
 \subsection{Plots}
 
-The less sensitive model was used to draw the displacement plot because the more sensitive one always gives low yields for frameshifts (e.g., \prfB\ give 10\% yield).
+On the less sensitive model, both plots contain similarities to plots of the known frameshifter \prfB,
+including the polar plot (Figure~\ref{rposfs:polar}).
+The dips in the displacement plot occur approximately at codons 50 and 180 (Figure~\ref{rposfs:disp});
+the latter trouble spot corresponds, nota bene, to the original sequence.
+The trouble spot at codon 90 remains as a bulge above the horizontal line $x(k)=2$,
+but less prominently.
 
-Both plots are similar to those of the known frameshifter \prfB.
-It is important to note the dips in the displacement plot at approximately 50 and 180 codons; the latter trouble spot corresponds to what is seen in the original sequence.
-The trouble spot at codon 90 still exists (a bulge above the horizontal line $x(k)=2$), but it is not as prominent as the dip near codon 180.
+% What does properly entail?
+On a sample of 1000 iterations, the proper frameshift occurs 86\% of the time,
+but the sequence runs properly only 55.1\% of the time.
 
 \begin{figure}[htp]
     \centering
@@ -121,6 +125,5 @@ The trouble spot at codon 90 still exists (a bulge above the horizontal line $x(
     \includegraphics[scale=0.7]{rpoS/frameshift-polar.png}
 \end{figure}
 
-On a sample of 1000 iterations, the proper frameshift occurs 86\% of the time, but the sequence runs properly only 55.1\% of the time.
-
+\bibliography{wizards}
 \end{document}
