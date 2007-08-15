@@ -1,13 +1,5 @@
-\documentclass[10pt,twocolumn]{article}
-\usepackage{amsmath,graphicx,fullpage,booktabs,microtype}
-\usepackage[font={sc,footnotesize}]{caption,subfig}
-\bibliographystyle{abbrv}
-
-\newcommand{\degree}{\ensuremath{^\circ}}
-\newcommand{\prfB}{\emph{prfB}}
-\newcommand{\rpoS}{\emph{rpoS}}
-\heavyrulewidth=.125em
-\thispagestyle{empty}
+\documentclass[10pt,twocolumn,draft]{article}
+\usepackage{candor}
 \begin{document}
 
 \title{{\bf \rpoS}}
@@ -19,7 +11,7 @@
 
 The RNA polymerase sigma factor \rpoS\ is known to be translationally regulated.
 This report aims to analyze potential areas of the sequence where transcriptional regulation can occur.
-It also suggests changes to the sequence that may improve yield for \rpoS\.
+It also suggests changes to the sequence that may improve yield for \rpoS.
 
 \subsection{Polar Plot}
 
@@ -30,7 +22,7 @@ it remains near the species angle.
     \centering
     \caption{Original \rpoS\ Sequence}
     \label{rpos:polar}
-    {\includegraphics[scale=0.7]{rpoS_polar.png}}
+    \includegraphics[scale=0.7]{rpoS/polar.png}
 \end{figure}
 
 \subsection{Displacement Plots}
@@ -42,7 +34,7 @@ The displacement stays within the range $[-0.5,0.5]$, which is well outside the 
     \centering
     \caption{Original \rpoS\ Displacement Plot}
     \label{rpos:disp}
-    {\includegraphics[scale=0.8]{rpoS.png}}
+    \includegraphics[scale=0.7]{rpoS/original.png}
 \end{figure}
 
 On a more sensitive model, however, \rpoS\ shows a different displacement plot.  
@@ -52,7 +44,7 @@ Figure~\ref{rpos:sensdisp} graphs ten iterations of \rpoS\ on the sensitive mode
     \centering
     \caption{Original \rpoS\ on a Sensitive Model}
     \label{rpos:sensdisp}
-    {\includegraphics[scale=0.8]{rpoS_sens.png}}
+    \includegraphics[scale=0.7]{rpoS/sensitive.png}
 \end{figure}
 
 Figure~\ref{rpos:sensdisp} indicates that \rpoS\ has two areas where frameshifts may potentially occur.
@@ -74,14 +66,14 @@ The more sensitive model highlights this difference even more (Figure~\ref{rposm
     \centering
     \caption{Modified \rpoS Displacement Plot}
     \label{rposmax:disp}
-    {\includegraphics[scale=1]{rpoSmax.png}}
+    \includegraphics[scale=1]{rpoS/max.png}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \caption{Modified \rpoS\ on a Sensitive Model}
     \label{rposmax:sensdisp}
-    {\includegraphics[scale=0.8]{rpoSmax_sens.png}}
+    \includegraphics[scale=0.7]{rpoS/max-sensitive.png}
 \end{figure}
 
 The polar plot for the modified \rpoS\ (Figure~\ref{rposmax:polar}) stays closer to the species angle as well.  
@@ -91,7 +83,7 @@ It avoids the large deviation (starting about halfway down the sequence) shown i
     \centering
     \caption{Modified \rpoS\ Polar Plot}
     \label{rposmax:polar}
-    {\includegraphics[scale=0.7]{rpoSmax_polar.png}}
+    \includegraphics[scale=0.7]{rpoS/max-polar.png}
 \end{figure}
 
 \subsection{Yields}
@@ -119,14 +111,14 @@ The trouble spot at codon 90 still exists (a bulge above the horizontal line $x(
     \centering
     \caption{Frameshifting \rpoS\ Displacement Plot}
     \label{rposfs:disp}
-    {\includegraphics[scale=1]{rpoSfs.png}}
+    \includegraphics{rpoS/frameshift.png}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \caption{Frameshifting \rpoS\ Polar Plot}
     \label{rposfs:polar}
-    {\includegraphics[scale=0.7]{rpoSfs_polar.png}}
+    \includegraphics[scale=0.7]{rpoS/frameshift-polar.png}
 \end{figure}
 
 On a sample of 1000 iterations, the proper frameshift occurs 86\% of the time, but the sequence runs properly only 55.1\% of the time.
