@@ -50,7 +50,9 @@ function [x, waits] = displacement(seq, Dvec, fs)
     if Config.yield == 0
         shoals = shoals + sqrt(away/upper);
     elseif Config.yield == 1
-        if fs == anthill, shoals = shoals + 1; end;
+        if size(fs) == size(anthill)
+            if fs == anthill, shoals = shoals + 1; end;
+        end
     end
 end
 
