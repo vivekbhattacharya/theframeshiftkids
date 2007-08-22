@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage{candor}
+\usepackage{setspace}
+\doublespace
+\begin{document}
+\section{Introduction}
+
+\section{Description of the Model}
+
+\subsection{Free Energy}
+\label{freeenergy}
+
+% Find correct citations for the next paragraph.
+
+Free energy in a cell drives ribosomal translation~\cite{starmer}.
+The origin of the free energy comes from hybridization between two sequences of RNA.
+
+As research suggests that the 16S tail of the ribosome hybridizes with the mRNA~\cite{weiss}, 
+we can calculate free energy values for the interaction between the two strands of RNA.
+Someone et al.~\cite{freier} propose a thermodynamic model for calculation of such free energy values; 
+they model the interaction in terms of \emph{doublets}, or pairs of consecutive nucleotides.
+Using this model, Freier et al.~\cite{freier} numerically calculate the free energy available upon hybridization for all permutations of RNA doublets.
+
+We use Freier et al.'s values to calculate a free energy value at each nucleotide.  
+The 13-base 16S tail of \ecoli\ is first hybridized with the first 13 bases of the sequence 
+(for a gene, usually a 12-base leader sequence and the first base of the start codon) to determine
+the free energy associated with the first nucleotide.
+We can calculate the free energy associated with each subsequent nucleotide by shifting the tail by one base pair.
+Since any free energy value greater than zero represent binding that would only take place if energy were added, 
+we set such values to zero.
+
+\subsection{Deterministic Model}
+
+Ponnala et al.~\cite{lalit:mechanics} assumes a sinusoidal model for free energy, whence one can calculate
+the magnitude and phase of ribosomal translation using arctan given the free energy signals once the memory model
+also proposed by Ponnala et al. stores those values in a phaser memory structure,
+where memory here is biologically equivalent to the displacement from the reading frame of the ribosome performing the translation
+and the registers represent a snapshot of the free energy values at a given codon during translation. The magnitude and phase
+of the ribosomal translation here represents the phaser Ponnala uses to structure the register contents and are used to generate
+polar plots.
+
+\subsubsection{Displacement}
+
+Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\vec{V}_k = Me^{j\theta_k}$.  
+They then differentiate this vector to derive a vector $\vec{D}_k$ for instantaneous energy, interpreting this
+vector as a force that acts on the ribosome to keep the mRNA in a given reading frame.
+
+The length of time that the force acts on the ribosome is dependent on the tRNA availability of the codon in the A-site.
+Ponnala et al.\ use a deterministic model to represent this aspect of translation.  For each codon, they define a number
+of ``wait cycles," a function of the rarity of the associated tRNA.  The number of wait cycles corresponds to the number
+of times the force is allowed to increment displacement.
+
+\section{Applications}
+
+\subsection{Bovine Growth Hormone}
+Besides the frameshifting sequence \prfB, our model also shows a significant correlation in data with biological
+bovine growth hormone data, sequenced previously in \ecoli~\cite{schoner:bgh}. For example, our model purports a relation
+between the deviation from the zero reading frame---for non-frameshifters anyway---and protein yield, ultimately postulating
+a relation between ribosomal efficiency and its ability to maintain its reading frame without wobbling. Schoner et al.
+modified beginning codons of an initial bovine growth hormone sequence to produce a series of alternate bGH sequences,
+two of which produced significantly higher yield than their compatriots. Those two, dubbed pcZ101 and pcZ105, produced significantly
+lower deviation than pcZ104, pcZ108, and other bGH sequences, thus agreeing with the biological data from Schoner et al.
+A model's accurate prediction of yield given a sequence would greatly benefit the work of biologists across the world,
+aiding in verifying the yields of a large sequence of proteins especially when experiments on all of them proves too difficult
+or costly. Therefore, bGH is an important cornerstone of our computational model's impact on biology.
+
+\subsection{rpoS}
+
+\bibliography{wizards}
+\end{document}
