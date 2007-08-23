@@ -1,7 +1,6 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{candor}
-\usepackage{setspace}
-\doublespace
+\linespread 2
 \begin{document}
 \section{Introduction}
 
@@ -12,21 +11,22 @@
 
 % Find correct citations for the next paragraph.
 
-Free energy in a cell drives ribosomal translation~\cite{starmer}.
-The origin of the free energy comes from hybridization between two sequences of RNA.
+Free energy in a cell, which arises from the hybridization between two
+sequences of RNA, drives ribosomal translation~\cite{starmer}.
 
-As research suggests that the 16S tail of the ribosome hybridizes with the mRNA~\cite{weiss}, 
-we can calculate free energy values for the interaction between the two strands of RNA.
-Someone et al.~\cite{freier} propose a thermodynamic model for calculation of such free energy values; 
-they model the interaction in terms of \emph{doublets}, or pairs of consecutive nucleotides.
-Using this model, Freier et al.~\cite{freier} numerically calculate the free energy available upon hybridization for all permutations of RNA doublets.
+Research suggests the 16S tail of the ribosome hybridizes with its  mRNA~\cite{weiss};
+from this, we can  calculate the free energy values for the interaction between the two strands of RNA.
+Someone et al.~\cite{freier} propose a thermodynamic model for exactly this,
+modelling the interaction in terms of \emph{doublets}, i.e. pairs of consecutive nucleotides.
+Using this model, Freier et al.~\cite{freier} numerically calculated the free energy available
+upon hybridization for all permutations of RNA doublets.
 
-We use Freier et al.'s values to calculate a free energy value at each nucleotide.  
-The 13-base 16S tail of \ecoli\ is first hybridized with the first 13 bases of the sequence 
-(for a gene, usually a 12-base leader sequence and the first base of the start codon) to determine
+We use Freier et al.'s values to calculate a free energy value at each nucleotide.
+First, the 13-base 16S tail of \ecoli\ hybridizes with the first 13 bases of a sequence, which
+for a gene is a 12-base leader sequence and the first base of the start codon, to determine
 the free energy associated with the first nucleotide.
-We can calculate the free energy associated with each subsequent nucleotide by shifting the tail by one base pair.
-Since any free energy value greater than zero represent binding that would only take place if energy were added, 
+Then, shifting one base pair at a time, we calculate the free energy for the entire sequence.
+Since any free energy value greater than zero represents binding that would only take place if energy were added,
 we set such values to zero.
 
 \subsection{Deterministic Model}
@@ -41,13 +41,13 @@ polar plots.
 
 \subsubsection{Displacement}
 
-Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\vec{V}_k = Me^{j\theta_k}$.  
-They then differentiate this vector to derive a vector $\vec{D}_k$ for instantaneous energy, interpreting this
-vector as a force that acts on the ribosome to keep the mRNA in a given reading frame.
+Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\vec{V}_k = Me^{j\theta_k}$.
+Differentiating this vector, we arrive at vector $\vec{D}_k$ for instantaneous energy, interpreting this
+vector as a force that acts on the ribosome, keeping the mRNA in a given reading frame.
 
-The length of time that the force acts on the ribosome is dependent on the tRNA availability of the codon in the A-site.
-Ponnala et al.\ use a deterministic model to represent this aspect of translation.  For each codon, they define a number
-of ``wait cycles," a function of the rarity of the associated tRNA.  The number of wait cycles corresponds to the number
+The length of time that the force acts on the ribosome depends up the codon's tRNA availability at the A-site during translation.
+Ponnala use a deterministic model to represent this: For each codon, a number
+of ``wait cycles," dependent upon the rarity of the associated tRNA, correspond to the number
 of times the force is allowed to increment displacement.
 
 \section{Applications}
