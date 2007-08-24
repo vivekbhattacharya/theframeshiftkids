@@ -39,7 +39,7 @@ if ($0 eq __FILE__) {
 		my $toys = substr($seq, $i, $n_rna);
 		
 		# Free energy values greater than zero represent binding
-		# that would cannot take place without added energy,
+		# that cannot take place without added energy,
 		# equivalent to as if no binding had taken place
         my $free_energy = $align->bind($toys, $rna);
 		$free_energy = 0 if $free_energy > 0;
