@@ -2,6 +2,9 @@
 \usepackage{candor}
 \linespread 2
 \begin{document}
+
+%SWC = Sexy White Chicks.  Not Siemens-Westinghouse Competition.  Are you so much of a nerd that you would rather win a research competition than have a hot girl around?  (Vivek: the answer is yes.)
+
 \section{Introduction}
 
 \section{Description of the Model}
@@ -9,7 +12,7 @@
 \subsection{Free Energy}
 \label{freeenergy}
 
-% Find correct citations for the next paragraph.
+% Find correct citations for the next paragraph.  NOW.
 
 Free energy in a cell, which arises from the hybridization between two
 sequences of RNA, drives ribosomal translation~\cite{starmer}.
@@ -50,6 +53,10 @@ Ponnala use a deterministic model to represent this: For each codon, a number
 of ``wait cycles," dependent upon the rarity of the associated tRNA, correspond to the number
 of times the force is allowed to increment displacement from the current reading frame.
 In their deterministic model, the force acts for \emph{exactly} this set number of cycles, given a certain codon in a certain gene sequence.
+
+\subsection{A Stochastic Model for Displacement}
+
+However, in practice it is idealistic to assume that all sequences, especially those that frameshift, will be read in exactly the same manner every single time that a given mRNA strand passes through the ribosome.  In order to account for this essentially random 
 
 \subsection{Frameshifts}
 
