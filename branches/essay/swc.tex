@@ -1,6 +1,7 @@
 \documentclass[12pt, draft]{article}
 \usepackage{candor, setspace}
 \linespread 2
+\numberwithin{equation}{section}
 
 \begin{document}
 \section{Introduction}
@@ -8,8 +9,6 @@
 \section{Description of the Model}
 \subsection{Free Energy}
 \label{freeenergy}
-
-% Find correct citations for the next paragraph.  NOW.
 
 Free energy in a cell, which arises from the hybridization between two
 sequences of RNA, drives ribosomal translation~\cite{starmer}.
@@ -41,8 +40,10 @@ and the registers represent a snapshot of the free energy values at a given codo
 of the ribosomal translation here represents the phasor Ponnala uses to structure the register contents and are used to generate
 polar plots.
 
-Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\vec{V}_k = Me^{j\theta_k}$.
-Differentiating this vector, we arrive at vector $\vec{D}_k$ for instantaneous energy, interpreting this
+Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\bvec{V} = Me^{i\theta}$
+where $i$ is the imaginary constant, projecting the magnitude and phase onto the complex plane such that
+we can model the polar plot for easier differentiation.
+Differentiating this vector, we arrive at vector $\bvec{D}$ for instantaneous energy, interpreting this
 vector as a force that acts on the ribosome, keeping the mRNA in a given reading frame.
 
 The length of time that the force acts on the ribosome depends up the codon's tRNA availability at the A-site during translation.
@@ -80,26 +81,59 @@ must undergo a phase shift of one-third of an entire period.  Figure~\ref{prfb:p
 
 % Find an example of a gene with a screwed-up displacement plot under Lalit's old model. --Vivek
 
-The gene \prfB\ shows a very characteristic frameshift under the deterministic model; the displacement jumps almost exactly to $x=2$.
-Certain genes, however, demonstrate ambiguous behavior near $x = 1$.
+The gene \prfB\ shows a characteristic frameshift under the deterministic model: The displacement jumps to $x=2$.
+Certain genes, however, demonstrate ambiguous behavior near $x = \pm 1$.
 Coupled with the limitation that a deterministic model will output a fixed graph for a given sequence, 
-it is difficult to interpret whether this behavior indicate a tendency for a stable frameshift.
+we cannot clearly interpret whether this behavior indicates a tendency for a stable frameshift.
 As such, we introduce probability into the model.
 
-We propose that at each cycle in elongation, the ribosome must make a decision: stay in the current reading frame, move to the $+1$ reading frame,
-or move to the $-1$ reading frame.  We can further subdivide this choice into the individual wait-cycles: 
+We propose that at each cycle in elongation, the ribosome must make a decision: stay in the current reading frame,
+move to the $+1$ reading frame,
+or move to the $-1$ reading frame.  We can further subdivide this choice into the individual wait-cycles.
 At each wait cycle, the ribosome can choose one of the above possibilities or proceed to another wait-cycle without making a decision.
 
-Let $abcd$ be a sequence of four nucleotides, with $abc$ in the current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the displacement as of the current wait cycle of the ribosome.  As the incremental displacement approaches +1, the probability of choosing codon $bcd$ should increase, and the probability of choosing codon $abc$ should decrease.  We modeled this behavior using even powers of the cosine and sine functions for $abc$ and $bcd$, respectively.  We define $\omega$ as the weight, which will be directly proportional to the probability.  The value of the exponent 
-$$\omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \qquad \qquad \omega_{bcd} = \sin^{10}{\frac{x\pi}{4}}$$
+Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
+current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the
+displacement as of the current wait cycle of the ribosome.  As the
+incremental displacement approaches +1, the probability of choosing
+codon $bcd$ should increase, and the probability of choosing codon
+$abc$ should decrease.  We modeled this behavior using even powers of
+nthe cosine and sine functions for $abc$ and $bcd$, respectively.  We
+define $\omega$ as the weight, which will be directly proportional to
+the probability.
 
-Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the number of wait cycles (which is itself inversely proportional to the tRNA availability of codon $abc$).  We present a logical argument for our normalization.
+\begin{equation}
+  \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} = \sin^{10}{\frac{x\pi}{4}}.
+\end{equation}
 
-Assume that we know nothing about the mechanics behind frameshifts.  Intuitively, we would guess that the probability of frameshifting after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the probability of moving on to the next codon and staying in a +0 reading frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} = \frac{1}{2}$.  But we already have argued that $P \propto \omega_{abc}$, so we define $n_{abc}$ to be the constnt of proportionality: i.e. $n_{abc} = \frac{\omega_{abc}}{P}$.  Coupled with the fact that $\omega_{abc} \le 1$, we have the following: $$n_{abc} \le \frac{\sqrt[N_{abc}]{2}}{\sqrt[N_{abc}]{2} - 1}$$
+Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
+$N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
 
-%$$\Pr\left(abc\right) = 1 - \prod_{i=1}^j \left(1-\frac{\omega_{abc}}{n_{abc}}\right)$$
+Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the
+number of wait cycles (which is itself inversely proportional to the
+tRNA availability of codon $abc$).  We present a logical argument for
+our normalization.
 
+Assume that we know nothing about the mechanics behind frameshifts.
+Intuitively, we would guess that the probability of frameshifting
+after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
+probability of moving on to the next codon and staying in a +0 reading
+frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
+\frac{1}{2}$.  But we already have argued that $P \propto
+\omega_{abc}$, so we define $n_{abc}$ to be the constnt of
+proportionality. That is, $n_{abc} = \omega_{abc} / P$.  Coupled
+with that $\omega_{abc} \le 1$, we have
 
+\begin{equation}
+  n_{abc} \le \frac{\sqrt[N_{abc}]{2}}{\sqrt[N_{abc}]{2} - 1}.
+\end{equation}
+
+Mathematically, the probability of choosing a codon is then
+\begin{align}
+  \prod^N \left(1-\frac{\omega}{n}\right) \text{ where } \omega = \cos^{10}{\frac{x\pi}{4}}.
+\end{align}
+Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
+$N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
 
 \section{Applications}
 
@@ -115,7 +149,7 @@ A model's accurate prediction of yield given a sequence would greatly benefit th
 aiding in verifying the yields of a large sequence of proteins especially when experiments on all of them proves too difficult
 or costly. Therefore, bGH is an important cornerstone of our computational model's impact on biology.
 
-\subsection{rpoS}
+\subsection{rpoS RNA Polymerase Protein}
 Because our model easily enables taking large samples of frameshifts without complicated biological experiments,
 we can employ the sample probability that a gene sequence will run correctly without any mistake frameshifts because
 at high sample sizes it readily approximates the population probability, which we have shown with sequences such as
