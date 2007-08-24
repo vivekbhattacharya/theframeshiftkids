@@ -90,11 +90,16 @@ We propose that at each cycle in elongation, the ribosome must make a decision: 
 or move to the $-1$ reading frame.  We can further subdivide this choice into the individual wait-cycles: 
 At each wait cycle, the ribosome can choose one of the above possibilities or proceed to another wait-cycle without making a decision.
 
-The probabilities of choosing
+Let $abcd$ be a sequence of four nucleotides, with $abc$ in the current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the displacement as of the current wait cycle of the ribosome.  As the incremental displacement approaches +1, the probability of choosing codon $bcd$ should increase, and the probability of choosing codon $abc$ should decrease.  We modeled this behavior using even powers of the cosine and sine functions for $abc$ and $bcd$, respectively.  We define $\omega$ as the weight, which will be directly proportional to the probability.  The value of the exponent 
+$$\omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \qquad \qquad \omega_{bcd} = \sin^{10}{\frac{x\pi}{4}}$$
 
-$$\Pr\left(abc\right) = 1 - \prod_{i=1}^j \left(1-\frac{\omega_{abc}}{n_{abc}}\right)$$
+Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the number of wait cycles (which is itself inversely proportional to the tRNA availability of codon $abc$).  We present a logical argument for our normalization.
 
-$$\omega_{abc} = \cos^{10}{\frac{x\pi}{4}}$$
+Assume that we know nothing about the mechanics behind frameshifts.  Intuitively, we would guess that the probability of frameshifting after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the probability of moving on to the next codon and staying in a +0 reading frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} = \frac{1}{2}$.  But we already have argued that $P \propto \omega_{abc}$, so we define $n_{abc}$ to be the constnt of proportionality: i.e. $n_{abc} = \frac{\omega_{abc}}{P}$.  Coupled with the fact that $\omega_{abc} \le 1$, we have the following: $$n_{abc} \le \frac{\sqrt[N_{abc}]{2}}{\sqrt[N_{abc}]{2} - 1}$$
+
+%$$\Pr\left(abc\right) = 1 - \prod_{i=1}^j \left(1-\frac{\omega_{abc}}{n_{abc}}\right)$$
+
+
 
 \section{Applications}
 
