@@ -1,14 +1,11 @@
-\documentclass[12pt]{article}
-\usepackage{candor}
+\documentclass[12pt, draft]{article}
+\usepackage{candor, setspace}
 \linespread 2
+
 \begin{document}
-
-%SWC = Sexy White Chicks.  Not Siemens-Westinghouse Competition.  Are you so much of a nerd that you would rather win a research competition than have a hot girl around?  (Vivek: the answer is yes.)
-
 \section{Introduction}
 
 \section{Description of the Model}
-
 \subsection{Free Energy}
 \label{freeenergy}
 
@@ -81,7 +78,7 @@ must undergo a phase shift of one-third of an entire period.  Figure~\ref{prfb:p
 
 \subsection{A Stochastic Model for Displacement}
 
-% Find an example of a gene with a screwed-up displacement plot under Lalit's old model. -- Vivek
+% Find an example of a gene with a screwed-up displacement plot under Lalit's old model. --Vivek
 
 The gene \prfB\ shows a very characteristic frameshift under the deterministic model; the displacement jumps almost exactly to $x=2$.
 Certain genes, however, demonstrate ambiguous behavior near $x = 1$.
@@ -106,14 +103,32 @@ Besides the frameshifting sequence \prfB, our model also shows a significant cor
 bovine growth hormone data, sequenced previously in \ecoli~\cite{schoner:bgh}. For example, our model purports a relation
 between the deviation from the zero reading frame---for non-frameshifters anyway---and protein yield, ultimately postulating
 a relation between ribosomal efficiency and its ability to maintain its reading frame without wobbling. Schoner et al.
-modified beginning codons of an initial bovine growth hormone sequence to produce a series of alternate bGH sequences,
-two of which produced significantly higher yield than their compatriots. Those two, dubbed pcZ101 and pcZ105, produced significantly
-lower deviation than pcZ104, pcZ108, and other bGH sequences, thus agreeing with the biological data from Schoner et al.
+modified early codons of an initial bovine growth hormone sequence to produce a series of alternate bGH sequences,
+two of which produced significantly higher yield than their compatriots. Those two, dubbed pcZ101 and pcZ105, procured significantly
+lower deviation than pcZ104, pcZ108, and other bGH sequences, thus agreeing with the biological data from Schoner.
 A model's accurate prediction of yield given a sequence would greatly benefit the work of biologists across the world,
 aiding in verifying the yields of a large sequence of proteins especially when experiments on all of them proves too difficult
 or costly. Therefore, bGH is an important cornerstone of our computational model's impact on biology.
 
 \subsection{rpoS}
+Because our model easily enables taking large samples of frameshifts without complicated biological experiments,
+we can employ the sample probability that a gene sequence will run correctly without any mistake frameshifts because
+at high sample sizes it readily approximates the population probability, which we have shown with sequences such as
+\prfB\ and ribosomal proteins contains a positive correlation to actual protein yield. In addition, research~\cite{rare:yield}
+suggests we can remove trouble spots where mistake frameshifts often occur by replacing those codons and their
+earlier neighbors with synonymous codons\footnote{Two codons are synonymous if and only if they produce the same amino acid.}.
+Therefore, we wrote a locally optimal (greedy) algorithm that finds trouble spots and replaces them with random sequences
+of synonymous codons, running those permutations through our model for their sample probability and choosing the
+sequence with the highest yield for each local trouble spot. Hence, locally optimizing. One ribosomal protein with
+low yield is \rpoS. Running \rpoS\ through our algorithm, we found 33 codon changes that produced a higher yield.
+The final \rpoS\ is now entering a biological experiment. If it proves that it does indeed express higher levels
+of \rpoS\ RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for applications
+such as commercial production. By optimizing potentially useful gene sequences as past scientists have done with
+insulin, our model aids the production medicinally and comercially important proteins by replacing a tedious and slow
+biological process with a computational model, again helping people across the world.
 
-\bibliography{wizards}
+\footnotesize
+\begin{singlespace}
+  \bibliography{wizards}
+\end{singlespace}
 \end{document}

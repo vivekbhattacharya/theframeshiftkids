@@ -1,5 +1,13 @@
 \begin{thebibliography}{1}
 
+\bibitem{freier}
+S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
+  T.~Nielson, and D.~H.~T. II.
+\newblock Improved free-energy parameters for predictions of rna duplex
+  stability.
+\newblock In {\em Biochemistry}, volume~83, pages 9373--9377. National Academy
+  of Sciences, Dec 1986.
+
 \bibitem{lalit:embs}
 L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
 \newblock A computational model for reading frame maintenance.
@@ -16,6 +24,18 @@ B.~E. Schoner, H.~M. Hsuiung, R.~M. Belagaje, N.~G. Mayne, and R.~G. Schoner.
 \newblock Role of {mRNA} translational efficiency in bovine growth hormone
   expression in {Escherichia coli}.
 \newblock In {\em Biochemistry}, volume~81, pages 5403--5407. National Academy
-  of Science, U.S.A., Sept. 1984.
+  of Sciences, U.S.A., Sept. 1984.
+
+\bibitem{starmer}
+J.~Starmer.
+\newblock {\em What can {RNA} hybrids tell us about translation?}
+\newblock PhD thesis, North Carolina State University, 2006.
+
+\bibitem{weiss}
+R.~B. Weiss, D.~M. Dunn, A.~E. Dahlberg, J.~F. Atkins, and R.~F. Gesteland.
+\newblock Reading frame switch caused by base-pair formation between the $3'$
+  end of {16S rRNA and the mRNA} during elongation of protein synthesis in
+  {Escherichia coli}.
+\newblock {\em European Molecular Biology Organization}, 7(5):1503--1507, 1988.
 
 \end{thebibliography}
