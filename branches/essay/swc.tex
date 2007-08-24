@@ -29,17 +29,17 @@ Then, shifting one base pair at a time, we calculate the free energy for the ent
 Since any free energy value greater than zero represents binding that would only take place if energy were added,
 we set such values to zero.
 
-\subsection{Deterministic Model}
+% We need to introduce the concept of displacement somewhere; I'm not sure where, though -- Vivek
+
+\subsection{A Deterministic Model for Displacement}
 
 Ponnala et al.~\cite{lalit:mechanics} assumes a sinusoidal model for free energy, whence one can calculate
 the magnitude and phase of ribosomal translation using arctan given the free energy signals once the memory model
-also proposed by Ponnala et al. stores those values in a phaser memory structure,
+also proposed by Ponnala et al. stores those values in a phasor memory structure,
 where memory here is biologically equivalent to the displacement from the reading frame of the ribosome performing the translation
 and the registers represent a snapshot of the free energy values at a given codon during translation. The magnitude and phase
-of the ribosomal translation here represents the phaser Ponnala uses to structure the register contents and are used to generate
+of the ribosomal translation here represents the phasor Ponnala uses to structure the register contents and are used to generate
 polar plots.
-
-\subsubsection{Displacement}
 
 Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\vec{V}_k = Me^{j\theta_k}$.
 Differentiating this vector, we arrive at vector $\vec{D}_k$ for instantaneous energy, interpreting this
@@ -48,7 +48,26 @@ vector as a force that acts on the ribosome, keeping the mRNA in a given reading
 The length of time that the force acts on the ribosome depends up the codon's tRNA availability at the A-site during translation.
 Ponnala use a deterministic model to represent this: For each codon, a number
 of ``wait cycles," dependent upon the rarity of the associated tRNA, correspond to the number
-of times the force is allowed to increment displacement.
+of times the force is allowed to increment displacement from the current reading frame.
+In their deterministic model, the force acts for \emph{exactly} this set number of cycles, given a certain codon in a certain gene sequence.
+
+\subsection{Frameshifts}
+
+% Where the following concept should be first mentioned, I'm not sure -- Vivek
+
+As mentioned earlier, a displacement of $x = 0$ corresponds to translation along the 0 reading frame,
+while a displacement of $x = 2$ represents translation along the $+1$ reading frame.
+Ponnala et al.~\cite{lalit:embs} prove that both $x = 0$ and $x = 2$ are stable points in displacement.
+
+% Figure 1 will be prfB on Lalit's model.
+
+A sudden jump from approximately $x = 0$ to $x = 2$ is the first indication of a $+1$ frameshift; 
+in essence, this jump suggests that the ribosome jumps one entire base pair in the mRNA sequence.
+Figure~\ref{prfB:lalitdisp} shows the displacement plot---by this deterministic model--for \prfB, 
+a gene known to have a programmed $+1$ frameshift at codon 26.
+
+Coupled with this characteristic plot, however, a $+1$ frameshift also shows a clockwise 120\degree
+rotation of phase angle from the species angle.   
 
 \section{Applications}
 
