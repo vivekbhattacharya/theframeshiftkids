@@ -59,15 +59,34 @@ As mentioned earlier, a displacement of $x = 0$ corresponds to translation along
 while a displacement of $x = 2$ represents translation along the $+1$ reading frame.
 Ponnala et al.~\cite{lalit:embs} prove that both $x = 0$ and $x = 2$ are stable points in displacement.
 
-% Figure 1 will be prfB on Lalit's model.
+% Figure prfB:lalitdisp will be prfB on Lalit's model.  Figure prfb:polar is the polar plot for prfB. Obviously.  --Vivek
 
 A sudden jump from approximately $x = 0$ to $x = 2$ is the first indication of a $+1$ frameshift; 
 in essence, this jump suggests that the ribosome jumps one entire base pair in the mRNA sequence.
-Figure~\ref{prfB:lalitdisp} shows the displacement plot---by this deterministic model--for \prfB, 
+Figure~\ref{prfB:lalitdisp} shows the displacement plot---by this deterministic model---for \prfB, 
 a gene known to have a programmed $+1$ frameshift at codon 26.
 
-Coupled with this characteristic plot, however, a $+1$ frameshift also shows a clockwise 120\degree
-rotation of phase angle from the species angle.   
+In conjunction with this characteristic plot, however, a $+1$ frameshift also shows a clockwise 120\degree
+rotation of phase angle from the species angle.
+Intuitively, a frameshift would only be sustained if the free energy signal aligns itself with the sudden jump in displacement.
+Since a the free energy signal has a period of one codon, for a $+1$ frameshift---a one-nucelotide jump---the free energy signal
+must undergo a phase shift of one-third of an entire period.  Figure~\ref{prfb:polar} indicates this shift in \prfB.
+
+\subsection{A Stochastic Model for Displacement}
+
+% Find an example of a gene with a screwed-up displacement plot under Lalit's old model. -- Vivek
+
+The gene \prfB\ shows a very characteristic frameshift under the deterministic model; the displacement jumps almost exactly to $x=2$.
+Certain genes, however, demonstrate ambiguous behavior near $x = 1$.
+Coupled with the limitation that a deterministic model will output a fixed graph for a given sequence, 
+it is difficult to interpret whether this behavior indicate a tendency for a stable frameshift.
+As such, we introduce probability into the model.
+
+We propose that at each cycle in elongation, the ribosome must make a decision: stay in the current reading frame, move to the $+1$ reading frame,
+or move to the $-1$ reading frame.  We can further subdivide this choice into the individual wait-cycles: 
+At each wait cycle, the ribosome can choose one of the above possibilities or proceed to another wait-cycle without making a decision.
+
+The probabilities of choosing
 
 \section{Applications}
 
