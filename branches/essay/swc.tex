@@ -32,6 +32,8 @@ we set such values to zero.
 
 \subsection{A Deterministic Model for Displacement}
 
+% Reword the following paragraph, possibly?  Has all the info, but slightly convoluted.
+
 Ponnala et al.~\cite{lalit:mechanics} assumes a sinusoidal model for free energy, whence one can calculate
 the magnitude and phase of ribosomal translation using arctan given the free energy signals once the memory model
 also proposed by Ponnala et al. stores those values in a phasor memory structure,
@@ -52,10 +54,6 @@ of ``wait cycles," dependent upon the rarity of the associated tRNA, correspond 
 of times the force is allowed to increment displacement from the current reading frame.
 In their deterministic model, the force acts for \emph{exactly} this set number of cycles, given a certain codon in a certain gene sequence.
 
-\subsection{A Stochastic Model for Displacement}
-
-However, in practice it is idealistic to assume that all sequences, especially those that frameshift, will be read in exactly the same manner every single time that a given mRNA strand passes through the ribosome.  In order to account for this essentially random 
-
 \subsection{Frameshifts}
 
 % Where the following concept should be first mentioned, I'm not sure -- Vivek
@@ -64,11 +62,9 @@ As mentioned earlier, a displacement of $x = 0$ corresponds to translation along
 while a displacement of $x = 2$ represents translation along the $+1$ reading frame.
 Ponnala et al.~\cite{lalit:embs} prove that both $x = 0$ and $x = 2$ are stable points in displacement.
 
-% Figure prfB:lalitdisp will be prfB on Lalit's model.  Figure prfb:polar is the polar plot for prfB. Obviously.  --Vivek
-
 A sudden jump from approximately $x = 0$ to $x = 2$ is the first indication of a $+1$ frameshift; 
 in essence, this jump suggests that the ribosome jumps one entire base pair in the mRNA sequence.
-Figure~\ref{prfB:lalitdisp} shows the displacement plot---by this deterministic model---for \prfB, 
+Figure~\ref{prfB:lalitdisp} shows the displacement plot as per this deterministic model for \prfB, 
 a gene known to have a programmed $+1$ frameshift at codon 26.
 
 In conjunction with this characteristic plot, however, a $+1$ frameshift also shows a 240\degree
@@ -120,7 +116,7 @@ after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
 probability of moving on to the next codon and staying in a +0 reading
 frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
 \frac{1}{2}$.  But we already have argued that $P \propto
-\omega_{abc}$, so we define $n_{abc}$ to be the constnt of
+\omega_{abc}$, so we define $n_{abc}$ to be the constant of
 proportionality. That is, $n_{abc} = \omega_{abc} / P$.  Coupled
 with that $\omega_{abc} \le 1$, we have
 
@@ -128,9 +124,9 @@ with that $\omega_{abc} \le 1$, we have
   n_{abc} \le \frac{\sqrt[N_{abc}]{2}}{\sqrt[N_{abc}]{2} - 1}.
 \end{equation}
 
-Mathematically, the probability of choosing a codon is then
+Mathematically, the probability of choosing a codon in the 0 reading frame is then
 \begin{align}
-  \prod^N \left(1-\frac{\omega}{n}\right) \text{ where } \omega = \cos^{10}{\frac{x\pi}{4}}.
+  \prod_i^N \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega = \cos^{10}{\frac{x\pi}{4}}.
 \end{align}
 Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
 $N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
