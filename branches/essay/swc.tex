@@ -10,123 +10,108 @@
 \subsection{Free Energy}
 \label{freeenergy}
 
-Free energy in a cell, which arises from the hybridization between two
-sequences of RNA, drives ribosomal translation~\cite{starmer}.
-
-Research suggests the 16S tail of the ribosome hybridizes with its  mRNA~\cite{weiss};
-from this, we can  calculate the free energy values for the interaction between the two strands of RNA.
-Someone et al.~\cite{freier} propose a thermodynamic model for exactly this,
+Free energy in a cell arises from the hybridization between two
+sequences of RNA and drives ribosomal translation~\cite{starmer}.
+Weiss et al.~\cite{weiss} suggests the 16S tail of the ribosome hybridizes with its mRNA strand;
+from this, we can calculate the free energy values for the interaction between the two strands of RNA.
+Freier et al.~\cite{freier}, in turn, proposes a thermodynamic model for exactly this,
 modelling the interaction in terms of \emph{doublets}, i.e. pairs of consecutive nucleotides.
-Using this model, Freier et al.~\cite{freier} numerically calculated the free energy available
-upon hybridization for all permutations of RNA doublets.
+Using this model, Freier numerically calculated the free energy available
+for the hybridization of all RNA doublets permutations.
 
-We use Freier et al.'s values to calculate a free energy value at each nucleotide.
+% Hao: I took out the setting energy values due to irrelevance.
+From this, we can simulate hybridization between the 16S ribosomal subunit and a given mRNA strand.
 First, the 13-base 16S tail of \ecoli\ hybridizes with the first 13 bases of a sequence, which
-for a gene is a 12-base leader sequence and the first base of the start codon, to determine
-the free energy associated with the first nucleotide.
+is a 12-base leader sequence and the first base of the start codon aug, to determine
+the free energy value of the first acid.
 Then, shifting one base pair at a time, we calculate the free energy for the entire sequence.
-Since any free energy value greater than zero represents binding that would only take place if energy were added,
-we set such values to zero.
-
-% We need to introduce the concept of displacement somewhere; I'm not sure where, though -- Vivek
 
 \subsection{A Deterministic Model for Displacement}
 
-% Reword the following paragraph, possibly?  Has all the info, but slightly convoluted.
+Ponnala et al.~\cite{lalit:mechanics} assumes a sinusoidal model for free energy, whence one can project free energy
+onto magnitude and phase through a noise-filtering memory model. Ponnala simualtes free energy in a memory structure
+that can store three values (registers) that he later can represent as a phasor, a concept from physics. Then,
+we can visualize free energy from polar plots and deduce frameshifts, which occur along defined boundaries on the
+polar plot for a species.
 
-Ponnala et al.~\cite{lalit:mechanics} assumes a sinusoidal model for free energy, whence one can calculate
-the magnitude and phase of ribosomal translation using arctan given the free energy signals once the memory model
-also proposed by Ponnala et al. stores those values in a phasor memory structure,
-where memory here is biologically equivalent to the displacement from the reading frame of the ribosome performing the translation
-and the registers represent a snapshot of the free energy values at a given codon during translation. The magnitude and phase
-of the ribosomal translation here represents the phasor Ponnala uses to structure the register contents and are used to generate
-polar plots.
-
-Ponnala et al.~\cite{lalit:embs} represents the cummulative phasor at codon $k$ as $\bvec{V} = Me^{i\theta}$
-where $i$ is the imaginary constant, projecting the magnitude and phase onto the complex plane such that
-we can model the polar plot for easier differentiation.
-Differentiating this vector, we arrive at vector $\bvec{D}$ for instantaneous energy, interpreting this
+Ponnala et al. then represent~\cite{lalit:embs} the cummulative phasor at codon $k$ as $\bvec{V} = Me^{i\theta}$
+where $i$ is the imaginary constant, allowing us to calculate the magnitude and phase at codon $k$ through
+simple trigonometry. Differentiating this vector, we arrive at vector $\bvec{D}$ for instantaneous energy, interpreting this
 vector as a force that acts on the ribosome, keeping the mRNA in a given reading frame.
 
-The length of time that the force acts on the ribosome depends up the codon's tRNA availability at the A-site during translation.
-Ponnala use a deterministic model to represent this: For each codon, a number
+The length of time that the force acts on the ribosome depends upon the codon's tRNA availability at the A-site during translation.
+Ponnala uses a deterministic model to represent this: For each codon, a number
 of ``wait cycles," dependent upon the rarity of the associated tRNA, correspond to the number
-of times the force is allowed to increment displacement from the current reading frame.
-In their deterministic model, the force acts for \emph{exactly} this set number of cycles, given a certain codon in a certain gene sequence.
+of times the force can increment displacement from the current reading frame.
+In their deterministic model, the force acts for \emph{exactly} this set number of cycles given a codon.
 
 \subsection{Frameshifts}
 
 % Where the following concept should be first mentioned, I'm not sure -- Vivek
 
-As mentioned earlier, a displacement of $x = 0$ corresponds to translation along the 0 reading frame,
-while a displacement of $x = 2$ represents translation along the $+1$ reading frame.
-Ponnala et al.~\cite{lalit:embs} prove that both $x = 0$ and $x = 2$ are stable points in displacement.
+First, we let a displacement of $x = 0$ correspond to the zero reading frame and increments of
+\emph{two} to represent a one-nucleotide change. For example, $x =2$ represents a +2 frameshift.
+Ponnala~\cite{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable) points in displacement in his model.
 
-A sudden jump from approximately $x = 0$ to $x = 2$ is the first indication of a $+1$ frameshift; 
-in essence, this jump suggests that the ribosome jumps one entire base pair in the mRNA sequence.
+% Figure prfB:lalitdisp will be prfB on Lalit's model.  Figure prfb:polar is the polar plot for prfB. Obviously.  --Vivek
+% 26 or 25? What counting system are we using? More details needed, but stick with 25 for now. --Hao
+
+A sudden jump from approximately $x = 0$ to $x = 2$ is then the first indication of a $+1$ frameshift.
+In essence, this jump suggests that the ribosome jumps one entire base pair in the mRNA sequence.
 Figure~\ref{prfB:lalitdisp} shows the displacement plot as per this deterministic model for \prfB, 
-a gene known to have a programmed $+1$ frameshift at codon 26.
+a gene known to have a programmed $+1$ frameshift at codon 25.
 
-In conjunction with this characteristic plot, however, a $+1$ frameshift also shows a 240\degree
-rotation of phase angle from the species angle.
-Intuitively, a frameshift would only be sustained if the free energy signal aligns itself with the sudden jump in displacement.
-Since a the free energy signal has a period of one codon, for a $+1$ frameshift---a one-nucelotide jump---the free energy signal
-must undergo a phase shift of one-third of an entire period.  Figure~\ref{prfb:polar} indicates this shift in \prfB.
+In conjunction with this characteristic plot, a $+1$ frameshift also shows a 240\degree
+rotation of phase angle from the species angle, consistent with the creation of displacement data from the phasors.
+Intuitively, a frameshift is only sustained if the free energy signal aligns itself with the sudden jump in displacement.
+Since the free energy signal has a period of one codon~\cite{lalit:mechanics}, for a $+1$ frameshift the free energy signal
+must undergo a phase shift of one-third of an entire period (Figure~\ref{prfb:polar}).
 
 \subsection{A Stochastic Model for Displacement}
 
 % Find an example of a gene with a screwed-up displacement plot under Lalit's old model. --Vivek
 
-The gene \prfB\ shows a characteristic frameshift under the deterministic model: The displacement jumps to $x=2$.
+The gene \prfB\ exhibits a characteristic frameshift under the deterministic model: The displacement jumps to $x=2$.
 Certain genes, however, demonstrate ambiguous behavior near $x = \pm 1$.
-Coupled with the limitation that a deterministic model will output a fixed graph for a given sequence, 
+In a deterministic model, the fixed displacement plots implies
 we cannot clearly interpret whether this behavior indicates a tendency for a stable frameshift.
+In practice, ribosomal translations are not deterministic. Due to the presence of
+noise within the cell environment, we instead chose to model translation stochastically, adding
+randomness to the choice of reading frame a ribosome executes at each codon given the free energy signal.
 As such, we introduce probability into the model.
 
 We propose that at each cycle in elongation, the ribosome must make a decision: stay in the current reading frame,
 move to the $+1$ reading frame,
 or move to the $-1$ reading frame.  We can further subdivide this choice into the individual wait-cycles.
-At each wait cycle, the ribosome can choose one of the above possibilities or proceed to another wait-cycle without making a decision.
+At each wait cycle, the ribosome chooses from the above possibilities or proceeds to another wait-cycle without making a decision.
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
 current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the
-displacement as of the current wait cycle of the ribosome.  As the
+displacement of the current wait cycle of the ribosome.  As the
 incremental displacement approaches +1, the probability of choosing
-codon $bcd$ should increase, and the probability of choosing codon
+codon $bcd$ should increase and the probability of choosing codon
 $abc$ should decrease.  We modeled this behavior using even powers of
-nthe cosine and sine functions for $abc$ and $bcd$, respectively.  We
-define $\omega$ as the weight, which will be directly proportional to
+cosine and sine functions for $abc$ and $bcd$.  We
+define $\omega$ as the weight that is directly proportional to
 the probability.
 
 \begin{equation}
   \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} = \sin^{10}{\frac{x\pi}{4}}.
 \end{equation}
 
-Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
-$N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
-
 Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the
-number of wait cycles (which is itself inversely proportional to the
-tRNA availability of codon $abc$).  We present a logical argument for
-our normalization.
-
-Assume that we know nothing about the mechanics behind frameshifts.
-Intuitively, we would guess that the probability of frameshifting
+number of wait cycles, itself inversely proportional to the
+tRNA availability of codon $abc$.
+We assume thep probability of frameshifting after
 after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
-probability of moving on to the next codon and staying in a +0 reading
+probability of moving on to the next codon and staying in current reading
 frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
-\frac{1}{2}$.  But we already have argued that $P \propto
-\omega_{abc}$, so we define $n_{abc}$ to be the constant of
+\frac{1}{2}$.  Because $P \propto \omega_{abc}$, we define $n_{abc}$ to be the constant of
 proportionality. That is, $n_{abc} = \omega_{abc} / P$.  Coupled
-with that $\omega_{abc} \le 1$, we have
-
-\begin{equation}
-  n_{abc} \le \frac{\sqrt[N_{abc}]{2}}{\sqrt[N_{abc}]{2} - 1}.
-\end{equation}
-
-Mathematically, the probability of choosing a codon in the 0 reading frame is then
+with that $\omega_{abc} \le 1$, we have $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1).$
+where $n = n_{abc}$ and $N = N_{abc}$. Mathematically, the probability of choosing a codon is then
 \begin{align}
-  \prod_i^N \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega = \cos^{10}{\frac{x\pi}{4}}.
+  \prod_N \left(1-\frac{\omega}{n}\right) \text{ where } \omega = \cos^{10}{\frac{x\pi}{4}}.
 \end{align}
 Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
 $N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
@@ -135,32 +120,32 @@ $N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
 
 \subsection{Bovine Growth Hormone}
 Besides the frameshifting sequence \prfB, our model also shows a significant correlation in data with biological
-bovine growth hormone data, sequenced previously in \ecoli~\cite{schoner:bgh}. For example, our model purports a relation
-between the deviation from the zero reading frame---for non-frameshifters anyway---and protein yield, ultimately postulating
-a relation between ribosomal efficiency and its ability to maintain its reading frame without wobbling. Schoner et al.
-modified early codons of an initial bovine growth hormone sequence to produce a series of alternate bGH sequences,
-two of which produced significantly higher yield than their compatriots. Those two, dubbed pcZ101 and pcZ105, procured significantly
-lower deviation than pcZ104, pcZ108, and other bGH sequences, thus agreeing with the biological data from Schoner.
-A model's accurate prediction of yield given a sequence would greatly benefit the work of biologists across the world,
-aiding in verifying the yields of a large sequence of proteins especially when experiments on all of them proves too difficult
-or costly. Therefore, bGH is an important cornerstone of our computational model's impact on biology.
+bovine growth hormone (bGH) data, sequenced in \ecoli~\cite{schoner:bgh}. For example, our model purports a relation
+between the deviation from the zero reading frame---for non-frameshifters---and protein yield, postulating
+an association between ribosomal efficiency and its reading frame stability. Schoner et al.~\cite{schoner:bgh}
+modified beginning codons of a sequenced bGH sequence to produce a series of alternates,
+two of which produced significantly higher yield in experiments. Those two, pcZ101 and pcZ105, procured significantly
+lower deviation than pcZ104, pcZ108, and other bGH sequences in our model, which agrees Schoner's findings.
+A computational model's accurate prediction of a sequence's yield greatly benefits microbiology,
+aiding in the measure of a protein's translational efficiency especially when experiments prove too difficult
+or costly. Therefore, bGH is a cornerstone of our computational model's scientific importance.
 
 \subsection{rpoS RNA Polymerase Protein}
-Because our model easily enables taking large samples of frameshifts without complicated biological experiments,
-we can employ the sample probability that a gene sequence will run correctly without any mistake frameshifts because
-at high sample sizes it readily approximates the population probability, which we have shown with sequences such as
-\prfB\ and ribosomal proteins contains a positive correlation to actual protein yield. In addition, research~\cite{rare:yield}
-suggests we can remove trouble spots where mistake frameshifts often occur by replacing those codons and their
+Our model can also calculate the sample probability that a gene sequence will run correctly without any mistake frameshifts
+effectively due to the computational and fast nature of running it.
+At high sample sizes it readily approximates the actual probability and therefore efficiency, which we have shown with sequences such as
+\prfB\ and ribosomal proteins. In addition, research~\cite{rare:yield}
+suggests we can remove trouble spots where mistake frameshifts occur by replacing those codons and their
 earlier neighbors with synonymous codons\footnote{Two codons are synonymous if and only if they produce the same amino acid.}.
 Therefore, we wrote a locally optimal (greedy) algorithm that finds trouble spots and replaces them with random sequences
-of synonymous codons, running those permutations through our model for their sample probability and choosing the
-sequence with the highest yield for each local trouble spot. Hence, locally optimizing. One ribosomal protein with
-low yield is \rpoS. Running \rpoS\ through our algorithm, we found 33 codon changes that produced a higher yield.
-The final \rpoS\ is now entering a biological experiment. If it proves that it does indeed express higher levels
-of \rpoS\ RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for applications
-such as commercial production. By optimizing potentially useful gene sequences as past scientists have done with
-insulin, our model aids the production medicinally and comercially important proteins by replacing a tedious and slow
-biological process with a computational model, again helping people across the world.
+of synonymous codons. The algorithm runs those permutations through our model and chooses the
+sequence with the lowest likelihood of frameshifting incorrectly. (Hence, locally optimizing.) One ribosomal protein with
+low yield is \rpoS, referred to us via Susan Gottesman and Dr. Anne-Marie Stomp.
+Running \rpoS\ through our algorithm, we found 33 codon changes that produced a higher yield, soon hopefully biologically verified.
+If it proves that our modified \rpoS\ does indeed express higher levels
+of RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for an untold number of  applications,
+espeicially commercial production. As with bGH, our model has the capability of replacing a tedious biological experimentation
+with a computationally fast process.
 
 \footnotesize
 \begin{singlespace}
