@@ -1,17 +1,29 @@
 #summary The three-pronged arrow of times.
 #labels Featured,changes
 
-== What's New in Version Three ==
+== What's New in Version Four (r212) ==
 
-=== 3.1415 ===
-  * All changes from 4.0 backported
+=== 4.6 (r325) ===
+
+  * [BecomingHarsher The harsher yield model] is now gone, but in its place comes [Deviation]. You can switch back to probability via `config.m`.
   * Extensive documentation for the `Kidnap` module (Issue 3)
-  * Optional arguments for `megaunity` (Issue 1); for usage, see in-file documentation
-  * Model now detects stop codons and unusually long wait times (`displacement.m`)
-  * Mathematical error in `excos` and `exsin` fixed
+  * Optional arguments for `megaunity` and `unity` (Issue 1); for usage, see in-file documentation.
+  * Model now detects stop codons and unusually long wait times (`displacement.m`) that we call ribosomal hyperpauses for short
   * `alopeciaunity.m` saves polar plots in batches, similar to what `opportunity.m` and `jejunity.m` do for overlay and error bar plots
-  * `impunity.m` handles single files in addition to folders now. Try it out with `impunity('prfb.txt', {'uga,25'}, {}, 100)`.
-  * Performance increase in `cumm_mag_phase.m` and Kidnap
+    * `impunity.m` handles single files in addition to folders now. Try it out with `impunity('prfb.txt', {'uga,25'}, {}, 100)`.
+  * Performance increases in `cumm_mag_phase.m` and Kidnap
+
+=== 4 ===
+  * reloop and sofar gone, q.v. BecomingHarsher
+  * The ThrushBaby algorithm
+
+  * free2bind, refactored to Kidnap, heavily edited (from 9000 lines to 2000)
+   * Now extensible with other parameter modules and readable
+   * !SantaLucia module depreciated due to lack of key subroutines
+   * free2bind.zip no longer a requirement for installation
+  * Performance increase in `diff_vectors.m`
+
+== What's New in Version Three ==
 
 === 3.141 (r156) ===
   * `Travel.mat` memoizes `nloopcalc.m` and combines `TAV.mat` and `Codons.mat`, making it redundant. Huge performance increases resulted because `nloopcalc` was called so many times.
@@ -21,7 +33,7 @@
   * Back frameshifts are now detected. Every function that took a forward frameshift parameter now takes a back frameshift parameter as well.
   * `dysentery.pl` will convert amino acid primary structure sequences to codon sequences, randomly choosing codons. In addition, it verifies hand-customized codon sequences against a primary structure sequence.
   * Sine and cosine in calculating window function now bounded for more accurate results.
-  * `jejunity.m` plots the average path taken by the codon in addition to error bars. It takes the same commands as `opportunity.m` as they both convey the same information in two different, cool ways.
+  * `jejunity.m` plots the average path taken by the codon in addition to error bars. It takes the same commands as `opportunity.m`, both displaying the same information about deviation.
 
 === 3.1 ===
   * `opportunity.m`: Spits out superimposed displacement plots for rainy day family slideshows
@@ -34,16 +46,6 @@
   * `fcalcmpx` split up and `megaunity` now several times faster
   * new `cornerstone.pl` parses Genbank search results and
   * no more fudging with free2bind
-
-== What's New in Version Four (r212) ==
-  * reloop and sofar gone, q.v. BecomingHarsher
-  * The ThrushBaby algorithm
-
-  * free2bind, refactored to Kidnap, heavily edited (from 9000 lines to 2000)
-   * Now extensible with other parameter modules and readable
-   * !SantaLucia module depreciated due to lack of key subroutines
-   * free2bind no longer a requirement for installation
-  * Performance increase in `diff_vectors.m`
 
 == Why Version 1.1 ==
 We re-released with Lalit's deterministic model merged other changes we've made since 3.1, merely replacing 3.1's `displacement.m`. Therefore it's web-enabled and has 3.1's Perl tools and performance.

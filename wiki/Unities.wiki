@@ -19,6 +19,9 @@
   * alopeciaunity.m
     * alopeciaunity takes a folder and saves the polar plot for each sequence inside said folder in a `merryround` subdirectory. No limit is required because polar plots are deterministic and not stochastic, unlike the displacement plots.
 
+  * impetigounity.m
+    * impetigounity.m does same as its jejunity and alopeciaunity brethrens except it generates a bar plot of wait times plotted against codon number, saving these plots to a `jail` subfolder.
+
 
 == See Also ==
   * UnityAndMegaunity
