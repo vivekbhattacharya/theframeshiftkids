@@ -30,7 +30,6 @@ function [mag, phase] = cumm_mag_phase(signal)
         %
         % We center the free energy wave at zero first.
         M = registers - mean(registers);
-        grass = M(3) + M(2);
         
         if M(1) ~= 0
             phase(i) = atan2(M(1)*sqrt(3), M(1) + 2*M(2)); 
