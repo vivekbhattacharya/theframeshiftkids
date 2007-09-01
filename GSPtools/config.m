@@ -4,4 +4,6 @@ function config
     
     % 0: Deviation. 1: Probability.
     Config.yield = 1;
+    
+    Config.phi_sp = -30 * pi / 180;
 end
