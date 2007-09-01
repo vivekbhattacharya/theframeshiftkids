@@ -4,10 +4,15 @@ function classify(folder, subfolder, crusade, varargin)
     
     % Handle files as if they were folders with magic.
     boulder = folder;
-    if ~isdir(boulder), boulder = fileparts(folder); end
+    if ~isdir(boulder), boulder = fileparts(which(folder)); end
+    if isempty(boulder)
+        fprintf('File %s does not exist\n\n', folder);
+        return;
+    end
     
     if subfolder
         subdir = fullfile(boulder, subfolder);
+        warning off MATLAB:MKDIR:DirectoryExists;
         mkdir(subdir);
     else
         subdir = boulder;

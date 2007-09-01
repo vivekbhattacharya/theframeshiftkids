@@ -19,4 +19,8 @@ end
 
 function [numbers] = rand_int(min, max, times)
 delta = max - min;
+
+% The augend creates numbers in the set [0, delta].
+% The addend morphs it into [min, delta + min] = [min, max].
+% Do not use ceiling!
 numbers = (round(delta .* rand(times, 1)) + min)';
