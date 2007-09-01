@@ -15,33 +15,12 @@ sequences of RNA and drives ribosomal translation~\cite{starmer}.
 Weiss et al.~\cite{weiss} suggests the 16S tail of the ribosome hybridizes with its mRNA strand;
 from this, we can calculate the free energy values for the interaction between the two strands of RNA.
 Freier et al.~\cite{freier}, in turn, proposes a thermodynamic model for exactly this,
-modelling the interaction in terms of \emph{doublets}, i.e. pairs of consecutive nucleotides.
+modeling the interaction in terms of \emph{doublets}, i.e. pairs of consecutive nucleotides.
 Using this model, Freier numerically calculated the free energy available
 for the hybridization of all RNA doublets permutations.
 
 % Hao: I took out the setting energy values due to irrelevance.
-From this, we can simulate hybridization between the 16S ribosomal subunit and a given mRNA strand.
-First, the 13-base 16S tail of \ecoli\ hybridizes with the first 13 bases of a sequence, which
-is a 12-base leader sequence and the first base of the start codon aug, to determine
-the free energy value of the first acid.
-Then, shifting one base pair at a time, we calculate the free energy for the entire sequence.
-
-\subsection{A Deterministic Model for Displacement}
-
-Ponnala et al.~\cite{lalit:mechanics} assumes a sinusoidal model for free energy, whence one can project free energy
-onto magnitude and phase through a noise-filtering memory model. Ponnala simualtes free energy in a memory structure
-that can store three values (registers) that he later can represent as a phasor, a concept from physics. Then,
-we can visualize free energy from polar plots and deduce frameshifts, which occur along defined boundaries on the
-polar plot for a species.
-
-Ponnala et al. then represent~\cite{lalit:embs} the cummulative phasor at codon $k$ as $\bvec{V} = Me^{i\theta}$
-where $i$ is the imaginary constant, allowing us to calculate the magnitude and phase at codon $k$ through
-simple trigonometry. Differentiating this vector, we arrive at vector $\bvec{D}$ for instantaneous energy, interpreting this
-vector as a force that acts on the ribosome, keeping the mRNA in a given reading frame.
-
-The length of time that the force acts on the ribosome depends upon the codon's tRNA availability at the A-site during translation.
-Ponnala uses a deterministic model to represent this: For each codon, a number
-of ``wait cycles," dependent upon the rarity of the associated tRNA, correspond to the number
+From this, we can simulate hybridization between the associated tRNA, correspond to the number
 of times the force can increment displacement from the current reading frame.
 In their deterministic model, the force acts for \emph{exactly} this set number of cycles given a codon.
 
@@ -102,7 +81,7 @@ the probability.
 Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the
 number of wait cycles, itself inversely proportional to the
 tRNA availability of codon $abc$.
-We assume thep probability of frameshifting after
+We assume the probability of frameshifting after
 after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
 probability of moving on to the next codon and staying in current reading
 frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
@@ -144,7 +123,7 @@ low yield is \rpoS, referred to us via Susan Gottesman and Dr. Anne-Marie Stomp.
 Running \rpoS\ through our algorithm, we found 33 codon changes that produced a higher yield, soon hopefully biologically verified.
 If it proves that our modified \rpoS\ does indeed express higher levels
 of RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for an untold number of  applications,
-espeicially commercial production. As with bGH, our model has the capability of replacing a tedious biological experimentation
+especially commercial production. As with bGH, our model has the capability of replacing a tedious biological experimentation
 with a computationally fast process.
 
 \footnotesize
