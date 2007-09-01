@@ -18,5 +18,5 @@ for row = 1:times
 end
 
 function [numbers] = rand_int(min, max, times)
-delta = max - min
+delta = max - min;
 numbers = (round(delta .* rand(times, 1)) + min)';
