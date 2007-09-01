@@ -15,8 +15,8 @@ function polardeviation(folder)
         theta = sowseal_surprise(path);
         sigma = sqrt(sum((theta - phi_sp) .^ 2));
         fprintf('%s: %g\n', filename, sigma);
-        fprintf('\n');
     end
+    fprintf('\n');
 
     function [theta] = sowseal_surprise(file)
         [signal, seq] = get_signal(file);
