@@ -9,9 +9,9 @@ tavs = zeros(times, L);
 N = 6;
 
 for row = 1:times
-    changes = rand_int(1, L, N);
+    changes = unique(rand_int(1, L, N));
     tavs(row, :) = init;
-    for j = 1:N
+    for j = 1:length(changes)
         r = 0.5 + 1.5 * rand;
         tavs(row, changes(j)) = tavs(row, changes(j)) * r;
     end
