@@ -1,6 +1,6 @@
 % Randomly select two TAV rows from the matrix, biasing toward
 % those with lower deviation.
-function [tav1, tav2, wt1, wt2] = chooser(tavmatrix, weights)
+function [child] = chooser(tavmatrix, weights)
     [rows columns] = size(tavmatrix);
 
     % Simple distribution where the best TAV gets `rows` chips,
@@ -11,12 +11,16 @@ function [tav1, tav2, wt1, wt2] = chooser(tavmatrix, weights)
 
     tav1 = tavmatrix(r1,:);
     tav2 = tavmatrix(r2,:);
-    wt1 = weights(r1);
-    wt2 = weights(r2);
+    
+    p = [weights(r1) weights(r2)];
+    p = p/sum(p);
+    child = tav1*p(1) + tav2*p(2);
 end
 
 function num = selectnum(init)
-    % Solve init = n*(n-1)/2
-    r = roots([.5 .5 -init])';
+    % Solve init = n*(n+1)/2 => n^2 + n - 2*init = 0
+    b = 1; c = -2*init;
+    q = sqrt(b^2 - 4*c);
+    r = ([q -q] - b)/2;
     num = max(ceil(r));
 end

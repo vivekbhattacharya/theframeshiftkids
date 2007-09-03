@@ -5,7 +5,7 @@
 % It needs the predicted frameshifts in order to calculate yield
 % and also a sample size.
 %
-% Usage: impunity('c:\work folder', {'uga,25'}, {}, sample size)
+% Usage: impunity('c:\work folder', [25], 100)
 % ----------------------------------------------------------------
 function impunity(folder, fshifts, limit)
     d = 0; singleton = 0;
@@ -24,9 +24,7 @@ function impunity(folder, fshifts, limit)
         % ----------------------------------------------------------------
         displacement = walrus_surprise(file);        
         global shoals sands;
-        for i=1:limit
-            x = displacement(fshifts);
-        end
+        for i=1:limit, displacement(fshifts); end;
         yield = shoals/sands;
     end
     
