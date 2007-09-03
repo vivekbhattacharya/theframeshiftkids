@@ -17,15 +17,15 @@ function [x, waits] = displacement(seq, Dvec, fs)
     % avoid computing the actual shift ever.
     away = 0; no_frameshifting = isempty(fs);
     if ~no_frameshifting, criticals = find_criticals(fs); end
-    for k=2:upper
+    for k = 2:upper
         % Take the codon and calculate nloop
         index = 3*k + store.shift;
         
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
         if (overaged == 1)
-            fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
-            break;
+            % fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
+            % break;
         elseif (overaged == -1)
             fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
@@ -92,7 +92,7 @@ function [overaged] = loop(fragment, k, diff)
     % for meanings and derivations. C1 chosen specifically to
     % make prfB work, cf. Lalit et al.
     C1 = 0.005; overaged = 0;
-    age_limit = 150 + 100 * rand; power = 10;
+    age_limit = 1000; power = 10;
     
     wt = 0; here_fail = 1; back_fail = 1; there_fail = 1;
     back_codon = fragment(1:3); codon = fragment(2:4); there_codon = fragment(3:5);

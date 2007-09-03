@@ -9,7 +9,7 @@ function [tav, weights] = sort_and_kill(tav, weights);
     % Sort rows by weights
     weights = sort(weights, 'descend');
     % Negative to sort descending
-    tav = sortrows(tav, -weight_col)
+    tav = sortrows(tav, -weight_col);
     % Kill half the population.
     tav(1:cutoff, :) = [];
     % And delete their weights.
