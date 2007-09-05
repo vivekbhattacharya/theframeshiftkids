@@ -11,7 +11,7 @@ function [gen] = pokegod(folder)
     % How big of a sample size for deviation?
     Pool_n = 4;
     times = 1;
-    sample_size = 1;
+    sample_n = 1;
     
     % Save optimal row because we won't have it after the for loop
     % completes looping.
@@ -22,7 +22,7 @@ function [gen] = pokegod(folder)
         yields = zeros(1, Pool_n);
         for row_n = 1:Pool_n
             taz = get_travel(Names, gen(row_n, :));
-            yields(row_n) = get_yield(folder, taz, sample_size);
+            yields(row_n) = get_yield(folder, taz, sample_n);
             fprintf(': Created person %g with yield %g\n', row_n, yields(row_n));
         end
         
@@ -39,6 +39,8 @@ function [gen] = pokegod(folder)
         
         % Throw away the parents.
         gen = tmp;
+        % Let Ctrl-C work.
+        save(fullfile(folder, 'apple.mat'), 'gen');
     end
 end
 
