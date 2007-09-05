@@ -12,9 +12,7 @@ function [child] = chooser(tavmatrix, weights)
     tav1 = tavmatrix(r1,:);
     tav2 = tavmatrix(r2,:);
     
-    p = [weights(r1) weights(r2)];
-    p = p/sum(p);
-    child = tav1*p(1) + tav2*p(2);
+    child = mean([tav1; tav2]);
 end
 
 function num = selectnum(init)
