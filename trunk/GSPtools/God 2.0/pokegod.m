@@ -2,7 +2,7 @@
 % obtain the least deviation possible on a displacement plot, thereby
 % improving protein efficiency magically. It takes a folder of
 % "calibration" genes, which for now had better be bGH.
-function pokegod(folder)
+function [gen] = pokegod(folder)
     load TAV.mat;
     load Codons.mat;
 
