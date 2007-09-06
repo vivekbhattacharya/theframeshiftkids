@@ -9,18 +9,20 @@ function [gen] = pokegod(folder)
     % How big should the gene pool be?
     % How many generations should we have?
     % How big of a sample size for deviation?
-    Pool_n = 4;
-    times = 1;
-    sample_n = 1;
+    % How many nucleotides of a person to mutate per spawn?
+    pool_n = 40;
+    times = 10;
+    sample_n = 10;
+    radiation_n = 10;
     
     % Save optimal row because we won't have it after the for loop
     % completes looping.
-    gen = generation_zero(TAV, Pool_n);
+    gen = generation_zero(TAV, pool_n);
     optimal = [];
     for N = 1:times
         fprintf('Creating generation %g\n', N);
-        yields = zeros(1, Pool_n);
-        for row_n = 1:Pool_n
+        yields = zeros(1, pool_n);
+        for row_n = 1:pool_n;
             taz = get_travel(Names, gen(row_n, :));
             yields(row_n) = get_yield(folder, taz, sample_n);
             fprintf(': Created person %g with yield %g\n', row_n, yields(row_n));
@@ -32,9 +34,9 @@ function [gen] = pokegod(folder)
         optimal = gen(1, :);
         
         % Spawn the next generation.
-        tmp = zeros(Pool_n, 64);
-        for row_n = 1:Pool_n
-            tmp(row_n, :) = chooser(gen, yields);
+        tmp = zeros(pool_n, 64);
+        for row_n = 1:pool_n
+            tmp(row_n, :) = spawn(gen, yields, radiation_n);
         end
         
         % Throw away the parents.

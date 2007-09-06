@@ -94,19 +94,21 @@ function [overaged] = loop(fragment, k, diff)
     C1 = 0.005; overaged = 0;
     age_limit = 1000; power = 10;
     
-    wt = 0; here_fail = 1; back_fail = 1; there_fail = 1;
+    % [back_fail, here_fail, there_fail]
+    fails = [1 1 1]; wt = 0;
     back_codon = fragment(1:3); codon = fragment(2:4); there_codon = fragment(3:5);
-    [back_loops, here_loops, there_loops] = real_loops(back_codon, codon, there_codon);
+    loops = real_loops(back_codon, codon, there_codon);
     
     global store ants anthill termites Config;
     x0 = store.x(k);
     for wt=1:age_limit + 1
         a = x0 - 2*store.shift; % Window function
-        [back_fail, back] = probabilities(back_loops, exsin(a, 771)^power, back_fail);
-        [here_fail, here] = probabilities(here_loops, excos(a)^power, here_fail);
-        [there_fail, there] = probabilities(there_loops, exsin(a, 117)^power, there_fail);
-        reloop = 1 - (here + there + back);
-
+        weights = [exsinb(a)^power, excos(a)^power, exsinf(a)^power];
+        fails = fails .* (1 - weights ./ loops);
+        probs = 1 - fails;
+        
+        reloop = 1 - sum(probs);
+        back = probs(1); here = probs(2); there = probs(3);
         r = rand;
         if (reloop < here) || (reloop < there) || (reloop < back)
             if r < here
@@ -141,14 +143,15 @@ end
 % Calculates Nloops per <http://code.google.com/p/
 % theframeshiftkids/wiki/MathBehindTheModel> for
 % the given codon.
-function [varargout] = real_loops(varargin)
+function [loops] = real_loops(varargin)
     global Travel;
+    loops = zeros(1, length(varargin));
     for i = 1:length(varargin)
-        codon = varargin{i};
-        n = ceil(Travel.(codon));
-        n = 2^(1/n);
-        varargout{i} = n / (n - 1);
+        loops(i) = Travel.(varargin{i});
     end
+    loops = ceil(loops);
+    loops = 2 .^ (1 ./ loops);
+    loops = loops ./ (loops - 1);
 end
 
 % Calculates probability per <http://code.google.com/p/
