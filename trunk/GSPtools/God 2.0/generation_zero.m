@@ -10,7 +10,8 @@ function tavs = generation_zero(init, times)
     for row = 1:times
         changes = rand_int(L, N);
         % Mutate within interval [0.5, 2].
-        r = 0.5 + 1.5 * rand(1, N);
+        r = -1 + 2 * rand(1, N);
+		r = 2.^r;
         tavs(row, changes) = tavs(row, changes) .* r;
     end
 end
