@@ -78,7 +78,7 @@ the probability.
 Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the
 number of wait cycles, itself inversely proportional to the
 tRNA availability of codon $abc$.
-We assume the probability of frameshifting after
+We want to wait long enough that the probability of assume the probability of frameshifting after
 after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
 probability of moving on to the next codon and staying in current reading
 frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
@@ -112,6 +112,11 @@ If it proves that our modified \rpoS\ does indeed express higher levels
 of RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for an untold number of  applications,
 especially commercial production. As with bGH, our model has the capability of replacing a tedious biological experimentation
 with a computationally fast process.
+
+\subsection{God}
+Because our model is so dependent on tRNA availability, we decided to investigate what would happen if we changed tRNA availability.  However, we wanted to change the availabilities of various codons in ways that would help differentiate between high-yield sequences and low-yield sequences.  Because studies have already been done on the translational efficiency of the eight recombinant BGH proteins, we decided to try to calibrate our model using these sequences.  To this end, we developed a genetic algorithm described below.
+
+Our algorithm starts by generating a list of randomly modified tRNA availability vectors.  At this point, we calculate $\mu_{low}$, the mean of the deviation yields of the six BGH sequences with lowest yields, and $\mu_{high}$, the mean of the deviation yields of the two BGH sequences with highest yields, namely PCZ101 and PCZ105\footnote{In Schoner's experiments, a signifcant difference was found between PCZ101 and PCZ105 compared to the other six sequences}.  We then sort the modified tRNA availabilities by the ratio $\mu_{high}/\mu_{low}$.  After discarding the worst half of the tRNA vectors, we choose two of the remaining vectors, with the chance of each vector being proportional to its rank.  We then take a weighted average of the two vectors and use this new vector as the basis for our next generation of random modifications.  After suitable improvements, the algorithm terminates.
 
 \section{Applications: Bovine Growth Hormone}
 One section of modern industry where genetics has proven useful is
