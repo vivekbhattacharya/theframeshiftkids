@@ -42,7 +42,7 @@ function [gen] = pokegod(folder)
         % Throw away the parents.
         gen = tmp;
         % Let Ctrl-C work.
-        save(fullfile(folder, 'apple.mat'), 'gen');
+        save(fullfile(folder, 'apple.mat'), 'optimal');
     end
 end
 
