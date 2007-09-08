@@ -103,7 +103,7 @@ function [overaged] = loop(fragment, k, diff)
     x0 = store.x(k);
     for wt=1:age_limit + 1
         a = x0 - 2*store.shift; % Window function
-        weights = [exsinb(a)^power, excos(a)^power, exsinf(a)^power];
+        weights = realpow([exsinb(a), excos(a), exsinf(a)], power);
         fails = fails .* (1 - weights ./ loops);
         probs = 1 - fails;
         
@@ -152,15 +152,4 @@ function [loops] = real_loops(varargin)
     loops = ceil(loops);
     loops = 2 .^ (1 ./ loops);
     loops = loops ./ (loops - 1);
-end
-
-% Calculates probability per <http://code.google.com/p/
-% theframeshiftkids/wiki/MathBehindTheModel> for
-% any given "thinking" time slice.
-% Parameters:
-%   loops: from real_loops
-%   weight: cos/sin factor
-function [acc, p] = probabilities(loops, weight, acc)
-    acc = acc*(1 - weight/loops);
-    p = 1 - acc;
 end
