@@ -16,16 +16,20 @@ function impunity(folder, fshifts, limit)
         singleton = 1;
     end
     
-    function [yield] = find_yield(file)
+    function [yields] = find_yield(file)
         % ----------------------------------------------------------------
         % The meat of `impunity`, this is `megaunity` without the graphs
         % or the infinite loop, instead capped at `limit`. In addition,
         % it returns the yield instead of displaying it.
         % ----------------------------------------------------------------
-        displacement = walrus_surprise(file);        
+        displacement = walrus_surprise(file);
         global shoals sands;
-        for i=1:limit, displacement(fshifts); end;
-        yield = shoals/sands;
+        yields = zeros(1, limit);
+        for i=1:limit
+            displacement(fshifts);
+            yields(i) = shoals/sands;
+            shoals = 0; sands = 0;
+        end
     end
     
     if singleton
@@ -35,20 +39,9 @@ function impunity(folder, fshifts, limit)
         return;
     end
     
-    % Print the header.
-    fid = fopen('results.txt', 'a+');
-    fwrite(fid, ['#' num2str(limit) ' iterations']);
-    fprintf(fid, '\n');
-    
     for i = 1:length(d)
         name = d(i).name;
-        yield = find_yield(fullfile(folder, name));
-        
-        % Print the data.
-        disp([name ': ' num2str(yield)]);
-        fwrite(fid, [name ': ' num2str(yield)]);
-        fprintf(fid, '\n');
+        yields = find_yield(fullfile(folder, name));
+        fprintf('%s: %g +/- %g\n', name, mean(yields), std(yields));
     end
-    fprintf(fid, '\n\n');
-    fclose(fid);
 end
