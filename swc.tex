@@ -96,18 +96,6 @@ which increments after every wait cycle.
 
 \section{Applications}
 
-\subsection{Bovine Growth Hormone}
-Besides the frameshifting sequence \prfB, our model also shows a significant correlation in data with biological
-bovine growth hormone (bGH) data, sequenced in \ecoli~\cite{schoner:bgh}. For example, our model purports a relation
-between the deviation from the zero reading frame---for non-frameshifters---and protein yield, postulating
-an association between ribosomal efficiency and its reading frame stability. Schoner et al.~\cite{schoner:bgh}
-modified beginning codons of a sequenced bGH sequence to produce a series of alternates,
-two of which produced significantly higher yield in experiments. Those two, pcZ101 and pcZ105, procured significantly
-lower deviation than pcZ104, pcZ108, and other bGH sequences in our model, which agrees Schoner's findings.
-A computational model's accurate prediction of a sequence's yield greatly benefits microbiology,
-aiding in the measure of a protein's translational efficiency especially when experiments prove too difficult
-or costly. Therefore, bGH is a cornerstone of our computational model's scientific importance.
-
 \subsection{rpoS RNA Polymerase Protein}
 Our model can also calculate the sample probability that a gene sequence will run correctly without any mistake frameshifts
 effectively due to the computational and fast nature of running it.
@@ -124,6 +112,68 @@ If it proves that our modified \rpoS\ does indeed express higher levels
 of RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for an untold number of  applications,
 especially commercial production. As with bGH, our model has the capability of replacing a tedious biological experimentation
 with a computationally fast process.
+
+\section{Applications: Bovine Growth Hormone}
+One section of modern industry where genetics has proven useful is
+agriculture where synthesized compounds keep the machinery of
+production running day in and day out. For example, recent
+research~\cite{schoner:bgh} have attempted to amplify the DNA sequence
+that codes for bovine growth hormone in cows and attempt to produce it
+in \ecoli. However, the process for modifying a DNA sequence is slow
+and arduous in a biological experiment environment especially in the
+measure of protein yield for each newly modified sequence. However,
+with the help of our computation model, we can easily determine the
+relative yields for each sequence quickly and efficiently if such a
+correlation between the metrics our model outputs and biological
+research exists. Indeed it does.
+
+Schoner~\cite{schoner:bgh}, primarily modifying the initial codons of an initial
+bovine growth hormone sequence, found two sequences pcZ101 and pcZ105,
+to have particularly high protein yield and efficient with respect to
+the six other sequences. Our model agrees. In modeling displacement,
+we found pcZ101 and pcZ105 to have the least reading frame deviation
+from $x = 0$~\ref{bgh:deviation}, which in our model~\cite{lalit:mechanics} indicates
+higher yield as increasing deviation from the correct reading frame
+produces larger error within the ribosome during translation.
+
+\begin{table}[tbp]
+\begin{center}
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Sequence} & $\mathbf{\sigma}$\\
+        \midrule
+        pcZ101 & 0.76719\\
+        pcZ105 & 0.76710\\
+        \midrule
+        pcZ100 & 0.80020\\
+        pcZ104 & 0.79729\\
+        pcZ108 & 0.79241\\
+        pcZ110 & 0.79760\\
+        pcZ112 & 0.79419\\
+        pcZ115 & 0.79794\\
+        \bottomrule
+    \end{tabular}
+    \caption{Deviation for bGH Sequences with Sample Size~200}
+    \label{bgh:deviation}
+\end{center}
+\end{table}
+
+In addition, in examining the polar plots, we noticed that during
+early translation the phase of translation for pcZ101 and 105 tended toward the species
+angle -30 degrees before diverging toward approximately 15 degrees. As
+it stands, our model, as with displacement, indicates higher yield when the polar plot
+indicates less deviation from the correct (zero) reading frame, as it
+does here with the species angle~\cite{lalit:mechanics}. Therefore our
+model is consistent with research~\cite{bgh:initiation} that indicates
+the early codons have a dramatic impact on the ultimate efficiency of
+ribosomal translation.
+
+These results from bovine growth hormone that correlation with a broad
+spectrum of known ribosomal behavior indicate our computational model
+can significantly increase the speed at which geneticists and
+biologists can obtain valuable information when synthesizing
+commercially or medicinally useful compounds without laboriously
+working through biological experiments.
 
 \footnotesize
 \begin{singlespace}
