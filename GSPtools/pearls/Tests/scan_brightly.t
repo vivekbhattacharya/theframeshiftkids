@@ -12,5 +12,5 @@ sub check {
     ok($candy eq $cavities, "$seq with $p");
 }
 
-check 'prfB.txt', 'Kidnap::Freier', 'prfB-Freier.txt';
-check 'prfB.txt', 'Kidnap::XiaMathews', 'prfB-XiaMathews.txt';
+check 'prayforme.txt', 'Kidnap::Freier', 'prfB-Freier.txt';
+check 'prayforme.txt', 'Kidnap::XiaMathews', 'prfB-XiaMathews.txt';
