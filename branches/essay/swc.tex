@@ -98,29 +98,37 @@ $N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
 It is important to note that $\omega$ is dependent on displacement, 
 which increments after every wait cycle.
 
-\section{Applications}
+\section{Studying \prfB}
 
-\subsection{rpoS RNA Polymerase Protein}
-Our model can also calculate the sample probability that a gene sequence will run correctly without any mistake frameshifts
-effectively due to the computational and fast nature of running it.
-At high sample sizes it readily approximates the actual probability and therefore efficiency, which we have shown with sequences such as
-\prfB\ and ribosomal proteins. In addition, research~\cite{rare:yield}
-suggests we can remove trouble spots where mistake frameshifts occur by replacing those codons and their
-earlier neighbors with synonymous codons\footnote{Two codons are synonymous if and only if they produce the same amino acid.}.
-Therefore, we wrote a locally optimal (greedy) algorithm that finds trouble spots and replaces them with random sequences
-of synonymous codons. The algorithm runs those permutations through our model and chooses the
-sequence with the lowest likelihood of frameshifting incorrectly. (Hence, locally optimizing.) One ribosomal protein with
-low yield is \rpoS, referred to us via Susan Gottesman and Dr. Anne-Marie Stomp.
-Running \rpoS\ through our algorithm, we found 33 codon changes that produced a higher yield, soon hopefully biologically verified.
-If it proves that our modified \rpoS\ does indeed express higher levels
-of RNA polymerase, then our model represents a breakthrough in optimizing gene sequences for an untold number of  applications,
-especially commercial production. As with bGH, our model has the capability of replacing a tedious biological experimentation
-with a computationally fast process.
+\subsection{Results by the Stochastic Model}
 
-\subsection{God}
-Because our model is so dependent on tRNA availability, we decided to investigate what would happen if we changed tRNA availability.  However, we wanted to change the availabilities of various codons in ways that would help differentiate between high-yield sequences and low-yield sequences.  Because studies have already been done on the translational efficiency of the eight recombinant BGH proteins, we decided to try to calibrate our model using these sequences.  To this end, we developed a genetic algorithm described below.
+In \ecoli, the gene \prfB\ codes for protein release factor B, an essential element in translation.
+This gene, as mentioned, is known to have a programmed frameshift at the 25$^\rm{th}$ codon.
+Our proposed stochastic model, as with the original model, can accurately predict this frameshift.
+Figure~\ref{prfb:disp} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
+To account for random variation, ten different runs are shown on the same set of axes.
+\footnote{Note that the polar plot is the the same as Figure~\ref{prfB:polar}; 
+the new model does not alter the polar plot and the free energy calculations.}
 
-Our algorithm starts by generating a list of randomly modified tRNA availability vectors.  At this point, we calculate $\mu_{low}$, the mean of the deviation yields of the six BGH sequences with lowest yields, and $\mu_{high}$, the mean of the deviation yields of the two BGH sequences with highest yields, namely PCZ101 and PCZ105\footnote{In Schoner's experiments, a signifcant difference was found between PCZ101 and PCZ105 compared to the other six sequences}.  We then sort the modified tRNA availabilities by the ratio $\mu_{high}/\mu_{low}$.  After discarding the worst half of the tRNA vectors, we choose two of the remaining vectors, with the chance of each vector being proportional to its rank.  We then take a weighted average of the two vectors and use this new vector as the basis for our next generation of random modifications.  After suitable improvements, the algorithm terminates.
+Notably, the displacement plot does not reach $x=2$ over the span of one codon, as the old model predicted.
+Rather, due to randomness, the ribosome chooses the codon in the $+1$ frame before actually reaching a displacement of exactly 2.
+The propensity to approach $x=2$, however, concurs with the biological idea that the ribosome stays in frame after the frameshift.
+
+\subsection{Concurring with Biological Evidence}
+
+Weiss et al.~\ref{weiss87,weiss88} conducted research on the frameshift in \prfB, trying to determine factors that would affect translational rate.
+We repeate Weiss's experiments computationally using the stochastic model in order to demonstrate its validity.
+
+% We need plots.
+
+Weiss et al.\ moved the stop codon in the \prfB\ sequence one nucleotide upstream.  
+The sequence failed to frameshift.  
+Moving the stop codon another nucleotide upstream failed to create a frameshift as well.
+
+% More plots needed.
+
+Another aspect of Weiss et al.'s work involved changing the 16S tail of the ribosomal RNA.
+
 
 \section{Applications: Bovine Growth Hormone}
 One section of modern industry where genetics has proven useful is
@@ -183,6 +191,29 @@ can significantly increase the speed at which geneticists and
 biologists can obtain valuable information when synthesizing
 commercially or medicinally useful compounds without laboriously
 working through biological experiments.
+
+\subsection{God}
+Ponnala et. al~\ref{ponnala:embs} base the tRNA avaliability values on codon usage, surveying a set of 2438 verified genes from \ecoli.
+Although this assumption has biological basis~\ref{ikemura}, it is still quite possible that the true values for these numbers may differ 
+slightly from those that Ponnala calculated.  As such, we designed a genetic algorithm to calibrate these values based on the bovine growth hormone sequences.
+
+An initial population was created by randomly modifying one through four tRNA availibility values by a factor between 0.5 and 2.
+The mean $\mu_{\rm{low}}$ of the deviation yields of the six bGH sequences with the lowest biological yields was calculated,
+as was the mean $\mu_{\rm{high}}$ of sequences with the highest yields.
+The new tRNA availability values were sorted by $\mu_{\rm{high}}/\mu_{\rm{low}}$
+
+Because our model is so dependent on tRNA availability, we decided to investigate what would happen if we changed tRNA availability.  
+However, we wanted to change the availabilities of various codons in ways that would help differentiate between high-yield sequences and low-yield sequences.  
+Because studies have already been done on the translational efficiency of the eight recombinant BGH proteins, we decided to try to calibrate our model using these sequences.  To this end, we developed a genetic algorithm described below.
+
+Our algorithm starts by generating a list of randomly modified tRNA availability vectors.  
+At this point, we calculate $\mu_{low}$, the mean of the deviation yields of the six BGH sequences with lowest yields, 
+and $\mu_{high}$, the mean of the deviation yields of the two BGH sequences with highest yields, namely PCZ101 and 
+PCZ105\footnote{In Schoner's experiments, a signifcant difference was found between PCZ101 and PCZ105 compared to the other six sequences}.  
+We then sort the modified tRNA availabilities by the ratio $\mu_{high}/\mu_{low}$.  
+After discarding the worst half of the tRNA vectors, we choose two of the remaining vectors, with the chance of each vector being proportional to its rank.  
+We then take a weighted average of the two vectors and use this new vector as the basis for our next generation of random modifications.  
+After suitable improvements, the algorithm terminates.
 
 \begin{singlespace}
   \bibliography{wizards}
