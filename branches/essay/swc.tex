@@ -74,10 +74,15 @@ $abc$ should decrease.  We modeled this behavior using even powers of
 cosine and sine functions for $abc$ and $bcd$.  We
 define $\omega$ as the weight that is directly proportional to
 the probability.
-
 \begin{equation}
   \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} = \sin^{10}{\frac{x\pi}{4}}.
 \end{equation}
+For the purposes of this model, the cosine and sine functions are taken to the tenth power, but
+in future studies, this parameter can be modified as long as it stays an even positive integer.
+The functions have a period of two base pairs ($x=4$), which is biologically sound:
+If the ribosome lies completely in the 0 frame, then the probability of staying in the 0 frame should be 1.  
+Consequently, if the ribosome lies in the +1 frame ($x=2$), the probability of going to
+the 0 frame should be 0.
 
 Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the
 number of wait cycles, itself inversely proportional to the
@@ -91,7 +96,7 @@ proportionality. That is, $n_{abc} = \omega_{abc} / P$.  Coupled
 with that $\omega_{abc} \le 1$, we have $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1).$
 where $n = n_{abc}$ and $N = N_{abc}$. Mathematically, the probability of choosing a codon is then
 \begin{align}
-  \prod_{i=1}^N \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega = \cos^{10}{\frac{x\pi}{4}}.
+  \prod_{i=1}^N \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
 \end{align}
 Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
 $N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
@@ -116,7 +121,7 @@ The propensity to approach $x=2$, however, concurs with the biological idea that
 
 \subsection{Concurring with Biological Evidence}
 
-Weiss et al.~\ref{weiss87,weiss88} conducted research on the frameshift in \prfB, trying to determine factors that would affect translational rate.
+Weiss et al.~\cite{weiss87,weiss88} conducted research on the frameshift in \prfB, trying to determine factors that would affect translational rate.
 We repeate Weiss's experiments computationally using the stochastic model in order to demonstrate its validity.
 
 % We need plots.
@@ -192,28 +197,26 @@ biologists can obtain valuable information when synthesizing
 commercially or medicinally useful compounds without laboriously
 working through biological experiments.
 
-\subsection{God}
-Ponnala et. al~\ref{ponnala:embs} base the tRNA avaliability values on codon usage, surveying a set of 2438 verified genes from \ecoli.
-Although this assumption has biological basis~\ref{ikemura}, it is still quite possible that the true values for these numbers may differ 
+\subsection{Determining tRNA Availability Values}
+
+Ponnala et. al~\cite{lalit:embs} base the tRNA avaliability values on codon usage, surveying a set of 2438 verified genes from \ecoli.
+Although this assumption has biological basis~\cite{ikemura}, it is still quite possible that the true values for these numbers may differ 
 slightly from those that Ponnala calculated.  As such, we designed a genetic algorithm to calibrate these values based on the bovine growth hormone sequences.
 
-An initial population was created by randomly modifying one through four tRNA availibility values by a factor between 0.5 and 2.
-The mean $\mu_{\rm{low}}$ of the deviation yields of the six bGH sequences with the lowest biological yields was calculated,
-as was the mean $\mu_{\rm{high}}$ of sequences with the highest yields.
-The new tRNA availability values were sorted by $\mu_{\rm{high}}/\mu_{\rm{low}}$
+An initial population of size $k$ was created by randomly modifying one through four tRNA availibility values by a factor between 0.5 and 2 
+and repeating this process $k$ times.
+We calculate the mean $\mu_{\rm{low}}$ of the deviation yields of the six bGH sequences with the lowest biological yields
+as well as the mean $\mu_{\rm{high}}$ of two sequences with the highest yields.
+We sort the new tRNA availability values by $\mu_{\rm{high}}/\mu_{\rm{low}}$, a lower value being more optimal.
+After discarding the worst half of the tRNA vectors, we choose two of the remaining vectors, 
+with the probability of choosing each vector proportional to its rank.
+We then take a weighted average of these two vectors to create a new tRNA vector.
+We repeatedly choose and average tRNA vectors until a population of size $k$ is created for the next generation.
+A set number of mutations are initiated per generation by randomly modifying one through four tRNA availability values for a few vectors.
+The algorithm terminates after a fixed number of generations.
 
-Because our model is so dependent on tRNA availability, we decided to investigate what would happen if we changed tRNA availability.  
-However, we wanted to change the availabilities of various codons in ways that would help differentiate between high-yield sequences and low-yield sequences.  
-Because studies have already been done on the translational efficiency of the eight recombinant BGH proteins, we decided to try to calibrate our model using these sequences.  To this end, we developed a genetic algorithm described below.
-
-Our algorithm starts by generating a list of randomly modified tRNA availability vectors.  
-At this point, we calculate $\mu_{low}$, the mean of the deviation yields of the six BGH sequences with lowest yields, 
-and $\mu_{high}$, the mean of the deviation yields of the two BGH sequences with highest yields, namely PCZ101 and 
-PCZ105\footnote{In Schoner's experiments, a signifcant difference was found between PCZ101 and PCZ105 compared to the other six sequences}.  
-We then sort the modified tRNA availabilities by the ratio $\mu_{high}/\mu_{low}$.  
-After discarding the worst half of the tRNA vectors, we choose two of the remaining vectors, with the chance of each vector being proportional to its rank.  
-We then take a weighted average of the two vectors and use this new vector as the basis for our next generation of random modifications.  
-After suitable improvements, the algorithm terminates.
+It is important to note, however, that changes in tRNA availability values were not drastic;
+they did not deviate much from the biologically-based calculations of Ponnala et. al.~\cite{lalit:embs}.
 
 \begin{singlespace}
   \bibliography{wizards}
