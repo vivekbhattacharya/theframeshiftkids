@@ -3,10 +3,6 @@
 \linespread 2
 \numberwithin{equation}{section}
 
-% Per SWC rules
-% http://www.mail-archive.com/lyx-users@lists.lyx.org/msg40346.html
-\setlength\bibsep{\baselineskip}
-
 \begin{document}
 \section{Introduction}
 
@@ -16,7 +12,7 @@
 
 Free energy in a cell arises from the hybridization between two
 sequences of RNA and drives ribosomal translation~\cite{starmer}.
-Weiss et al.~\cite{weiss} suggests the 16S tail of the ribosome hybridizes with its mRNA strand;
+Weiss et al.~\cite{weiss88} suggests the 16S tail of the ribosome hybridizes with its mRNA strand;
 from this, we can calculate the free energy values for the interaction between the two strands of RNA.
 Freier et al.~\cite{freier}, in turn, proposes a thermodynamic model for exactly this,
 modeling the interaction in terms of \emph{doublets}, i.e. pairs of consecutive nucleotides.
@@ -38,7 +34,7 @@ Ponnala~\cite{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable)
 
 A sudden jump from approximately $x = 0$ to $x = 2$ is then the first indication of a $+1$ frameshift.
 In essence, this jump suggests that the ribosome jumps one entire base pair in the mRNA sequence.
-Figure~\ref{prfB:lalitdisp} shows the displacement plot as per this deterministic model for \prfB, 
+Figure~\ref{prfB:lalitdisp} shows the displacement plot per this deterministic model for \prfB, 
 a gene known to have a programmed $+1$ frameshift at codon 25.
 
 In conjunction with this characteristic plot, a $+1$ frameshift also shows a 240\degree
@@ -105,7 +101,7 @@ which increments after every wait cycle.
 
 \section{Studying \prfB}
 
-\subsection{Results by the Stochastic Model}
+\subsection{Results from the Stochastic Model}
 
 In \ecoli, the gene \prfB\ codes for protein release factor B, an essential element in translation.
 This gene, as mentioned, is known to have a programmed frameshift at the 25$^\rm{th}$ codon.
@@ -121,8 +117,10 @@ The propensity to approach $x=2$, however, concurs with the biological idea that
 
 \subsection{Concurring with Biological Evidence}
 
-Weiss et al.~\cite{weiss87,weiss88} conducted research on the frameshift in \prfB, trying to determine factors that would affect translational rate.
-We repeate Weiss's experiments computationally using the stochastic model in order to demonstrate its validity.
+Weiss et al.~\cite{weiss87,weiss88} conducted research on the
+frameshift in \prfB, trying to determine factors that would affect
+translational rate.  We repeate Weiss's experiments computationally
+using the stochastic model in order to demonstrate its validity.
 
 % We need plots.
 
@@ -134,9 +132,8 @@ Moving the stop codon another nucleotide upstream failed to create a frameshift 
 
 Another aspect of Weiss et al.'s work involved changing the 16S tail of the ribosomal RNA.
 
-
 \section{Applications: Bovine Growth Hormone}
-One section of modern industry where genetics has proven useful is
+Today, the field of genetics has widely intersected with
 agriculture where synthesized compounds keep the machinery of
 production running day in and day out. For example, recent
 research~\cite{schoner:bgh} have attempted to amplify the DNA sequence
@@ -197,26 +194,53 @@ biologists can obtain valuable information when synthesizing
 commercially or medicinally useful compounds without laboriously
 working through biological experiments.
 
-\subsection{Determining tRNA Availability Values}
+\subsection{Calibrating tRNA Availabilities}
+Although our model relies upon tRNA availabilities in the calculation of
+wait time from free energy signals, we lack a reliable source for such
+values. However, with the model, we can calibrate such values by
+surveying existing, measured \ecoli\ genes. For example, two bovine growth
+hormone proteins (pcZ101 and pcZ105)  have much higher expression
+levels than their siblings as discussed below. To this end, we
+developed a genetic algorithm attempting to find the TAV values that
+produces the optimal separation between pcZ101 and pcZ105 yields in
+comparison to other bGH proteins.
 
-Ponnala et. al~\cite{lalit:embs} base the tRNA avaliability values on codon usage, surveying a set of 2438 verified genes from \ecoli.
-Although this assumption has biological basis~\cite{ikemura}, it is still quite possible that the true values for these numbers may differ 
-slightly from those that Ponnala calculated.  As such, we designed a genetic algorithm to calibrate these values based on the bovine growth hormone sequences.
+First, we generate a list of randomly modified TAV vectors at which
+point we calculate the ratio of the deviation from
+displacement---discussed above---for pcZ101 and pcZ105 to the other
+six bGH proteins. From there, we sort the modified TAV according to
+this ratio and discarding the least optimal half of the tRNA
+vectors. We then choose two of the remaining vectors, with the chance
+of each vector being proportional to its rank.  We then take a
+weighted average of the two vectors and spawn a new vector.  After
+creating the next generation according to a constant ``gene pool''
+size, we delete the previous generation and repeat. After a fixed
+number of generations, the algorithm terminates and returns the
+optimal TAV vector.
 
-An initial population of size $k$ was created by randomly modifying one through four tRNA availibility values by a factor between 0.5 and 2 
-and repeating this process $k$ times.
-We calculate the mean $\mu_{\rm{low}}$ of the deviation yields of the six bGH sequences with the lowest biological yields
-as well as the mean $\mu_{\rm{high}}$ of two sequences with the highest yields.
-We sort the new tRNA availability values by $\mu_{\rm{high}}/\mu_{\rm{low}}$, a lower value being more optimal.
-After discarding the worst half of the tRNA vectors, we choose two of the remaining vectors, 
-with the probability of choosing each vector proportional to its rank.
-We then take a weighted average of these two vectors to create a new tRNA vector.
-We repeatedly choose and average tRNA vectors until a population of size $k$ is created for the next generation.
-A set number of mutations are initiated per generation by randomly modifying one through four tRNA availability values for a few vectors.
-The algorithm terminates after a fixed number of generations.
+\section{Verification}
+\begin{figure}
+  \caption{Artificial linker sequence}
+  \label{linker}
+  \begin{verbatim}
+    agaaaucagacc
+    aug gag gcu ggc acc agg ggg uac agu uaag caa acg uag
+  \end{verbatim}
+\end{figure}
 
-It is important to note, however, that changes in tRNA availability values were not drastic;
-they did not deviate much from the biologically-based calculations of Ponnala et. al.~\cite{lalit:embs}.
+In order to verify the model's ability to predict frameshifts, we
+artificially created a thirteen-codon sequence (Figure~\ref{linker})
+with a twelve-acid leader that frameshifts at the ninth codon and,
+from a BLAST search, is not known to nature.  Using a fused protein of
+beta-galactosidase, our linker, and xylE, we measured levels of our
+synthetic compound. $\beta$-gal and xylE constructs retain their
+functionality and thus we can measure protein expression during an in
+vivo experiment. For example, beta-galactosidase levels correlate to
+levels of nitrophenol, which has a yellow color, while xylE expresses
+an enzyme that cleaves catechol, another metric that correlates to the
+expression of our linker sequence.
+
+% Talk about plots. --Hao
 
 \begin{singlespace}
   \bibliography{wizards}
