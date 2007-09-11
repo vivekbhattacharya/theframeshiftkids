@@ -104,7 +104,8 @@ which increments after every wait cycle.
 \subsection{Results from the Stochastic Model}
 
 In \ecoli, the gene \prfB\ codes for protein release factor B, an essential element in translation.
-This gene, as mentioned, is known to have a programmed frameshift at the 25$^\rm{th}$ codon.
+This gene, as mentioned, is known to have a programmed frameshift at
+the 25$^{\textrm{th}}$ codon.
 Our proposed stochastic model, as with the original model, can accurately predict this frameshift.
 Figure~\ref{prfb:disp} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
 To account for random variation, ten different runs are shown on the same set of axes.
@@ -115,22 +116,26 @@ Notably, the displacement plot does not reach $x=2$ over the span of one codon, 
 Rather, due to randomness, the ribosome chooses the codon in the $+1$ frame before actually reaching a displacement of exactly 2.
 The propensity to approach $x=2$, however, concurs with the biological idea that the ribosome stays in frame after the frameshift.
 
-\subsection{Concurring with Biological Evidence}
+\subsection{Biological Evidence}
 
 \citet{weiss87,weiss88} conducted research on the
-frameshift in \prfB, trying to determine factors that would affect
-translational rate.  We repeate Weiss's experiments computationally
-using the stochastic model in order to demonstrate its validity.
+frameshift in \prfB, determining factors that would affect
+translational rate.  We repeated Weiss's experiments computationally
+using the stochastic model, which agreed with Weiss's results and
+provides strong evidence that our model accurately represents existing
+biological evidence and metrics.
 
 % We need plots.
 
-\citeauthor{weiss88} moved the stop codon in the \prfB\ sequence one nucleotide upstream.  
-The sequence failed to frameshift.  
-Moving the stop codon another nucleotide upstream failed to create a frameshift as well.
+Specifically, \citeauthor{weiss88} moved the stop codon in the
+\prfB\ sequence one nucleotide upstream, causing the sequence to fail to
+frameshift. Moving the stop codon another nucleotide upstream failed
+to create a frameshift as well. However, a final nucleotide upstream
+transposition resulted in a similar frameshift to the initial \prfB sequence.
 
 % More plots needed.
 
-Another aspect of \citeauthor{weiss88}'s  work involved changing the 16S tail of the ribosomal RNA.
+% Another aspect of \citeauthor{weiss88}'s  work involved changing the 16S tail of the ribosomal RNA.
 
 \section{Applications: Bovine Growth Hormone}
 Today, the field of genetics has widely intersected with
@@ -217,6 +222,34 @@ creating the next generation according to a constant ``gene pool''
 size, we delete the previous generation and repeat. After a fixed
 number of generations, the algorithm terminates and returns the
 optimal TAV vector.
+
+\section{Applications: rpoS}
+% I'm colluding deviation and probability yield here, but it's for a
+% good purpose. --Hao.
+
+\citet{rpos:process} indicate that rpoS, a gene that codes for an RNA
+polymerase sigma factor, contains sections of rare codons that disrupt
+ribosomal translation. Indeed, our computation model agrees with this
+biological evidence, showing again moderately high deviation from $x =
+0$. In mass production of such a polymerase sigma factor, biologists
+can replace sequences of codons known to add noise and error to
+ribosomal translation with synonymous codons (see above
+footnote). However, with a computation model, the process is much
+faster and, with this performance, we can perform a randomized, greedy
+algorithmic search for codon sequence replacements. We first find an
+early trouble spot of four codons, randomly replacing that sequence
+with synonymous four codons, and running our model against those
+permutations to obtain a locally optimal sequence at that place. We
+then repeat for all trouble spots\footnote{Specifically, places with
+  mistake frameshifts in our model, which correlate to rare codons per
+  above discussion} the first, terminating when we have locally
+optimized the last one. With this algorithm, we reduced our standard
+deviation metric for the rpoS displacement plot from 0.168 to 0.117
+on sample size of 1000 with a replacement of 33 codons. The
+initial correlation between deviation and biological expression
+provides strong anecdotal evidence that, with future biological
+experimentation, our algorithm has indeed increased protein yield
+bypassing a slow and arduous biological experimentation process.
 
 \section{Verification}
 \begin{figure}

@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -26,6 +26,12 @@ L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
 L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
 \newblock A model for +1 frameshifts in eubacteria.
 \newblock \emph{Bioinformatics}, 2006{\natexlab{b}}.
+
+\bibitem[Repoila et~al.(2003)Repoila, Majdalani, and Gottesman]{rpos:process}
+F.~Repoila, N.~Majdalani, and S.~Gottesman.
+\newblock Small non-coding {RNAs}, coordinators of adaptation processes in
+  {Escherichia coli}: the {rpoS} paradigm.
+\newblock \emph{Molecular Microbiology}, 48:\penalty0 855--61, May 2003.
 
 \bibitem[Schoner et~al.(1984)Schoner, Hsuiung, Belagaje, Mayne, and
   Schoner]{schoner:bgh}
