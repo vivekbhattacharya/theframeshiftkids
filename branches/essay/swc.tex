@@ -1,14 +1,31 @@
 \documentclass[12pt, draft]{article}
 \usepackage{candor, setspace, color, wrapfig}
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
-  citecolor=BWFGreen, urlcolor=BWFRed]{hyperref}
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={On the Computational
+    Modelling of Ribosomal Translation and Frameshifts},
+  pdfauthor={Hao Lian, Vivek Bhattacharya, and Daniel Vitek},
+  pdfsubject={Bioinformatics, Genetics, and Biology}, pdfcreator={The
+    Frameshift Kids}, pdfkeywords={bioinformatics,genetics,biology,
+    frameshifts,perl,matlab,ecoli,prfb,rpos,bgh}, pdfstartview={FitH}]{hyperref}
 
 \linespread 2
 \numberwithin{equation}{section}
 
+\author{{\sc Hao Lian, Vivek Bhattacharya, and Daniel Vitek}}
+\date{{\sc \today}}
+\title{{\bf On the Computational Modelling of Ribosomal Translation
+    and Frameshifts}}
+
 \begin{document}
+\pagenumbering{roman}
+\maketitle
 \tableofcontents
 
+\begin{abstract}
+  In this document, we present heresy and general chaos.
+\end{abstract}
+
+\pagenumbering{arabic}
 \section{Introduction}
 
 \subsection{Protein Translation}
@@ -44,18 +61,17 @@ modeling the interaction in terms of \emph{doublets}: pairs of consecutive nucle
 Using this model, Freier calculated the free energy available
 for the hybridization of all permutations of RNA doublets.
 
-% Hao: I took out the setting energy values due to irrelevance.
 \subsection{A Deterministic Model for Displacement} 
  
 \citet{lalit:mechanics} assume a sinusoidal model for
 free energy, whence one can project free energy onto magnitude and
-phase through a noise-filtering memory model. Ponnala simualtes free
+phase through a noise-filtering memory model. Ponnala simulates free
 energy in a memory structure that can store three values (registers)
 that he later can represent as a phasor, a concept from physics. Then,
 we can visualize free energy from polar plots and deduce frameshifts,
 which occur along defined boundaries on the polar plot for a species.
  
-\citet{lalit:embs} then represent the cummulative phasor
+\citet{lalit:embs} then represent the cumulative phasor
 at codon $k$ as $\bvec{V} = Me^{i\theta}$ where $i$ is the imaginary
 constant, allowing us to calculate the magnitude and phase at codon
 $k$ through simple trigonometry. Differentiating this vector, we
@@ -95,8 +111,6 @@ for the entire sequence.
   \includegraphics[scale=0.5]{prfB/polar}
 \end{wrapfigure}
 
-% Where the following concept should be first mentioned, I'm not sure -- Vivek
-
 First, we let a displacement of $x = 0$ correspond to the zero reading frame and increments of
 \emph{two} to represent a one-nucleotide change. For example, $x =2$ represent the +1 frame.
 \citet{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable) points in displacement in their model,
@@ -116,15 +130,16 @@ must undergo a phase shift of one-third of an entire period (\autoref{prfB:polar
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
 
-% Find an example of a gene with a screwed-up displacement plot under Lalit's old model. --Vivek
-
-As mentioned, the gene \prfB\ exhibits a definite frameshift under the deterministic model: The displacement jumps to $x=2$.
-Certain other genes, however, demonstrate ambiguous behavior near $x = \pm 1$.
-In a deterministic model, the fixed displacement plots implies
-we cannot clearly interpret whether this behavior indicates a tendency for a stable frameshift.
-In practice, ribosomal translations are not deterministic. Due to the presence of
-noise within the cell environment, we instead chose to model translation stochastically, adding
-randomness to the choice of reading frame a ribosome executes at each codon given the free energy signal.
+As mentioned, the gene \prfB\ exhibits a definite frameshift under the
+deterministic model: The displacement jumps to $x=2$.  Certain other
+genes, however, demonstrate ambiguous behavior near $x = \pm
+1$~\cite{lalit:embs}.  In a deterministic model, the fixed
+displacement plots implies we cannot clearly interpret whether this
+behavior indicates a tendency for a stable frameshift.  In practice,
+ribosomal translations are not deterministic. Due to the presence of
+noise within the cell environment, we instead chose to model
+translation stochastically, adding randomness to the choice of reading
+frame a ribosome executes at each codon given the free energy signal.
 As such, we introduce probability into the model.
 
 We propose that at each cycle in elongation, the ribosome must make a decision: stay in the current reading frame,
@@ -190,6 +205,7 @@ choose the +1 frame at the frameshift codon (but must stay in the 0 frame before
 and the +1 frame after) in order for the run to be a success.
 
 \subsubsection{Displacement Deviation}
+\label{section:deviation}
 
 We propose the formula
 \begin{equation}
@@ -230,8 +246,8 @@ provide an excellent method of calibration.
 
 We optimize the separation between pcZ101 and pcZ105 yields and those of other bGH sequences.  
 First, we generate a list of randomly modified TAV vectors at which
-point we calculate the ratio of the deviation from
-displacement (\autoref{deviation}) for pcZ101 and pcZ105 to the other
+point we calculate the ratio of the displacement deviation from
+displacement (\autoref{section:deviation}) for pcZ101 and pcZ105 to the other
 six bGH proteins. From there, we sort the modified TAV according to
 this ratio and discarding the least optimal half of the tRNA
 vectors. We then choose two of the remaining vectors, with the chance
@@ -365,7 +381,7 @@ conducted soon.
 % I'm colluding deviation and probability yield here, but it's for a
 % good purpose. --Hao.
 
-\citet{rpos:process} indicate that \rpoS, a gene that codes for an RNA
+\citet{rpoS:process} indicate that \rpoS, a gene that codes for an RNA
 polymerase sigma factor, contains sections of rare codons that disrupt
 ribosomal translation. Indeed, our computation model agrees with this
 biological evidence, showing again moderately high deviation from $x =
@@ -382,7 +398,7 @@ with synonymous four codons, and running our model against those
 permutations to obtain a locally optimal sequence at that place. We
 then repeat for all trouble spots the first, terminating when we have locally
 optimized the last one. With this algorithm, we reduced our standard
-deviation metric for the rpoS displacement plot from 0.168 to 0.117
+deviation metric for the \rpoS\ displacement plot from 0.168 to 0.117
 on sample size of 1000 with a replacement of 33 codons. The
 initial correlation between deviation and biological expression
 provides strong anecdotal evidence that, with future biological
@@ -416,7 +432,7 @@ The propensity to approach $x=2$, however, concurs with the biological idea that
 For these plots, a species angle of $\theta_{\rm{sp}} =-30\degree$ was used.
 Yet, we must note that the model is quite robust; that is, minor changes
 in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting much.
-\autoref{prfb:sens} illustrates the error-free rate
+\autoref{prfB:sens} illustrates the error-free rate as
 a function of species angle and initial displacement.  As noted,
 the frameshift holds over quite a wide range.
 
@@ -424,7 +440,7 @@ the frameshift holds over quite a wide range.
 \begin{figure}
   \centering
   \caption{Sensitivity plot for \ecoli\ genes}
-  \label{prfb:sens}
+  \label{prfB:sens}
   \includegraphics[scale=0.4]{prfB/sensitivity}
 \end{figure}
 
@@ -434,8 +450,6 @@ translational rate.  We repeated Weiss's experiments computationally
 using the stochastic model, and results agreed with those that Weiss found.
 This concurrence provides support for the biological validity of
 the stochastic model.
-
-% We need plots.
 
 Specifically, \citeauthor{weiss87} moved the stop codon in the
 \prfB\ sequence one nucleotide upstream, causing the sequence to fail to
@@ -457,11 +471,14 @@ of the time.  Although such a number is somewhat drastic by experimental
 standards \cite{weiss87,weiss88}, it indicates that the model provides
 strong predictive power.
 
-% More plots needed.
-
-% Another aspect of \citeauthor{weiss88}'s  work involved changing the 16S tail of the ribosomal RNA.
-
 \subsection{Verification}
+
+\begin{figure}
+  \centering
+  \caption{Artificial linker sequence sensitivity plot}
+  \label{linker:sens}
+  \includegraphics[scale=0.25]{linker/sensitivity}
+\end{figure}
 
 \begin{wrapfigure}{R}{0.55\textwidth}
   \caption{Artificial linker sequence}
@@ -477,7 +494,8 @@ artificially created a sixteen-codon sequence (\autoref{linker})
 designed to frameshift.  The sequence is designed to frameshift into
 the aag frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
-angle and initial displacement, in order to demonstrate robustness.
+angle and initial displacement, in order to demonstrate robustness,
+similar to the \prfB\ sensitivity plot (\autoref{prfB:sens}).
 
 A BLAST search finds about thirty matches of our sequence with areas of
 bacterial genomes.  Yet, none of these genomes come from \ecoli, which 
@@ -496,7 +514,20 @@ high levels of nitrophenol and low levels of catechol.
 The biological construct for this experiment is in the process of being created.
 Results should be available by the middle of October.
 
-% Talk about plots. --Hao
+\section{Conclusion}
+
+In the face of recent breakthroughs in genetics and as genetics
+becomes increasingly important in numerous fields, the inescapable
+component of biological experimentation remains a bottleneck that,
+fragile and finicky, presents time constraints and confounded data
+alien to a fast-paced field with enormous potential. As such, an
+accurate computational model is an invaluable tool. Our model is
+rapidly changing and always refining; initially given a deterministic
+model, we extended and tweaked it. In addition, we gathered a wide
+array of biological data that supported and further refined the
+model. In the future, as more experimental data arrives, we hope to
+further perfect the model. Our work thus represents an ongoing process
+and a radical evolution in bioinformatics.
 
 \addcontentsline{toc}{section}{References}
 \begin{singlespace}
