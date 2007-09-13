@@ -106,6 +106,35 @@ which increments after every wait cycle.
 
 % DANIEL END EDIT
 
+\subsection{Measures of Sequence Analysis}
+
+As this model is stochastic, multiple runs of the same sequence must be analyzed.
+As such, we propose two metrics for analysis of a number of different runs 
+simultaneously. 
+
+{\textbf{Error-Free Rate.}}  
+This metric of analysis is useful when studying a 
+sequence with a programmed frameshift.  It measures the percentage of runs 
+during which the sequence runs with the ribosome choosing the correct codon
+at \emph{every} juncture.  For a +1 frameshift, for example, the ribosome must
+choose the +1 frame at the frameshift codon (but must stay in the 0 frame before
+and the +1 frame after) in order for the run to be a success.
+
+{\textbf{Deviation from Baseline.}}
+We propose the formula
+\begin{equation}
+    \label{eqn:lbd}
+    d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}}
+\end{equation}
+where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is the displacement at codon $i$,
+and $N$ is the total number of codons as a measure of the deviation of the sequence
+from the expected reading frame.  Usually $\beta_i = 0$ unless a biologically verified frameshift exists. For example, for \prfB\ $\beta_i = 2$ for all $i \geq 25$ because \prfB\ frameshifts at codon 25 uga
+and the model represents a frameshift with +2 displacement.
+
+This model and all the algorithms that are discussed later in this report
+are implemented as a set of MATLAB and Perl codes.  All scripts are available
+open-source on the Internet, along with full documentation and many comments.
+
 \section{Calibrating tRNA Availability Values}
 
 Section~\ref{stochastic} suggests that the stochastic model is dependent
@@ -347,8 +376,8 @@ strong predictive power.
   \caption{Artificial linker sequence}
   \label{linker}
   \begin{verbatim}
-    agaaaucagacc
-    aug gag gcu ggc acc agg ggg uac agu uaag caa acg uag
+    aga aau cag acc aug gag gcu ggc acc 
+    agg ggg uac agu  u  aag caa acg
   \end{verbatim}
 \end{figure}
 
