@@ -1,6 +1,5 @@
-\documentclass[12pt]{article}
+\documentclass[12pt, draft]{article}
 \usepackage{candor, setspace, color, wrapfig}
-
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed]{hyperref}
 
@@ -32,6 +31,7 @@ bond together to form the full protein.
 
 \section{Description of the Model}
 \label{allmodel}
+
 \subsection{Free Energy}
 \label{freeenergy}
 
@@ -45,18 +45,41 @@ Using this model, Freier calculated the free energy available
 for the hybridization of all permutations of RNA doublets.
 
 % Hao: I took out the setting energy values due to irrelevance.
-From this, we can simulate hybridization between the associated tRNA, corresponding to the number
-of times the force can increment displacement from the current reading frame.
-In their deterministic model, the force acts for \emph{exactly} this set number of cycles given a codon.
+\subsection{A Deterministic Model for Displacement} 
+ 
+\citet{lalit:mechanics} assume a sinusoidal model for
+free energy, whence one can project free energy onto magnitude and
+phase through a noise-filtering memory model. Ponnala simualtes free
+energy in a memory structure that can store three values (registers)
+that he later can represent as a phasor, a concept from physics. Then,
+we can visualize free energy from polar plots and deduce frameshifts,
+which occur along defined boundaries on the polar plot for a species.
+ 
+\citet{lalit:embs} then represent the cummulative phasor
+at codon $k$ as $\bvec{V} = Me^{i\theta}$ where $i$ is the imaginary
+constant, allowing us to calculate the magnitude and phase at codon
+$k$ through simple trigonometry. Differentiating this vector, we
+arrive at vector $\bvec{D}$ for instantaneous energy, interpreting
+this vector as a force that acts on the ribosome, keeping the mRNA in
+a given reading frame.
+ 
+The length of time that the force acts on the ribosome depends upon
+the codon's tRNA availability at the A-site during translation.
+Ponnala uses a deterministic model to represent this: For each codon,
+a number of ``wait cycles," dependent upon the rarity of the
+associated tRNA, correspond to the number of times the force can
+increment displacement from the current reading frame.  In their
+deterministic model, the force acts for \emph{exactly} this set number
+of cycles given a codon We can then simulate hybridization between the
+16S ribosomal subunit and a given mRNA strand.  First, the 13-base 16S
+tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
+which is a 12-base leader sequence and the first base of the start
+codon aug, to determine the free energy value of the first acid.
+Then, shifting one base pair at a time, we calculate the free energy
+for the entire sequence.
+ 
 
 \subsection{Frameshifts}
-
-% Where the following concept should be first mentioned, I'm not sure -- Vivek
-
-First, we let a displacement of $x = 0$ correspond to the zero reading frame and increments of
-\emph{two} to represent a one-nucleotide change. For example, $x =2$ represent the +1 frame.
-\citet{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable) points in displacement in their model,
-as would be expected.
 
 \begin{figure}
   \centering
@@ -65,12 +88,19 @@ as would be expected.
   \includegraphics[scale=0.4]{prfB/deterministic}
 \end{figure}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{R}{0.5\textwidth}
   \centering
   \caption{Polar plot of \prfB}
   \label{prfB:polar}
   \includegraphics[scale=0.5]{prfB/polar}
 \end{wrapfigure}
+
+% Where the following concept should be first mentioned, I'm not sure -- Vivek
+
+First, we let a displacement of $x = 0$ correspond to the zero reading frame and increments of
+\emph{two} to represent a one-nucleotide change. For example, $x =2$ represent the +1 frame.
+\citet{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable) points in displacement in their model,
+as would be expected.
 
 A sudden jump from approximately $x = 0$ to $x = 2$ is then the first indication of a $+1$ frameshift.
 In essence, this jump suggests that the ribosome skips one entire base pair in the mRNA sequence.
@@ -241,7 +271,7 @@ evaluates the proposed metric.
 
 % CITATION ???
 
-\begin{wrapfigure}{r}{0.55\textwidth}
+\begin{wrapfigure}{R}{0.55\textwidth}
   \centering
   \caption{Displacement deviation for \ecoli\ genes}
   \label{ecoli:hist}
@@ -284,7 +314,7 @@ from $x = 0$ (\autoref{bgh:deviation}), which in our model~\cite{lalit:mechanics
 higher yield as increasing deviation from the correct reading frame
 produces larger error within the ribosome during translation.
 
-\begin{table}[tbp]
+\begin{wrapfigure}{R}{0.5\textwidth}
 \begin{center}
     \begin{tabular}{lc}
         \toprule
@@ -304,7 +334,7 @@ produces larger error within the ribosome during translation.
     \caption{Deviations for bGH Sequences with Sample Size~200}
     \label{bgh:deviation}
 \end{center}
-\end{table}
+\end{wrapfigure}
 
 In addition, in examining the polar plots, we noticed that during
 early translation the phase of translation for pcZ101 and pcZ105 tended toward the species
@@ -390,14 +420,13 @@ in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting much.
 a function of species angle and initial displacement.  As noted,
 the frameshift holds over quite a wide range.
 
-%\begin{wrapfigure}{r}{0.5\textwidth}
-%  \centering
-%  \caption{Displacement deviation for \ecoli\ genes}
-%  \label{prfb:sens}
-%  \includegraphics[scale=0.2]{prfB/sensitivity}
-%\end{wrapfigure}
-
 \subsection{Biological Verification for \prfB}
+\begin{figure}
+  \centering
+  \caption{Sensitivity plot for \ecoli\ genes}
+  \label{prfb:sens}
+  \includegraphics[scale=0.4]{prfB/sensitivity}
+\end{figure}
 
 \citet{weiss87,weiss88} conducted research on the
 frameshift in \prfB, determining factors that would affect
@@ -434,7 +463,7 @@ strong predictive power.
 
 \subsection{Verification}
 
-\begin{wrapfigure}{r}{0.55\textwidth}
+\begin{wrapfigure}{R}{0.55\textwidth}
   \caption{Artificial linker sequence}
   \label{linker}
   \begin{verbatim}
