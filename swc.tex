@@ -131,7 +131,8 @@ As this model is stochastic, multiple runs of the same sequence must be analyzed
 As such, we propose two metrics for analysis of a number of different runs 
 simultaneously. 
 
-\noindent{\textbf{Error-Free Rate.}}  
+\subsubsection{Error-Free Rate}
+
 This metric of analysis is useful when studying a 
 sequence with a programmed frameshift.  It measures the percentage of runs 
 during which the sequence runs with the ribosome choosing the correct codon
@@ -139,7 +140,8 @@ at \emph{every} juncture.  For a +1 frameshift, for example, the ribosome must
 choose the +1 frame at the frameshift codon (but must stay in the 0 frame before
 and the +1 frame after) in order for the run to be a success.
 
-\noindent{\textbf{Deviation from Baseline.}}
+\subsubsection{Displacement Deviation}
+
 We propose the formula
 \begin{equation}
     \label{eqn:lbd}
@@ -358,10 +360,16 @@ The propensity to approach $x=2$, however, concurs with the biological idea that
 For these plots, a species angle of $\theta_{\rm{sp}} =-30\degree$ was used.
 Yet, we must note that the model is quite robust; that is, minor changes
 in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting much.
-\autoref{prfb:sens} illustrates the proportion of times that the sequence
-frameshifts at the proper place and completes translation without errors---that is, the yield---as
+\autoref{prfb:sens} illustrates the error-free rate
 a function of species angle and initial displacement.  As noted,
 the frameshift holds over quite a wide range.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \centering
+  \caption{Displacement deviation for \ecoli\ genes}
+  \label{prfb:sens}
+  \includegraphics[scale=0.2]{prfB/sensitivity}
+\end{wrapfigure}
 
 \subsection{Biological Verification for \prfB}
 
