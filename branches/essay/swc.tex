@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{candor, setspace, color}
+\usepackage{candor, setspace, color, wrapfig}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed]{hyperref}
@@ -41,10 +41,17 @@ as would be expected.
 
 \begin{figure}
   \centering
-  \caption{Deterministic displacement plot of \prfB}
+  \caption{Deterministic displacement plot of~\prfB}
   \label{prfB:deterministic}
-  \includegraphics[scale=0.7]{prfB/deterministic.pdf}
+  \includegraphics[scale=0.4]{prfB/deterministic}
 \end{figure}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \centering
+  \caption{Polar plot of \prfB}
+  \label{prfB:polar}
+  \includegraphics[scale=0.5]{prfB/polar}
+\end{wrapfigure}
 
 A sudden jump from approximately $x = 0$ to $x = 2$ is then the first indication of a $+1$ frameshift.
 In essence, this jump suggests that the ribosome skips one entire base pair in the mRNA sequence.
@@ -55,7 +62,7 @@ In conjunction with this characteristic plot, a $+1$ frameshift also shows a clo
 rotation of phase angle from the species angle, consistent with the creation of displacement data from the phasors.
 Intuitively, a frameshift is only sustained if the free energy signal aligns itself with the sudden jump in displacement.
 Since the free energy signal has a period of one codon~\cite{lalit:mechanics}, for a $+1$ frameshift the free energy signal
-must undergo a phase shift of one-third of an entire period (\autoref{prfb:polar}).
+must undergo a phase shift of one-third of an entire period (\autoref{prfB:polar}).
 
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
@@ -145,7 +152,7 @@ For example, for \prfB\ $\beta_i = 2$ for all $i \geq 25$ because \prfB\ framesh
 and the model represents a frameshift with +2 displacement.
 
 This model and all the algorithms that are discussed later in this report
-are implemented as a set of MATLAB and Perl codes.  All scripts are available
+are implemented as a set of Matlab and Perl codes.  All scripts are available
 open-source on the Internet, along with full documentation and many comments.
 
 \section{Calibrating tRNA Availability Values}
@@ -164,7 +171,7 @@ Although this assumption has biological basis~\cite{ikemura},
 it is still quite possible that the true values for these numbers may differ 
 slightly from those that Ponnala calculated, purely due to sampling error.  
 As such, we designed a genetic algorithm to calibrate these values based on the bovine growth hormone (bGH) sequences.
-As will be discussed in \autoref{bGH}, biological experiments
+As will be discussed in \autoref{section:bgh}, biological experiments
 have been conducted \cite{schoner:bgh} that propose a set of eight sequences coding for bGH,
 two of which have very high yield (pcZ101 and pcZ105) and six of which have low yield.
 Since these sequences are known to be translationally regulated, they
@@ -213,10 +220,17 @@ evaluates the proposed metric.
 
 % CITATION ???
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \centering
+  \caption{Displacement deviation for \ecoli\ genes}
+  \label{ecoli:hist}
+  \includegraphics[scale=0.2]{histograms/everything}
+\end{wrapfigure}
+
 Many microbiologists agree that translation in \ecoli\ is a rather efficient
 process.  It logically follows that the model should indicate low deviation
 for most \ecoli\ proteins.  Indeed, computational data supports this hypothesis.
-\autoref{allhist} is a histogram of the deviation yields of 4364 genes of
+\autoref{ecoli:hist} is a histogram of the deviation yields of 4364 genes of
 \ecoli, over 80\% of the entire genome.  As predicted, the vast majority
 of these genes lie in the 0 to 1 interval.
 
@@ -226,6 +240,7 @@ them in such large quantities.  Our model supports this claim as well.
 {\textbf{WE NEED MORE HERE!!!}}
 
 \subsection{Bovine Growth Hormone}
+\label{section:bgh}
 
 % Perhaps include a plot of Schoner's yield and our deviation.
 
