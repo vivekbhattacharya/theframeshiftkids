@@ -1,9 +1,14 @@
 \documentclass[12pt, draft]{article}
-\usepackage{candor, setspace}
+\usepackage{candor, setspace, color}
+
+\usepackage[final, colorlinks=true, linkcolor=BWFBlue,
+  citecolor=BWFGreen, urlcolor=BWFRed]{hyperref}
 \linespread 2
 \numberwithin{equation}{section}
 
 \begin{document}
+\tableofcontents
+
 \section{Introduction}
 
 \section{Description of the Model}
@@ -31,19 +36,26 @@ In their deterministic model, the force acts for \emph{exactly} this set number 
 
 First, we let a displacement of $x = 0$ correspond to the zero reading frame and increments of
 \emph{two} to represent a one-nucleotide change. For example, $x =2$ represent the +1 frame.
-~\citeauthor{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable) points in displacement in their model,
+\citet{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed (stable) points in displacement in their model,
 as would be expected.
+
+\begin{figure}
+  \centering
+  \caption{Deterministic displacement plot of \prfB}
+  \label{prfB:deterministic}
+  \includegraphics[scale=0.7]{prfB/deterministic.pdf}
+\end{figure}
 
 A sudden jump from approximately $x = 0$ to $x = 2$ is then the first indication of a $+1$ frameshift.
 In essence, this jump suggests that the ribosome skips one entire base pair in the mRNA sequence.
-Figure~\ref{prfB:lalitdisp} shows the displacement plot per this deterministic model for \prfB, 
+\autoref{prfB:deterministic} shows the displacement plot per this deterministic model for \prfB, 
 a gene known to have a programmed $+1$ frameshift at codon 25.
 
 In conjunction with this characteristic plot, a $+1$ frameshift also shows a clockwise 120\degree\
 rotation of phase angle from the species angle, consistent with the creation of displacement data from the phasors.
 Intuitively, a frameshift is only sustained if the free energy signal aligns itself with the sudden jump in displacement.
 Since the free energy signal has a period of one codon~\cite{lalit:mechanics}, for a $+1$ frameshift the free energy signal
-must undergo a phase shift of one-third of an entire period (Figure~\ref{prfb:polar}).
+must undergo a phase shift of one-third of an entire period (\autoref{prfb:polar}).
 
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
@@ -137,22 +149,22 @@ open-source on the Internet, along with full documentation and many comments.
 
 \section{Calibrating tRNA Availability Values}
 
-Section~\ref{stochastic} suggests that the stochastic model is dependent
+\autoref{stochastic} suggests that the stochastic model is dependent
 on a number of input parameters, all of which have to be tuned to optimize
 the predictive power of the model.  As will be discussed in later sections,
 many of these parameters, including the species angle and the initial displacement,
-are robust; minor changes in these values will have negligible repurcussions
+are robust; minor changes in these values will have negligible repercussions
 on the output of the model.  A parameter that is much more difficult to estimate
 is tRNA availability values (TAV vectors).
 
-\citeauthor{lalit:embs} base the tRNA avaliability values on codon usage, 
+\citeauthor{lalit:embs} base the tRNA availability values on codon usage, 
 surveying a set of genes from \ecoli.
 Although this assumption has biological basis~\cite{ikemura}, 
 it is still quite possible that the true values for these numbers may differ 
 slightly from those that Ponnala calculated, purely due to sampling error.  
 As such, we designed a genetic algorithm to calibrate these values based on the bovine growth hormone (bGH) sequences.
-As will be discussed in Section~\ref{bGH}, biological experiments
-have been conducted \cite{schoner} that propose a set of eight sequences coding for bGH,
+As will be discussed in \autoref{bGH}, biological experiments
+have been conducted \cite{schoner:bgh} that propose a set of eight sequences coding for bGH,
 two of which have very high yield (pcZ101 and pcZ105) and six of which have low yield.
 Since these sequences are known to be translationally regulated, they
 provide an excellent method of calibration.
@@ -160,7 +172,7 @@ provide an excellent method of calibration.
 We optimize the separation between pcZ101 and pcZ105 yields and those of other bGH sequences.  
 First, we generate a list of randomly modified TAV vectors at which
 point we calculate the ratio of the deviation from
-displacement (Section~\ref{deviation}) for pcZ101 and pcZ105 to the other
+displacement (\autoref{deviation}) for pcZ101 and pcZ105 to the other
 six bGH proteins. From there, we sort the modified TAV according to
 this ratio and discarding the least optimal half of the tRNA
 vectors. We then choose two of the remaining vectors, with the chance
@@ -174,7 +186,7 @@ optimal TAV vector.
 This algorithm did not alter the TAV vectors to a significant degree.
 In fact, the average change to each value in the vector was merely
 10\%.  Yet, the newly generated vector returns much more optimal
-results than the one calculated by Ponnala et al.  The new values
+results than the one calculated by \citeauthor{lalit:embs}.  The new values
 are used throughout the remainder of the paper to produce the 
 values and graphs.
 
@@ -190,7 +202,7 @@ that translate at optimal level.  As such, developing a computational method
 to roughly predict translational efficiency would have much impact for the 
 biological community.
 
-Section~\ref{allmodel} suggests that divergence from $x=0$ causes
+\autoref{allmodel} suggests that divergence from $x=0$ causes
 problems in translation; after all, this divergence is an essential characteristic
 of a frameshift.  Thus, we stipulate that high translational efficiency should correlate to low deviation yield,
 since this requirement implies proximity to the horizontal axis.  This section
@@ -203,7 +215,7 @@ evaluates the proposed metric.
 Many microbiologists agree that translation in \ecoli\ is a rather efficient
 process.  It logically follows that the model should indicate low deviation
 for most \ecoli\ proteins.  Indeed, computational data supports this hypothesis.
-Figure~\ref{allhist} is a histogram of the deviation yields of 4364 genes of
+\autoref{allhist} is a histogram of the deviation yields of 4364 genes of
 \ecoli, over 80\% of the entire genome.  As predicted, the vast majority
 of these genes lie in the 0 to 1 interval.
 
@@ -224,14 +236,14 @@ in \ecoli\ in large amounts.  As this process was purely biological, researchers
 simply induced changes in a sequence until protein yield increased, thus resulting
 in a rather arduous process.  We suggest that our model can accurately
 differentiate between high and low yield proteins, thus providing a preliminary screen
-to determine translational efficiency before biological verfication.
+to determine translational efficiency before biological verification.
 
 Schoner~\cite{schoner:bgh}, primarily modifying the initial codons of an initial
 bovine growth hormone sequence, found two sequences (pcZ101 and pcZ105)
 to have particularly high protein yield and efficient with respect to
 the six other sequences. Our model agrees with his findings. In modeling displacement,
 we found pcZ101 and pcZ105 to have the least reading frame deviation
-from $x = 0$ (Table~\ref{bgh:deviation}), which in our model~\cite{lalit:mechanics} indicates
+from $x = 0$ (\autoref{bgh:deviation}), which in our model~\cite{lalit:mechanics} indicates
 higher yield as increasing deviation from the correct reading frame
 produces larger error within the ribosome during translation.
 
@@ -252,7 +264,7 @@ produces larger error within the ribosome during translation.
         pcZ115 & 0.79794\\
         \bottomrule
     \end{tabular}
-    \caption{Deviation for bGH Sequences with Sample Size~200}
+    \caption{Deviations for bGH Sequences with Sample Size~200}
     \label{bgh:deviation}
 \end{center}
 \end{table}
@@ -318,19 +330,19 @@ In \ecoli, the gene \prfB\ codes for protein release factor B, an essential elem
 This gene, as mentioned, is known to have a programmed frameshift at
 the 25$^{\textrm{th}}$ codon.
 Our proposed stochastic model, as with the original model, can accurately predict this frameshift.
-Figure~\ref{prfb:disp} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
+\autoref{prfb:disp} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
 To account for random variation, ten different runs are shown on the same set of axes.
-\footnote{Note that the polar plot is the the same as Figure~\ref{prfB:polar}; 
+\footnote{Note that the polar plot is the the same as \autoref{prfB:polar}; 
 the new model does not alter the polar plot and the free energy calculations.}
 
 Notably, the displacement plot does not reach $x=2$ over the span of one codon, as the old model predicted.
 Rather, due to randomness, the ribosome chooses the codon in the $+1$ frame before actually reaching a displacement of exactly 2.
 The propensity to approach $x=2$, however, concurs with the biological idea that the ribosome stays in frame after the frameshift.
 
-For these plots, a species angle of $\theta_{\rm{sp}=-30\degree}$ was used.
+For these plots, a species angle of $\theta_{\rm{sp}} =-30\degree$ was used.
 Yet, we must note that the model is quite robust; that is, minor changes
 in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting much.
-Figure~\ref{prfb:sens} illustrates the proportion of times that the sequence
+\autoref{prfb:sens} illustrates the proportion of times that the sequence
 frameshifts at the proper place and completes translation without errors---that is, the yield---as
 a function of species angle and initial displacement.  As noted,
 the frameshift holds over quite a wide range.
@@ -349,16 +361,16 @@ the stochastic model.
 Specifically, \citeauthor{weiss87} moved the stop codon in the
 \prfB\ sequence one nucleotide upstream, causing the sequence to fail to
 frameshift. Moving the stop codon another nucleotide upstream failed
-to create a frameshift as well.  Figures~\ref{prfb:move1} and~\ref{prfb:move2}
+to create a frameshift as well. \autoref{prfb:move1} and \autoref{prfb:move2}
 show the displacement of these sequences.  As illustrated,
 the frameshift is absent in both displacement plots.  The polar
-plots, Figures~\ref{prfb:move1polar} and~\ref{prfb:move2polar}
+plots, \autoref{prfb:move1polar} and \autoref{prfb:move2polar}
 lack the 180\degree shift present in that of the actual sequence.
 
 In another experiment, \citeauthor{weiss88} altered the sequence of the
 16S ribosomal tail, changing one nucleotide in the Shine-Dalgarno-like region
 from guanine to cytosine.  As predicted by the stochastic model, this
-change derailed the frameshift (Figure~\ref{prfb:weisschange}).
+change derailed the frameshift (\autoref{prfb:weisschange}).
 
 In all the cases discussed, 1000 iterations of the stochastic model
 suggested that the sequence would frameshift at the desired location 0\%
@@ -382,7 +394,7 @@ strong predictive power.
 \end{figure}
 
 In order to verify the model's ability to predict frameshifts, we
-artificially created a thirteen-codon sequence (Figure~\ref{linker})
+artificially created a thirteen-codon sequence (\autoref{linker})
 with a twelve-acid leader that frameshifts at the ninth codon and,
 from a BLAST search, is not known to nature.  Using a fused protein of
 beta-galactosidase, our linker, and xylE, we measured levels of our
@@ -395,6 +407,7 @@ expression of our linker sequence.
 
 % Talk about plots. --Hao
 
+\addcontentsline{toc}{section}{References}
 \begin{singlespace}
   \bibliography{wizards}
 \end{singlespace}
