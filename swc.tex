@@ -1,4 +1,4 @@
-\documentclass[12pt, draft]{article}
+\documentclass[12pt]{article}
 \usepackage{candor, setspace, color, wrapfig}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
@@ -11,6 +11,24 @@
 \tableofcontents
 
 \section{Introduction}
+
+\subsection{Protein Translation}
+
+A cell's genetic material is contained in its DNA, a long string
+of nucleotides containing one of four nitrogenous bases: adenine,
+guanine, cytosine, and thymine.  However, DNA is not
+directly involved in the process of producing a protein.  Rather, through
+a process called \emph{transcription}, mRNA is produced from DNA.
+This mRNA then arrives at a ribosome and undergoes \emph{translation}, or
+protein production.
+
+Each group of three nucleotides on the mRNA strand forms a \emph{codon}.
+Each codon, furthermore, codes from a specific amino acid.  When the mRNA
+is in the ribosome, specialized molecules called tRNA bring amino acids
+to the ribosome.  Once the proper amino acid is found for the current codon,
+the ribosome shifts three nucleotides in view---one full codon---and waits
+for a tRNA to bring the appropriate amino acid.  In turn, these amino acids
+bond together to form the full protein.
 
 \section{Description of the Model}
 \label{allmodel}
@@ -347,7 +365,7 @@ bypassing a slow and arduous biological experimentation process.
 
 \begin{figure}
   \centering
-  \caption{Deterministic displacement plot of \prfB}
+  \caption{Stochastic displacement plot of \prfB}
   \label{prfB}
   \includegraphics[scale=0.4]{prfB/disp}
 \end{figure}
@@ -372,12 +390,12 @@ in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting much.
 a function of species angle and initial displacement.  As noted,
 the frameshift holds over quite a wide range.
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \centering
-  \caption{Displacement deviation for \ecoli\ genes}
-  \label{prfb:sens}
-  \includegraphics[scale=0.2]{prfB/sensitivity}
-\end{wrapfigure}
+%\begin{wrapfigure}{r}{0.5\textwidth}
+%  \centering
+%  \caption{Displacement deviation for \ecoli\ genes}
+%  \label{prfb:sens}
+%  \includegraphics[scale=0.2]{prfB/sensitivity}
+%\end{wrapfigure}
 
 \subsection{Biological Verification for \prfB}
 
@@ -426,16 +444,28 @@ strong predictive power.
 \end{wrapfigure}
 
 In order to verify the model's ability to predict frameshifts, we
-artificially created a thirteen-codon sequence (\autoref{linker})
-with a twelve-acid leader that frameshifts at the ninth codon and,
-from a BLAST search, is not known to nature.  Using a fused protein of
-beta-galactosidase, our linker, and xylE, we measured levels of our
-synthetic compound. $\beta$-gal and xylE constructs retain their
-functionality and thus we can measure protein expression during an in
-vivo experiment. For example, beta-galactosidase levels correlate to
-levels of nitrophenol, which has a yellow color, while xylE expresses
-an enzyme that cleaves catechol, another metric that correlates to the
-expression of our linker sequence.
+artificially created a sixteen-codon sequence (\autoref{linker})
+designed to frameshift.  The sequence is designed to frameshift into
+the aag frame after crossing the sole uracil.  Figure~\ref{linker:sens}
+shows the error-free rate of the linker sequence as a function of species
+angle and initial displacement, in order to demonstrate robustness.
+
+A BLAST search finds about thirty matches of our sequence with areas of
+bacterial genomes.  Yet, none of these genomes come from \ecoli, which 
+adds interest to this experiment.  To test the frameshifting capacity of
+this linker sequence, we propose a biological experiment.
+
+We create a bifunctional fusion protein containing beta-galactosidase (\bgals) 
+and \xylE.  Beta-galactosidase levels correlate to
+levels of nitrophenol, which has a yellow color, while \xylE\ expresses
+an enzyme that cleaves catechol.  These two proteins are joined by
+the proposed linker sequence.  Research indicates that even in this
+fused protein, both \bgals\ and \xylE\ should retain their functionalities.
+As such, if the frameshift were to occur, one should observe both 
+high levels of nitrophenol and low levels of catechol.
+
+The biological construct for this experiment is in the process of being created.
+Results should be available by the middle of October.
 
 % Talk about plots. --Hao
 
