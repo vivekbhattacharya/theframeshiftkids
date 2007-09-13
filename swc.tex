@@ -1,8 +1,9 @@
-\documentclass[12pt]{article}
+\documentclass[12pt, draft]{article}
 \usepackage{candor, setspace, color, wrapfig}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed]{hyperref}
+
 \linespread 2
 \numberwithin{equation}{section}
 
@@ -222,7 +223,7 @@ evaluates the proposed metric.
 
 % CITATION ???
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{r}{0.55\textwidth}
   \centering
   \caption{Displacement deviation for \ecoli\ genes}
   \label{ecoli:hist}
@@ -293,7 +294,7 @@ angle $-30\degree$ before diverging toward approximately $15\degree$. As
 it stands, our model, as with displacement, indicates higher yield when the polar plot
 indicates less deviation from the correct (zero) reading frame, as it
 does here with the species angle~\cite{lalit:mechanics}. Therefore our
-model is consistent with research~\cite{bgh:initiation} that indicates
+model is consistent with research that indicates
 the early codons have a dramatic impact on the ultimate efficiency of
 ribosomal translation.
 
@@ -344,11 +345,18 @@ bypassing a slow and arduous biological experimentation process.
 
 \subsection{Results for \prfB}
 
+\begin{figure}
+  \centering
+  \caption{Deterministic displacement plot of \prfB}
+  \label{prfB}
+  \includegraphics[scale=0.4]{prfB/disp}
+\end{figure}
+
 In \ecoli, the gene \prfB\ codes for protein release factor B, an essential element in translation.
 This gene, as mentioned, is known to have a programmed frameshift at
 the 25$^{\textrm{th}}$ codon.
 Our proposed stochastic model, as with the original model, can accurately predict this frameshift.
-\autoref{prfb:disp} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
+\autoref{prfB} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
 To account for random variation, ten different runs are shown on the same set of axes.
 \footnote{Note that the polar plot is the the same as \autoref{prfB:polar}; 
 the new model does not alter the polar plot and the free energy calculations.}
@@ -408,14 +416,14 @@ strong predictive power.
 
 \subsection{Verification}
 
-\begin{figure}
+\begin{wrapfigure}{r}{0.55\textwidth}
   \caption{Artificial linker sequence}
   \label{linker}
   \begin{verbatim}
-    aga aau cag acc aug gag gcu ggc acc 
+    aga aau cag acc aug gag gcu ggc acc
     agg ggg uac agu  u  aag caa acg
   \end{verbatim}
-\end{figure}
+\end{wrapfigure}
 
 In order to verify the model's ability to predict frameshifts, we
 artificially created a thirteen-codon sequence (\autoref{linker})
