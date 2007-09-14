@@ -1,4 +1,4 @@
-\documentclass[12pt, draft]{article}
+\documentclass[12pt]{article}
 \usepackage{candor, setspace, color, wrapfig}
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={On the Computational
@@ -24,7 +24,17 @@
 
 \begin{abstract}
   \begin{normalsize}
-    In this document, we present heresy and general chaos.
+  In this document, we discuss a stochastic model for ribosomal displacement relative to reading 
+  frame based on forces arising from changes in free energy present in hybridization between the 
+  16S rRNA tail and nucleotides upstream from the A-site.  We present both our investigation and 
+  potential applications for this model, including optimization of economically significant gene
+  sequences such as bovine growth horme, non-experimental verification of translational efficiency for man-made 
+  proteins, adjustment of calculated tRNA availability values, and modelling of frameshifts in \prfB\ in \ecoli.  This
+  investigation is presented as a series of sections comprising of various inquiries that were made 
+  in subjects ranging throughout the field of molecular biology.  We also applied our stochastic 
+  model to create a short, 16-codon sequence that is not known to produce a frameshift in nature 
+  in order to test our model's predictive power for synthesized mRNA sequences, and designed an 
+  experiment to verify this frameshift.  Results are expected at the beginning of October 2007.
   \end{normalsize}
 \end{abstract}
 
@@ -32,6 +42,20 @@
 
 \pagenumbering{arabic}
 \section{Introduction}
+
+Since the advent of gene sequencing technology, bacteria---in particular,
+\emph{Escherichia coli}---have been studied as potential factories for the
+mass production of synthetic proteins.  The optimization of the production
+of human insulin in \ecoli\ epitmoizes the utility of this idea.  Yet, the
+intricate details of protein translation are not fully understood; differentiating
+between a high-yield and a low-yield sequence often amounts to tedious 
+biological experimentation.  
+
+To attack this problem, we wish to propose a stochastic
+model for translation in the ribosome.  We study the applications
+of this model as a means of screening for high-yield proteins without biological experimentation.
+In addition, we analyze the applications of this model in the detection of ribosomal
+frameshifts.
 
 \subsection{Protein Translation}
 
@@ -202,8 +226,8 @@ probability of choosing the codon in the current reading frame is just
   \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
 \end{align}
 Here, $n$ represents the wait time for that codon and $K$ is the
-ordinal of the wait cycle. (For example, $K=1$ on the first wait
-cycle, $NK2$ on the second, and so forth.)  Importantly,
+ordinal of the wait cycle. For example, $K=1$ on the first wait
+cycle, $K=2$ on the second, and so forth.  Importantly,
 $\omega$ is dependent on displacement, which increments after
 every wait cycle.
 
@@ -470,7 +494,7 @@ the frameshift holds over quite a wide range.
 \subsection{Biological Verification for \prfB}
 \begin{figure}
   \centering
-  \caption{Sensitivity plot for \ecoli\ genes}
+  \caption{Sensitivity plot for \prfB}
   \label{prfB:sens}
   \includegraphics[scale=0.4]{prfB/sensitivity}
 \end{figure}
@@ -510,7 +534,7 @@ of the time.  Although such a number is somewhat drastic by experimental
 standards \cite{weiss87,weiss88}, it indicates that the model provides
 strong predictive power.
 
-\subsection{Verification}
+\subsection{Verification: An Artificial Frameshifter}
 
 \begin{figure}
   \centering
