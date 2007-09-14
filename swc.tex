@@ -28,7 +28,7 @@
   frame based on forces arising from changes in free energy present in hybridization between the 
   16S rRNA tail and nucleotides upstream from the A-site.  We present both our investigation and 
   potential applications for this model, including optimization of economically significant gene
-  sequences such as bovine growth horme, non-experimental verification of translational efficiency for man-made 
+  sequences such as bovine growth horme, non-experimental prediction of translational efficiency for man-made 
   proteins, adjustment of calculated tRNA availability values, and modelling of frameshifts in \prfB\ in \ecoli.  This
   investigation is presented as a series of sections comprising of various inquiries that were made 
   in subjects ranging throughout the field of molecular biology.  We also applied our stochastic 
@@ -46,16 +46,15 @@
 Since the advent of gene sequencing technology, bacteria---in particular,
 \emph{Escherichia coli}---have been studied as potential factories for the
 mass production of synthetic proteins.  The optimization of the production
-of human insulin in \ecoli\ epitmoizes the utility of this idea.  Yet, the
+of human insulin in \ecoli\ epitomizes the utility of this idea.  Yet, the
 intricate details of protein translation are not fully understood; differentiating
-between a high-yield and a low-yield sequence often amounts to tedious 
+between a high-yield and a low-yield sequence often requires tedious and costly
 biological experimentation.  
 
-To attack this problem, we wish to propose a stochastic
-model for translation in the ribosome.  We study the applications
-of this model as a means of screening for high-yield proteins without biological experimentation.
-In addition, we analyze the applications of this model in the detection of ribosomal
-frameshifts.
+To attack this problem, we propose a stochastic model for translation in the 
+ribosome.  We study the applications of this model as a means of screening for 
+high-yield proteins without biological experimentation.  In addition, we analyze 
+the applications of this model in the detection of ribosomal frameshifts.
 
 \subsection{Protein Translation}
 
@@ -68,7 +67,7 @@ This mRNA then arrives at a ribosome and undergoes ribosomal \emph{translation},
 protein production.
 
 Each group of three nucleotides on the mRNA strand forms a \emph{codon}.
-Each codon, furthermore, codes from a specific amino acid.  When the mRNA
+Each codon, furthermore, codes for a specific amino acid.  When the mRNA
 is in the ribosome, transfer RNA molecules bring amino acids
 to the ribosome.  Once the proper amino acid is found for the current codon,
 the ribosome shifts three nucleotides in view---one full codon---and waits
@@ -88,17 +87,17 @@ from this, we can calculate the free energy values for the interaction between t
 \citet{freier} propose a thermodynamic model for exactly this,
 modeling the interaction in terms of \emph{doublets}, which are pairs of consecutive nucleotides.
 Using this model, Freier calculated the free energy available
-for the hybridization of all permutations of RNA doublets.
+for the hybridization of permutations of RNA doublets.
 
 \subsection{A Deterministic Model for Displacement} 
  
 \citet{lalit:mechanics} assume a sinusoidal model for
-free energy, whence one can project free energy onto magnitude and
-phase through a noise-filtering memory model. Ponnala simulates free
+free energy, whence we can project free energy onto magnitude and
+phase through a memory model. Ponnala simulates free
 energy in a memory structure that can store three values (registers)
 that he later can represent as a phasor, a concept from physics. Then,
 we can visualize free energy from polar plots and deduce frameshifts,
-which occur along defined boundaries on the polar plot for a species.
+which occur along defined boundaries~\citet{lalit:mechanics} on the polar plot for a species.
  
 \citet{lalit:embs} then represent the cumulative phasor
 at codon $k$ as $\bvec{V} = Me^{i\theta}$ where $i$ is the imaginary
@@ -120,7 +119,7 @@ of cycles given a codon. We can then simulate hybridization between the
 16S ribosomal subunit and a given mRNA strand: First, the 13-base 16S
 tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
 which is a 12-base leader sequence and the first base of the start
-codon aug, to determine the free energy value of the first acid.
+codon \textsc{aug}, to determine the free energy value of the first acid.
 Then, shifting one base pair at a time, we calculate the free energy
 for the entire sequence according to \citet{starmer}.
 
@@ -258,7 +257,7 @@ where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is the displace
 and $N$ is the total number of codons as a measure of the deviation of the sequence
 from the expected reading frame.  Usually $\beta_i = 0$ unless a
 programmed frameshift exists as it does for \prfB.
-For example, for \prfB\ $\beta_i = 2$ for all $i \geq 25$ because \prfB\ frameshifts at codon 25 (uga)
+For example, for \prfB\ $\beta_i = 2$ for all $i \geq 25$ because \prfB\ frameshifts at codon 25 \textsc{uga}
 and the model represents a frameshift with +2 displacement per \autoref{section:frameshifts}.
 
 \section{Calibrating tRNA Availability Values}
@@ -556,7 +555,7 @@ strong predictive power.
 In order to verify the model's ability to predict frameshifts, we
 artificially created a sixteen-codon sequence (\autoref{linker})
 designed to frameshift.  The sequence is designed to frameshift into
-the aag frame after crossing the sole uracil.  Figure~\ref{linker:sens}
+the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
 angle and initial displacement, in order to demonstrate robustness,
 similar to the \prfB\ sensitivity plot (\autoref{prfB:sens}).
@@ -602,9 +601,8 @@ The genetic algorithm can be modified to account for larger sets of training
 data.  Eventually, we hope to expand the model to account for other species of
 bacteria using the same principles as the ones we used for \ecoli.
 
-Our model provides a number of analytical tools that
-is of potential use to microbiologists designing synthetic gene sequences,
-a process used to
+Our model provides a number of analytical tools of potential use to 
+microbiologists designing synthetic gene sequences, a process used to
 produce useful proteins for industry and medicine.
 With the code publicly available, we hope to gather enough data over the
 next few years to improve the accuracy of this model even further.
