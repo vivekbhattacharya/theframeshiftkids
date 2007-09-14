@@ -10,10 +10,10 @@ function [gen] = pokegod(folder)
     % How many generations should we have?
     % How big of a sample size for deviation?
     % How many nucleotides of a person to mutate per spawn?
-    pool_n = 40;
-    times = 10;
-    sample_n = 10;
-    radiation_n = 10;
+    pool_n = 65;
+    times = 100;
+    sample_n = 50;
+    radiation_n = 6;
     
     % Save optimal row because we won't have it after the for loop
     % completes looping.
