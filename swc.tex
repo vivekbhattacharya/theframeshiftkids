@@ -99,6 +99,7 @@ Then, shifting one base pair at a time, we calculate the free energy
 for the entire sequence according to \citet{starmer}.
 
 \subsection{Frameshifts}
+\label{section:frameshifts}
 
 \begin{figure}
   \centering
@@ -124,10 +125,11 @@ In essence, this jump suggests that the ribosome skips one entire base pair in t
 \autoref{prfB:deterministic} shows the displacement plot per this deterministic model for \prfB, 
 a gene with a programmed $+1$ frameshift at codon 25.
 
-In conjunction with this characteristic plot, a $+1$ frameshift also shows a clockwise 120\degree\
-rotation of phase angle from the species angle, consistent with the creation of displacement data from the phasors.
-Intuitively, a frameshift is only sustained if the free energy signal aligns itself with the sudden jump in displacement.
-Since the free energy signal has a period of one codon~\cite{lalit:mechanics}, for a $+1$ frameshift the free energy signal
+In conjunction with this characteristic plot, a $+1$ frameshift also displays a clockwise 120\degree\
+phase angle rotation from the species angle, consistent with the
+creation of the displacement vector from the phasors.
+Intuitively, a frameshift sustains if the free energy signal aligns with the sudden jump in displacement.
+Since the free energy signal has a period of one codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy signal
 must undergo a phase shift of one-third of an entire period (\autoref{prfB:polar}).
 
 \subsection{A Stochastic Model for Displacement}
@@ -135,20 +137,23 @@ must undergo a phase shift of one-third of an entire period (\autoref{prfB:polar
 
 As mentioned, the gene \prfB\ exhibits a definite frameshift under the
 deterministic model: The displacement jumps to $x=2$.  Certain other
-genes, however, demonstrate ambiguous behavior near $x = \pm
+genes, however, demonstrate equivocal, ambiguous behavior near $x = \pm
 1$~\cite{lalit:embs}.  In a deterministic model, the fixed
 displacement plots implies we cannot clearly interpret whether this
-behavior indicates a tendency for a stable frameshift.  In practice,
+behavior indicates a tendency for a stable frameshift. Even worse,
+the model may not show these unstable behaviors at all. In practice,
 ribosomal translations are not deterministic. Due to the presence of
 noise within the cell environment, we instead chose to model
 translation stochastically, adding randomness to the choice of reading
-frame a ribosome executes at each codon given the free energy signal.
+frame a ribosome performs at each codon based upon the free energy signal.
 As such, we introduce probability into the model.
 
-We propose that at each cycle in elongation, the ribosome must make a decision: stay in the current reading frame,
-move to the $+1$ reading frame,
-or move to the $-1$ reading frame.  We can further subdivide this choice into the individual wait-cycles.
-At each wait cycle, the ribosome chooses from the above possibilities or proceeds to another wait-cycle without making a decision.
+We propose that at each cycle in elongation, the ribosome must make a
+decision: stay in the current reading frame, move to the $+1$ reading
+frame, or move to the $-1$ reading frame.  We can further subdivide
+this choice into the individual wait-cycles.  At each wait cycle, the
+ribosome chooses from the above possibilities or proceeds to another
+wait-cycle without making a decision.
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
 current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the
@@ -160,52 +165,60 @@ cosine and sine functions for $abc$ and $bcd$.  We
 define $\omega$ as the \emph{weight} that is directly proportional to
 the probability.
 \begin{equation}
-  \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} = \sin^{10}{\frac{x\pi}{4}}.
+  \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} =
+  \sin^{10}{\frac{x\pi}{4}}.
+  \footnote{For the purposes of this model, the cosine and sine
+    functions are taken to the tenth power, but in future studies,
+    this parameter, which must be an even integer, can change.}
 \end{equation}
-For the purposes of this model, the cosine and sine functions are taken to the tenth power, but
-in future studies, this parameter can be modified as long as it stays an even positive integer.
-The functions have a period of two base pairs ($x=4$), which is biologically sound:
-If the ribosome lies completely in the 0 frame, then the probability of staying in the 0 frame should be 1.  
-Consequently, if the ribosome lies fully in the +1 frame ($x=2$), the probability of going to
-the 0 frame should be 0.
+If the ribosome lies completely in the 0 frame, then the probability
+of staying in the 0 frame should be 1.  Consequently, if the ribosome
+lies fully in the +1 frame ($x=2$), the probability of going to the 0
+frame should be 0. Therefore, these functions have a period of two
+base pairs ($x=4$).
 
-% DANIEL BEGIN EDIT
-
-Now we define a value $n_{abc}$ based on normalizing $N_{abc}$, the
+Now we define a value $n_{abc}$ based upon normalizing $N_{abc}$, the
 number of wait cycles, itself inversely proportional to the
 tRNA availability of codon $abc$.
 We want to wait long enough that the probability of assume the probability of frameshifting after
 after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
 probability of moving on to the next codon and staying in current reading
 frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
-\frac{1}{2}$.  Because $P \propto \omega_{abc}$, we define $n_{abc}$ to be the constant of
-proportionality. That is, $n_{abc} = \omega_{abc} / P$.  Coupled
-with that $\omega_{abc} \le 1$, we have $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1).$
-where $n = n_{abc}$ and $N = N_{abc}$. Mathematically, the probability of choosing a codon is then
-\begin{align}
-  \prod_{i=1}^N \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
-\end{align}
-Here, $n$ represents the wait time for that codon and $N$ is the ordinal of the wait cycle. (For example,
-$N=1$ on the first wait cycle, $N=2$ on the second, and so forth.)
-It is important to note that $\omega$ is dependent on displacement, 
-which increments after every wait cycle.
+\frac{1}{2}$.
 
-% DANIEL END EDIT
+Now assume we are at a particular wait cycle. In absence of further
+research, we assume by the principle of indifference the probability
+of frameshifting is 1/2.  Let $P$ be the instantaneous probability of
+moving on to the next codon and staying in the current reading frame.
+Then we should have $1-\left(1-P\right)^{N_{abc}} = \frac{1}{2}$.
+Given that $P \propto \omega_{abc}$, let $n_{abc}$ be the constant of
+proportionality; thus $n_{abc} = \omega_{abc} / P$.  We have
+$\omega_{abc} \le 1$, so hence $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$
+where $n = n_{abc}$ and $N = N_{abc}$.  Mathematically, the
+probability of choosing the codon in the current reading frame is just
+\begin{align}
+  \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
+\end{align}
+Here, $n$ represents the wait time for that codon and $K$ is the
+ordinal of the wait cycle. (For example, $K=1$ on the first wait
+cycle, $NK2$ on the second, and so forth.)  Importantly,
+$\omega$ is dependent on displacement, which increments after
+every wait cycle.
 
 \subsection{Measures of Sequence Analysis}
 
-As this model is stochastic, multiple runs of the same sequence must be analyzed.
+As this model is stochastic, multiple runs (the sample size) of the same sequence must be analyzed.
 As such, we propose two metrics for analysis of a number of different runs 
 simultaneously. 
 
 \subsubsection{Error-Free Rate}
 
-This metric of analysis is useful when studying a 
-sequence with a programmed frameshift.  It measures the percentage of runs 
-during which the sequence runs with the ribosome choosing the correct codon
+When studying a
+sequence with a programmed frameshift, it measures the percentage of runs 
+during which the ribosome chooses the correct codon
 at \emph{every} juncture.  For a +1 frameshift, for example, the ribosome must
-choose the +1 frame at the frameshift codon (but must stay in the 0 frame before
-and the +1 frame after) in order for the run to be a success.
+choose the +1 frame at the frameshift codon and stay in the 0 frame before
+and the +1 frame after in order for the run to be a success.
 
 \subsubsection{Displacement Deviation}
 \label{section:deviation}
@@ -217,37 +230,36 @@ We propose the formula
 \end{equation}
 where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is the displacement at codon $i$,
 and $N$ is the total number of codons as a measure of the deviation of the sequence
-from the expected reading frame.  Usually $\beta_i = 0$ unless a biologically verified frameshift exists. 
+from the expected reading frame.  Usually $\beta_i = 0$ unless a
+programmed frameshift exists as it does for \prfB.
 For example, for \prfB\ $\beta_i = 2$ for all $i \geq 25$ because \prfB\ frameshifts at codon 25 (uga)
-and the model represents a frameshift with +2 displacement.
-
-This model and all the algorithms that are discussed later in this report
-are implemented as a set of Matlab and Perl codes.  All scripts are available
-open-source on the Internet, along with full documentation and many comments.
+and the model represents a frameshift with +2 displacement per \autoref{section:frameshifts}.
 
 \section{Calibrating tRNA Availability Values}
 
-\autoref{stochastic} suggests that the stochastic model is dependent
-on a number of input parameters, all of which have to be tuned to optimize
+From \autoref{stochastic}, it becomes clear that the model depends upon
+its input parameters, all of which have to be tuned to optimize
 the predictive power of the model.  As will be discussed in later sections,
 many of these parameters, including the species angle and the initial displacement,
 are robust; minor changes in these values will have negligible repercussions
 on the output of the model.  A parameter that is much more difficult to estimate
-is tRNA availability values (TAV vectors).
+is tRNA availability value (TAV) vectors.
 
 \citeauthor{lalit:embs} base the tRNA availability values on codon usage, 
 surveying a set of genes from \ecoli.
 Although this assumption has biological basis~\cite{ikemura}, 
-it is still quite possible that the true values for these numbers may differ 
-slightly from those that Ponnala calculated, purely due to sampling error.  
-As such, we designed a genetic algorithm to calibrate these values based on the bovine growth hormone (bGH) sequences.
-As will be discussed in \autoref{section:bgh}, biological experiments
-have been conducted \cite{schoner:bgh} that propose a set of eight sequences coding for bGH,
+it is possible that the true values for these numbers may differ 
+due to sampling error or the choice of genes chosen.
+Taking a different tack, we chose to calibrate TAV vectors from
+existing biological data, designing a genetic algorithm to calibrate
+these values based on the bovine growth hormone (bGH) sequences.
+As discussed in \autoref{section:bgh}, \citet{schoner:bgh}
+have conducted experiments that propose a set of eight sequences coding for bGH,
 two of which have very high yield (pcZ101 and pcZ105) and six of which have low yield.
 Since these sequences are known to be translationally regulated, they
 provide an excellent method of calibration.
 
-We optimize the separation between pcZ101 and pcZ105 yields and those of other bGH sequences.  
+We optimize the separation between the yields ofpcZ101 and pcZ105 and those of other bGH sequences.  
 First, we generate a list of randomly modified TAV vectors at which
 point we calculate the ratio of the displacement deviation from
 displacement (\autoref{section:deviation}) for pcZ101 and pcZ105 to the other
@@ -264,7 +276,7 @@ optimal TAV vector.
 This algorithm did not alter the TAV vectors to a significant degree.
 In fact, the average change to each value in the vector was merely
 10\%.  Yet, the newly generated vector returns much more optimal
-results than the one calculated by \citeauthor{lalit:embs}.  The new values
+results than values from \citeauthor{lalit:embs}.  The new values
 are used throughout the remainder of the paper to produce the 
 values and graphs.
 
@@ -272,17 +284,17 @@ values and graphs.
 
 % Need citations for the following paragraph.
 
-A central problem in modern genetics is that of translational efficiency.
-Although most bacteria, like \ecoli, are known to regulate protein production
-on the transcriptional level, synthetic genes often encounter translational
+A central problem in modern genetics is that
+although most bacteria, like \ecoli, are known to regulate protein production
+on the transcriptional level, synthetic genes often encounter \emph{translational}
 problems.  Microbiologists usually resort to trial-and-error to determine genes
-that translate at optimal level.  As such, developing a computational method
-to roughly predict translational efficiency would have much impact for the 
-biological community.
+that translate at optimal level, but we can develop a computational method
+to roughly predict the translational efficiency of synthetic genes to
+be run in \ecoli.
 
-\autoref{allmodel} suggests that divergence from $x=0$ causes
-problems in translation; after all, this divergence is an essential characteristic
-of a frameshift.  Thus, we stipulate that high translational efficiency should correlate to low deviation yield,
+\autoref{allmodel} implies that divergence from $x=0$ causes
+problems in translation, an essential characteristic
+of a frameshift.  Thus, we stipulate that high translational efficiency correlates to low deviation yield,
 since this requirement implies proximity to the horizontal axis.  This section
 evaluates the proposed metric.
 
@@ -297,8 +309,8 @@ evaluates the proposed metric.
   \includegraphics[scale=0.2]{histograms/everything}
 \end{wrapfigure}
 
-Many microbiologists agree that translation in \ecoli\ is a rather efficient
-process.  It logically follows that the model should indicate low deviation
+\ecoli, as a product of evolution, is naturally efficient in its
+processes.  It logically follows that the model should indicate low deviation
 for most \ecoli\ proteins.  Indeed, computational data supports this hypothesis.
 \autoref{ecoli:hist} is a histogram of the deviation yields of 4364 genes of
 \ecoli, over 80\% of the entire genome.  As predicted, the vast majority
@@ -315,13 +327,13 @@ proteins is in fact 0.2515.
 
 % Perhaps include a plot of Schoner's yield and our deviation.
 
-We investigate the concept of deviation yield as a measure of biological
-yield by studying bovine growth hormone (bGH), a protein with much use in agriculture
-and one that was of much concern in the 1980s.
-Research~\cite{schoner:bgh} at that time attempted to produce bGH
+We investigated the concept of deviation yield as a measure of biological
+yield by studying bovine growth hormone (bGH), a protein commonly used
+in agriculture and thus possessing wide commercial benefit.
+Research~\cite{schoner:bgh} at the time attempted to produce bGH
 in \ecoli\ in large amounts.  As this process was purely biological, researchers
 simply induced changes in a sequence until protein yield increased, thus resulting
-in a rather arduous process.  We suggest that our model can accurately
+in a rather arduous process. In contrast, our model can accurately
 differentiate between high and low yield proteins, thus providing a preliminary screen
 to determine translational efficiency before biological verification.
 
@@ -349,14 +361,15 @@ to determine translational efficiency before biological verification.
 \end{center}
 \end{wrapfigure}
 
-Schoner~\cite{schoner:bgh}, primarily modifying the initial codons of an initial
-bovine growth hormone sequence, found two sequences (pcZ101 and pcZ105)
-to have particularly high protein yield and efficient with respect to
+\citet{schoner:bgh}, primarily modifying the initial codons of an initial
+bovine growth hormone sequence, found two sequences pcZ101 and pcZ105
+to have particularly high protein yield and to be efficient in
+comparison to
 the six other sequences. Our model agrees with his findings. In modeling displacement,
 we found pcZ101 and pcZ105 to have the least reading frame deviation
-from $x = 0$ (\autoref{bgh:deviation}).   Figure~\ref{bgh:disp} shows the displacement
-plots of all the bGH sequences on the same set of axes.  The two highest yield ones
-are in green and turquoise and stay close to the axis, thus suggesting that with these
+from $x = 0$ (\autoref{bgh:deviation}). \autoref{bgh:disp} shows the displacement
+plots of all the bGH sequences on the same set of axes.  The two with the highest yields
+are in green and turquoise and stay close to the axis, suggesting that with the
 new tRNA calibrations, low deviation may correspond to higher yield.
 
 \begin{figure}
@@ -370,13 +383,13 @@ In addition, in examining the polar plots, we noticed that during
 early translation the phase of translation for pcZ101 and pcZ105 tended toward the species
 angle $-30\degree$ before diverging toward approximately $15\degree$. As
 it stands, our model, as with displacement, indicates higher yield when the polar plot
-indicates less deviation from the correct (zero) reading frame, as it
+indicates less deviation from the correct, zero reading frame, as it
 does here with the species angle~\cite{lalit:mechanics}. Therefore our
 model is consistent with research that indicates
 the early codons have a dramatic impact on the ultimate efficiency of
 ribosomal translation.
 
-These results from bovine growth hormone that correlation with a broad
+These results from bovine growth hormone in addition to correlation with a broad
 spectrum of known ribosomal behavior indicate our computational model
 can significantly increase the speed at which geneticists and
 biologists can obtain valuable information when synthesizing
@@ -387,9 +400,9 @@ working through biological experiments.
 
 If deviation yield is in fact a potential metric for biological yield,
 a method for optimizing deviation would be of use of biologists.  As such,
-we have written an algorithm to minimize deviation for given sequences.
+we wrote an algorithm to minimize deviation for given sequences.
 We tested this algorithm computationally on \rpoS, a gene known to
-be translationally regulated.  Biological experiments will hopefully be
+be translationally regulated.  Biological experiments will be
 conducted soon.
 
 % I'm colluding deviation and probability yield here, but it's for a
@@ -417,7 +430,7 @@ on sample size of 1000 with a replacement of 33 codons. The
 initial correlation between deviation and biological expression
 provides strong anecdotal evidence that, with future biological
 experimentation, our algorithm has indeed increased protein yield
-bypassing a slow and arduous biological experimentation process.
+bypassing a potentially slow biological experimentation process.
 
 \section{Frameshifts}
 
@@ -430,24 +443,27 @@ bypassing a slow and arduous biological experimentation process.
   \includegraphics[scale=0.4]{prfB/disp}
 \end{figure}
 
-In \ecoli, the gene \prfB\ codes for protein release factor B, an essential element in translation.
-This gene, as mentioned, is known to have a programmed frameshift at
-the 25$^{\textrm{th}}$ codon.
-Our proposed stochastic model, as with the original model, can accurately predict this frameshift.
-\autoref{prfB} shows a displacement plot for \prfB, again with a distinctive jump at codon 25.
-To account for random variation, ten different runs are shown on the same set of axes.
-\footnote{Note that the polar plot is the the same as \autoref{prfB:polar}; 
-the new model does not alter the polar plot and the free energy calculations.}
+In \ecoli, the gene \prfB\ codes for protein release factor B, an
+essential element in translation.  This gene, as mentioned, is known
+to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.  Our
+proposed stochastic model, as with the original model, can accurately
+predict this frameshift.  \autoref{prfB} shows a displacement plot for
+\prfB, again with a distinctive jump at codon 25.  To account for
+random variation, ten different runs are shown on the same set of
+axes.
+\footnote{Note that the polar plot is the the same as \autoref{prfB:polar}. 
+The new model does not alter the polar plot or the free energy calculations.}
 
 Notably, the displacement plot does not reach $x=2$ over the span of one codon, as the old model predicted.
 Rather, due to randomness, the ribosome chooses the codon in the $+1$ frame before actually reaching a displacement of exactly 2.
-The propensity to approach $x=2$, however, concurs with the biological idea that the ribosome stays in frame after the frameshift.
+The propensity to approach $x=2$, however, concurs with biological
+evidence indiciating the ribosome stays in frame after the frameshift.
 
-For these plots, a species angle of $\theta_{\rm{sp}} =-30\degree$ was used.
-Yet, we must note that the model is quite robust; that is, minor changes
-in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting much.
+For these plots, we used a species angle of $\theta_{\rm{sp}} =-30\degree$.
+Yet, we must note that the model is quite robust; minor changes
+in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting significantly.
 \autoref{prfB:sens} illustrates the error-free rate as
-a function of species angle and initial displacement.  As noted,
+a function of species angle and initial displacement. As noted,
 the frameshift holds over quite a wide range.
 
 \subsection{Biological Verification for \prfB}
@@ -563,12 +579,16 @@ data.  Eventually, we hope to expand the model to account for other species of
 bacteria using the same principles as the ones we used for \ecoli.
 
 Our model provides a number of analytical tools that
-could be of potential use to microbiologists designing synthetic gene sequences
-that produce useful proteins for industry and the medical sciences.
+is of potential use to microbiologists designing synthetic gene sequences,
+a process used to
+produce useful proteins for industry and medicine.
 With the code publicly available, we hope to gather enough data over the
 next few years to improve the accuracy of this model even further.
 Our work thus represents an ongoing process that has the potential
 to revolutionize biotechnology.
+
+This model, including algorithms, is available as a collection of
+Matlab and Perl scripts available on the Internet, open source and documented.
 
 \addcontentsline{toc}{section}{References}
 \begin{singlespace}
