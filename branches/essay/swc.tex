@@ -468,11 +468,19 @@ the stochastic model.
 Specifically, \citeauthor{weiss87} moved the stop codon in the
 \prfB\ sequence one nucleotide upstream, causing the sequence to fail to
 frameshift. Moving the stop codon another nucleotide upstream failed
-to create a frameshift as well. \autoref{prfb:move1} and \autoref{prfb:move2}
-show the displacement of these sequences.  As illustrated,
-the frameshift is absent in both displacement plots.  The polar
-plots, \autoref{prfb:move1polar} and \autoref{prfb:move2polar}
-lack the 180\degree shift present in that of the actual sequence.
+to create a frameshift as well. \autoref{prfb:weiss}
+shows the displacement of these sequences.  As illustrated,
+the frameshift is absent in both displacement plots at the proper codon.
+The jump in the displacement later in the sequence may correspond to a
+stop codon, or a sufficiently rare codon, that it encounters.
+
+\begin{figure}
+    \centering
+    \caption{\prfB\ with Weiss's modifications}
+    \label{prfb:weiss}
+    \subfloat[1 Base Pair]{\includegraphics[scale=0.4]{prfb/weiss1}}
+    \subfloat[2 Base Pairs]{\includegraphics[scale=0.4]{prfb/weiss2}}
+\end{figure}
 
 In another experiment, \citeauthor{weiss88} altered the sequence of the
 16S ribosomal tail, changing one nucleotide in the Shine-Dalgarno-like region
@@ -531,18 +539,36 @@ Results should be available by the middle of October.
 
 \section{Conclusion}
 
-In the face of recent breakthroughs in genetics and as genetics
-becomes increasingly important in numerous fields, the inescapable
-component of biological experimentation remains a bottleneck that,
-fragile and finicky, presents time constraints and confounded data
+As genetics becomes increasingly important in numerous fields, the
+promise of mass-scale protein production remains one of the associated dreasm.
+Yet, the inescapable
+component of biological experimentation remains a bottleneck that
+presents time constraints and confounded data
 alien to a fast-paced field with enormous potential. As such, an
-accurate computational model is an invaluable tool. Our model is
-rapidly changing and always refining; initially given a deterministic
-model, we extended and tweaked it. In addition, we gathered a wide
-array of biological data that supported and further refined the
-model. In the future, as more experimental data arrives, we hope to
-further perfect the model. Our work thus represents an ongoing process
-and a radical evolution in bioinformatics.
+accurate computational model is an invaluable tool. 
+Our model provides a basis for a method of modelling ribosomal translation.
+We have presented a metric for translational efficiency, running it on
+ribosomal proteins, which likely have efficient translation rates.
+More importantly, our work concurs with biological experiments dealing with bovine growth hormone,
+accurately distinguishing between low-yield and high-yield proteins.
+The model can also identify the programmed frameshift in \prfB,
+and we used this capability to design an artificial sequence that we hypothesize to frameshift.
+
+Although we have presented a large amount of circumstantial evidence
+to support our model, we would like to test our theory on translational effiency
+on other gene sequences.  Sets of sequences known to be translationally regulated
+can be run in the model to compare results to those found for bGH.
+The genetic algorithm can be modified to account for larger sets of training
+data.  Eventually, we hope to expand the model to account for other species of
+bacteria using the same principles as the ones we used for \ecoli.
+
+Our model provides a number of analytical tools that
+could be of potential use to microbiologists designing synthetic gene sequences
+that produce useful proteins for industry and the medical sciences.
+With the code publicly available, we hope to gather enough data over the
+next few years to improve the accuracy of this model even further.
+Our work thus represents an ongoing process that has the potential
+to revolutionize biotechnology.
 
 \addcontentsline{toc}{section}{References}
 \begin{singlespace}
