@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{candor, setspace, color, wrapfig}
+\usepackage{candor, setspace, wrapfig}
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={Computational
     Modelling Ribosomal Translation and Frameshifts},
@@ -34,7 +34,7 @@
   in subjects ranging throughout the field of molecular biology.  We also applied our stochastic 
   model to create a short, 16-codon sequence that is not known to produce a frameshift in nature 
   in order to test our model's predictive power for synthesized mRNA sequences, and designed an 
-  experiment to verify this frameshift.  Results are expected at the beginning of October 2007.
+  experiment to verify this frameshift.  We expect results in October 2007.
   \end{normalsize}
 \end{abstract}
 
@@ -329,8 +329,8 @@ evaluates the proposed metric.
 
 \begin{wrapfigure}{R}{0.55\textwidth}
   \centering
-  \caption{Displacement deviation for \ecoli\ genes with <1\% of genes
-    with deviation >3 truncated}
+  \caption{Displacement deviation for \ecoli\ genes with with
+    deviation >3 (<1\%) truncated}
   \label{ecoli:hist}
   \includegraphics[width=0.55\textwidth]{histograms/everything}
 \end{wrapfigure}
@@ -350,8 +350,6 @@ proteins is in fact 0.2515.
 
 \subsection{Bovine Growth Hormone}
 \label{section:bgh}
-
-% Perhaps include a plot of Schoner's yield and our deviation.
 
 We investigated the concept of deviation yield as a measure of biological
 yield by studying bovine growth hormone (bGH), a protein commonly used
@@ -613,6 +611,7 @@ to revolutionize biotechnology.
 This model, including algorithms, is available as a collection of
 Matlab and Perl scripts available on the Internet, open source and documented.
 
+\phantomsection
 \addcontentsline{toc}{section}{References}
 \begin{singlespace}
   \bibliography{wizards}
