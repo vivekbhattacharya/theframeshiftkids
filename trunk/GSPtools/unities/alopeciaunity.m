@@ -1,10 +1,10 @@
 % Draws a polar plot for each gene in the work folder
-% (txt or FASTA), saving that plot to merryround\gene.png
+% (txt or FASTA), saving that plot to alopeciaunity\gene.png
 % in the work folder.
 %
 % alopeciaunity('c:\work folder')
 function alopeciaunity(folder)
-    classify(folder, 'merryround', @helper, 'preparation');
+    classify(folder, 'alopeciaunity', @helper, 'preparation');
     function helper(path, filename, image)
         disp(filename);
         h = figure(2); set(h, 'Renderer', 'OpenGL');

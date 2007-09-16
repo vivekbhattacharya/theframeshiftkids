@@ -1,5 +1,5 @@
 % Draws a wait time bar plot for each gene in the work folder
-% (txt or FASTA), saving that plot to jail\gene.png
+% (txt or FASTA), saving that plot to impetigounity\gene.png
 % in the work folder using a sample size of N.
 %
 % If given, X specifies the upper limit of the horizontal
@@ -14,7 +14,7 @@ function impetigounity(folder, times, varargin)
     if l >= 1, x_bound = varargin{1}; end;
     if l >= 2, y_bound = varargin{2}; end;
 
-    classify(folder, 'jail', @plot_average);
+    classify(folder, 'impetigounity', @plot_average);
     function plot_average(displacement, n, filename, image)
         disp(filename);
         waitress = zeros(times, 0);

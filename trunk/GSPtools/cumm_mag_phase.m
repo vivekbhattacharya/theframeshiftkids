@@ -24,7 +24,7 @@ function [mag, phase] = cumm_mag_phase(signal)
         % length is a multiple of 3. Let's assume that is true.
         % Then calculate magnitude and phase.
         %
-        % phase(i) translates into tan(theta). Trust us. We
+        % atan2(...) translates into atan(tan(theta)). Trust us. We
         % worked it out. (Given r.1 = M * sin(theta), r.2 = M *
         % sin(theta + 2*pi/3), r.3 = M * sin(theta + 4*pi/3)).
         %
