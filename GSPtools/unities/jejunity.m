@@ -1,13 +1,13 @@
 % ------------------------------------------------
 % Plots displacment error bars for gene.txt, saving
-% the plot to carnivale\gene.png in the work folder
+% the plot to jejunity\gene.png in the work folder
 % using an N sample size for each gene (txt or
 % FASTA) in the work folder.
 % 
 % Usage: jejunity('C:\work folder', N)
 % ------------------------------------------------
 function jejunity(folder, limit)
-    classify(folder, 'carnivale', @helper);
+    classify(folder, 'jejunity', @helper);
     
     function helper(displacement, n, file, image)
         disp(file);
