@@ -42,7 +42,8 @@ function [gen] = pokegod(folder)
         % Throw away the parents.
         gen = tmp;
         % Let Ctrl-C work.
-        save(fullfile(folder, 'apple.mat'), 'optimal');
+        myfile = ['banana' num2str(N) '.mat'];
+        save(fullfile(folder, myfile), 'optimal');
     end
 end
 
@@ -58,7 +59,7 @@ function [value] = get_yield(folder, travails, times)
         yield = shoals/sands;
         
         % OR hack
-        if [strfind(filename, '101') strfind(filename, '105')]
+        if [strfind(filename, '101') strfind(filename, '105') strfind(filename, '112') strfind(filename, '115')]
             good = good + yield;
         else
             bad = bad + yield;
@@ -67,5 +68,5 @@ function [value] = get_yield(folder, travails, times)
 
     % There are six sequences besides 101 and 105.
     % (good/2) / (bad / 6)
-    value = good*3/bad;
+    value = good/bad;
 end
