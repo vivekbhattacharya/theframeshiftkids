@@ -34,6 +34,12 @@ function [fantastic, n] = walrus_surprise(file, varargin)
             xlabel('Codon'); ylabel('Phase angle (deg)');
         end
     end
+
+%     clear globals;
+%     global Travel Names;
+%     load Codons.mat;
+%     load apple2.mat;
+%     Travel = get_travel(Names, gen(56,:));
     
     global Travel;
     if isempty(Travel), load Travel.mat; end
