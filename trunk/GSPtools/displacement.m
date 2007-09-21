@@ -145,11 +145,10 @@ end
 % the given codon.
 function [loops] = real_loops(varargin)
     global Travel;
-    loops = zeros(1, length(varargin));
-    for i = 1:length(varargin)
+    loops = zeros(1, nargin);
+    for i = 1:nargin
         loops(i) = Travel.(varargin{i});
     end
-    loops = ceil(loops);
-    loops = 2 .^ (1 ./ loops);
+    loops = 2 .^ (1 ./ ceil(loops));
     loops = loops ./ (loops - 1);
 end
