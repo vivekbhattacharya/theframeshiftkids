@@ -178,7 +178,10 @@ decision: stay in the current reading frame, move to the $+1$ reading
 frame, or move to the $-1$ reading frame.  We can further subdivide
 this choice into the individual wait-cycles.  At each wait cycle, the
 ribosome chooses from the above possibilities or proceeds to another
-wait-cycle without making a decision.
+wait-cycle without making a decision.  In addition, we propose that the 
+number of wait cycles is inversely proportional to the tRNA availability of 
+the codon in the current reading frame, as rarer codons should force the 
+ribosome to wait longer for a correct transfer.
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
 current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the
@@ -202,16 +205,8 @@ lies fully in the +1 frame ($x=2$), the probability of going to the 0
 frame should be 0. Therefore, these functions have a period of two
 base pairs ($x=4$).
 
-Now we define a value $n_{abc}$ based upon normalizing $N_{abc}$, the
-number of wait cycles, itself inversely proportional to the
-tRNA availability of codon $abc$.
-We want to wait long enough that the probability of assume the probability of frameshifting after
-after $N_{abc}$ wait cycles is $\frac{1}{2}$.  Let $P$ be the
-probability of moving on to the next codon and staying in current reading
-frame.  Then we should have $1-\left(1-P\right)^{N_{abc}} =
-\frac{1}{2}$.
-
-Now assume we are at a particular wait cycle. In absence of further
+We also define a value $N_{abc}$ that is the number of wait cycles 
+allowed by the given in-frame codon.  Now assume we are at a particular wait cycle. In absence of further
 research, we assume by the principle of indifference the probability
 of frameshifting is 1/2.  Let $P$ be the instantaneous probability of
 moving on to the next codon and staying in the current reading frame.
@@ -220,15 +215,19 @@ Given that $P \propto \omega_{abc}$, let $n_{abc}$ be the constant of
 proportionality; thus $n_{abc} = \omega_{abc} / P$.  We have
 $\omega_{abc} \le 1$, so hence $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$
 where $n = n_{abc}$ and $N = N_{abc}$.  Mathematically, the
-probability of choosing the codon in the current reading frame is just
+probability of choosing the codon at a given wait cycle in the zero reading frame is just
 \begin{align}
   \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
 \end{align}
 Here, $n$ represents the wait time for that codon and $K$ is the
-ordinal of the wait cycle. For example, $K=1$ on the first wait
+ordinal of the current wait cycle. For example, $K=1$ on the first wait
 cycle, $K=2$ on the second, and so forth.  Importantly,
 $\omega$ is dependent on displacement, which increments after
 every wait cycle.
+
+Importantly, we have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating 
+that the probability of choosing a codon at a given cycle is directly proportional 
+to its tRNA availability, a result that makes perfect biological sense.
 
 \subsection{Measures of Sequence Analysis}
 
