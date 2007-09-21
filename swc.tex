@@ -1,8 +1,10 @@
 \documentclass[12pt]{article}
 \usepackage{candor, setspace, wrapfig}
+\newcommand{\BWFtitle}{Computational Modelling Ribosomal Translation
+    and Programmed Frameshifts in}
+
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
-  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={Computational
-    Modelling Ribosomal Translation and Frameshifts},
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle E. Coli}
   pdfauthor={Hao Lian, Vivek Bhattacharya, and Daniel Vitek},
   pdfsubject={Bioinformatics, Genetics, and Biology}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,genetics,biology,
@@ -13,14 +15,14 @@
 
 \author{{\sc Hao Lian, Vivek Bhattacharya, and Daniel Vitek}}
 \date{{\sc \today}}
-\title{{\bf Computational Modelling Ribosomal Translation
-    and Frameshifts}}
+\title{\bf{\BWFtitle~\emph{Escherichia coli}}}
 
 \begin{document}
 \pagenumbering{roman}
 \maketitle
 \tableofcontents
 \clearpage
+\pagenumbering{arabic}
 
 \begin{abstract}
   \begin{normalsize}
@@ -511,7 +513,7 @@ shows the displacement of these sequences.  As illustrated,
 the frameshift is absent in both displacement plots at the proper codon.
 The jump in the displacement later in the sequence may correspond to a
 stop codon, or a sufficiently rare codon, that it encounters.
-
+\
 \begin{figure}
     \centering
     \caption{\prfB\ with Weiss's modifications}
