@@ -205,9 +205,20 @@ ordinal of the current wait cycle. For example, $K=1$ on the first
 wait cycle, $K=2$ on the second, and so forth.  Importantly, $\omega$
 is dependent on displacement, which increments after every wait cycle.
 
-Importantly, we have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating 
-that the probability of choosing a codon at a given cycle is directly proportional 
+We also have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating
+that the probability of choosing a codon at a given cycle is directly proportional
 to its tRNA availability, another result that coincides with biological evidence.
+
+
+\subsection{Consequences of the Stochastic Model}
+
+The stochastic model has introduced a new concept into the model proposed by
+\citet{lalit:mechanics}: Now, the ribosome can ``choose the wrong codon," in 
+essence accepting the tRNA of a codon out-of-frame.  It is imperative to note
+that this phenomenon is not equivalent to frameshifting.  In a programmed
+frameshift, the force pushes the ribosome to an unstable point---one at which
+
+
 \section{Analysis}
 In order to test our computational model, we ran a number of
 experiments to analyze sequences present in the \ecoli\ genome.
@@ -221,7 +232,7 @@ simultaneously.
 
 \subsubsection{Error-Free Rate}
 When studying a
-sequence with a programmed frameshift, it measures the percentage of runs 
+sequence with a programmed frameshift, \emph{error-free rate} measures the percentage of runs 
 during which the ribosome chooses the correct codon
 at \emph{every} juncture.  For a +1 frameshift, for example, the ribosome must
 choose the +1 frame at the frameshift codon and stay in the 0 frame before
@@ -230,9 +241,9 @@ and the +1 frame after in order for the run to be a success.
 \subsubsection{Displacement Deviation}
 \label{section:deviation}
 
-We propose the formula
+We propose a notion called {\emph{displacement deviation}}, defined by
 \begin{equation}
-    d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}}
+    d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}},
 \end{equation}
 where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
 the displacement at codon $i$, and $N$ is the total number of codons
@@ -346,8 +357,7 @@ values and graphs.
   \includegraphics[scale=0.4]{prfB/disp}
 \end{cfigure}
 
-In \ecoli, the gene \prfB\ codes for protein release factor B, an
-essential element in translation.  This gene, as mentioned, is known
+The gene \prfB, as mentioned, is known
 to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
 \autoref{prfB} shows a displacement plot for
 \prfB, again with a distinctive jump at codon 25.
@@ -446,7 +456,7 @@ previously established correlations.
 
 \subsection{Optimizing Translational Efficiency}
 
-If deviation yield is in fact a potential metric for biological yield,
+If displacement deviation is in fact a potential metric for biological yield,
 a method for optimizing deviation would be of use of biologists.  As such,
 we wrote an algorithm to minimize deviation for given sequences.
 We tested this algorithm computationally on \rpoS, a gene known to
