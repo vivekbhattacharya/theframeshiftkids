@@ -290,12 +290,52 @@ We finally test our model on a set of sequences known to be translationally
 regulated.  \citet{schoner:bgh} developed a number of sequences that
 code for variations of bovine growth hormone. \citeauthor{schoner:bgh}
 note that these sequences are, in fact, translationally regulated.
-As such, we predict that the sequences that are highly expressed in
+\citeauthor{schoner:bgh} present a set of eight sequences, four of which
+are expressed at high levels, and four or which have negligible expression.
+We predict that the sequences that are highly expressed in
 \ecoli\ should have lower displacement deviations.
 
 \subsection{Parameters}
 \label{section:parameters}
-For the entire 
+For all computational experiments in this report, we use a species
+angle of $\theta_{\rm{sp}} = -30\degree$ and an initial displacement of 0.1,
+in accordance with \citet{lalit:embs}.  Later in this report, we explore
+the effects of changing the species angle and initial displacement on the
+error-free rate of \prfB.
+
+A parameter that is much more difficult to estimate
+is tRNA availability value (TAV) vectors.
+\citeauthor{lalit:embs} base the tRNA availability values on codon usage, 
+surveying a set of genes from \ecoli.
+Although this assumption has biological basis~\cite{ikemura}, 
+it is possible that the true values for these numbers may differ 
+due to sampling error or the choice of genes chosen.
+Taking a different track, we chose to calibrate TAV vectors from
+existing biological data, designing a genetic algorithm to calibrate
+these values based on the bovine growth hormone (bGH) sequences
+while still remaining numerically close to the values determined by \citeauthor{lalit:embs}.
+
+We optimize the separation between the displacement deviations of the 
+high-yield sequences and the other ones.  
+First, we generate a list of randomly modified TAV vectors at which
+point we calculate the ratio of the displacement deviation from
+displacement (\autoref{section:deviation}) for the high-yield sequences to the other ones
+six bGH proteins. From there, we sort the modified TAV according to
+this ratio and discarding the least optimal half of the tRNA
+vectors. We then choose two of the remaining vectors, with the chance
+of each vector being proportional to its rank.  We then take a
+weighted average of the two vectors and spawn a new vector.  After
+creating the next generation according to a constant ``gene pool''
+size, we delete the previous generation and repeat. After a fixed
+number of generations, the algorithm terminates and returns the
+optimal TAV vector.
+
+This algorithm did not alter the TAV vectors to a significant degree.
+In fact, the average change to each value in the vector was merely
+15.99\%.  Yet, the newly generated vector returns much more optimal
+results than values from \citeauthor{lalit:embs}.  The new values
+are used throughout the remainder of the paper to produce the 
+values and graphs.
 
 \section{Results}
 \subsection{\prfB}
