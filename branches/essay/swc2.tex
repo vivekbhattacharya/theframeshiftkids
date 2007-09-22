@@ -581,75 +581,67 @@ parameters are necessary (\autoref{section:parameters}), they are not
 crucial to the true interplay within the model between free energy and
 translational efficiency.
 
-In addition, our model agrees with biological evidence in that
-ribosomal proteins express much more highly than genes in
-general~\cite{rpoS:process} (\autoref{section:riboproteins}). This
-concrete evidence, in addition with others presented in relation to
-\prfB\ and bGH form strong evidence that our model can accurately
-predict protein synthesis efficiency with its metrics (\autoref{section:metrics}).
+In addition, our model agrees with a great pool biological
+evidence. In our model, ribosomal proteins express more highly than
+genes in general as per \citet{rpoS:process}
+(\autoref{section:riboproteins}).  Our correlation in running bovine
+growth hormone again indicate this crucial relationship between
+translational efficiency~\cite{schoner:bgh} and the metrics of our
+model. With continual refinement, our model can then can significantly
+increase the speed at which geneticists and biologists can obtain
+valuable information when synthesizing commercially or medicinally
+useful compounds without working through potentially slow biological
+experiments especially in the commercial value of bGH in this
+instance.  These concrete evidence suggest that our model
+accurately predicts protein synthesis efficiency with its metrics
+(\autoref{section:metrics}) and those metrics have a strong
+association with the metrics of protein production in biological experiments.
 
-Our correlation in running bovine growth hormone again indicate this
-crucial relationship between translational
-efficiency~\cite{schoner:bgh} and the metrics of our model. With
-continual refinement, our model can then can significantly increase
-the speed at which geneticists and biologists can obtain valuable
-information when synthesizing commercially or medicinally useful
-compounds without laboriously working through biological experiments
-especially in the commercial value of bGH in this instance.
+A motif throughout the results is that outliers---certain sequences by
+Weiss and pcZ108, for example---differ in primary structure from
+sequences known to translate at high rates. Although we designed our
+model to concentrate on the signal analysis of the mRNA, there also
+exists biochemical interactions between nascent polypeptides with and
+their ribosomal or cellular environment.  As such, we cannot
+distinguish between errors in translation due to encoding in the
+signal and the actual protein structures. In future research, we will
+collect more data on the process by which synonymous codons can
+improve translational efficiency. We aim also to calibrate more finely
+tRNA values with a data set beyond bovine growth hormone, which can
+allow for larger deviation from given values~\cite{lalit:embs} than
+the small margin of error we used. The underlying theme of future
+research is then to congeal together more biological data and model
+results from the vast pool of research with which our model has not
+yet come into contact.
 
-A recurring theme throughout the results is that outliers---certain
-sequences by Weiss and pcZ108, for example---often differ in primary
-structure from sequences known to translate at high rates.  This pattern
-suggests a bottleneck in our model: It is designed to concentrated on
-signal analysis of the mRNA, not on the biochemical interactions of
-the nascent polypeptide with its ribosomal and cellular environment.
-As such, we cannot distinguish between errors in translation due to
-encoding in the signal and structure of the protein.  To circumvent this
-issue, more data needs to be collected on constructs that substitute
-synonymous codons to improve translational efficiency.
-
-``More data" epitomizes the direction of future research.  The algorithm
-used to calibrate tRNA values presented good values for bovine growth hormone,
-but the program could not be run to its fullest extent.  Because of the small
-data set, it was imperative to stay within a certain margin of error of
-the values that \citet{lalit:embs} calculated.  However, with more biological
-data, the algorithm can be run on numerous sequences, and we can deviate
-from the given values with some more confidence.
-
-The model certainly provides considerable predictive power over a broad spectrum
-of biological topics, as exemplified by the investigations in this report.  Yet,
-we must reconcile physical assumptions of the model with biological experimentation.
-Choosing the wrong codon implicitly suggests that the ribosome always produces
-long proteins, although some proteins may be dysfunctional.  Such is not always the case
-[Dr. Stomp, we need some clarification or citations here].  The other interpretation
-discussed (that deviation from the baseline entails a longer time for translation) may
-bear more biological sense, as the ribosome is experimentally known to dissociate if translation takes
-too long.  Thus, we must consider the biological implications of the model in addition
-to its predictive power.
-
-In addition, \citet{weiss87} conducted one set of experiments in
-which they changed the codon before the frameshift site at codon 25.
-Interestingly, changing this codon from the original {\sc{guu}} drops
-the yield down to less than 60 whole-cell units.  However, our model
-predicts very high error-free rates at an average of 92.8\% for all
-six sequences. Again, our model does not fully correlate with all
-biological evidence in the field and \citeauthor{weiss87}'s
+In addition, \citet{weiss87} conducted a set of experiments in which
+they changed the codon before the frameshift site at \sc{guu},
+dropping the yield to less than 60 whole-cell units. In contrast,
+our model predicts very high error-free rates at an average of 92.8\%
+for all six sequences. Again, our model does not fully correlate with
+all biological evidence in the field and \citeauthor{weiss87}'s
 experiments remain a topic of scrutiny as we continually refine our
 model in future research.
 
 % Frameshift discussion
 
-Overall, the benefits from an accurate computational model in
-modeling translation accrue when biologists need a large amount of
-runs without the stopgap of experimentation, in vivo or in
-vitro. Naturally, our model then possesses the power to imbue
-commercial or scientific pursuits with the wind beneath their sails
-they need in a rapidly innovating and developing field of genetics
-with enormous potential and applications.
+The model certainly provides considerable predictive power over a broad spectrum
+of biological topics, exemplified by the investigations in this report.  Yet,
+as we reconcile assumptions of the model with biological
+experimentation, we find wrinkles future research needs to address.
+For example, choosing the wrong codon suggests the ribosome always produces
+long proteins, producing some dysfunctional proteins. However, such is not the case
+[Dr. Stomp, we need some clarification or citations here]. We also
+assumed deviation from the baseline entails a longer wait time to
+model the dissociation of the ribosome from the mRNA. With future
+research, we aim to refine this assumption with more rigor and
+biological evidence as we consider the biological implications of the model in addition
+to its predictive power.
 
 \phantomsection
 \addcontentsline{toc}{section}{References}
 \begin{singlespace} \bibliography{wizards} \end{singlespace}
 \end{document}
 
+% This is for ispell. Do not delete. --Hao
 % LocalWords:  embs abcd abc bcd sp pcZ riboproteins
