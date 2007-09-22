@@ -1,12 +1,14 @@
-\documentclass[12pt, draft]{article}
+\documentclass[12pt]{article}
 \usepackage{candor, setspace}
 \usepackage[verbose]{wrapfig}
-\newcommand{\BWFtitle}{Computationally Modeling Ribosomal Translation
-    and Programmed Frameshifts in}
+\newcommand{\BWFtitle}{Computationally
+  Modeling Ribosomal Translation and Programmed Frameshifts in}
+\newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
+  R. Vitek}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle Escherichia
-    coli}, pdfauthor={Hao Lian, Vivek Bhattacharya, and Daniel Vitek},
+    coli}, pdfauthor={\BWFauthors},
   pdfsubject={Bioinformatics, Genetics, and Biology}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,genetics,biology,
     frameshifts,perl,matlab,ecoli,prfb,rpos,bgh}, pdfstartview={FitH},
@@ -15,7 +17,7 @@
 \linespread 2
 \numberwithin{equation}{section}
 
-\author{{\sc Hao Lian, Vivek Bhattacharya, and Daniel Vitek}}
+\author{\sc{\BWFauthors}}
 \date{{\sc \today}}
 \title{\bf{\BWFtitle~\emph{Escherichia coli}}}
 
@@ -88,9 +90,6 @@ codon \textsc{aug}, to determine the free energy value of the first acid.
 Then, shifting one base pair at a time, we calculate the free energy
 for the entire sequence according to \citet{starmer}.
 
-\subsection{Displacement Deviation and Translational Efficiency}
-Insert magic here.
-
 \subsection{Frameshifts}
 \label{section:frameshifts}
 
@@ -126,12 +125,11 @@ must undergo a phase shift of one-third of an entire period (\autoref{prfB:polar
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
 
-As mentioned, the gene \prfB\ exhibits a definite frameshift under the
+As mentioned, the gene \prfB\ exhibits a programmed frameshift under the
 deterministic model: The displacement jumps to $x=2$.  Certain other
 genes, however, demonstrate equivocal, ambiguous behavior near $x = \pm
-1$~\cite{lalit:embs}.  In a deterministic model, the fixed
-displacement plots implies we cannot clearly interpret whether this
-behavior indicates a tendency for a stable frameshift. Even worse,
+1$~\cite{lalit:embs}.  In a deterministic model, we lack the
+information and sensitivity needed to discern clearly a tendency for a stable frameshift. Even worse,
 the model may not show these unstable behaviors at all. In practice,
 ribosomal translations are not deterministic. Due to the presence of
 noise within the cell environment, any deterministic model ultimately
@@ -172,38 +170,46 @@ lies fully in the +1 frame ($x=2$), the probability of going to the 0
 frame should be 0. Therefore, these functions have a period of two
 base pairs ($x=4$).
 
-We also define a value $N_{abc}$ that is the number of wait cycles 
-allowed by the given in-frame codon.  Now assume we are at a particular wait cycle. In absence of further
-research, we assume by the principle of indifference the probability
+We define $N_{abc}$ to be the number of wait cycles 
+allocated to the given codon in the current frame.
+Suppose we are at a particular wait cycle on codon $abc$ and
+abbreviate $N = N_{abc}$ as per above.
+In absence of further research, we assume the probability
 of frameshifting is 1/2.  Let $P$ be the instantaneous probability of
 moving on to the next codon and staying in the current reading frame.
-Then we should have $1-\left(1-P\right)^{N_{abc}} = \frac{1}{2}$.
-Given that $P \propto \omega_{abc}$, let $n_{abc}$ be the constant of
-proportionality; thus $n_{abc} = \omega_{abc} / P$.  We have
-$\omega_{abc} \le 1$, so hence $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$
-where $n = n_{abc}$ and $N = N_{abc}$.  Mathematically, the
+Then we should have $1 - \left(1-P\right)^{N} = \frac{1}{2}$.
+Given that $P \propto \omega$, let $n = n_{abc}$ be the constant of
+proportionality; thus $n = \omega / P$.  We have
+$\omega \le 1$, so hence $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$
+Mathematically, the
 probability of choosing the codon at a given wait cycle in the zero reading frame is just
-\begin{align}
-  \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where } \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
-\end{align}
+
+\begin{equation}
+  \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where }
+  \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.\footnote{The sinusoidal
+    component of $\omega_i$ depends upon the codon in question.}
+\end{equation}
+
 Here, $n$ represents the wait time for that codon and $K$ is the
-ordinal of the current wait cycle. For example, $K=1$ on the first wait
-cycle, $K=2$ on the second, and so forth.  Importantly,
-$\omega$ is dependent on displacement, which increments after
-every wait cycle.
+ordinal of the current wait cycle. For example, $K=1$ on the first
+wait cycle, $K=2$ on the second, and so forth.  Importantly, $\omega$
+is dependent on displacement, which increments after every wait cycle.
 
 Importantly, we have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating 
 that the probability of choosing a codon at a given cycle is directly proportional 
 to its tRNA availability, another result that coincides with biological evidence.
+\section{Analysis}
+In order to test our computational model, we ran a number of
+experiments to analyze sequences present in the \ecoli\ genome.
 
-\subsection{Measures of Sequence Analysis}
+\subsection{Measures}
+\label{section:metrics}
 
 As this model is stochastic, multiple runs (the sample size) of the same sequence must be analyzed.
 As such, we propose two metrics for analysis of a number of different runs 
 simultaneously. 
 
 \subsubsection{Error-Free Rate}
-
 When studying a
 sequence with a programmed frameshift, it measures the percentage of runs 
 during which the ribosome chooses the correct codon
@@ -227,18 +233,13 @@ for all $i \geq 25$ because \prfB\ frameshifts at codon 25
 \textsc{uga} and the model represents a frameshift with +2
 displacement per \autoref{section:frameshifts}.
 
-\subsection{Topics of Analysis}
-In order to test our computational model, we ran a number of
-experiments to analyze sequences present in the \ecoli\ genome.  This
-section explains these investigations.
-
-\subsubsection{\prfB\ and Related Sequences}
+\subsection{\prfB\ and Related Sequences}
 As discussed, \prfB\ codes for protein release factor B in \ecoli.
 Notably, microbiologists agree that \prfB\ has a programmed frameshift
 in the 25$^\textrm{th}$ codon~\cite{weiss87}.  We thus test the
 gene \prfB\ to determine whether our model can predict this
 frameshift.  We downloaded the nucleotide sequence for \prfB\ from
-NCBI's Genbank database.  [Dr. Stomp, do we need a citation for genbank?]
+NCBI's Genbank database.  [Dr. Stomp, do we need a citation for Genbank?]
 
 \citet{weiss87} performed a number of biological experiments on
 \prfB\ to test how mutations in the sequence would affect the rate of
@@ -249,7 +250,7 @@ We hypothesize that genes found to frameshift at high rates by
 \citeauthor{weiss87} should also show high error-free rates under
 our model.
 
-\subsubsection{The \ecoli\ Genome and Ribosomal Proteins}
+\subsection{The \ecoli\ Genome and Ribosomal Proteins}
 We now aim to test the capabilities of our model to predict translational
 efficiency other than frameshift rate.  We hypothesize that displacement
 deviation provides a suitable metric for translational efficiency:  A lower
@@ -275,13 +276,18 @@ furthermore predict that ribosomal proteins will have deviations lower
 on average than those for the other \ecoli\ genes.
 
 \subsubsection{Bovine Growth Hormone}
-
 We finally test our model on a set of sequences known to be translationally 
 regulated.  \citet{schoner:bgh} developed a number of sequences that
-code for 
+code for [Guys, finish this].
 
+\subsection{Displacement Deviation and Translational Efficiency}
+[Dr. Stomp, we'll add more rigor here later.] In running a large
+sample of \ecoli\ genes, we noticed an immense correlation between
+protein efficiency and displacement deviation, which soon became an
+important metric (\autoref{section:deviation}).
 
 \section{Parameters}
+\label{section:parameters}
 For these plots, we used a species angle of $\theta_{\rm{sp}}
 =-30\degree$.
 
@@ -302,11 +308,13 @@ to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
 \footnote{Note that the polar plot is the the same as \autoref{prfB:polar}. 
 The new model does not alter the polar plot or the free energy calculations.}
 
-Notably, the displacement plot does not reach $x=2$ over the span of one codon, as the old model predicted.
-Rather, due to randomness, the ribosome chooses the codon in the $+1$ frame before actually reaching a displacement of exactly 2.
-The propensity to approach $x=2$, however, concurs with biological
-evidence indicating the ribosome stays in frame after the frameshift.
-[Dr. Stomp, we need references here.]
+Notably, the displacement plot does not reach $x=2$ over the span of
+one codon, as the old model predicted.  Rather, due to randomness, the
+ribosome chooses the codon in the $+1$ frame before actually reaching
+a displacement of exactly 2.  The propensity to approach $x=2$,
+however, concurs with biological evidence indicating the ribosome
+stays in frame after the frameshift.  [Dr. Stomp, we need references
+  here.]
 
 \begin{cfigure}
   \caption{Sensitivity plot for \prfB}
@@ -333,31 +341,32 @@ to create a frameshift as well in our model.
 \end{cfigure}
 
 \ecoli, as a product of evolution, is naturally efficient in its
-processes. [Dr. Stomp, we need references here.]
-It logically follows that the model should indicate low deviation
-for most \ecoli\ proteins.
-\autoref{ecoli:hist} is a histogram of the deviation yields of 4364 genes of
-\ecoli, over 80\% of the entire genome.  As predicted, 93.45\% of the genes that we ran
-[Guys, expand on this.] laid in the 0 to 1 interval.  The average displacement deviation
-for these \ecoli\ genes is [Guys, what?], in a run for 100 iterations per genes.
+processes. [Dr. Stomp, we need references here.]  It logically follows
+that the model should indicate low deviation for most
+\ecoli\ proteins.  \autoref{ecoli:hist} is a histogram of the
+deviation yields of 4364 genes of \ecoli, over 80\% of the entire
+genome.  As predicted, 93.45\% of the genes that we ran laid in the 0
+to 1 interval, agreeing with our theory of natural efficiency.  The
+average displacement deviation for these \ecoli\ genes is 0.4425, in a
+run for 500 iterations per gene.
 
-\subsection{Ribosomal Proteins}
-\begin{wrapfigure}{o}{0.3\textwidth}
+\begin{cfigure}
   \caption{Boxplot comparison of ribosomal proteins and an almost
     complete sample of verified \ecoli\ genes}
   \label{ribosomal:comp}
-  \includegraphics[width=0.3\textwidth]{histograms/ribosomal.png}
-\end{wrapfigure}
+  \includegraphics[width=\textwidth]{histograms/ribosomal}
+\end{cfigure}
+
+\subsection{Ribosomal Proteins}
+\label{section:riboproteins}
 
 To compound this finding, biologists also agree that ribosomal
 proteins offer especially high translational efficiencies, since the
 cell must produce them in such large quantities. [Dr. Stomp, we need
-  references here.] The displacement deviation for ribosomal proteins
-is in fact [Guys, what?]. We found the average displacement deviation
-to be [Guys, what?], which is significantly lower with a $t$-value of
-[Guys, what?].
-
-[Guys, outliers.]
+  references here.] The displacement deviation from $x=0$ for ribosomal proteins
+is on average 0.2708 in comparison to the average of 0.4425 for our
+large sample of \ecoli\ genes, which is significantly higher with a $t$-value of
+0.0109 when performing a two-sample $t$ test on the means.
 
 \subsection{Bovine Growth Hormone}
 \label{section:bgh}
@@ -429,14 +438,22 @@ bypassing a potentially slow biological experimentation process.
 [Dr. Stomp, we need the notes that you mentioned.]
 
 \section{Discussion}
-Yet, we must note that the model is quite robust; minor changes
-in $\theta_{\rm{sp}}$ and initial displacement do not affect frameshifting significantly~\autoref{prfB:sens}.
+First, we note that our model is quite robust: Minor changes
+in $\theta_{\rm{sp}}$ and initial displacement do not affect
+frameshifting significantly.
 \autoref{prfB:sens} illustrates the error-free rate as
 a function of species angle and initial displacement. As noted,
-the frameshift holds over quite a wide range.
+the frameshift holds over quite a wide range. Though these initial
+parameters are necessary (\autoref{section:parameters}), they are not
+crucial to the true interplay within the model between free energy and
+translational efficiency.
 
-Therefore, our model agrees with life in that ribosomal proteins
-express much more highly than genes in general.
+In addition, our model agrees with biological evidence in that
+ribosomal proteins express much more highly than genes in
+general~\cite{rpoS:process} (\autoref{section:riboproteins}). This
+concrete evidence, in addition with others presented in relation to
+\prfB\ and bGH form strong evidence that our model can accurately
+predict protein synthesis efficiency with its metrics (\autoref{section:metrics}).
 
 These results from bovine growth hormone in addition to correlation with a broad
 spectrum of known ribosomal behavior indicate our computational model
@@ -445,7 +462,7 @@ biologists can obtain valuable information when synthesizing
 commercially or medicinally useful compounds without laboriously
 working through biological experiments.
 
-Our model agrees with his findings.
+Our model agrees with \citeauthor{schoner:bgh}'s findings.
 
 \phantomsection
 \addcontentsline{toc}{section}{References}
