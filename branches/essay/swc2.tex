@@ -5,13 +5,14 @@
   Modeling Ribosomal Translation and Programmed Frameshifts in}
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
   R. Vitek}
+\newcommand{\subfigref}[1]{\hyperref[#1]{Figure~\ref{#1}}}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
-  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle Escherichia
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle\ Escherichia
     coli}, pdfauthor={\BWFauthors},
   pdfsubject={Bioinformatics, Genetics, and Biology}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,genetics,biology,
-    frameshifts,perl,matlab,ecoli,prfb,rpos,bgh}, pdfstartview={FitH},
+    frameshifts,perl,matlab,ecoli,prfB,rpoS,bGH,ecoli}, pdfstartview={FitH},
   backref]{hyperref}
 
 \linespread 2
@@ -19,7 +20,7 @@
 
 \author{\sc{\BWFauthors}}
 \date{{\sc \today}}
-\title{\bf{\BWFtitle~\emph{Escherichia coli}}}
+\title{\bf{\BWFtitle\ \emph{Escherichia coli}}}
 
 \begin{document}
 % Title, table of contents, and abstract start things off.
@@ -31,8 +32,8 @@
 
 \clearpage
 \begin{abstract}\begin{normalsize}
-  In this document, we discuss a stochastic model for ribosomal displacement relative to reading 
-  frame based on forces arising from changes in free energy present in hybridization between the 
+  In \emph{\BWFtitle\ Escherichia coli}, we discuss a stochastic model for ribosomal displacement relative to reading 
+  frame based on forces that arise from changes in free energy present in hybridization between the 
   16S rRNA tail and nucleotides upstream from the A-site.  We present both our investigation and 
   potential applications for this model, including optimization of economically significant gene
   sequences such as bovine growth hormone, non-experimental prediction of translational efficiency for man-made 
@@ -100,16 +101,17 @@ for the entire sequence according to \citet{starmer}.
 \label{section:frameshifts}
 
 \begin{cfigure}
-  \caption{Deterministic displacement plot of~\prfB}
-  \label{prfB:deterministic}
-  \includegraphics[scale=0.4]{prfB/deterministic}
+  \caption{Plots of~\prfB}
+  \label{prfB:detplots}
+  \subfloat[Deterministic displacement]{
+    \label{prfB:deterministic:sub}
+    \includegraphics[width=0.5\textwidth]{prfB/deterministic}
+  }
+  \subfloat[Polar plot]{
+    \label{prfB:polar:sub}
+    \includegraphics[width=0.4\textwidth]{prfB/polar}
+  }
 \end{cfigure}
-
-\begin{wrapfigure}{R}{0.5\textwidth}
-  \caption{Polar plot of \prfB}
-  \label{prfB:polar}
-  \includegraphics[width=0.5\textwidth]{prfB/polar}
-\end{wrapfigure}
 
 First, we let a displacement of $x = 0$ correspond to the zero reading
 frame and increments of \emph{two} to represent a one-nucleotide
@@ -119,7 +121,7 @@ change. For example, $x =2$ represents the +1 frame.
 
 A sudden jump from approximately $x = 0$ to $x = 2$ is then the first
 indication of a $+1$ frameshift; it suggests the ribosome skips one
-entire base pair in the mRNA sequence.  \autoref{prfB:deterministic}
+entire base pair in the mRNA sequence.  \subfigref{prfB:deterministic:sub}
 shows the displacement plot per this deterministic model for \prfB, a
 unique gene with a programmed $+1$ frameshift at codon 25. In
 conjunction with this characteristic plot, a $+1$ frameshift also
@@ -130,7 +132,7 @@ frameshift sustains if the free energy signal aligns with the sudden
 jump in displacement.  Since the free energy signal has a period of
 one codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy
 signal must undergo a phase shift of one-third of an entire period
-(\autoref{prfB:polar}).
+(\subfigref{prfB:polar:sub}).
 
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
@@ -262,7 +264,7 @@ and the +1 frame after in order for the run to be a success.
 \subsubsection{Displacement Deviation}
 \label{section:deviation}
 
-We propose a notion called {\emph{displacement deviation}}, defined by
+We define \emph{displacement deviation} to be
 \begin{equation}
     d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}},
 \end{equation}
@@ -382,7 +384,7 @@ The gene \prfB, as mentioned, is known
 to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
 \autoref{prfB} shows a displacement plot for
 \prfB, again with a distinctive jump at codon 25.
-\footnote{Note that the polar plot is the the same as \autoref{prfB:polar}. 
+\footnote{Note that the polar plot is the the same as \subfigref{prfB:polar:sub}.
 The new model does not alter the polar plot or the free energy calculations.}
 
 Notably, the displacement plot does not reach $x=2$ over the span of
@@ -400,7 +402,7 @@ stays in frame after the frameshift.  [Dr. Stomp, we need references
 \end{cfigure}
 
 \begin{wrapfigure}{R}{0.5\textwidth}
-  \caption{Comparison of biological yield and error-free rate,500 iterations}
+  \caption{Comparison of biological yield and error-free rate, 500 iterations}
   \label{weissboxplot}
   \includegraphics[width=0.5\textwidth]{histograms/weissbox}
 \end{wrapfigure}
@@ -430,14 +432,14 @@ analysis of sequences.
 processes. [Dr. Stomp, we need references here.]  It logically follows
 that the model should indicate low deviation for most
 \ecoli\ proteins.  \autoref{ecoli:hist} is a histogram of the
-deviation yields of 4364 genes of \ecoli, over 80\% of the entire
+deviation yields of 4364 verified genes of \ecoli, over 80\% of the entire
 genome.  As predicted, 93.45\% of the genes that we ran laid in the 0
 to 1 interval, agreeing with our theory of natural efficiency.  The
 average displacement deviation for these \ecoli\ genes is 0.4425, in a
 run for 500 iterations per gene.
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-  \caption{Boxplot comparison of ribosomal proteins and an almost
+\begin{wrapfigure}{R}{0.5\textwidth}
+  \caption{Comparison of ribosomal proteins and a large
     complete sample of verified \ecoli\ genes}
   \label{ribosomal:comp}
   \includegraphics[width=0.5\textwidth]{histograms/ribosomal}
