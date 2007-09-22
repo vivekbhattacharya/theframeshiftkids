@@ -213,7 +213,7 @@ simultaneously.
 
 \subsubsection{Error-Free Rate}
 When studying a
-sequence with a programmed frameshift, it measures the percentage of runs 
+sequence with a programmed frameshift, {\emph{error-free rate}} measures the percentage of runs 
 during which the ribosome chooses the correct codon
 at \emph{every} juncture.  For a +1 frameshift, for example, the ribosome must
 choose the +1 frame at the frameshift codon and stay in the 0 frame before
@@ -222,9 +222,9 @@ and the +1 frame after in order for the run to be a success.
 \subsubsection{Displacement Deviation}
 \label{section:deviation}
 
-We propose the formula
+We propose the notion of {\emph{displacement deviation}}, defined as 
 \begin{equation}
-    d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}}
+    d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}},
 \end{equation}
 where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
 the displacement at codon $i$, and $N$ is the total number of codons
@@ -233,7 +233,10 @@ reading frame.  Usually $\beta_i = 0$ unless a programmed frameshift
 exists as it does for \prfB.  For example, for \prfB\ $\beta_i = 2$
 for all $i \geq 25$ because \prfB\ frameshifts at codon 25
 \textsc{uga} and the model represents a frameshift with +2
-displacement per \autoref{section:frameshifts}.
+displacement per \autoref{section:frameshifts}.  Note that as
+the displacement plot diverges from the horizontal axis (or any predicted frame),
+$d$ increases.
+
 
 \subsection{\prfB\ and Related Sequences}
 As discussed, \prfB\ codes for protein release factor B in \ecoli.
@@ -277,16 +280,13 @@ are hypothesized to be translated at especially efficient rates.  We
 furthermore predict that ribosomal proteins will have deviations lower
 on average than those for the other \ecoli\ genes.
 
-\subsubsection{Bovine Growth Hormone}
+\subsection{Bovine Growth Hormone}
 We finally test our model on a set of sequences known to be translationally 
 regulated.  \citet{schoner:bgh} developed a number of sequences that
-code for [Guys, finish this].
-
-\subsection{Displacement Deviation and Translational Efficiency}
-[Dr. Stomp, we'll add more rigor here later.] In running a large
-sample of \ecoli\ genes, we noticed an immense correlation between
-protein efficiency and displacement deviation, which soon became an
-important metric (\autoref{section:deviation}).
+code for variations of bovine growth hormone.  \citeauthor{schoner:bgh}
+note that these sequences are, in fact, translationally regulated.
+As such, we predict that the sequences that are highly expressed in 
+\ecoli\ should have lower displacement deviations.
 
 \section{Parameters}
 \label{section:parameters}
