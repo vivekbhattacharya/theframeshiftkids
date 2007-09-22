@@ -125,28 +125,30 @@ must undergo a phase shift of one-third of an entire period (\autoref{prfB:polar
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
 
-As mentioned, the gene \prfB\ exhibits a programmed frameshift under the
-deterministic model: The displacement jumps to $x=2$.  Certain other
-genes, however, demonstrate equivocal, ambiguous behavior near $x = \pm
-1$~\cite{lalit:embs}.  In a deterministic model, we lack the
-information and sensitivity needed to discern clearly a tendency for a stable frameshift. Even worse,
-the model may not show these unstable behaviors at all. In practice,
-ribosomal translations are not deterministic. Due to the presence of
-noise within the cell environment, any deterministic model ultimately
-imperfectly accounts for ribosomal translation especially with regard
-to sensitivity to the equivocation of the ribosome between $x=-1$ and
-$x=1$. Therefore, we next explored stochastically modeling ribosome
-translation with a sinusoidal probability paradigm that follows.
+As mentioned, the gene \prfB\ exhibits a programmed frameshift under
+the deterministic model: The displacement jumps to $x=2$.  Certain
+other genes, however, demonstrate equivocal, ambiguous behavior near
+$x = \pm 1$~\cite{lalit:embs}.  In a deterministic model, we lack the
+information and sensitivity needed to discern clearly a tendency for a
+stable frameshift. Even worse, the model may not show these unstable
+behaviors at all. In practice then, ribosomal translations are not
+deterministic. Due to the presence of noise within the cell
+environment, any deterministic model ultimately imperfectly accounts
+for translation. Therefore, we next explored stochastically modeling
+ribosome translation with a sinusoidal probability paradigm that
+follows.
 
 We propose that at each cycle in elongation, the ribosome must make a
 decision: stay in the current reading frame, move to the $+1$ reading
 frame, or move to the $-1$ reading frame.  We can further subdivide
 this choice into the individual wait-cycles.  At each wait cycle, the
 ribosome chooses from the above possibilities or proceeds to another
-wait-cycle without making a decision.  In addition, we propose that the 
+wait-cycle without making a decision.  In addition, we assert the 
 number of wait cycles is inversely proportional to the tRNA availability of 
 the codon in the current reading frame, as rarer codons should force the 
-ribosome to wait longer for a correct transfer.
+ribosome to wait longer for a correct transfer. In turn, we calculate
+tRNA availability from existing research suggesting an association
+between it and codon frequency~\cite{ikemura}.
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
 current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the
@@ -393,11 +395,11 @@ outlier because \citeauthor{schoner:bgh} reported low protein
 efficiency whereas our model reports low deviation, incongrous with
 previously established correlations.
 
-\begin{cfigure}
+\begin{wrapfigure}{R}{0.5\textwidth}
   \caption{Displacement plot for bGH}
   \label{bgh:disp}
-  \includegraphics[scale=0.4]{bgh/all}
-\end{cfigure}
+  \includegraphics[width=0.5\textwidth]{bgh/all}
+\end{wrapfigure}
 
 \subsection{Optimizing Translational Efficiency}
 
