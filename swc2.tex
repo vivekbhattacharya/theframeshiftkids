@@ -1,6 +1,7 @@
-\documentclass[12pt]{article}
+\documentclass[12pt, draft]{article}
 \usepackage{candor, setspace}
 \usepackage[verbose]{wrapfig}
+\hyphenation{frame-shifts}
 \newcommand{\BWFtitle}{Computationally
   Modeling Ribosomal Translation and Programmed Frameshifts in}
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
@@ -402,7 +403,7 @@ values and graphs.
   \label{prfB:stochplots}
   \subfloat[Displacement Plot]{
     \label{prfB:disp:sub}
-    \includegraphics[width=0.5\textwidth]{prfB/disp}
+    \includegraphics[width=0.4\textwidth]{prfB/disp}
   }
   \subfloat[Sensitivity plot]{
     \label{prfB:sens:sub}
@@ -479,6 +480,12 @@ large sample of \ecoli\ genes, which is significantly higher with a $t$-value of
 \subsection{Bovine Growth Hormone}
 \label{section:bgh}
 
+\begin{cfigure}
+  \caption{Displacement plot for bGH}
+  \label{bgh:disp}
+  \includegraphics[width=0.5\textwidth]{bgh/all}
+\end{cfigure}
+
 We investigated the concept of deviation yield as a measure of biological
 yield by studying bovine growth hormone (bGH), a protein commonly used
 in agriculture.
@@ -508,12 +515,6 @@ ones; the lower translational efficiency may be attributed to the interaction
 of the primary structure with the ribosome and not to any signal encoded
 in the mRNA.
 
-\begin{wrapfigure}{R}{0.5\textwidth}
-  \caption{Displacement plot for bGH}
-  \label{bgh:disp}
-  \includegraphics[width=0.5\textwidth]{bgh/all}
-\end{wrapfigure}
-
 \subsection{Optimizing Translational Efficiency}
 
 If displacement deviation is in fact a potential metric for biological yield,
@@ -526,6 +527,7 @@ conducted soon.
 % I'm colluding deviation and probability yield here, but it's for a
 % good purpose. --Hao.
 
+[Dr. Stomp, we need the notes that you mentioned.]
 \citet{rpoS:process} indicate that \rpoS, which codes for an RNA
 polymerase sigma factor, contains sections of rare codons that disrupt
 ribosomal translation. Our computation model agrees, showing
@@ -549,8 +551,6 @@ initial correlation between deviation and biological expression
 provides strong anecdotal evidence that, with future biological
 experimentation, our algorithm has indeed increased protein yield
 bypassing a potentially slow biological experimentation process.
-
-[Dr. Stomp, we need the notes that you mentioned.]
 
 \subsection{An Artificial Frameshifter}
 \begin{cfigure}
@@ -581,7 +581,7 @@ bacterial genomes but none from \ecoli. To test the frameshifting capacity of
 this linker sequence, we initiate a biological experiment.
 
 We create a bifunctional fusion protein containing beta-galactosidase (\bgals) 
-and \xylE.  Beta-galactosidase levels correlate to
+and \xylE. \bgals\ levels correlate to
 levels of nitrophenol, which has a yellow color, while \xylE\ expresses
 an enzyme that cleaves catechol.  These two proteins are joined by
 the proposed linker sequence.  Research indicates that even in this
