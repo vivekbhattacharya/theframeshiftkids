@@ -48,19 +48,15 @@
 \pagenumbering{arabic}
 
 \section{Introduction}
-In the past, the only practical method to determine whether or not a sequence often 
-produces malformed protein or is translationally inefficient was to construct a 
-reporter plasmid and run a series of experiments.  This process is not only 
-time-consuming, but also expensive and requires specialized equipment.  Obviously, 
-any method that could effectively shorten or cheapen this process would be extremely 
-useful. We present such a method: a computational model.  Based on fundamental 
-principles of physics, molecular biology, and statistics, as well as the groundwork 
-of other researchers, we created a new stochastic model for ribosomal translation 
-that incorporates probability, force, and free energy present in hybridization and 
-which can fairly accurately predict programmed frameshifts, incorrect codon choice, 
-and can also be incorporated into a wide variety of other research, such as 
-optimization of tRNA availabilities for recombinant protein synthesis. 
-
+Prior research on translational efficiency, especially sequence-dependent features, has shown that 
+translational efficiency can be influenced by such factors as codon bias~\cite{gustafsson04} and 
+rare codon usage~\cite{kane95}~\cite{ikemura}.  These sequence-dependent factors even apply to 
+expression of recombinant proteins~\cite{sorensen05}.  In addition, secondary-structure problems 
+associated with the folding of the sequence can decrease translational efficiency~\cite{kozak05}. 
+However, the specific connections between translational efficiency and these factors are not fully 
+understood, and eliminating troublesome factors does not always correlate to increased efficiency. 
+[Dr. Stomp, we need references here.]  We have developed an additional tool that can help to 
+eliminate problems caused by codon bias and codon usage, which will certainly be useful.  
 
 % Insert introduction here.
 \section{Computational Methods}
@@ -377,16 +373,16 @@ We optimize the separation between the displacement deviations of the
 high-yield sequences and the other ones.  
 First, we generate a list of randomly modified TAV vectors at which
 point we calculate the ratio of the displacement deviation from
-displacement (\autoref{section:deviation}) for the high-yield sequences to the other ones
-six bGH proteins. From there, we sort the modified TAV according to
-this ratio and discarding the least optimal half of the tRNA
-vectors. We then choose two of the remaining vectors, with the chance
-of each vector being proportional to its rank.  We then take a
-weighted average of the two vectors and spawn a new vector.  After
-creating the next generation according to a constant ``gene pool''
-size, we delete the previous generation and repeat. After a fixed
-number of generations, the algorithm terminates and returns the
-optimal TAV vector.
+displacement (\autoref{section:deviation}) for the four high-yield 
+sequences to the other bGH proteins. From there, we sort the 
+modified TAV according to this ratio and discarding the least 
+optimal half of the tRNA vectors. We then choose two of the 
+remaining vectors, with the chance of each vector being proportional
+ to its rank.  We then take a weighted average of the two vectors 
+ and spawn a new vector.  After creating the next generation according 
+ to a constant ``gene pool'' size, we delete the previous generation 
+ and repeat. After a fixed number of generations, the algorithm 
+ terminates and returns the optimal TAV vector.
 
 This algorithm did not alter the TAV vectors to a significant degree.
 In fact, the average change to each value in the vector was merely
