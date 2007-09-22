@@ -1,9 +1,18 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Freier et~al.(1986)Freier, Kierzek, Jaeger, Sugimoto, Caruthers,
+  Nielson, and II]{freier}
+S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
+  T.~Nielson, and D.~H.~T. II.
+\newblock Improved free-energy parameters for predictions of {RNA} duplex
+  stability.
+\newblock In \emph{Biochemistry}, volume~83, pages 9373--9377. National Academy
+  of Sciences, Dec 1986.
 
 \bibitem[Ponnala et~al.(2006{\natexlab{a}})Ponnala, Bitzer, Stomp, and
   Vouk]{lalit:embs}
