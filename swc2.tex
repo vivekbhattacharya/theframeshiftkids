@@ -413,31 +413,72 @@ conducted soon.
 % I'm colluding deviation and probability yield here, but it's for a
 % good purpose. --Hao.
 
-\citet{rpoS:process} indicate that \rpoS, a gene that codes for an RNA
+\citet{rpoS:process} indicate that \rpoS, which codes for an RNA
 polymerase sigma factor, contains sections of rare codons that disrupt
-ribosomal translation. Indeed, our computation model agrees with this
-biological evidence, showing again moderately high deviation from $x =
-0$. In mass production of such a polymerase sigma factor, biologists
-can replace sequences of codons known to add noise and error to
-ribosomal translation with synonymous codons. 
-However, with a computation model, the process is much
-faster and, with this performance, we can perform a randomized, greedy
-algorithmic search for codon sequence replacements. We first find an
-early trouble spot\footnote{Specifically, places with
-  mistake frameshifts in our model, which correlate to rare codons per
-  above discussion.} of four codons, randomly replacing that sequence
-with synonymous four codons, and running our model against those
+ribosomal translation. Our computation model agrees, showing
+relatively high deviation from $x = 0$ in comparison to other
+ribosomal proteins (\autoref{section:riboproteins}). In mass
+production of such a polymerase sigma factor, biologists replace
+sequences of codons with synonymous counterparts known to reduce noise
+and error. However, with a computation model, the process is much
+faster and with this performance we constructed a randomized and greedy
+algorithmic search for such replacements. We first find an
+early trouble spot\footnote{Specifically, places with mistake
+  frameshifts in our model, which correlate to rare codons per above
+  discussion.} of four codons, randomly replacing that sequence with
+synonymous four codons, and running our model against those
 permutations to obtain a locally optimal sequence at that place. We
-then repeat for all trouble spots the first, terminating when we have locally
-optimized the last one. With this algorithm, we reduced our standard
-deviation metric for the \rpoS\ displacement plot from 0.168 to 0.117
-on sample size of 1000 with a replacement of 33 codons. The
+then repeat for all trouble spots the first, terminating when we have
+locally optimized the last one. With this algorithm, we reduced our
+standard deviation metric for the \rpoS\ displacement plot from 0.168
+to 0.117 on sample size of 1000 with a replacement of 33 codons. The
 initial correlation between deviation and biological expression
 provides strong anecdotal evidence that, with future biological
 experimentation, our algorithm has indeed increased protein yield
 bypassing a potentially slow biological experimentation process.
 
 [Dr. Stomp, we need the notes that you mentioned.]
+
+\subsection{An Artificial Frameshifter}
+\begin{cfigure}
+  \caption{Artificial linker sequence sensitivity plot}
+  \label{linker:sens}
+  \includegraphics[scale=0.25]{linker/sensitivity}
+\end{cfigure}
+
+\begin{wrapfigure}{R}{0.55\textwidth}
+  \caption{Artificial linker sequence}
+  \label{linker}
+  \begin{verbatim}
+    aga aau cag acc
+    aug gag gcu ggc acc
+    agg ggg uac agu  u  aag caa acg
+  \end{verbatim}
+\end{wrapfigure}
+
+In order to verify the model's ability to predict frameshifts, we
+artificially created a sixteen-codon sequence (\autoref{linker})
+designed to frameshift.  The sequence is designed to frameshift into
+the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
+shows the error-free rate of the linker sequence as a function of species
+angle and initial displacement, in order to demonstrate robustness,
+similar to the \prfB\ sensitivity plot (\autoref{prfB:sens}).
+
+A BLAST search finds about thirty matches of our sequence within areas of
+bacterial genomes but none from \ecoli. To test the frameshifting capacity of
+this linker sequence, we initiate a biological experiment.
+
+We create a bifunctional fusion protein containing beta-galactosidase (\bgals) 
+and \xylE.  Beta-galactosidase levels correlate to
+levels of nitrophenol, which has a yellow color, while \xylE\ expresses
+an enzyme that cleaves catechol.  These two proteins are joined by
+the proposed linker sequence.  Research indicates that even in this
+fused protein, both \bgals\ and \xylE\ should retain their functionalities.
+As such, if the frameshift were to occur, one should observe both 
+high levels of nitrophenol and low levels of catechol.
+
+The biological construct for this experiment is in the process of being created.
+Results should be available by mid-October.
 
 \section{Discussion}
 First, we note that our model is quite robust: Minor changes
