@@ -444,27 +444,27 @@ We must note that \citeauthor{weiss87} did not maintain the amino acid structure
 while substituting codons.  Changes in the primary structure is of interest in
 analysis of sequences.
 
-\subsection{\ecoli\ genes}
+\subsection{\ecoli\ Genes}
 \begin{cfigure}
-  \caption{Displacement deviation for \ecoli\ genes with with
-    deviation >3 (<1\%) truncated}
-  \label{ecoli:hist}
-  \includegraphics[scale=0.4]{histograms/everything}
+  \caption{Investigating a large sample of \ecoli\ genes}
+  \subfloat[Displacement deviations]{
+    \label{ecoli:hist}
+    \includegraphics[width=0.4\textwidth]{histograms/everything}
+  }
+  \quad
+  \subfloat[Comparison to ribosomal proteins]{
+    \label{ribosomal:comp}
+    \includegraphics[width=0.5\textwidth]{histograms/ribosomal}
+  }
 \end{cfigure}
 
-\autoref{ecoli:hist} is a histogram of the
+\autoref{ecoli:hist}\footnote{We truncate the histogram at three, excluding
+  the outliers and less than 1\% of the sample.} is a histogram of the
 deviation yields of 4364 genes of \ecoli, over 80\% of the entire
 genome.  As predicted, 93.45\% of the genes that we ran laid in the 0
 to 1 interval, agreeing with our theory of natural efficiency.  The
 average displacement deviation for these \ecoli\ genes is 0.4425, in a
 run for 500 iterations per gene.
-
-\begin{wrapfigure}{R}{0.5\textwidth}
-  \caption{Comparison of ribosomal proteins and a large
-    complete sample of verified \ecoli\ genes}
-  \label{ribosomal:comp}
-  \includegraphics[width=0.5\textwidth]{histograms/ribosomal}
-\end{wrapfigure}
 
 \subsection{Ribosomal Proteins}
 \label{section:riboproteins}
