@@ -253,11 +253,32 @@ our model.
 We now aim to test the capabilities of our model to predict translational
 efficiency other than frameshift rate.  We hypothesize that displacement
 deviation provides a suitable metric for translational efficiency:  A lower
-deviation would correspond to a more efficient sequence.  We base this 
-hypothesis on a To this end, we start with a simple fact:
+deviation would correspond to a more efficient sequence.  
+
+We base this 
+hypothesis on the fact that as the displacement moves away from the 
+horizontal axis, the ribosome has a greater probability of picking the
+codon in the +1 frame by chance, in effect producing junk.  In addition,
+a greater deviation from the zero axis inherently implies a longer
+time for translation, since the force must act on the ribosome for an 
+extended period of time to make the displacement relatively large.  A
+high value would thus indicate a propensity for a high time for translation,
+thus reducing translational efficiency.  [Better explanation, citations.]
+
+To this end, we start with a simple fact:
 Microbiologists agree that translation in \ecoli\ is an efficient process;
-most regulation is transcriptional.  We hypothesize that displacement deviation
-provides an accurate metric 
+most regulation is transcriptional.  As such, the majority of the genes 
+in the genome should exhibit low displacement deviations.  Moreover,
+ribosomal proteins are known to be abundant in the cell, and thus
+are hypothesized to be translated at especially efficient rates.  We
+furthermore predict that ribosomal proteins will have deviations lower
+on average than those for the other \ecoli\ genes.
+
+\subsubsection{Bovine Growth Hormone}
+
+We finally test our model on a set of sequences known to be translationally 
+regulated.  \citet{schoner:bgh} developed a number of sequences that
+code for 
 
 
 \section{Parameters}
