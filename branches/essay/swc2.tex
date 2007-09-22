@@ -377,15 +377,23 @@ values and graphs.
 \section{Results}
 \subsection{\prfB}
 
+
 \begin{cfigure}
-  \caption{Stochastic displacement plot of \prfB}
-  \label{prfB}
-  \includegraphics[scale=0.4]{prfB/disp}
+  \caption{Plots of~\prfB}
+  \label{prfB:stochplots}
+  \subfloat[Displacement Plot]{
+    \label{prfB:disp:sub}
+    \includegraphics[width=0.5\textwidth]{prfB/disp}
+  }
+  \subfloat[Sensitivity plot]{
+    \label{prfB:sens:sub}
+    \includegraphics[width=0.5\textwidth]{prfB/sensitivity}
+  }
 \end{cfigure}
 
 The gene \prfB, as mentioned, is known
 to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
-\autoref{prfB} shows a displacement plot for
+Figure \autoref{prfB:disp:sub} shows a displacement plot for
 \prfB, again with a distinctive jump at codon 25.
 \footnote{Note that the polar plot is the the same as \subfigref{prfB:polar:sub}.
 The new model does not alter the polar plot or the free energy calculations.}
@@ -397,12 +405,6 @@ a displacement of exactly 2.  The propensity to approach $x=2$,
 however, concurs with biological evidence indicating the ribosome
 stays in frame after the frameshift.  [Dr. Stomp, we need references
   here.]
-
-\begin{cfigure}
-  \caption{Sensitivity plot for \prfB}
-  \label{prfB:sens}
-  \includegraphics[scale=0.4]{prfB/sensitivity}
-\end{cfigure}
 
 \begin{wrapfigure}{R}{0.5\textwidth}
   \caption{Comparison of biological yield and error-free rate, 500 iterations}
@@ -553,7 +555,7 @@ designed to frameshift.  The sequence is designed to frameshift into
 the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
 angle and initial displacement, in order to demonstrate robustness,
-similar to the \prfB\ sensitivity plot (\autoref{prfB:sens}).
+similar to the \prfB\ sensitivity plot (\autoref{prfB:sens:sub}).
 
 A BLAST search finds about thirty matches of our sequence within areas of
 bacterial genomes but none from \ecoli. To test the frameshifting capacity of
@@ -576,7 +578,7 @@ student for running this experiment in the laboratory.
 First, we note that our model is quite robust: Minor changes
 in $\theta_{\rm{sp}}$ and initial displacement do not affect
 frameshifting significantly.
-\autoref{prfB:sens} illustrates the error-free rate as
+\autoref{prfB:sens:sub} illustrates the error-free rate as
 a function of species angle and initial displacement. As noted,
 the frameshift holds over quite a wide range. Though these initial
 parameters are necessary (\autoref{section:parameters}), they are not
@@ -617,7 +619,7 @@ results from the vast pool of research with which our model has not
 yet come into contact.
 
 In addition, \citet{weiss87} conducted a set of experiments in which
-they changed the codon before the frameshift site at \sc{guu},
+they changed the codon before the frameshift site at {\sc{guu}},
 dropping the yield to less than 60 whole-cell units. In contrast,
 our model predicts very high error-free rates at an average of 92.8\%
 for all six sequences. Again, our model does not fully correlate with
