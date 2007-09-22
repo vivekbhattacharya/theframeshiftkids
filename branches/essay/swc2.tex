@@ -23,6 +23,22 @@
 \maketitle
 \tableofcontents
 \clearpage
+
+\begin{abstract}\begin{normalsize}
+  In this document, we discuss a stochastic model for ribosomal displacement relative to reading 
+  frame based on forces arising from changes in free energy present in hybridization between the 
+  16S rRNA tail and nucleotides upstream from the A-site.  We present both our investigation and 
+  potential applications for this model, including optimization of economically significant gene
+  sequences such as bovine growth hormone, non-experimental prediction of translational efficiency for man-made 
+  proteins, adjustment of calculated tRNA availability values, and modelling of frameshifts in \prfB\ in \ecoli.
+  We present this investigation as a series of various inquiries made 
+  in subjects ranging throughout the field of molecular biology.  We also applied our stochastic 
+  model to create a short, 16-codon sequence that is not known to produce a frameshift in nature 
+  in order to test our model's predictive power for synthesized mRNA sequences, and designed an 
+  experiment to verify this frameshift.  We expect results in October 2007.
+\end{normalsize}\end{abstract}
+
+\clearpage
 \pagenumbering{arabic}
 
 \section{Computational Methods}
@@ -65,18 +81,16 @@ Insert magic here.
 \subsection{Frameshifts}
 \label{section:frameshifts}
 
-\begin{figure}
-  \centering
+\begin{cfigure}
   \caption{Deterministic displacement plot of~\prfB}
   \label{prfB:deterministic}
   \includegraphics[scale=0.4]{prfB/deterministic}
-\end{figure}
+\end{cfigure}
 
 \begin{wrapfigure}{R}{0.5\textwidth}
-  \centering
   \caption{Polar plot of \prfB}
   \label{prfB:polar}
-  \includegraphics[scale=0.5]{prfB/polar}
+  \includegraphics[width=0.5\textwidth]{prfB/polar}
 \end{wrapfigure}
 
 First, we let a displacement of $x = 0$ correspond to the zero reading frame and increments of
@@ -167,7 +181,7 @@ every wait cycle.
 
 Importantly, we have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating 
 that the probability of choosing a codon at a given cycle is directly proportional 
-to its tRNA availability, a result that makes perfect biological sense.
+to its tRNA availability, another result that coincides with biological evidence.
 
 \subsection{Measures of Sequence Analysis}
 
@@ -189,15 +203,16 @@ and the +1 frame after in order for the run to be a success.
 
 We propose the formula
 \begin{equation}
-    \label{eqn:lbd}
     d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}}
 \end{equation}
-where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is the displacement at codon $i$,
-and $N$ is the total number of codons as a measure of the deviation of the sequence
-from the expected reading frame.  Usually $\beta_i = 0$ unless a
-programmed frameshift exists as it does for \prfB.
-For example, for \prfB\ $\beta_i = 2$ for all $i \geq 25$ because \prfB\ frameshifts at codon 25 \textsc{uga}
-and the model represents a frameshift with +2 displacement per \autoref{section:frameshifts}.
+where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
+the displacement at codon $i$, and $N$ is the total number of codons
+as a measure of the deviation of the sequence from the expected
+reading frame.  Usually $\beta_i = 0$ unless a programmed frameshift
+exists as it does for \prfB.  For example, for \prfB\ $\beta_i = 2$
+for all $i \geq 25$ because \prfB\ frameshifts at codon 25
+\textsc{uga} and the model represents a frameshift with +2
+displacement per \autoref{section:frameshifts}.
 
 \subsection{Topics of Analysis}
 In order to test our computational model, we ran a number of
@@ -232,12 +247,11 @@ For these plots, we used a species angle of $\theta_{\rm{sp}}
 \section{Results}
 \subsection{\prfB}
 
-\begin{figure}
-  \centering
+\begin{cfigure}
   \caption{Stochastic displacement plot of \prfB}
   \label{prfB}
   \includegraphics[scale=0.4]{prfB/disp}
-\end{figure}
+\end{cfigure}
 
 In \ecoli, the gene \prfB\ codes for protein release factor B, an
 essential element in translation.  This gene, as mentioned, is known
@@ -253,12 +267,11 @@ The propensity to approach $x=2$, however, concurs with biological
 evidence indicating the ribosome stays in frame after the frameshift.
 [Dr. Stomp, we need references here.]
 
-\begin{figure}
-  \centering
+\begin{cfigure}
   \caption{Sensitivity plot for \prfB}
   \label{prfB:sens}
   \includegraphics[scale=0.4]{prfB/sensitivity}
-\end{figure}
+\end{cfigure}
 
 We repeated Weiss's experiments computationally
 using the stochastic model, and our results agreed~\cite{weiss87,weiss88}.
@@ -271,9 +284,7 @@ frameshift. Moving the stop codon another nucleotide upstream failed
 to create a frameshift as well in our model.
 
 \subsection{\ecoli\ genes}
-
 \begin{wrapfigure}{R}{0.55\textwidth}
-  \centering
   \caption{Displacement deviation for \ecoli\ genes with with
     deviation >3 (<1\%) truncated}
   \label{ecoli:hist}
@@ -290,6 +301,13 @@ for most \ecoli\ proteins.
 for these \ecoli\ genes is [Guys, what?], in a run for 100 iterations per genes.
 
 \subsection{Ribosomal Proteins}
+\begin{wrapfigure}{R}{0.3\textwidth}
+  \caption{Boxplot comparison of ribosomal proteins and an almost
+    complete sample of verified \ecoli\ genes}
+  \label{ribosomal:comp}
+  \includegraphics[width=0.3\textwidth]{histograms/ribosomal.png}
+\end{wrapfigure}
+
 To compound this finding, biologists also agree that ribosomal
 proteins offer especially high translational efficiencies, since the
 cell must produce them in such large quantities. [Dr. Stomp, we need
@@ -325,12 +343,11 @@ outlier because \citeauthor{schoner:bgh} reported low protein
 efficiency whereas our model reports low deviation, incongrous with
 previously established correlations.
 
-\begin{figure}
-  \centering
+\begin{cfigure}
   \caption{Displacement plot for bGH}
   \label{bgh:disp}
   \includegraphics[scale=0.4]{bgh/all}
-\end{figure}
+\end{cfigure}
 
 \subsection{Optimizing Translational Efficiency}
 
@@ -391,7 +408,5 @@ Our model agrees with his findings.
 
 \phantomsection
 \addcontentsline{toc}{section}{References}
-\begin{singlespace}
-  \bibliography{wizards}
-\end{singlespace}
+\begin{singlespace} \bibliography{wizards} \end{singlespace}
 \end{document}
