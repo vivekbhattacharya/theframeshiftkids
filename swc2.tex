@@ -405,27 +405,20 @@ stays in frame after the frameshift.  [Dr. Stomp, we need references
   \includegraphics[width=0.5\textwidth]{histograms/weissbox}
 \end{wrapfigure}
 
-We repeated Weiss's experiments computationally
-using the stochastic model, and most of our results supported those found by 
-Weiss.  However, results did not match Weiss's numbers through ordinality.
-Rather, we could separate the genes into two general categories:
-``high yield" ($\beta$-galactosidase activity of over 1650 
-whole-cell units, where unaltered \prfB\ has an activity of 6600) and ``low yield" (otherwise).
+We repeated \citeauthor{weiss87}'s experiments computationally
+using the stochastic model, noticing a marked contrast between those
+with $\beta$-galactosidase activity over 1650 whole-cell units, low in
+relationship with \prfB\ that had an activity of 6600, and those
+without. We distinguish between these as high and low yield, respectively.
 With some reservations, the data supports our prediction that high yield
-and low yield sequences could more-or-less be distinguished via error-free rate.
-
-Weiss conducted one set of experiments in which he changed the codon before
-the frameshift site.  Interestingly, changing this codon from the original {\sc{guu}}
-drops the yield down to less than 60 whole-cell units.  However, our model
-predicted very high error-free rates, at an average of 92.8\% for all six sequences.
+and low yield sequences could more-or-less be distinguished via
+error-free rate as we found from our results.
 
 We must note that \citeauthor{weiss87} did not maintain the amino acid structure
-while substituting codons.  Changes in the primary structure may be of interest in
+while substituting codons.  Changes in the primary structure is of interest in
 analysis of sequences.
 
-
 \subsection{\ecoli\ genes}
-
 \begin{cfigure}
   \caption{Displacement deviation for \ecoli\ genes with with
     deviation >3 (<1\%) truncated}
@@ -482,10 +475,10 @@ plots of all the bGH sequences on the same set of axes. Although not
 immediately obvious, the four sequences do indeed indicate lower
 deviation. Despite running the genetic algorithm, pcZ108 remains an
 outlier because \citeauthor{schoner:bgh} reported low protein
-efficiency whereas our model reports low deviation, incongrous with
+efficiency whereas our model reports low deviation, incongruous with
 previously established correlations.
 
-Once again, it must be noted that like Weiss, \citeauthor{schober:bgh}
+Once again, it must be noted that like Weiss, \citeauthor{schoner:bgh}
 did not maintain the amino acid structure while altering his sequences.
 The sequence pcZ108 has a different amino acid structure than the other
 ones; the lower translational efficiency may be attributed to the interaction
@@ -543,15 +536,14 @@ bypassing a potentially slow biological experimentation process.
   \includegraphics[scale=0.25]{linker/sensitivity}
 \end{cfigure}
 
-\begin{wrapfigure}{R}{0.55\textwidth}
-  \caption{Artificial linker sequence}
+\begin{cfigure}
+  \caption{Artificial linker sequence with a 12-base leader sequence
+    in brackets}
   \label{linker}
   \begin{verbatim}
-    aga aau cag acc
-    aug gag gcu ggc acc
-    agg ggg uac agu  u  aag caa acg
+    [aga aau cag acc] aug gag gcu ggc acc agg ggg uac agu  u  aag caa acg
   \end{verbatim}
-\end{wrapfigure}
+\end{cfigure}
 
 In order to verify the model's ability to predict frameshifts, we
 artificially created a sixteen-codon sequence (\autoref{linker})
@@ -635,13 +627,23 @@ bear more biological sense, as the ribosome is experimentally known to dissociat
 too long.  Thus, we must consider the biological implications of the model in addition
 to its predictive power.
 
+In addition, \citet{weiss87} conducted one set of experiments in
+which they changed the codon before the frameshift site at codon 25.
+Interestingly, changing this codon from the original {\sc{guu}} drops
+the yield down to less than 60 whole-cell units.  However, our model
+predicts very high error-free rates at an average of 92.8\% for all
+six sequences. Again, our model does not fully correlate with all
+biological evidence in the field and \citeauthor{weiss87}'s
+experiments remain a topic of scrutiny as we continually refine our
+model in future research.
+
 % Frameshift discussion
 
 Overall, the benefits from an accurate computational model in
 modeling translation accrue when biologists need a large amount of
 runs without the stopgap of experimentation, in vivo or in
 vitro. Naturally, our model then possesses the power to imbue
-commmercial or scientific pursuits with the wind beneath their sails
+commercial or scientific pursuits with the wind beneath their sails
 they need in a rapidly innovating and developing field of genetics
 with enormous potential and applications.
 
@@ -649,3 +651,5 @@ with enormous potential and applications.
 \addcontentsline{toc}{section}{References}
 \begin{singlespace} \bibliography{wizards} \end{singlespace}
 \end{document}
+
+% LocalWords:  embs abcd abc bcd sp pcZ riboproteins
