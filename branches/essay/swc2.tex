@@ -253,6 +253,7 @@ As such, we propose two metrics for analysis of a number of different runs
 simultaneously. 
 
 \subsubsection{Error-Free Rate}
+\label{section:efr}
 When studying a
 sequence with a programmed frameshift, \emph{error-free rate} measures the percentage of runs 
 during which the ribosome chooses the correct codon
@@ -299,15 +300,23 @@ efficiency other than frameshift rate.  We hypothesize that displacement
 deviation provides a suitable metric for translational efficiency:  A lower
 deviation would correspond to a more efficient sequence.  
 
-We base this 
-hypothesis on the fact that as the displacement moves away from the 
-horizontal axis, the ribosome has a greater probability of picking the
-codon in the +1 frame by chance, in effect producing junk.  In addition,
-a greater deviation from the zero axis inherently implies a longer
-time for translation, since the force must act on the ribosome for an 
-extended period of time to make the displacement relatively large.  A
-high value would thus indicate a propensity for a high time for translation,
-thus reducing translational efficiency.
+[Dr. Stomp, are there any references in literature to the relationship
+  between ribosome displacement instability and protein efficiency?]
+We base this hypothesis on the fact that as the displacement moves
+away from the horizontal axis, the ribosome has a greater probability
+of picking the codon in the +1 frame by chance, in effect
+\emph{probabilistically} producing junk. That is, while a single run
+may biologically produce a working primary structure of the protein,
+the gene in question ultimately is less efficient than a synonymous gene
+with lower aggregate probabilities be this aggregate measure the
+error-free rate (\autoref{section:efr}) or displacement deviation
+(\autoref{section:deviation}). In addition, a greater deviation from
+the zero axis inherently implies a longer time for translation, since
+the force must act on the ribosome for an extended period of time to
+make the displacement relatively large.  A high value thus
+indicates a propensity for a high time for translation, reducing
+translational efficiency, again contributing to the aggregate
+probability of translational failure.
 
 To this end, we start with a simple fact:
 Microbiologists agree that translation in \ecoli\ is an efficient process;
@@ -650,4 +659,4 @@ to its predictive power.
 \end{document}
 
 % This is for ispell. Do not delete. --Hao
-% LocalWords:  embs abcd abc bcd sp pcZ riboproteins
+% LocalWords:  embs abcd abc bcd sp pcZ riboproteins disp
