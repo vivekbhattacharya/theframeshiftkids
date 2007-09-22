@@ -47,7 +47,19 @@
 \pagenumbering{arabic}
 
 \section{Introduction}
-To be written.
+In the past, the only practical method to determine whether or not a sequence often 
+produces malformed protein or is translationally inefficient was to construct a 
+reporter plasmid and run a series of experiments.  This process is not only 
+time-consuming, but also expensive and requires specialized equipment.  Obviously, 
+any method that could effectively shorten or cheapen this process would be extremely 
+useful. We present such a method: a computational model.  Based on fundamental 
+principles of physics, molecular biology, and statistics, as well as the groundwork 
+of other researchers, we created a new stochastic model for ribosomal translation 
+that incorporates probability, force, and free energy present in hybridization and 
+which can fairly accurately predict programmed frameshifts, incorrect codon choice, 
+and can also be incorporated into a wide variety of other research, such as 
+optimization of tRNA availabilities for recombinant protein synthesis. 
+
 
 % Insert introduction here.
 \section{Computational Methods}
@@ -204,14 +216,14 @@ probability of choosing the codon at a given wait cycle in the zero reading fram
     frame choice in question.}
 \end{equation}
 
-Here, $n$ represents the wait time for that codon and $K$ is the
+Here, $n$ represents $n_{abc}$ for the current codon and $K$ is the
 ordinal of the current wait cycle. For example, $K=1$ on the first
 wait cycle, $K=2$ on the second, and so forth.  Importantly, $\omega$
 is dependent on displacement, which increments after every wait cycle.
 
 We also have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating
 that the probability of choosing a codon at a given cycle is directly proportional
-to its tRNA availability, another result that coincides with biological evidence.
+to its tRNA availability, another result that coincides with reason and intuition.
 
 
 \subsection{Consequences of the Stochastic Model}
