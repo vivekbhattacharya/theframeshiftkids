@@ -32,47 +32,60 @@
 
 \clearpage
 \begin{abstract}\begin{normalsize}
-  In \emph{\BWFtitle\ Escherichia coli}, we discuss a stochastic model for ribosomal displacement relative to reading 
-  frame based on forces that arise from changes in free energy present in hybridization between the 
-  16S rRNA tail and nucleotides upstream from the A-site.  We present both our investigation and 
-  potential applications for this model, including optimization of economically significant gene
-  sequences such as bovine growth hormone, non-experimental prediction of translational efficiency for man-made 
-  proteins, adjustment of calculated tRNA availability values, and modelling of frameshifts in \prfB\ in \ecoli.
-  We present this investigation as a series of various inquiries made 
-  in subjects ranging throughout the field of molecular biology.  We also applied our stochastic 
-  model to create a short, 16-codon sequence that is not known to produce a frameshift in nature 
-  in order to test our model's predictive power for synthesized mRNA sequences, and designed an 
-  experiment to verify this frameshift.  We expect results in October 2007.
+  In \emph{\BWFtitle\ Escherichia coli}, we propose a stochastic model
+  for ribosomal displacement relative to the reading frame. We base
+  the model on forces that arise from changes in free energy present
+  in hybridization between the 16S rRNA tail and nucleotides upstream
+  from the A-site.  We present both our investigation and potential
+  applications for this model, including investigations into
+  economically significant gene sequences such as bovine growth
+  hormone, translational efficiency predictions for man-made proteins,
+  and a model of programmed frameshifts existent within the
+  \ecoli\ gene \prfB.  We present this investigation as a series of
+  various inquiries made into subjects throughout the field of
+  molecular biology.  We also applied our stochastic model to create a
+  short, 16-codon sequence not known to produce a frameshift in nature
+  and not found in \ecoli\ in order to test our model's predictive
+  power for synthesized mRNA sequences and designed an experiment to
+  verify this frameshift.  We expect results in October 2007.
 \end{normalsize}\end{abstract}
 \clearpage
 \pagenumbering{arabic}
 
 \section{Introduction}
-Prior research on translational efficiency, especially sequence-dependent features, has shown that 
-translational efficiency can be influenced by such factors as codon bias~\cite{gustafsson04} and 
-rare codon usage~\cite{ikemura}~\cite{kane95}.  These sequence-dependent factors even apply to 
-expression of recombinant proteins~\cite{sorensen05}.  In addition, secondary-structure problems 
-associated with the folding of the sequence can decrease translational efficiency~\cite{kozak05}. 
-However, the specific connections between translational efficiency and these factors are not fully 
-understood, and eliminating troublesome factors does not always correlate to increased efficiency. 
-[Dr. Stomp, we need references here.]  We have developed an additional tool that can help to 
-eliminate problems caused by codon bias and codon usage, which will certainly be useful.  
+\citet{gustafsson04, ikemura, kane95} have studied translational
+efficiency and its influence on codon bias and rare codon usage.
+These sequence-dependent factors even apply to expression of proteins
+in alien cells~\cite{sorensen05}.  In addition, secondary structure
+problems during protein folding can decrease translational
+efficiency~\cite{kozak05}.  However, scientists do not fully
+understand the specific connections between efficiency and these
+factors, and eliminating troublesome factors does not always increase
+efficiency.  [Dr. Stomp, we need references here.]  We also develop an
+additional tool to eliminate problems caused by codon bias and codon
+usage as an application of our model's vatic powers.
 
-The recent work of~\citet{lalit:embs} focused on creating a deterministic model of frameshifting based on 
-hybridization between the 16S rRNA tail and upstream mRNA nucleotides.  The periodicity of this signal 
-discussed in~\cite{lalit:jbsb} suggests that force arising from the free energy in such hybridizations acts as a correcting mechanism, helping to ensure that possible overshooting or 
-undershooting of the next in-frame codon does not occur.  In this manner, early errors in reading frame tend
-not to be propagated throughout the entire sequence.  Some limitations of the deterministic model are
-discussed in section 2.4.
+\citet{lalit:embs} created a deterministic model of frameshifting
+based on the hybridization between the 16S rRNA tail and upstream mRNA
+nucleotides.  The periodicity of this signal~\cite{lalit:jbsb}
+suggests that the force emerges from the free energy during
+hybridization acts as a correcting mechanism, stabilizing codon
+choice.  In this manner, early errors in the reading frame tend not to
+propagate throughout the entire sequence.  Some limitations of the
+deterministic model are discussed in \autoref{stochastic}.
 
-Because the ribosome's displacement from the zero reading frame is virtually always nonzero, and because the 
-free energy acts as a correcting mechanism, we reasoned that we could create a new metric for a sequence: 
-the total deviation from the intended reading frame.  This metric, because it measures how far the ribosome 
-is from optimal functionality, should then roughly correlate to translational efficiency.  Throughout this 
-paper, we use our new metric to optimize tRNA availabilities in order to distinguish between high-efficiency
-sequences and low-efficency sequences.  We also use our new metric to optimize a gene sequence known to be 
-translationally regulated for maximum efficiency, and will apply our new metric to ribosomal proteins and 
-the entire \ecoli\ genome to see if the model is robust over many different genes.
+Because the ribosome's displacement from the zero reading frame is
+almost always nonzero and because the free energy acts as a correcting
+mechanism, we create a new metric of efficiency: the total deviation
+from the intended reading frame.  This metric
+(\autoref{section:deviation}) then roughly correlates to translational
+efficiency.  Throughout this paper, we use this and other metrics to
+optimize tRNA availabilities in order to distinguish between
+high-efficiency and low-efficency sequences. We also use our new
+metric to optimize a translationally regulated gene sequence
+regulated for maximum efficiency, and will apply our new metric to
+ribosomal proteins and the entire \ecoli\ genome to see if the model
+is robust over many different genes.
 
 \section{Computational Methods}
 \subsection{Free Energy}
