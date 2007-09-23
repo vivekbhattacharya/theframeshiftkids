@@ -52,27 +52,48 @@
 \clearpage
 \pagenumbering{arabic}
 
-\section{Introduction}
-\citet{gustafsson04, ikemura, kane95} have studied translational
-efficiency and its influence on codon bias and rare codon usage.
-These sequence-dependent factors even apply to expression of proteins
-in alien cells~\cite{sorensen05}.  In addition, secondary structure
-problems during protein folding can decrease translational
+\section{Purpose}
+Our studies are part of an ongoing research project focused on
+investigating the usefulness of applying information and coding theory
+and signal processing methods to further our understanding of how
+information is encoded and decoded from nucleic acids.  The particular
+focus of the current research is information that controls translation
+in bacteria.  Previous students have developed a deterministic model
+for the control of translational reading frame by studying the
+programmed frameshift present in the prfB gene of E. coli.  The focus
+of our studies was to correct the deficiencies of the model developed
+by \autoref{lalit:mechanics}.
+
+\section{Rationale}
+\citet{gustafsson04, ikemura}, and \citet{kane95} studied the impact
+of translational efficiency efficiency on sequence-dependent features
+and especially with regard its influence on codon bias and rare codon
+usage.  The importance of relationship is even more pronounced in
+recombinant proteins~\cite{sorensen05}.  In addition, secondary
+structure problems during protein folding can decrease translational
 efficiency~\cite{kozak05}.  However, scientists do not fully
 understand the specific connections between efficiency and these
-factors, and eliminating troublesome factors does not always increase
-efficiency.  [Dr. Stomp, we need references here.]  We also develop an
-additional tool to eliminate problems caused by codon bias and codon
-usage as an application of our model's vatic powers.
+sequence-dependent factors, as even eliminating troublesome factors
+does not always increase efficiency. The goal of our studies is to
+advance the development of a computational method that can increase
+translational efficiency through mRNA sequence modifications. If
+successful, this work streamlines gene sequence optimization in the
+production of high-yield, recombinant proteins. Creating cell lines
+that synthesize commercially viable yields in fields ranging from
+medicine to agriculture is a significant challenge that our model
+addresses. In addition, a successful model implies a mechanism by
+which molecular biologists can test the maintainence through
+elongation.
 
-\citet{lalit:embs} created a deterministic model of frameshifting
-based on the hybridization between the 16S rRNA tail and upstream mRNA
-nucleotides.  The periodicity of this signal~\cite{lalit:jbsb}
-suggests that the force emerges from the free energy during
-hybridization acts as a correcting mechanism, stabilizing codon
-choice.  In this manner, early errors in the reading frame tend not to
-propagate throughout the entire sequence.  Some limitations of the
-deterministic model are discussed in \autoref{stochastic}.
+Earlier, \citet{lalit:embs} created a deterministic model of
+frameshifting based on the hybridization between the 16S rRNA tail and
+upstream mRNA nucleotides.  The periodicity of this
+signal~\cite{lalit:jbsb} suggests that the force emerges from the free
+energy during hybridization acts as a correcting mechanism,
+stabilizing codon choice.  In this manner, early errors in the reading
+frame tend not to propagate throughout the entire sequence.  Some
+limitations of the deterministic model are discussed in
+\autoref{stochastic}.
 
 Because the ribosome's displacement from the zero reading frame is
 almost always nonzero and because the free energy acts as a correcting
