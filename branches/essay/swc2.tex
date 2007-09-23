@@ -50,7 +50,7 @@
 \section{Introduction}
 Prior research on translational efficiency, especially sequence-dependent features, has shown that 
 translational efficiency can be influenced by such factors as codon bias~\cite{gustafsson04} and 
-rare codon usage~\cite{kane95}~\cite{ikemura}.  These sequence-dependent factors even apply to 
+rare codon usage~\cite{ikemura}~\cite{kane95}.  These sequence-dependent factors even apply to 
 expression of recombinant proteins~\cite{sorensen05}.  In addition, secondary-structure problems 
 associated with the folding of the sequence can decrease translational efficiency~\cite{kozak05}. 
 However, the specific connections between translational efficiency and these factors are not fully 
@@ -60,7 +60,7 @@ eliminate problems caused by codon bias and codon usage, which will certainly be
 
 The recent work of~\citet{lalit:embs} focused on creating a deterministic model of frameshifting based on 
 hybridization between the 16S rRNA tail and upstream mRNA nucleotides.  The periodicity of this signal 
-discussed in [Ponnala-JBSB.pdf --need to cite] suggests that force arising from the free energy in such hybridizations acts as a correcting mechanism, helping to ensure that possible overshooting or 
+discussed in~\cite{lalit:jbsb} suggests that force arising from the free energy in such hybridizations acts as a correcting mechanism, helping to ensure that possible overshooting or 
 undershooting of the next in-frame codon does not occur.  In this manner, early errors in reading frame tend
 not to be propagated throughout the entire sequence.  Some limitations of the deterministic model are
 discussed in section 2.4.
@@ -72,7 +72,7 @@ is from optimal functionality, should then roughly correlate to translational ef
 paper, we use our new metric to optimize tRNA availabilities in order to distinguish between high-efficiency
 sequences and low-efficency sequences.  We also use our new metric to optimize a gene sequence known to be 
 translationally regulated for maximum efficiency, and will apply our new metric to ribosomal proteins and 
-the entire \ecoli genome to see if the model is robust over many different types of genes.
+the entire \ecoli\ genome to see if the model is robust over many different genes.
 
 \section{Computational Methods}
 \subsection{Free Energy}
@@ -147,7 +147,7 @@ A jump from approximately $x = 0$ to $x = 2$ {\emph{over the span of just one ba
 indication of a $+1$ frameshift; it suggests the ribosome skips one
 entire base pair in the mRNA sequence.  \autoref{prfB:deterministic:sub}
 shows the displacement plot per this deterministic model for \prfB, a
-unique gene with a programmed $+1$ frameshift at codon 25. In
+gene with a unique programmed $+1$ frameshift at codon 25. In
 conjunction with this characteristic plot, a $+1$ frameshift also
 displays an equally characteristic clockwise 120\degree\ phase angle
 rotation from the species angle, the average phase of the free energy
@@ -179,7 +179,7 @@ decision: stay in the current reading frame, move to the $+1$ reading
 frame, or move to the $-1$ reading frame.  We can further subdivide
 this choice into the individual wait-cycles.  At each wait cycle, the
 ribosome chooses from the above possibilities or proceeds to another
-wait-cycle without making a decision.  In addition, we assert the 
+wait-cycle without choosing a codon.  In addition, we assert the 
 number of wait cycles is inversely proportional to the tRNA availability of 
 the codon in the current reading frame, as rarer codons should force the 
 ribosome to wait longer for a correct transfer. In turn, we calculate
@@ -257,11 +257,11 @@ equations suggest, the ribosome is quite liable to choose the select the codon
 in the +1 frame by accident.  This action, unlike a frameshift, is a result
 of a digression that takes place over a number of codons---a digression that
 occurs slowly.  As the ribosome nears $x = 1$, the values for both the sine 
-and cosine functions drop, thus increasing the probability of indecision, that is,
+and cosine functions drop, thus increasing the probability of waiting and 
 increasing the time required for translation.
 
 Choosing the wrong codon is a purely stochastic phenomenon; only through our new
-model can we actually track the decisions of the ribosome throughout the course
+model can we actually track the actions of the ribosome throughout the course
 of translation.  Due to a general biological conceptualization of the physics involved,
 as described above, we believe that the stochastic model has the potential to 
 measure translational efficiency.
