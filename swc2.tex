@@ -62,7 +62,7 @@ in bacteria.  Previous students have developed a deterministic model
 for the control of translational reading frame by studying the
 programmed frameshift present in the prfB gene of E. coli.  The focus
 of our studies was to correct the deficiencies of the model developed
-by \autoref{lalit:mechanics}.
+by \citet{lalit:mechanics}.
 
 \section{Rationale}
 \citet{gustafsson04, ikemura}, and \citet{kane95} studied the impact
@@ -115,7 +115,7 @@ is robust over many different genes.
 Hybridization between two sequences of RNA causes changes in free energy in a cell.  
 It is well established that such hybridization occurs between the rRNA of the two 
 ribosomal subunits, the mRNA, and the tRNA.  In particular, the 16S tail of the small 
-ribosomal subunit interacts with the mRNA.  \citet{shine}observed that a subsequence 
+ribosomal subunit interacts with the mRNA.  \citet{sd}observed that a subsequence 
 of the 16S tail (the $3’$ end of the 16S rRNA) is complementary to a sequence found 
 directly upstream of many prokaryotic mRNAs; they hypothesized that RNA hybridization 
 plays a role in translation initiation.  \citet{hui} and \citet{Jacob} experimentally 
@@ -136,36 +136,37 @@ for the hybridization of permutations of RNA doublets.
 
 \subsection{The Deterministic Model}
 \citet{lalit:mechanics} assume a sinusoidal model for
-free energy, whence we can project free energy onto magnitude and
+free energy that projects free energy onto magnitude and
 phase through a memory model. Ponnala simulates free
 energy in a memory structure that can store three values (registers)
 that he later can represent as a phasor, a concept from physics. Then,
 we can visualize free energy from polar plots and deduce frameshifts,
-which occur along defined boundaries~\citet{lalit:mechanics} on the polar plot for a species.
+which occur along defined boundaries~\cite{lalit:mechanics} on the polar plot for a species.
  
 \citet{lalit:embs} then represent the cumulative phasor
 at codon $k$ as $\bvec{V} = Me^{i\theta}$ where $i$ is the imaginary
-constant, allowing us to calculate the magnitude and phase at codon
-$k$ through simple trigonometry. Magnitude and phase are then modeled
+constant, allowing calculation of the magnitude and phase 
+through simple trigonometry. Magnitude and phase are then modeled
 as a polar plot, one of the model outputs. Differentiating the energy vector $\bvec{V}$
-with respect to distance along the mRNA strand, we
-arrive at vector $\bvec{D}$ and interpret it as
+with respect to distance along the mRNA strand gives 
+vector $\bvec{D}$, which is interpreted~\cite{lalit:mechanics} as 
 a force that acts on the ribosome, keeping the mRNA in
 a given reading frame.
  
 The length of time that the force acts on the ribosome depends upon
-the codon's tRNA availability at the A-site during translation as well as the its shape [Dr. Stomp, references please!].
+the availability of the tRNA associated with the codon at the A-site 
+and any interactions between said tRNA and the ribosome. [Dr. Stomp, references please!].
 \citeauthor{lalit:mechanics} use a deterministic model to represent this: For each codon,
 a number of ``wait cycles," dependent upon the rarity of the
 associated tRNA, correspond to the number of times the force can
 increment displacement from the current reading frame.  In the
 deterministic model, the force acts for \emph{exactly} this set number
-of cycles given a codon. We can then simulate hybridization between the
+of cycles given a codon. A model detailed in~\cite{lalit:embs} simulates hybridization between the
 16S ribosomal subunit and a given mRNA strand: First, the 13-base 16S
 tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
-which is a 12-base leader sequence and the first base of the start
-codon \textsc{aug}, to determine the free energy value of the first acid.
-Then, shifting one base pair at a time, we calculate the free energy
+which includes a 12-base leader sequence, to determine the free energy 
+value of the first amino acid. The algorithm shifts one base pair at a time, 
+calculating the free energy
 for the entire sequence according to \citet{starmer}.
 
 \subsection{Frameshifts}
