@@ -116,7 +116,7 @@ Hybridization between two sequences of RNA causes changes in free energy in a ce
 It is well established that such hybridization occurs between the rRNA of the two 
 ribosomal subunits, the mRNA, and the tRNA.  In particular, the 16S tail of the small 
 ribosomal subunit interacts with the mRNA.  \citet{sd}observed that a subsequence 
-of the 16S tail (the $3�$ end of the 16S rRNA) is complementary to a sequence found 
+of the 16S tail (the $3$ end of the 16S rRNA) is complementary to a sequence found 
 directly upstream of many prokaryotic mRNAs; they hypothesized that RNA hybridization 
 plays a role in translation initiation.  \citet{hui} and \citet{Jacob} experimentally 
 confirmed this hypothesis.
@@ -491,12 +491,11 @@ to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
 The new model does not alter the polar plot or the free energy calculations.}
 
 Notably, the displacement plot does not reach $x=2$ over the span of
-one codon, as the old model predicted.  Rather, due to randomness, the
-ribosome chooses the codon in the $+1$ frame before actually reaching
+one codon, as the previous deterministic model predicted.  Rather, due to randomness, the
+ribosome stabilizes the codon of the $+1$ frame in the A-site before actually reaching
 a displacement of exactly 2.  The propensity to approach $x=2$,
 however, concurs with biological evidence indicating the ribosome
-stays in frame after the frameshift.  [Dr. Stomp, we need references
-  here.]
+stays in frame after the \prfB\ frameshift to produce full-length RF2.
   
 \autoref{prfB:sens:sub} shows the error-free rate of \prfB\ as a function
 of species angle and initial displacement and demonstrates the
@@ -508,18 +507,24 @@ robustness of our model (\autoref{section:discussion}).
   \includegraphics[width=0.5\textwidth]{histograms/weissbox}
 \end{wrapfigure}
 
-We repeated \citeauthor{weiss87}'s experiments computationally
-using the stochastic model, noticing a marked contrast between those
-with \bgals\ activity over 1650 whole-cell units, low in
-relationship with \prfB\ that had an activity of 6600, and those
-without. We distinguish between these as high and low yield, respectively.
-With some reservations, the data supports our prediction that high yield
-and low yield sequences could more-or-less be distinguished via
-error-free rate as we found from our results.
+Next, we used our computational model to determine whether a correlation exists between 
+error-free rate and the yield of a reporter protein, $\beta$-galactosidase (\bgals).  
+\citet{weiss87} investigated element of the mRNA sequence that could change the frequency 
+of frameshifting.  The frameshift site of \prfB\ was fused to the encoding sequence for 
+\bgals\ in such a manner that \bgals\ activity was dependent on the frameshift occurring, 
+thus serving as an indirect measure of frameshift frequency.  
 
-We must note that \citeauthor{weiss87} did not maintain the amino acid structure
-while substituting codons.  Changes in the primary structure is of interest in
-analysis of sequences.
+Our metric, error-free rate, showed some ability to divide Weiss's 35 constructs into 
+two general categories: those with \bgals\ activity over 1650 units and those with a 
+lower activity.  This number is in relation to the original, unmodified \prfB\ sequence, 
+which exhibited an activity of 6600 units.  These computations results suggest that 
+error-free rate could be used to predict protein yield, although it lacks resolution.
+
+Notably, \citeauthor{weiss87} did not maintain the amino acid structure of the polypeptides.  
+This discrepancy may impact protein folding and half-life.  Although \citeauthor{weiss87} 
+present no evidence evaluating this idea, such a phenomenon would confound the interpretation 
+of \bgals\ activity as a measure of frameshift frequency.
+
 
 \subsection{\ecoli\ Genes}
 \begin{cfigure}
@@ -537,29 +542,36 @@ analysis of sequences.
 
 \autoref{ecoli:hist}\footnote{We truncate the histogram at three, excluding
   the outliers and less than 1\% of the sample.} is a histogram of the
-deviation yields of 4364 genes of \ecoli, over 80\% of the entire
-genome.  As predicted, 93.45\% of the genes that we ran laid in the 0
-to 1 interval, agreeing with our theory of natural efficiency.  The
-average displacement deviation for these \ecoli\ genes is 0.4425, in a
-run for 500 iterations per gene.
+deviation yields of 4364 genes of \ecoli, encompassing over 80\% of the entire
+genome.  As predicted, 93.45\% of the genes that had deviations in the 0
+to 1 interval, agreeing with the theory of natural efficiency.  The
+average displacement deviation for these \ecoli\ genes is 0.4425 ($\sigma = 0.1537$), 
+under the condition of 500 iterations per gene.
 
 \subsection{Ribosomal Proteins}
 \label{section:riboproteins}
-To compound this finding, biologists also agree that ribosomal
-proteins offer especially high translational efficiencies, since the
-cell must produce them in such large quantities. [Dr. Stomp, we need
-  references here.] The displacement deviation from $x=0$ for ribosomal proteins
-is on average 0.2708 in comparison to the average of 0.4425 for our
-large sample of \ecoli\ genes, which is significantly higher with a $t$-value of
+To further test our idea that genes that translate efficiently should exhibit
+low displacement deviations, we tested our model on ribosomal proteins, which
+are known to be expressed at especially high levels.
+The displacement deviation from $x=0$ for ribosomal proteins
+is on average 0.2708 ($\sigma = 0.0884$) in comparison to the average of 0.4425 for our
+large sample of \ecoli\ genes, which is significantly higher with a $p$-value of
 0.0109 when performing a two-sample $t$ test on the means.
 
 \subsection{Bovine Growth Hormone}
 \label{section:bgh}
 
 \begin{cfigure}
-  \caption{Displacement plot for bGH}
-  \label{bgh:disp}
-  \includegraphics[width=0.5\textwidth]{bgh/all}
+  \footnotesize
+  \caption{Things historical related to bGH}
+  \subfloat[Displacement plot]{
+    \label{bgh:disp}
+    \includegraphics[width=0.5\textwidth]{bgh/all}
+  }
+  \subfloat[Deviations with Sample Size~500]{
+    \label{bgh:deviation}
+    \input{bgh/deviations.tex}
+  }
 \end{cfigure}
 
 We investigated the concept of deviation yield as a measure of biological
@@ -567,8 +579,6 @@ yield by studying bovine growth hormone (bGH), a protein commonly used
 in agriculture.
 Research~\cite{schoner:bgh} at the time attempted to produce bGH
 in \ecoli\ in large amounts.
-
-\input{bgh/deviations}
 
 \citet{schoner:bgh}, primarily modifying the initial codons of an
 initial bovine growth hormone sequence, found sequences pcZ101,
