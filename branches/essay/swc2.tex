@@ -85,13 +85,14 @@ which occur along defined boundaries~\citet{lalit:mechanics} on the polar plot f
 at codon $k$ as $\bvec{V} = Me^{i\theta}$ where $i$ is the imaginary
 constant, allowing us to calculate the magnitude and phase at codon
 $k$ through simple trigonometry. Magnitude and phase are then modeled
-as a polar plot, one of the model outputs. Differentiating this vector, we
-arrive at vector $\bvec{D}$ for instantaneous energy, interpreting
+as a polar plot, one of the model outputs. Differentiating the energy vector $\bvec{V}$
+with respect to distance along the mRNA strand, we
+arrive at vector $\bvec{D}$ and interpret  it as
 this as a force that acts on the ribosome, keeping the mRNA in
 a given reading frame.
  
 The length of time that the force acts on the ribosome depends upon
-the codon's tRNA availability at the A-site during translation.
+the codon's tRNA availability at the A-site during translation as well as the its shape [Dr. Stomp, references please!].
 \citeauthor{lalit:mechanics} use a deterministic model to represent this: For each codon,
 a number of ``wait cycles," dependent upon the rarity of the
 associated tRNA, correspond to the number of times the force can
@@ -134,8 +135,8 @@ shows the displacement plot per this deterministic model for \prfB, a
 unique gene with a programmed $+1$ frameshift at codon 25. In
 conjunction with this characteristic plot, a $+1$ frameshift also
 displays an equally characteristic clockwise 120\degree\ phase angle
-rotation from the species angle, an emergent property from
-constructing displacement vector from the phasors.  Intuitively, a
+rotation from the species angle, the average phase of the free energy
+signals of a number of verified \ecoli\ genes that stay in frame \cite{lalit:mechanics}.  Intuitively, a
 frameshift sustains if the free energy signal aligns with the sudden
 jump in displacement.  Since the free energy signal has a period of
 one codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy
