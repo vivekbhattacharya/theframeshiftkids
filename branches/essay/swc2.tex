@@ -58,7 +58,24 @@ understood, and eliminating troublesome factors does not always correlate to inc
 [Dr. Stomp, we need references here.]  We have developed an additional tool that can help to 
 eliminate problems caused by codon bias and codon usage, which will certainly be useful.  
 
+The recent work of~\citet{lalit:embs} focused on creating a deterministic model of frameshifting based on 
+hybridization between the 16S rRNA tail and upstream mRNA nucleotides.  The periodicity of this signal 
+discussed in [Ponnala-JBSB.pdf --need to cite] suggests that force arising from the free energy in such hybridizations acts as a correcting mechanism, helping to ensure that possible overshooting or 
+undershooting of the next in-frame codon does not occur.  In this manner, early errors in reading frame tend
+not to be propagated throughout the entire sequence.  Some limitations of the deterministic model are
+discussed in section 2.4.
+
+Because the ribosome's displacement from the zero reading frame is virtually always nonzero, and because the 
+free energy acts as a correcting mechanism, we reasoned that we could create a new metric for a sequence: 
+the total deviation from the intended reading frame.  This metric, because it measures how far the ribosome 
+is from optimal functionality, should then roughly correlate to translational efficiency.  Throughout this 
+paper, we use our new metric to optimize tRNA availabilities in order to distinguish between high-efficiency
+sequences and low-efficency sequences.  We also use our new metric to optimize a gene sequence known to be 
+translationally regulated for maximum efficiency, and will apply our new metric to ribosomal proteins and 
+the entire \ecoli genome to see if the model is robust over many different types of genes.
+
 % Insert introduction here.
+% It has been done. -Daniel
 \section{Computational Methods}
 \subsection{Free Energy}
 \label{freeenergy}
@@ -168,7 +185,7 @@ wait-cycle without making a decision.  In addition, we assert the
 number of wait cycles is inversely proportional to the tRNA availability of 
 the codon in the current reading frame, as rarer codons should force the 
 ribosome to wait longer for a correct transfer. In turn, we calculate
-tRNA availability from existing research suggesting an association
+tRNA availability based on existing research suggesting an association
 between it and codon frequency~\cite{ikemura}.
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
