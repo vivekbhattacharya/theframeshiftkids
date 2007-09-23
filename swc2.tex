@@ -87,7 +87,7 @@ regulated for maximum efficiency, and will apply our new metric to
 ribosomal proteins and the entire \ecoli\ genome to see if the model
 is robust over many different genes.
 
-\section{Computational Methods}
+\section{Prior Model}
 \subsection{Free Energy}
 \label{freeenergy}
 
@@ -170,6 +170,8 @@ jump in displacement.  Since the free energy signal has a period of
 one codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy
 signal must undergo a phase shift of one-third of an entire period
 (\autoref{prfB:polar:sub}).
+
+\section{Computational Methods}
 
 \subsection{A Stochastic Model for Displacement}
 \label{stochastic}
@@ -305,7 +307,7 @@ and the +1 frame after in order for the run to be a success.
 
 We define \emph{displacement deviation} to be
 \begin{equation}
-    d = \sqrt{\frac{\sum_i \left(x_i - \beta_i\right)^2}{N}},
+    d = \sqrt{\frac{\sum_i (x_i - \beta_i)^2}{N}},
 \end{equation}
 where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
 the displacement at codon $i$, and $N$ is the total number of codons
