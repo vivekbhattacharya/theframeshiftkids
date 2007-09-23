@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -14,12 +14,31 @@ S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
 \newblock In \emph{Biochemistry}, volume~83, pages 9373--9377. National Academy
   of Sciences, Dec 1986.
 
+\bibitem[Gustafsson et~al.(2004)Gustafsson, Govindarajan, and
+  Minshull]{gustafsson04}
+C.~Gustafsson, S.~Govindarajan, and J.~Minshull.
+\newblock Codon bias and heterologous protein expression.
+\newblock \emph{Trends in Biotechnology}, 22\penalty0 (7):\penalty0 346--353,
+  Jul 2004.
+
 \bibitem[Ikemura(1985)]{ikemura}
 T.~Ikemura.
 \newblock Codon usage and trna content in unicellular and multicellular
   organisms.
 \newblock \emph{Molecular Biology and Evoluion}, 2\penalty0 (1):\penalty0
   13--34, 1985.
+
+\bibitem[Kane(1995)]{kane95}
+J.~F. Kane.
+\newblock Effects of rare codon clusters on high-level expression of
+  heterologous proteins in escherichia coil.
+\newblock \emph{Current Opinion in Biotechnology}, 6:\penalty0 494--500, 1995.
+
+\bibitem[Kozak(2005)]{kozak05}
+M.~Kozak.
+\newblock Regulation of translation via mrna structure in prokaryotes and
+  eukaryotes.
+\newblock \emph{Gene}, 361:\penalty0 13--37, 2005.
 
 \bibitem[Ponnala et~al.(2006{\natexlab{a}})Ponnala, Bitzer, Stomp, and
   Vouk]{lalit:embs}
@@ -47,6 +66,12 @@ B.~E. Schoner, H.~M. Hsuiung, R.~M. Belagaje, N.~G. Mayne, and R.~G. Schoner.
   expression in {Escherichia coli}.
 \newblock In \emph{Biochemistry}, volume~81, pages 5403--5407. National Academy
   of Sciences, U.S.A., Sept. 1984.
+
+\bibitem[S{\o}rensen and Mortensen(2005)]{sorensen05}
+H.~P. S{\o}rensen and K.~K. Mortensen.
+\newblock Advanced genetic strategies for recombinant protein expression in
+  escherichia coli.
+\newblock \emph{Journal of Biotechnology}, 115:\penalty0 113--128, 2005.
 
 \bibitem[Starmer(2006)]{starmer}
 J.~Starmer.
