@@ -66,11 +66,11 @@ by \citet{lalit:mechanics}.
 
 \section{Rationale}
 \citet{gustafsson04, ikemura}, and \citet{kane95} studied the impact
-of translational efficiency efficiency on sequence-dependent features
-and especially with regard its influence on codon bias and rare codon
-usage.  The importance of relationship is even more pronounced in
-recombinant proteins~\cite{sorensen05}.  In addition, secondary
-structure problems during protein folding can decrease translational
+of sequence-dependent features, especially with regard to codon bias 
+and rare codon usage, on translational efficiency.  The importance of 
+relationship is even more pronounced in recombinant 
+proteins~\cite{sorensen05}.  In addition, secondary structure problems 
+during protein folding can decrease translational 
 efficiency~\cite{kozak05}.  However, scientists do not fully
 understand the specific connections between efficiency and these
 sequence-dependent factors, as even eliminating troublesome factors
@@ -363,9 +363,12 @@ displacement per \autoref{section:frameshifts}.
 
 \subsection{\prfB\ and Related Sequences}
 In the first test of our stochastic model, we investigated the
-gene \prfB\ to determine whether our model can predict this
-frameshift.  We downloaded the nucleotide sequence for \prfB\ from
-NCBI's Genbank database.\footnote{\url{http://www.ncbi.nlm.nih.gov/}, accession number: NC\_000913, \prfB}
+gene \prfB\footnote{\prfB\ encodes a protein known as protein release factor 2,
+which can enter the A-site and cause protein synthesis to terminate at the stop 
+codons \textsc{UGA} and \textsc{UAA}.  As synthesis does not stop in \prfB\ 
+itself, the frameshift in the gene allows for an interesting autoregulatory 
+mechanism.} to determine whether our model can predict this frameshift. 
+We downloaded the nucleotide sequence for \prfB\ from NCBI's Genbank database.\footnote{\url{http://www.ncbi.nlm.nih.gov/}, accession number: NC\_000913, \prfB}
 
 \citet{weiss87} performed a number of biological experiments on
 \prfB\ to test how mutations in the sequence would affect the rate of
@@ -411,7 +414,7 @@ high gene stability and thus high translational efficiency. In another
 test, we looked at ribosomal proteins, known to have high levels of
 expression~\cite{rpoS:process}. There we predict lower, on average,
 deviation than those of the \ecoli\ gene sample.
-
+	
 \subsection{Bovine Growth Hormone}
 Our finally test our model involved the analysis a set of sequences known to be translationally 
 regulated.  \citet{schoner:bgh} created a set of eight sequences in an empirical effort
