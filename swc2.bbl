@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -21,12 +21,27 @@ C.~Gustafsson, S.~Govindarajan, and J.~Minshull.
 \newblock \emph{Trends in Biotechnology}, 22\penalty0 (7):\penalty0 346--353,
   Jul 2004.
 
+\bibitem[Hui and de~Boer(1987)]{hui}
+A.~Hui and H.~de~Boer.
+\newblock {Specialized ribosome system: Preferential translation of a single
+  mRNA species by a subpopulation of mutated ribosomes in \emph{Escherichia
+  coli.}}
+\newblock \emph{Proceedings of the National Academy of Sciences}, 84:\penalty0
+  4762--4766, 1987.
+
 \bibitem[Ikemura(1985)]{ikemura}
 T.~Ikemura.
 \newblock {Codon usage and tRNA content in unicellular and multicellular
   organisms}.
 \newblock \emph{Molecular Biology and Evoluion}, 2\penalty0 (1):\penalty0
   13--34, 1985.
+
+\bibitem[Jacob et~al.(1987)Jacob, Santer, and Dahlberg]{Jacob}
+W.~Jacob, M.~Santer, and A.~Dahlberg.
+\newblock {A single base change in the Shine-Dalgarno region of 16S rRNA of
+  \emph{Escherichia coli} affects translation of many proteins.}
+\newblock \emph{Proceedings of the National Academy of Sciences}, 84:\penalty0
+  4757--4761, 1987.
 
 \bibitem[Kane(1995)]{kane95}
 J.~F. Kane.
