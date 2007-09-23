@@ -1,4 +1,4 @@
-\documentclass[12pt, draft]{article}
+\documentclass[12pt]{article}
 \usepackage{candor, setspace}
 \usepackage[verbose]{wrapfig}
 \hyphenation{frame-shifts}
@@ -87,8 +87,8 @@ constant, allowing us to calculate the magnitude and phase at codon
 $k$ through simple trigonometry. Magnitude and phase are then modeled
 as a polar plot, one of the model outputs. Differentiating the energy vector $\bvec{V}$
 with respect to distance along the mRNA strand, we
-arrive at vector $\bvec{D}$ and interpret  it as
-this as a force that acts on the ribosome, keeping the mRNA in
+arrive at vector $\bvec{D}$ and interpret it as
+a force that acts on the ribosome, keeping the mRNA in
 a given reading frame.
  
 The length of time that the force acts on the ribosome depends upon
@@ -128,7 +128,7 @@ change. For example, $x =2$ represents the +1 frame.
 \citet{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed
 (stable) points in displacement in their model, as expected.
 
-A sudden jump from approximately $x = 0$ to $x = 2$ is then the first
+A jump from approximately $x = 0$ to $x = 2$ {\emph{over the span of just one base pair}} is then the first
 indication of a $+1$ frameshift; it suggests the ribosome skips one
 entire base pair in the mRNA sequence.  \autoref{prfB:deterministic:sub}
 shows the displacement plot per this deterministic model for \prfB, a
@@ -228,7 +228,8 @@ to its tRNA availability, another result that coincides with reason and intuitio
 
 The stochastic model has introduced a new concept into the model proposed by
 \citet{lalit:mechanics}: Now, the ribosome can ``choose the wrong codon," in 
-essence accepting the tRNA of a codon out-of-frame.  It is imperative to note
+essence accepting the tRNA of a codon out-of-frame, either due to a high availability
+of the tRNA or due to a more applicable shape.  It is imperative to note
 that this phenomenon is not equivalent to frameshifting.  In a programmed
 frameshift, the force pushes the ribosome to an unstable point---one at which
 the ribosome must move to the +1 reading frame quickly in order to maintain
