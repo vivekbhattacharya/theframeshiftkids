@@ -82,7 +82,7 @@ production of high-yield, recombinant proteins. Creating cell lines
 that synthesize commercially viable yields in fields ranging from
 medicine to agriculture is a significant challenge that our model
 addresses. In addition, a successful model implies a mechanism by
-which molecular biologists can test the maintainence through
+which molecular biologists can test the maintenance through
 elongation.
 
 Earlier, \citet{lalit:embs} created a deterministic model of
@@ -102,7 +102,7 @@ from the intended reading frame.  This metric
 (\autoref{section:deviation}) then roughly correlates to translational
 efficiency.  Throughout this paper, we use this and other metrics to
 optimize tRNA availabilities in order to distinguish between
-high-efficiency and low-efficency sequences. We also use our new
+high-efficiency and low-efficiency sequences. We also use our new
 metric to optimize a translationally regulated gene sequence
 regulated for maximum efficiency, and will apply our new metric to
 ribosomal proteins and the entire \ecoli\ genome to see if the model
@@ -201,7 +201,7 @@ characteristic plot, a $+1$ frameshift also displays an equally
 characteristic clockwise 120\degree\ phase angle rotation from the
 species angle, the average phase of the free energy signals of a
 number of verified \ecoli\ genes that stay in frame
-\cite{lalit:mechanics}.  We interpet the free energy signal's
+\cite{lalit:mechanics}.  We interpret the free energy signal's
 alignment with the sudden jump in displacement as a sustained
 frameshift because the physics of the jump indicate a stable shift in
 reading frame. Since the free energy signal has a period of one
@@ -297,7 +297,7 @@ to its tRNA availability, another result that coincides with reason and intuitio
 \subsection{Consequences of the Stochastic Model}
 
 The stochastic model has introduced a new concept into the model proposed by
-\citet{lalit:mechanics}: Now, the ribosome has a finite probablity of
+\citet{lalit:mechanics}: Now, the ribosome has a finite probability of
 choosing ``choose the wrong codon," in 
 essence accepting the tRNA of a codon out-of-frame, either due to a high availability
 of the tRNA or due to a more applicable shape.  It is imperative to note
@@ -324,7 +324,6 @@ model can we actually track the actions of the ribosome throughout the course
 of translation.  Due to a general biological conceptualization of the physics involved,
 as described above, we believe that the stochastic model has the potential to 
 measure translational efficiency.
-
 
 \section{Analysis}
 To test our computational model, we ran a number of
@@ -378,40 +377,40 @@ We hypothesize that genes found to frameshift at high rates by
 our model.
 
 \subsection{The \ecoli\ Genome and Ribosomal Proteins}
-We now aim to test the capabilities of our model to predict translational
-efficiency other than frameshift rate.  We hypothesize that displacement
-deviation provides a suitable metric for translational efficiency:  A lower
-deviation would correspond to a more efficient sequence.  
+Another aspect of our model addresses its ability to predict
+translational efficiency. We hypothesize that displacement deviation
+provides a suitable metric for translational efficiency: A lower
+deviation would correspond to a more efficient sequence.
 
-[Dr. Stomp, are there any references in literature to the relationship
-  between ribosome displacement instability and protein efficiency?]
-We base this hypothesis on the fact that as the displacement moves
-away from the horizontal axis, the ribosome has a greater probability
-of picking the codon in the +1 frame by chance, in effect
-\emph{probabilistically} producing junk. That is, while a single run
-may biologically produce a working primary structure of the protein,
-the gene in question ultimately is less efficient than a synonymous gene
-with lower aggregate probabilities be this aggregate measure the
+We base this hypothesis on the idea that if, at each wait cycle, the
+ribosome fails to stabilize in a period of indecision, the probability
+that it will change reading frames increases. The translational
+process resolves this indecision either by stabilizing around the
+incorrect +1 or -1 reading frame or pausing. The former synthesizes an
+incorrect primary structure or causes premature truncation due to an
+out-of-frame stop codon while the latter preserves fidelity at the
+expense of speed. That is, while a single run may biologically produce
+a working primary structure of the protein, the gene in question
+ultimately is less efficient than a synonymous gene with lower
+aggregate probabilities, whether we express the aggregate measure as the
 error-free rate (\autoref{section:efr}) or displacement deviation
 (\autoref{section:deviation}). In addition, a greater deviation from
 the zero axis inherently implies a longer time for translation, since
 the force must act on the ribosome for an extended period of time to
-make the displacement relatively large.  A high value thus
-indicates a propensity for a high time for translation, reducing
-translational efficiency, again contributing to the aggregate
-probability of translational failure.
+make the displacement relatively large. A high value thus indicates a
+propensity for a longer time for translation, reducing translational
+efficiency, again contributing to the aggregate probability of
+translational failure.
 
-To this end, we start with a simple fact:
-Microbiologists agree that translation in \ecoli\ is an efficient process;
-most regulation is transcriptional.  As such, the majority of the genes 
-in the genome should exhibit low displacement deviations.  Moreover,
-ribosomal proteins are known to be abundant in the cell, and thus
-are hypothesized to be translated at especially efficient rates.  We
-furthermore predict that ribosomal proteins will have deviations lower
-on average than those for the other \ecoli\ genes.
-
-We run the model on a set of 4364 genes collected from \ecoli.  The
-nucleotide sequences were obtained from Ecogene.
+To this end, we performed two tests. In one test, we ran the model on
+all the 4364 genes provided by the Ecogene database of
+\ecoli\ genes\footnote{\url{http://ecogene.org/}}, selected for the
+database's reliability. We predict the majority exhibit low
+displacement deviations from the inherent tendency of evolution toward
+high gene stability and thus high translational efficiency. In another
+test, we looked at ribosomal proteins, known to have high levels of
+expression~\cite{rpoS:process}. There we predict lower, on average,
+deviation than those of the \ecoli\ gene sample.
 
 \subsection{Bovine Growth Hormone}
 Our finally test our model involved the analysis a set of sequences known to be translationally 
@@ -420,7 +419,7 @@ to increase the yield of recombinant bovine growth hormone (bGH)
 synthesized in an \ecoli\ expression system. \citeauthor{schoner:bgh}
 noted that these sequences are, in fact, translationally regulated, 
 presenting a set of eight sequences, four of which
-are expressed in signficantly higher amounts than the others.
+are expressed in significantly higher amounts than the others.
 We predict that the sequences that are highly expressed in
 \ecoli\ should have lower displacement deviations.
 
@@ -747,4 +746,6 @@ to its predictive power.
 \end{document}
 
 % This is for ispell. Do not delete. --Hao
-% LocalWords:  embs abcd abc bcd sp pcZ riboproteins disp aag guu efr
+% LocalWords:  embs abcd abc bcd sp pcZ riboproteins disp aag guu efr ikemura
+% LocalWords:  gustafsson kane sd xray starmer aa TAV uga NCBI's Genbank lacZ
+% LocalWords:  Ecogene schoner

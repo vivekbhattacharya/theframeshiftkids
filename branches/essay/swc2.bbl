@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -89,6 +89,13 @@ B.~E. Schoner, H.~M. Hsuiung, R.~M. Belagaje, N.~G. Mayne, and R.~G. Schoner.
   expression in \emph{Escherichia coli}}.
 \newblock \emph{Proceedings of the National Academy of Sciences}, 81:\penalty0
   5403--5407, Sept. 1984.
+
+\bibitem[Shine and Dalgarno(1974)]{sd}
+J.~Shine and L.~Dalgarno.
+\newblock {The 3'-terminal sequence of \emph{Escherichia coli} 16S ribosomal
+  RNA: Complementarity to nonsense triplets and ribosome binding Sites}.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 71\penalty0
+  (4):\penalty0 1342--1346, 1974.
 
 \bibitem[S{\o}rensen and Mortensen(2005)]{sorensen05}
 H.~P. S{\o}rensen and K.~K. Mortensen.
