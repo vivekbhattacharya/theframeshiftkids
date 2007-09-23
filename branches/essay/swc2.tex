@@ -185,59 +185,64 @@ for the entire sequence according to \citet{starmer}.
   }
 \end{cfigure}
 
-First, we let a displacement of $x = 0$ correspond to the zero reading
-frame and increments of \emph{two} to represent a one-nucleotide
-change. For example, $x =2$ represents the +1 frame.
+First, \cite{lalit:mechanics} let a displacement of $x = 0$ correspond
+to the zero reading frame and increments of \emph{two} to represent a
+one-nucleotide change. For example, $x =2$ represents the +1 frame.
 \citet{lalit:embs} prove that both $x = 0$ and $x = 2$ are fixed
 (stable) points in displacement in their model, as expected.
 
-A jump from approximately $x = 0$ to $x = 2$ {\emph{over the span of just one base pair}} is then the first
-indication of a $+1$ frameshift; it suggests the ribosome skips one
-entire base pair in the mRNA sequence.  \autoref{prfB:deterministic:sub}
-shows the displacement plot per this deterministic model for \prfB, a
-gene with a unique programmed $+1$ frameshift at codon 25. In
-conjunction with this characteristic plot, a $+1$ frameshift also
-displays an equally characteristic clockwise 120\degree\ phase angle
-rotation from the species angle, the average phase of the free energy
-signals of a number of verified \ecoli\ genes that stay in frame \cite{lalit:mechanics}.  Intuitively, a
-frameshift sustains if the free energy signal aligns with the sudden
-jump in displacement.  Since the free energy signal has a period of
-one codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy
-signal must undergo a phase shift of one-third of an entire period
+A jump from approximately $x = 0$ to $x = 2$ over the span of only
+base pair is then the first indication of a $+1$ frameshift; it
+suggests the ribosome skips one entire base pair in the mRNA sequence.
+\autoref{prfB:deterministic:sub} shows the displacement plot per this
+deterministic model for \prfB, a gene with a unique programmed $+1$
+frameshift, which exists at codon 25. In conjunction with this
+characteristic plot, a $+1$ frameshift also displays an equally
+characteristic clockwise 120\degree\ phase angle rotation from the
+species angle, the average phase of the free energy signals of a
+number of verified \ecoli\ genes that stay in frame
+\cite{lalit:mechanics}.  We interpet the free energy signal's
+alignment with the sudden jump in displacement as a sustained
+frameshift because the physics of the jump indicate a stable shift in
+reading frame. Since the free energy signal has a period of one
+codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy signal
+must undergo a phase shift of one-third of an entire period
 (\autoref{prfB:polar:sub}).
 
 \section{Computational Methods}
 
-\subsection{A Stochastic Model for Displacement}
+\subsection{Stochastic Displacement Model}
 \label{stochastic}
 
 As mentioned, the gene \prfB\ exhibits a programmed frameshift under
 the deterministic model: The displacement jumps to $x=2$.  Certain
 other genes, however, demonstrate equivocal, ambiguous behavior near
 $x = \pm 1$~\cite{lalit:embs}.  In a deterministic model, we lack the
-information and sensitivity needed to discern clearly a tendency for a
-stable frameshift. Even worse, the model may not show these unstable
-behaviors at all. In practice then, ribosomal translations are not
-deterministic. Due to the presence of noise within the cell
-environment, any deterministic model ultimately imperfectly accounts
-for translation. Therefore, we next explored stochastically modeling
-ribosome translation with a sinusoidal probability paradigm that
-follows.
+information and sensitivity needed to clearly discern a stable
+frameshift. Even worse, the model may not show these unstable
+behaviors at all. Due to the presence of noise within the cell
+environment, the nondeterministic behavior of translation limits its
+ability to model ribosomal behavior. Therefore, we explored a
+stochastic model of ribosome translation through the incorporation of
+with a sinusoidal probability paradigm.
 
 We propose that at each cycle in elongation, the ribosome must make a
 decision: stay in the current reading frame, move to the $+1$ reading
-frame, or move to the $-1$ reading frame.  We can further subdivide
-this choice into the individual wait-cycles.  At each wait cycle, the
+frame, or move to the $-1$ reading frame.  This decision exists at
+each individual wait-cycle, at which the
 ribosome chooses from the above possibilities or proceeds to another
 wait-cycle without choosing a codon.  In addition, we assert the 
 number of wait cycles is inversely proportional to the tRNA availability of 
-the codon in the current reading frame, as rarer codons should force the 
-ribosome to wait longer for a correct transfer. In turn, we calculate
-tRNA availability based on existing research suggesting an association
-between it and codon frequency~\cite{ikemura}.
+the codon in the current reading frame (the A-site), as rarer codons should force the 
+ribosome to wait longer for the appropriate
+aa-tRNA. \citet{lalit:mechanics}, in turn, calculated tRNA
+availability values based on existing research~\cite{ikemura}
+indicating a relationship between it and codon frequency. Based on
+this approach and research, we developed a different algorithm to
+calculate TAV values (\autoref{section:parameters}).
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
-current reading frame and $bcd$ in a +1 reading frame.  Let $x$ be the
+current reading frame and $bcd$ in the +1 reading frame.  Let $x$ be the
 displacement of the current wait cycle of the ribosome.  As the
 incremental displacement approaches +1, the probability of choosing
 codon $bcd$ should increase and the probability of choosing codon
@@ -252,25 +257,25 @@ the probability.
     functions are taken to the tenth power, but in future studies,
     this parameter, which must be an even integer, can change.}
 \end{equation}
-If the ribosome lies completely in the 0 frame, then the probability
-of staying in the 0 frame should be 1.  Consequently, if the ribosome
-lies fully in the +1 frame ($x=2$), the probability of going to the 0
-frame should be 0. Therefore, these functions have a period of two
+If the ribosome lies completely and thus is physically stable in the
+zero frame, then the probability
+of staying in the that frame should be one.  Consequently, if the ribosome
+lies fully in the +1 frame ($x=2$), the probability of going to the zero
+frame should be zero. Therefore, these functions have a period of two
 base pairs ($x=4$).
 
-We define $N_{abc}$ to be the number of wait cycles 
-allocated to the given codon in the current frame.
-Suppose we are at a particular wait cycle on codon $abc$ and
-abbreviate $N = N_{abc}$ as per above.
-In absence of further research, we assume the probability
-of frameshifting is 1/2.  Let $P$ be the instantaneous probability of
-moving on to the next codon and staying in the current reading frame.
-Then we should have $1 - \left(1-P\right)^{N} = \frac{1}{2}$.
-Given that $P \propto \omega$, let $n = n_{abc}$ be the constant of
-proportionality; thus $n = \omega / P$.  We have
-$\omega \le 1$, so hence $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$
-Mathematically, the
-probability of choosing the codon at a given wait cycle in the zero reading frame is just
+We define $N_{abc}$ to be the number of wait cycles allocated to the
+given codon in the current frame. Suppose we are at a particular wait
+cycle on codon $abc$ and abbreviate $N = N_{abc}$ as per above.
+(Here, the probability of frameshifting is 1/2.) Let $P$ be the
+instantaneous probability of moving on to the next codon and staying
+in the current reading frame. Then we should have $1 -
+\left(1-P\right)^{N} = \frac{1}{2}$. Given that $P \propto \omega$,
+let $n = n_{abc}$ be the constant of proportionality; thus $n = \omega
+/ P$.  We have $\omega \le 1$, so hence $n \le
+\sqrt[N]{2}/(\sqrt[N]{2} - 1).$ Mathematically, the probability of
+choosing the codon at a given wait cycle in the zero reading frame is
+just
 
 \begin{equation}
   \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where }
@@ -292,23 +297,27 @@ to its tRNA availability, another result that coincides with reason and intuitio
 \subsection{Consequences of the Stochastic Model}
 
 The stochastic model has introduced a new concept into the model proposed by
-\citet{lalit:mechanics}: Now, the ribosome can ``choose the wrong codon," in 
+\citet{lalit:mechanics}: Now, the ribosome has a finite probablity of
+choosing ``choose the wrong codon," in 
 essence accepting the tRNA of a codon out-of-frame, either due to a high availability
 of the tRNA or due to a more applicable shape.  It is imperative to note
 that this phenomenon is not equivalent to frameshifting.  In a programmed
-frameshift, the force pushes the ribosome to an unstable point---one at which
-the ribosome must move to the +1 reading frame quickly in order to maintain
-equilibrium.  Thus, programmed frameshifts take place over the span of simply
+frameshift, the force pushes the ribosome to an unstable point, at which
+the ribosome must quickly move to the +1 reading frame to regain stability.
+Thus, programmed frameshifts take place over the span of just
 one codon; the graph never approaches $x=2$ over a number of codons.
 
 An incorrect codon choice occurs when displacement approaches $x = \pm 1$.
-At this point, the +1 frame is in view, along with the 0 frame.  As the probability
-equations suggest, the ribosome is quite liable to choose the select the codon
-in the +1 frame by accident.  This action, unlike a frameshift, is a result
-of a digression that takes place over a number of codons---a digression that
-occurs slowly.  As the ribosome nears $x = 1$, the values for both the sine 
+At this point, both the 0 and the +1 reading frame have a finite
+probability of occupying the A-site in the ribosome. As the probability
+equations suggest, the ribosome is increasingly liable to stabilize around
+the +1 frame by accident.  This, unlike a frameshift, is a result
+of a slow digression from the ribosomal alignment that takes place over a number of codons.
+As the ribosome nears $x = 1$, the values for both the sine 
 and cosine functions drop, thus increasing the probability of waiting and 
-increasing the time required for translation.
+increasing the time required for translation. This models the physical
+behavior of ribosome as it stabilizes upon an aa-tRNA in the A-site,
+which causes the pausing of translation.
 
 Choosing the wrong codon is a purely stochastic phenomenon; only through our new
 model can we actually track the actions of the ribosome throughout the course
