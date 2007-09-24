@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -47,6 +47,14 @@ M.~Kozak.
 \newblock {Regulation of translation via mRNA structure in prokaryotes and
   eukaryotes}.
 \newblock \emph{Gene}, 361:\penalty0 13--37, 2005.
+
+\bibitem[Phelps et~al.(2006)Phelps, Gaudin, Yoshizawa, Benitez, Foumy, and
+  Joseph]{phelps}
+S.~Phelps, C.~Gaudin, S.~Yoshizawa, C.~Benitez, D.~Foumy, and S.~Joseph.
+\newblock {Translocation of a tRNA with an extended anticodon through the
+  ribosome}.
+\newblock \emph{Journal of Molecular Biology}, 360\penalty0 (3):\penalty0
+  610--622, 2006.
 
 \bibitem[Ponnala et~al.(2006{\natexlab{a}})Ponnala, Bitzer, Stomp, and
   Vouk]{lalit:mechanics}
@@ -101,5 +109,11 @@ R.~B. Weiss, D.~M. Dunn, J.~F. Atkins, and R.~F. Gesteland.
   -1, +1, +2, +5, and +6 ribosomal frameshifting.
 \newblock \emph{Cold Spring Harbor Symposium on Quantatative Biology},
   52:\penalty0 687--693, 1987.
+
+\bibitem[Yusupova et~al.(2006)Yusupova, Jenner, Rees, Moras, and
+  Yusupova]{xray}
+G.~Yusupova, L.~Jenner, B.~Rees, D.~Moras, and M.~Yusupova.
+\newblock {Structural basis for messenger RNA movement on the ribosome}.
+\newblock \emph{Nature}, 444\penalty0 (7117):\penalty0 391--394, 2006.
 
 \end{thebibliography}

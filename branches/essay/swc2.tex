@@ -602,6 +602,7 @@ of the primary structure with the ribosome and not to any signal encoded
 in the mRNA.
 
 \subsection{An Artificial Frameshifter}
+\label{section:linker}
 \begin{wrapfigure}{R}{0.5\textwidth}
   \centering
   \caption{Artificial linker sequence sensitivity plot}
@@ -648,61 +649,76 @@ to other control groups. The experiment is a work in progress.
 \section{Discussion}
 \label{section:discussion}
 
-Our model incorporates various biological ideas,
-such as codon bias~\cite{ikemura} and rare codon usage~\cite{kane95},
-into a genetic signal processing mechanism to analyze ribosomal translation.
-In particular, our studies suggest that the model may
-provide a method for computationally predicting translational efficiency.
-It improves the previous deterministic
-model~\cite{lalit:mechanics} by adding probability to the picture. This allows us
-to track the movement and the codon decisions the ribosome at every point on 
-the mRNA.  In essence, the stochastic model paints a more realistic picture of the
-ribosome, a machine that makes choices nondeterministically
-due to noise from the cell environment.
+The purpose of our studies was to extend and improve the deterministic
+model of \citeauthor{lalit:mechanics}, which gave a mechanistic
+perspective of ribosomal movement during translation and a genetic
+signal approach to translating mRNA sequnences. It incorporated a
+number of parameters including
+codon bias~\cite{ikemura} and rare codon usage~\cite{kane95} known to
+affect translation. The model also could predict frameshift locations
+in the sequence, of value in sequence annotation i.e. frameshift identification.
+Our studies extended this predictive power to 
+computationally predicting translational efficiency.
 
-The two metrics we introduced also show considerable promise
-as measures of translational efficiency.  Error-free rate (\autoref{section:efr})
-provides a measure of efficiency of sequences by
+The deterministic structure limited the \cite{lalit:mechanics} model.
+We restructured it into a stochastic process where cellular
+environment conditions can affect translation. In essence, the
+stochastic model paints a more realistic picture of the ribosome, a
+machine that makes choices nondeterministically due to noise from the
+cell environment.
+
+In addition to the stochastic version, we also developed two metrics:
+error-free rate (\autoref{section:efr}) and displacement deviation
+(\autoref{section:deviation}). Error-free rate
+provides a measure of an mRNA sequence's propensity to frameshift by
 measuring reading frame change frequency.  Notably, replicating the experiments
 of \citet{weiss87} shows it can roughly separate sequences into
 those with high and low frameshift frequencies. However, the
-resolution provided by the model is not clear.
+resolution provided by the model is not clear and we must turn to
+displacement deviation in these cases.
 
-We also proposed displacement deviation (\autoref{section:deviation}) as another metric for translational efficiency.
-When run upon a large sample of \ecoli\ genes known to be translationally efficient,
-displacement deviation correlates with experimental data, predicting
+Displacement deviation (\autoref{section:deviation}),
+when run upon a large sample of \ecoli\ genes known to be translationally efficient,
+correlated with over 90\% of the  experimental data, predicting
 these genes to be efficient.  Moreover, it predicts that ribosomal proteins should
 be more efficient than average.  Displacement deviations for eight bGH
 sequences~\cite{schoner:bgh} also roughly correlates with further
-experimental data though one sequence proved to be an outlier.
+experimental data; one sequence proved to be an outlier.
 
-Since the model is preliminary, we take note of these outliers.
-In the bGH, \citeauthor{schoner:bgh} experimentally determined
-pcZ108 to be of low yield, but the model
-computationally predicts high yield.  One set of \citeauthor{weiss87}'s
-sequences also were of low yield, but the model again predicted differently.  A possible cause
-of these discrepancies may relate to the chemical structures of the mRNA sequences
-and the polypeptides that they encode.  In both cases, the experimenters did not
-maintain the amino acid structure while designing the sequences.  Our
-model does not predict the results of chemical interactions between the messenger, polypeptide, and
-the ribosome; it only focuses on the signal encoded in the mRNA during translation.
-Although neither paper offers any evidence relating to possible chemical interactions, 
-these examples highlight a shortcoming in our model to be addressed in
-future research.
+Since the model is preliminary, we must note these outliers.  In the
+bGH, \citeauthor{schoner:bgh} experimentally determined pcZ108 to be
+of low yield, but the model computationally predicts high yield.
+Likewise, in the set of constructs used by \citet{weiss87}, where one
+set gave of low yield, the model again predicted differently.  One
+possible explanation of these discrepancies relates to the chemical
+structures of the mRNA sequences and the polypeptides they
+encode.  In both cases, \citeauthor{weiss87} and
+\citeauthor{schoner:bgh} did not maintain the amino
+acid structure while designing the sequences. If a protein-ribosome
+interaction or post-translational instability resulted from these
+changes, then such a change significantly impacts protein yield, an
+indirect measure of translation. However, these effects on
+translational efficiency are beyond the scope of our model.
 
-We also aim to explore parameter estimation in future studies.  Analysis of \prfB\ and the
+We also plan to explore parameter estimation in future studies.
+Analysis of \prfB\ and the
 proposed linker sequence suggest our model is robust with respect to species angle
 and initial displacement, but proper estimation of tRNA availability
-remains a problem. \citet{lalit:mechanics} based these values solely on 
-codon usage, but we suggest that tRNA shape also plays a factor (\autoref{section:parameters}).
-In this paper, however, we remained conservative and limited the
+poses a problem. \citet{lalit:mechanics} based these values solely on 
+codon usage, but research~\cite{phelps} also suggests that tRNA shape
+also determintes overall availability as it is known to affect
+frameshift frequency. The
+genetic algorithm (\autoref{section:parameters}) we created thus
+provides an initial method for a coarse estimation. However, we did
+not extensively investigate this idea and thus we limited the
 deviation values computed by \citeauthor{lalit:mechanics}.
 
 Currently, our model predicts translational efficiency with some
-accuracy and can distinguish between high and low yield sequences. With more experimental data,
-such as our proposed linker sequence, we will adjust the model to increase
-its predictive and resolving power and consequently its importance in
-the field of genetics.
+accuracy and can distinguish between high and low yield sequences. We
+need more experimental verification such as our linker sequence
+(\autoref{section:linker}), currently in progress, we will adjust the
+model to increase its predictive and resolving power and consequently
+its importance in the field of genetics.
 
 \section{Conclusion}
 \label{section:conclusion}
