@@ -216,17 +216,14 @@ must undergo a phase shift of one-third of an entire period
 \subsection{Stochastic Displacement Model}
 \label{stochastic}
 
-As mentioned, the gene \prfB\ exhibits a programmed frameshift under
-the deterministic model: The displacement jumps to $x=2$.  Certain
-genes, however, demonstrate equivocal, ambiguous behavior near
-$x = \pm 1$~\cite{lalit:mechanics}.  In the deterministic model, we lack the
-information and sensitivity needed to clearly discern a stable
-frameshift. Worse, the model may not show these unstable
-behaviors at all. Due to the noise within a cell, the nondeterministic
-behavior of translation limits the model's
-ability to better model it. Therefore, we designed a
-stochastic model of ribosome translation through the incorporation of
-a sinusoidal probability paradigm.
+As mentioned, the gene \prfB\ exhibits a programmed frameshift: Under
+the deterministic model, the displacement jumps to $x=2$.  Certain genes 
+demonstrate ambiguous behavior near $x = \pm 1$~\cite{lalit:mechanics}. 
+In the deterministic model, we lack the sensitivity needed to clearly 
+discern a stable frameshift or detect unstable behaviors. Due to the 
+noise within a cell, the nondeterministic behavior of translation limits 
+the model's ability to predict displacement. Therefore, we designed a
+stochastic model incorporating a sinusoidal probability paradigm.
 
 We propose that at each cycle in elongation, the ribosome must make a
 decision at each individual wait-cycle: stay in the current reading
@@ -282,7 +279,7 @@ just
     frame choice in question.}
 \end{equation}
 
-Where $n$ represents $n_{abc}$ for the current codon and $K$ is the
+where $n$ represents $n_{abc}$ for the current codon and $K$ is the
 ordinal of the current wait cycle. For example, $K=1$ on the first
 wait cycle, $K=2$ on the second, and so forth.  Importantly, $\omega$
 depends upon displacement, which increments after every cycle.
@@ -297,24 +294,23 @@ The stochastic model has introduced a new concept into the model proposed by
 \citet{lalit:mechanics}: Now, the ribosome has a finite probability of
 choosing ``choose the wrong codon," in 
 essence accepting the tRNA of a codon out-of-frame, either due to a high availability
-of the tRNA or due to a more applicable shape.  It is imperative to note
-that this phenomenon is not equivalent to frameshifting.  In a programmed
+of the tRNA or due to a more applicable shape. It is imperative to note
+that this phenomenon is not equivalent to frameshifting. In a programmed
 frameshift, the force pushes the ribosome to an unstable point, at which
 the ribosome must quickly move to the +1 reading frame to regain stability.
-Thus, programmed frameshifts take place over the span of just
-one codon; the graph never approaches $x=2$ over a number of codons.
+Programmed frameshifts take place over the span of just
+one codon; the graph never approaches $x=2$ over multiple codons.
 
-An incorrect codon choice occurs when displacement approaches $x = \pm 1$.
-At this point, both the 0 and the +1 reading frame have a finite
-probability of occupying the A-site in the ribosome. As the probability
-equations suggest, the ribosome is increasingly liable to stabilize around
-the +1 frame by accident.  This, unlike a frameshift, is a result
-of a slow digression from the ribosomal alignment that takes place over a number of codons.
-As the ribosome nears $x = 1$, the values for both the sine 
-and cosine functions drop, thus increasing the probability of waiting and 
-increasing the time required for translation. This models the physical
-behavior of ribosome as it stabilizes upon an aa-tRNA in the A-site,
-which causes the pausing of translation.
+An incorrect choice may occur when displacement approaches $x = \pm 1$.
+At this point, both the 0 and the $\pm 1$ reading frame may occupy the 
+A-site in the ribosome. As the probability equations suggest, the 
+ribosome is increasingly liable to stabilize around the new frame by 
+accident.  This, unlike a frameshift, is a result of a slow digression 
+from the original frame. As the ribosome nears $x = \pm 1$, the values 
+for both the sine and cosine functions drop, thus increasing the 
+probability of waiting and the time required for translation. 
+This models the physical behavior of ribosome as it stabilizes upon an 
+aa-tRNA in the A-site, which causes the pausing of translation.
 
 Choosing the wrong codon is a purely stochastic phenomenon; only through our new
 model can we actually track the actions of the ribosome throughout the course
@@ -338,9 +334,9 @@ simultaneously.
 When studying a
 sequence with a programmed frameshift, \emph{error-free rate} measures the percentage of runs 
 during which the ribosome chooses the correct codon
-at \emph{every} juncture.  For a +1 frameshift, for example, the ribosome must
-choose the +1 frame at the frameshift codon and stay in the 0 frame before
-and the +1 frame after in order for the run to be a success.
+at \emph{every} juncture.  For a +1 frameshifting sequence the ribosome must
+stay in the 0 frame, choose the +1 frame at the frameshift codon and stay in the 
++1 frame until termination in order for the run to be a success.
 
 \subsubsection{Displacement Deviation}
 \label{section:deviation}
