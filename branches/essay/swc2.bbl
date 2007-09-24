@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -13,13 +13,6 @@ S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
   stability.
 \newblock \emph{Proceedings of the National Academy of Sciences}, 83:\penalty0
   9373--9377, Dec 1986.
-
-\bibitem[Gustafsson et~al.(2004)Gustafsson, Govindarajan, and
-  Minshull]{gustafsson04}
-C.~Gustafsson, S.~Govindarajan, and J.~Minshull.
-\newblock Codon bias and heterologous protein expression.
-\newblock \emph{Trends in Biotechnology}, 22\penalty0 (7):\penalty0 346--353,
-  Jul 2004.
 
 \bibitem[Hui and de~Boer(1987)]{hui}
 A.~Hui and H.~de~Boer.
@@ -56,25 +49,19 @@ M.~Kozak.
 \newblock \emph{Gene}, 361:\penalty0 13--37, 2005.
 
 \bibitem[Ponnala et~al.(2006{\natexlab{a}})Ponnala, Bitzer, Stomp, and
-  Vouk]{lalit:embs}
-L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
-\newblock A computational model for reading frame maintenance.
-\newblock In \emph{EMBS Annual International Conference}, pages 4540--4543.
-  Institute of Electrical and Electronics Engineers, Aug. 2006{\natexlab{a}}.
-
-\bibitem[Ponnala et~al.(2006{\natexlab{b}})Ponnala, Bitzer, Stomp, and
   Vouk]{lalit:mechanics}
 L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
 \newblock A model for +1 frameshifts in eubacteria.
-\newblock \emph{Bioinformatics}, 2006{\natexlab{b}}.
+\newblock \emph{Bioinformatics}, 2006{\natexlab{a}}.
 
-\bibitem[Ponnala et~al.(2006{\natexlab{c}})Ponnala, Stomp, Bitzer, and
+\bibitem[Ponnala et~al.(2006{\natexlab{b}})Ponnala, Stomp, Bitzer, and
   Vouk]{lalit:jbsb}
 L.~Ponnala, A.-M. Stomp, D.~L. Bitzer, and M.~A. Vouk.
-\newblock Analysis of free energy signals arising from nucleotide hybridization
-  between rrna and mrna sequences during translation in eubacteria.
+\newblock {Analysis of free energy signals arising from nucleotide
+  hybridization between rRNA and mRNA sequences during translation in
+  Eubacteria}.
 \newblock \emph{Journal on Bioinformatics and Systems Biology}, pages 1--9,
-  2006{\natexlab{c}}.
+  2006{\natexlab{b}}.
 
 \bibitem[Repoila et~al.(2003)Repoila, Majdalani, and Gottesman]{rpoS:process}
 F.~Repoila, N.~Majdalani, and S.~Gottesman.
