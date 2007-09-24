@@ -144,12 +144,15 @@ X-ray crystallography data.
 modeling the hybridization of permutations of RNA \emph{doublets}, pairs of consecutive nucleotides.
 
 \subsection{Deterministic Model}
-\citet{lalit:mechanics} assumed a sinusoidal model for
+\citet{lalit:mechanics} assumed a sinusoidal model 
+(and verified it with a fast Fourier transform) for
 free energy that projects free energy onto magnitude and
 phase through a memory model that stores three values
 in a phasor, a concept from physics. Then,
 they visualize free energy from polar plots where frameshifts
 occur along defined boundaries for a given species.
+
+% Looks almost sinusoidal as you move the codon across; good fit
  
 \citeauthor{lalit:mechanics} then represent the cumulative energy phasor
 at codon $k$ as $\bvec{V} = Me^{i\theta}$, where $i$ is the imaginary
@@ -196,6 +199,8 @@ to the zero reading frame and increments of \emph{two} to represent a
 one-nucleotide change. For example, $x =2$ represents the +1 frame.
 They prove that both $x = 0$ and $x = 2$ are fixed
 (stable) points in displacement in their model, as expected.
+
+% bitzer 5.3, b/c near 0, p(indecision) is large -- > spends more time  
 
 A jump from approximately $x = 0$ to $x = 2$ in a span of only
 base pair is then the first indication of a $+1$ frameshift; it
@@ -398,9 +403,9 @@ ultimately is less efficient than a synonymous gene with lower
 aggregate probabilities, whether we express the aggregate measure as the
 error-free rate (\autoref{section:efr}) or displacement deviation
 (\autoref{section:deviation}). In addition, a greater deviation from
-the zero axis inherently implies a longer time for translation, since
-the force must act on the ribosome for an extended period of time to
-so increase the displacement. A high value thus reduces translational
+the zero axis inherently implies a longer time for translation, 
+since proximity to $\pm1$ would increase the probability of not choosing
+either codon, i.e., waiting. A high value thus reduces translational
 efficiency, again contributing to the aggregate probability of
 translational failure.
 
