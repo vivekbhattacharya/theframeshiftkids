@@ -98,22 +98,19 @@ upstream mRNA nucleotides.  The periodicity of this
 signal~\cite{lalit:jbsb} suggests that the force emerges from the free
 energy during hybridization acts as a correcting mechanism,
 stabilizing codon choice.  In this manner, early errors in the reading
-frame tend not to propagate throughout the entire sequence.  Some
-limitations of the deterministic model are discussed in
-\autoref{stochastic}.
+frame are rarely propagated.  Some limitations of the deterministic 
+model are discussed in \autoref{stochastic}.
 
 Because the ribosome's displacement from the zero reading frame is
-almost always nonzero and because the free energy acts as a correcting
-mechanism, we create a new metric of efficiency: the total deviation
-from the intended reading frame.  This metric
+almost always nonzero, we create a new metric of efficiency: the total 
+deviation from the intended reading frame.  This metric
 (\autoref{section:deviation}) then roughly correlates to translational
 efficiency.  Throughout this paper, we use this and other metrics to
 optimize tRNA availabilities in order to distinguish between
 high-efficiency and low-efficiency sequences. We also use our new
-metric to optimize a translationally regulated gene sequence
-regulated for maximum efficiency, and will apply our new metric to
-ribosomal proteins and the entire \ecoli\ genome to see if the model
-is robust over many different genes.
+metric to optimize the efficiency of a translationally regulated gene, 
+and apply our new metric to ribosomal proteins and the entire \ecoli\ 
+genome to see if the model is robust over many genes.
 
 \section{Prior Model}
 \subsection{Free Energy}
@@ -398,8 +395,7 @@ error-free rate (\autoref{section:efr}) or displacement deviation
 (\autoref{section:deviation}). In addition, a greater deviation from
 the zero axis inherently implies a longer time for translation, since
 the force must act on the ribosome for an extended period of time to
-make the displacement relatively large. A high value thus indicates a
-propensity for a longer time for translation, reducing translational
+so increase the displacement. A high value thus reduces translational
 efficiency, again contributing to the aggregate probability of
 translational failure.
 
@@ -414,15 +410,16 @@ expression~\cite{rpoS:process}. There we predict lower, on average,
 deviation than those of the \ecoli\ gene sample.
 	
 \subsection{Bovine Growth Hormone}
-Our finally test our model involved the analysis a set of sequences known to be translationally 
-regulated.  \citet{schoner:bgh} created a set of eight sequences in an empirical effort
-to increase the yield of recombinant bovine growth hormone (bGH) 
-synthesized in an \ecoli\ expression system. \citeauthor{schoner:bgh}
-noted that these sequences are, in fact, translationally regulated, 
-presenting a set of eight sequences, four of which
-are expressed in significantly higher amounts than the others.
-We predict that the sequences that are highly expressed in
-\ecoli\ should have lower displacement deviations.
+Our final test involved the analysis a set of sequences known to 
+be translationally regulated.  \citet{schoner:bgh} created a set 
+of eight sequences in an empirical effort to increase the yield 
+of recombinant bovine growth hormone (bGH) synthesized in an 
+\ecoli\ expression system. \citeauthor{schoner:bgh} noted that 
+these sequences are, in fact, translationally regulated, 
+presenting a set of eight sequences, four of which are expressed 
+at significantly higher levels than the others. We predict that 
+the sequences that are highly expressed in \ecoli\ should have 
+lower displacement deviations.
 
 \subsection{Parameters}
 \label{section:parameters}
@@ -434,38 +431,32 @@ the effects of changing the species angle and initial displacement on the
 error-free rate of \prfB.
 
 A parameter that is much more difficult to estimate
-is tRNA availability value (TAV) vectors.
+is tRNA availability value (TAV).
 \citeauthor{lalit:mechanics} base the tRNA availability values on codon usage, 
-surveying a set of genes from \ecoli.
+surveying genes from \ecoli.
 Although this assumption has biological basis~\cite{ikemura}, 
-it is possible that the true values for these numbers may differ 
-due to sampling error or the choice of genes chosen.
-Taking a different track, we chose to calibrate TAV vectors from
-existing biological data, designing a genetic algorithm to calibrate
-these values based on the bovine growth hormone (bGH) sequences
-while still remaining numerically close to the values
-\citeauthor{lalit:mechanics} determined.
+it is possible that the true values for these numbers may differ.
+We chose to calibrate TAV vectors from existing biological data, 
+designing a genetic algorithm to improve these values based on 
+the bovine growth hormone (bGH) sequences while remaining close 
+to the values \citeauthor{lalit:mechanics} determined.
 
 We optimize the separation between the displacement deviations of the 
-high-yield sequences and the other ones.  
-First, we generate a list of randomly modified TAV vectors at which
-point we calculate the ratio of the displacement deviation from
-displacement (\autoref{section:deviation}) for the four high-yield 
-sequences to the other bGH proteins. From there, we sort the 
-modified TAV according to this ratio and discarding the least 
-optimal half of the tRNA vectors. We then choose two of the 
-remaining vectors, with the chance of each vector being proportional
- to its rank.  We then take a weighted average of the two vectors 
- and spawn a new vector.  After creating the next generation according 
- to a constant ``gene pool'' size, we delete the previous generation 
- and repeat. After a fixed number of generations, the algorithm 
- terminates and returns the optimal TAV vector.
+high-yield and low-yield sequences. First, we generate a list of 
+randomly modified TAV vectors and calculate the ratio of the 
+displacement deviation (\autoref{section:deviation}) for the four 
+high-yield sequences to that of the other four. From there, we sort the 
+modified TAV vectors by to this ratio and discard the worst half of the 
+vectors. We then choose two of the remaining vectors, with the chance 
+of each vector being proportional to its rank.  We then take a weighted 
+average of the two vectors and spawn a new vector.  After creating the 
+next generation according to a constant ``gene pool'' size, we delete 
+the previous generation  and repeat. After a fixed number of 
+generations, the algorithm terminates and returns the optimal TAV vector.
 
-This algorithm did not alter the TAV vectors to a significant degree.
-In fact, the average change to each value in the vector was merely
-15.99\%.  The new values
-are used throughout the remainder of the paper to produce the 
-values and graphs.
+This algorithm did not significantly alter the TAV vectors; the average 
+change to each value in the vector was merely 15.99\%.  The new values
+are used throughout the remainder of the paper.
 
 \section{Results}
 \subsection{\prfB}
@@ -582,12 +573,11 @@ yield of the protein in an \ecoli\ expression system.
 \citet{schoner:bgh} created a number of constructs, primarily modifying the initial codons of a
 bovine growth hormone sequence.  The research found sequences pcZ101,
 pcZ105, pcZ112, and pcZ115, to have particularly high protein yields
-in comparison to the six other sequences. In
-modeling displacement, we found these four sequences  to have the least
+in comparison to the four other sequences. We found these four sequences  to have the least
 displacement deviation from $x = 0$
 (\autoref{bgh:deviation}). \autoref{bgh:disp} shows the displacement
 plots of all the bGH sequences on the same set of axes. 
-Despite running the genetic algorithm to improve estimates of tRNA availability vectors, pcZ108 remains an
+Despite running the genetic algorithm to improve tRNA avaliability vectors, pcZ108 remains an
 outlier because \citeauthor{schoner:bgh} reported low protein
 yield whereas our model reports low deviation, indicative of 
 high protein yield.
@@ -623,26 +613,25 @@ the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
 angle and initial displacement, which is as robust as \prfB\ (\autoref{prfB:sens:sub}).
 
-Next, we performed a BLAST search, which finds no similar sequences in
-\ecoli\ or in general known to possess a frameshift. Instead, we only found only 30
-matches in other bacterial genomes that meet neither of the criteria.
-Then, working with molecular biologists, we helped create a strategy
-to use a bifunctional fusion protein containing beta-galactosidase (\bgals) 
-and \xylE. \bgals\ levels are quantified from the colorless reagent 
-nitrophenol-galactosidase that, when cleaved by \bgals, yields
-nitrophenol, which has a yellow color; \xylE\ goes through a similar
-cleavage and yields catechol.  These two proteins and the
-the proposed linker sequence join to form a fusion protein.  Research indicates that even in this
-fused protein, both \bgals\ and \xylE\ should retain their functionalities.
-As such, if the frameshift were to occur, one should observe both 
-high levels of nitrophenol and low levels of catechol cleavage products.
+Next, we performed a BLAST search, which found no similar sequences in 
+\ecoli\ or known to possess a frameshift. We found only 30 matches, all 
+of which meet neither of the criteria. Then, working with molecular 
+biologists, we helped design a strategy to use a bifunctional fusion 
+protein containing beta-galactosidase (\bgals) and \xylE, with \xylE\ in 
+a +1 reading frame. \bgals\ levels are quantified from the colorless 
+reagent nitrophenol-galactosidase that, when cleaved by \bgals, yields 
+nitrophenol, which has a yellow color; \xylE\ cleaves the carbon ring 
+of catechol.  These two proteins and the proposed linker sequence join 
+to form a fusion protein.  Research indicates that even in this fused 
+protein, both \bgals\ and \xylE\ should retain their functionalities.
+As such, if the frameshift were to occur, one should observe high 
+levels of both nitrophenol and catechol cleavage products.
 
-Working with a graduate student with
-molecular biology expertise who has constructed a plasmid made of an
-ampicillin gene, the \emph{lacZ} operon, our linker sequence, and the
-catechol enzyme gene \xylE\ in order to measure the frameshift
-efficiency of our linker sequence in addition to other control
-groups. The experiment is a work in progress.
+We are working with a graduate student with molecular biology expertise 
+who has constructed a plasmid made of an ampicillin gene, the \emph{lacZ} 
+operon, our linker sequence, and the catechol enzyme gene \xylE\ in order 
+to measure the frameshift efficiency of our linker sequence in addition 
+to other control groups. The experiment is a work in progress.
 
 \section{Discussion}
 \label{section:discussion}
@@ -655,10 +644,10 @@ a function of species angle and initial displacement. As noted,
 the frameshift holds over quite a wide range. Though these initial
 parameters are necessary (\autoref{section:parameters}), exact values
 are not
-crucial to the true interplay within the model between free energy and
+crucial to the true interplay between free energy and
 translational efficiency.
 
-In addition, our model agrees with a great pool biological
+In addition, our model agrees with a great pool of biological
 evidence. In our model, ribosomal proteins express more highly than
 genes in general as per \citet{rpoS:process}
 (\autoref{section:riboproteins}).  Our correlation in running bovine
