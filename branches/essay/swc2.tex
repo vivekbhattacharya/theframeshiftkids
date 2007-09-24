@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{candor, setspace}
+\usepackage{candor, setspace, sectsty}
 \usepackage[verbose]{wrapfig}
 \hyphenation{frame-shifts}
 \newcommand{\BWFtitle}{Computationally
@@ -17,6 +17,7 @@
 
 \linespread 2
 \numberwithin{equation}{section}
+\allsectionsfont{\normalsize}
 
 \author{\sc{\BWFauthors}}
 \date{{\sc \today}}
@@ -101,7 +102,7 @@ mechanism, we create a new metric of efficiency: the total deviation
 from the intended reading frame.  This metric
 (\autoref{section:deviation}) then roughly correlates to translational
 efficiency.  Throughout this paper, we use this and other metrics to
-optimize tRNA availabilities in order to distinguish between
+optimize tRNA availabilit`ies in order to distinguish between
 high-efficiency and low-efficiency sequences. We also use our new
 metric to optimize a translationally regulated gene sequence
 regulated for maximum efficiency, and will apply our new metric to
@@ -133,41 +134,37 @@ modeling the interaction in terms of \emph{doublets}, which are pairs of consecu
 Using this model, Freier calculated the free energy available
 for the hybridization of permutations of RNA doublets.
 
-
-\subsection{The Deterministic Model}
+\subsection{Deterministic Model}
 \citet{lalit:mechanics} assume a sinusoidal model for
 free energy that projects free energy onto magnitude and
-phase through a memory model. Ponnala simulates free
-energy in a memory structure that can store three values (registers)
-that he later can represent as a phasor, a concept from physics. Then,
-we can visualize free energy from polar plots and deduce frameshifts,
-which occur along defined boundaries~\cite{lalit:mechanics} on the polar plot for a species.
+phase through a memory model that stores three values
+in a phasor, a concept from physics. Then,
+they visualize free energy from polar plots where frameshifts
+occur along defined boundaries~\cite{lalit:mechanics} for a given species.
  
-\citet{lalit:mechanics} then represent the cumulative phasor
-at codon $k$ as $\bvec{V} = Me^{i\theta}$ where $i$ is the imaginary
-constant, allowing calculation of the magnitude and phase 
-through simple trigonometry. Magnitude and phase are then modeled
-as a polar plot, one of the model outputs. Differentiating the energy vector $\bvec{V}$
+\citet{lalit:mechanics} then represent the cumulative energy phasor
+at codon $k$ as $\bvec{V} = Me^{i\theta}$, where $i$ is the imaginary
+constant, from which they calculate the magnitude and phase, modeled
+on a polar plot, via
+trigonometry. Differentiating the energy phasor
 with respect to distance along the mRNA strand gives 
-vector $\bvec{D}$, which is interpreted~\cite{lalit:mechanics} as 
-a force that acts on the ribosome, keeping the mRNA in
-a given reading frame.
+vector $\bvec{D}$, the force~\cite{lalit:mechanics}
+that acts on the ribosome that keeps the mRNA in the reading frame.
  
 The length of time that the force acts on the ribosome depends upon
-the availability of the tRNA associated with the codon at the A-site 
+the tRNA availability associated with the codon at the A-site 
 and any interactions between said tRNA and the ribosome. [Dr. Stomp, references please!].
-\citeauthor{lalit:mechanics} use a deterministic model to represent this: For each codon,
-a number of ``wait cycles," dependent upon the rarity of the
-associated tRNA, correspond to the number of times the force can
+\citeauthor{lalit:mechanics} represent this with a deterministic model: For each codon,
+a number of ``wait cycles," a function of the rarity of the
+tRNA, correspond to time the force can
 increment displacement from the current reading frame.  In the
-deterministic model, the force acts for \emph{exactly} this set number
+deterministic model, the force acts for \emph{exactly} the number
 of cycles given a codon. \cite{lalit:mechanics}'s model then simulates hybridization between the
 16S ribosomal subunit and a given mRNA strand: First, the 13-base 16S
 tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
 which includes a 12-base leader sequence, to determine the free energy 
 value of the first amino acid. The algorithm shifts one base pair at a time, 
-calculating the free energy
-for the entire sequence according to \citet{starmer}.
+calculating the free energy for the entire sequence~\cite{starmer}.
 
 \subsection{Frameshifts}
 \label{section:frameshifts}
@@ -216,83 +213,78 @@ must undergo a phase shift of one-third of an entire period
 
 As mentioned, the gene \prfB\ exhibits a programmed frameshift under
 the deterministic model: The displacement jumps to $x=2$.  Certain
-other genes, however, demonstrate equivocal, ambiguous behavior near
-$x = \pm 1$~\cite{lalit:mechanics}.  In a deterministic model, we lack the
+genes, however, demonstrate equivocal, ambiguous behavior near
+$x = \pm 1$~\cite{lalit:mechanics}.  In the deterministic model, we lack the
 information and sensitivity needed to clearly discern a stable
-frameshift. Even worse, the model may not show these unstable
-behaviors at all. Due to the presence of noise within the cell
-environment, the nondeterministic behavior of translation limits its
-ability to model ribosomal behavior. Therefore, we explored a
+frameshift. Worse, the model may not show these unstable
+behaviors at all. Due to the noise within a cell, the nondeterministic
+behavior of translation limits the model's
+ability to better model it. Therefore, we designed a
 stochastic model of ribosome translation through the incorporation of
-with a sinusoidal probability paradigm.
+a sinusoidal probability paradigm.
 
 We propose that at each cycle in elongation, the ribosome must make a
-decision: stay in the current reading frame, move to the $+1$ reading
-frame, or move to the $-1$ reading frame.  This decision exists at
-each individual wait-cycle, at which the
-ribosome chooses from the above possibilities or proceeds to another
-wait-cycle without choosing a codon.  In addition, we assert the 
+decision at each individual wait-cycle: stay in the current reading
+frame, move to the $\pm 1$ reading frames, or proceed to the next cycle.
+In addition, because the 
 number of wait cycles is inversely proportional to the tRNA availability of 
-the codon in the current reading frame (the A-site), as rarer codons should force the 
+the codon in the current reading frame (the A-site), rarer codons force the 
 ribosome to wait longer for the appropriate
 aa-tRNA. \citet{lalit:mechanics}, in turn, calculated tRNA
-availability values based on existing research~\cite{ikemura}
-indicating a relationship between it and codon frequency. Based on
-this approach and research, we developed a different algorithm to
+availability values from existing research~\cite{ikemura} that
+indicates a relationship between it and codon frequency. From this
+body of work, we later created a different algorithm to
 calculate TAV values (\autoref{section:parameters}).
 
 Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
-current reading frame and $bcd$ in the +1 reading frame.  Let $x$ be the
+current and $bcd$ in the +1 reading frame.  Let $x$ be the
 displacement of the current wait cycle of the ribosome.  As the
 incremental displacement approaches +1, the probability of choosing
-codon $bcd$ should increase and the probability of choosing codon
-$abc$ should decrease.  We model this behavior using even powers of
-cosine and sine functions for $abc$ and $bcd$.  We
-define $\omega$ as the \emph{weight} that is directly proportional to
+codon $bcd$ increases and the probability of choosing codon
+$abc$ decreases.  We model this behavior using even powers of
+cosine and sine functions for $abc$ and $bcd$, defining
+$\omega$ as the \emph{weight} that is directly proportional to
 the probability.
 \begin{equation}
   \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} =
   \sin^{10}{\frac{x\pi}{4}}.
-  \footnote{For the purposes of this model, the cosine and sine
-    functions are taken to the tenth power, but in future studies,
+  \footnote{The cosine and sine
+    functions are taken to the tenth power here. In future studies,
     this parameter, which must be an even integer, can change.}
 \end{equation}
-If the ribosome lies completely and thus is physically stable in the
+If the ribosome lies completely and thus is stable in the
 zero frame, then the probability
-of staying in the that frame should be one.  Consequently, if the ribosome
-lies fully in the +1 frame ($x=2$), the probability of going to the zero
-frame should be zero. Therefore, these functions have a period of two
-base pairs ($x=4$).
+of staying in the that frame is one.  Consequently, a ribosome
+fully in the +1 frame ($x=2$) has a no chance of going to the zero
+frame, hence the requirement for a period of two base pairs ($x=4$) in
+these functions.
 
 We define $N_{abc}$ to be the number of wait cycles allocated to the
-given codon in the current frame. Suppose we are at a particular wait
-cycle on codon $abc$ and abbreviate $N = N_{abc}$ as per above.
-(Here, the probability of frameshifting is 1/2.) Let $P$ be the
+given codon in the current frame. Suppose we are on a wait cycle
+cycle at codon $abc$ with  $N = N_{abc}$ total cycles.
+(The probability of frameshifting is then 1/2.) Let $P$ be the
 instantaneous probability of moving on to the next codon and staying
-in the current reading frame. Then we should have $1 -
-\left(1-P\right)^{N} = \frac{1}{2}$. Given that $P \propto \omega$,
-let $n = n_{abc}$ be the constant of proportionality; thus $n = \omega
-/ P$.  We have $\omega \le 1$, so hence $n \le
-\sqrt[N]{2}/(\sqrt[N]{2} - 1).$ Mathematically, the probability of
-choosing the codon at a given wait cycle in the zero reading frame is
+in the current reading frame. Then we have $1 -
+\left(1-P\right)^{N} = \frac{1}{2}$. Given that $P \propto \omega$ and
+letting $n = n_{abc}$ be the constant of proportionality, $n = \omega
+/ P$.  Because $\omega \le 1$,  $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1).$
+The probability of choosing the codon in the zero reading frame is
 just
-
 \begin{equation}
   \prod_{i=1}^K \left(1-\frac{\omega_i}{n}\right) \text{ where }
-  \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.\footnote{The sinusoidal
+  \omega_i = \cos^{10}{\frac{x_i\pi}{4}},\footnote{The sinusoidal
     component of $\omega_i$ is not always cosine and depends upon the
     frame choice in question.}
 \end{equation}
 
-Here, $n$ represents $n_{abc}$ for the current codon and $K$ is the
+Where $n$ represents $n_{abc}$ for the current codon and $K$ is the
 ordinal of the current wait cycle. For example, $K=1$ on the first
 wait cycle, $K=2$ on the second, and so forth.  Importantly, $\omega$
-is dependent on displacement, which increments after every wait cycle.
+depends upon displacement, which increments after every cycle.
 
-We also have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$, indicating
-that the probability of choosing a codon at a given cycle is directly proportional
-to its tRNA availability, another result that coincides with reason and intuition.
-
+We also have $\displaystyle\lim_{N\rightarrow\infty} n = N/\ln{2}$. Thus,
+the probability of choosing a codon at a cycle is proportional
+to its TAV, which coincides with intuition.
 
 \subsection{Consequences of the Stochastic Model}
 
