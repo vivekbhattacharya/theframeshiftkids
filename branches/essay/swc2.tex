@@ -2,14 +2,16 @@
 \usepackage{candor, setspace}
 \usepackage[verbose]{wrapfig}
 \hyphenation{frame-shifts}
-\newcommand{\BWFtitle}{Computationally
-  Modeling Translational Efficiency and Programmed Frameshifts in}
+
+\newcommand{\BWFtitle}[1]{A Computational Modeling for Translational
+  Efficiency and Frameshifts in #1{Escherichia coli} Using Genetic Signal
+  Processing}
+
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
   R. Vitek}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
-  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle\ Escherichia
-    coli}, pdfauthor={\BWFauthors},
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}}, pdfauthor={\BWFauthors},
   pdfsubject={Bioinformatics, Genetics, and Biology}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,genetics,biology,
     frameshifts,perl,matlab,ecoli,prfB,rpoS,bGH,ecoli}, pdfstartview={FitH},
@@ -27,7 +29,7 @@
 
 \author{\sc{\BWFauthors}}
 \date{{\sc \today}}
-\title{\bf{\BWFtitle\ \emph{Escherichia coli}}}
+\title{\bf{\BWFtitle{\emph}}}
 
 \begin{document}
 % Title, table of contents, and abstract start things off.
@@ -39,7 +41,7 @@
 
 \clearpage
 \begin{abstract}\begin{normalsize}
-  In \emph{\BWFtitle\ Escherichia coli}, we propose a stochastic model
+  In ``\BWFtitle{\emph}'', we propose a stochastic model
   for ribosomal displacement relative to the reading frame. We base
   the model on forces that arise from changes in free energy present
   in hybridization between the 16S rRNA tail and nucleotides upstream
@@ -89,7 +91,7 @@ production of high-yield, recombinant proteins. Creating cell lines
 that synthesize commercially viable yields in fields ranging from
 medicine to agriculture is a significant challenge that our model
 addresses. In addition, a successful model implies a mechanism by
-which molecular biologists can test the maintenance through
+which molecular biologists can test the stable maintenance of
 elongation.
 
 Earlier, \citet{lalit:jbsb} created a deterministic model of
