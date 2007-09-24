@@ -42,26 +42,24 @@
 \end{center}
 \begin{abstract}\begin{normalsize}
   \textbf{``\BWFtitle{\emph}''}
-
-  We propose a stochastic model
-  for ribosomal displacement relative to the initial reading frame, based 
-  on forces that arise from changes in free energy present in hybridization 
-  between the 16S rRNA tail and nucleotides upstream from the A-site. Also, 
-  we developed a new metric, displacement deviation, that should correlate 
-  to   translational efficiency. We applied this metric to the entire 
-  \ecoli\ genome and found that more than 93\% had a displacement deviation 
-  of less than 1, an acceptable range. The average displacement deviation 
-  for these genes was 0.4425.  We also looked at ribosomal proteins, which 
-  are known to be expressed even more efficiently, and found that the 
-  ribosomal proteins in this range had an average displacement deviation of
-  0.2708. In further investigations we considered adjusting tRNA 
-  availability values based on recombinant bovine growth hormone sequences 
-  studied by Schoner, and tried to optimize a translationally regulated 
-  gene using an algorithm we developed for just such a purpose. Finally, as 
-  a culminating test of our model, we created an artificial 16-codon 
-  sequence not known to frameshift in nature, but which our model predicts 
-  should frameshift, and constructed an experiment to test this prediction. 
-  Results are expected in October 2007.
+  
+  In modern genetics, \ecoli\ is often used as an expression system to commercially
+  produce useful proteins.  However, sequence-dependent
+  features, such as rare codons and codon bias, have large effects on translational
+  efficiency.  To tackle this problem, we proposed a stochastic model designed to computationally estimate
+  translational efficiency and predict frameshifting, uniting ideas from biological literature.  We proposed
+  two metrics that bear considerable predictive power for translational efficiency.
+  We then tested our model on a large sample of sequences from the \ecoli\ genome and
+  found that over 90\% of them are predicted to translate at high yields, a
+  result that concurs with biological knowledge.  Moreover, ribosomal proteins
+  are predicted to translate at even more efficient rates, as suggested by microbiologists.
+  Computational results also concurred with experimental data conducted on translation
+  rates of recombinant bovine growth hormone sequences and variations of \prfB, a gene
+  with a programmed frameshift.  Various explanations for outliers, such as protein-ribosome
+  interactions are discussed.  An experiment to test our model's predictions is
+  outlined, although the work is still in progress.  With more data, this model provides great
+  promise to serve as a time-effective, low-cost means of predicting translational
+  efficiency of recombinant proteins in \ecoli.
 
 \end{normalsize}\end{abstract}  
   
