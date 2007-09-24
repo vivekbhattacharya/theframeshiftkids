@@ -33,23 +33,22 @@
 % Title, table of contents, and abstract start things off.
 \pagenumbering{roman}
 \begin{singlespace}
-  \maketitle
   \tableofcontents
 \end{singlespace}
 
 \clearpage
 \begin{center}
+\Large
+\BWFtitle{\emph}
 \end{center}
 \begin{abstract}\begin{normalsize}
-  \textbf{``\BWFtitle{\emph}''}
-  
   In modern genetics, \ecoli\ is used as an expression system to commercially
   produce proteins.  However, sequence-dependent
   features, such as rare codons and codon bias, have large effects on translational
   efficiency.  To tackle this problem, we proposed a stochastic model to computationally estimate
   translational efficiency and predict frameshifting, uniting ideas from biological literature.
   We propose two metrics that bear considerable predictive power toward translational efficiency.
-  We then test our model on a large sample of sequences from the \ecoli\ genome and
+  We then test model on a large sample of sequences from the \ecoli\ genome and
   found over 90\% of them have predicted high yields, which correlates
   result that concurs with biological knowledge.  Moreover, it predicts ribosomal proteins
   to translate at even more efficient rates, also experimentally verified.
@@ -58,7 +57,7 @@
   with a programmed frameshift. Various explanations for outliers, such as protein-ribosome
   interactions, are discussed. We then test of our model's predictive
   power, a work in progress.  With more data, this model provides
-  promise to serve as a quick, computation means to predict the
+  promise to serve as a quick, computational means to predict the
   translational behavior of recombinant proteins in \ecoli.
 \end{normalsize}\end{abstract}  
   
@@ -295,7 +294,7 @@ the probability of not failing to change the reading frame ($1 - P$)
 at every cycle for $K$ cycles. Hence, 
 \begin{equation}
   1 - \prod_{i=1}^K \left( 1 - \frac{\omega_i}{n} \right) \text{ where }
-  \omega_i = \cos^{10}{\frac{x_i\pi}{4}},
+  \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
   % Footnote
   \footnote{The weight, of
     course, depends upon the frame choice in question.}
