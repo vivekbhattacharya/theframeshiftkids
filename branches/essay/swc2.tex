@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{candor, setspace, sectsty}
 \usepackage[verbose]{wrapfig}
+\usepackage[small, compact]{titlesec}
 \hyphenation{frame-shifts}
 \newcommand{\BWFtitle}{Computationally
   Modeling Translational Efficiency and Programmed Frameshifts in}
@@ -18,6 +19,12 @@
 \linespread 2
 \numberwithin{equation}{section}
 \allsectionsfont{\normalsize}
+\sectionfont{\normalsize\MakeUppercase}
+
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{0.5\baselineskip}{*0}
+\titlespacing{\subsection}{0pt}{0.5\baselineskip}{*0}
+\titlespacing{\subsubsection}{0pt}{0.5\baselineskip}{*0}
 
 \author{\sc{\BWFauthors}}
 \date{{\sc \today}}
