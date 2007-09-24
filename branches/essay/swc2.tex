@@ -575,30 +575,28 @@ large sample of \ecoli\ genes, which is significantly higher with a $p$-value of
   }
 \end{cfigure}
 
-We investigated the concept of deviation yield as a measure of biological
-yield by studying bovine growth hormone (bGH), a protein commonly used
-in agriculture.
-Research~\cite{schoner:bgh} at the time attempted to produce bGH
-in \ecoli\ in large amounts.
+We investigated the concept of displacement deviation as a predictive parameter
+for biological yield using published expression data~\cite{schoner:bgh} for bovine growth hormone (bGH).
+The focus of this research was to modify the bGH mRNA sequence to optimize
+yield of the protein in an \ecoli\ expression system.
 
-\citet{schoner:bgh}, primarily modifying the initial codons of an
-initial bovine growth hormone sequence, found sequences pcZ101,
-pcZ105, pcZ112, and pcZ115, to have particularly high protein yield
-and to be efficient in comparison to the six other sequences. In
+\citet{schoner:bgh} created a number of constructs, primarily modifying the initial codons of a
+bovine growth hormone sequence.  The research found sequences pcZ101,
+pcZ105, pcZ112, and pcZ115, to have particularly high protein yields
+in comparison to the six other sequences. In
 modeling displacement, we found these four sequences  to have the least
 displacement deviation from $x = 0$
 (\autoref{bgh:deviation}). \autoref{bgh:disp} shows the displacement
-plots of all the bGH sequences on the same set of axes. Although not
-immediately obvious, the four sequences do indeed indicate lower
-deviation. Despite running the genetic algorithm, pcZ108 remains an
+plots of all the bGH sequences on the same set of axes. 
+Despite running the genetic algorithm to improve estimates of tRNA avaliability vectors, pcZ108 remains an
 outlier because \citeauthor{schoner:bgh} reported low protein
-efficiency whereas our model reports low deviation, incongruous with
-previously established correlations.
+yield whereas our model reports low deviation, indicative of 
+high protein yield.
 
-Once again, it must be noted that like Weiss, \citeauthor{schoner:bgh}
-did not maintain the amino acid structure while altering his sequences.
-The sequence pcZ108 has a different amino acid structure than the other
-ones; the lower translational efficiency may be attributed to the interaction
+Once again, it must be noted that, like Weiss, \citeauthor{schoner:bgh}
+did not maintain the amino acid sequence while modifying the nucleotide sequences of the bGH constructs.
+The sequence pcZ108 encodes a different amino acid sequences than the other constructs.
+The lower translational efficiency may be attributed to the interaction
 of the primary structure with the ribosome and not to any signal encoded
 in the mRNA.
 
