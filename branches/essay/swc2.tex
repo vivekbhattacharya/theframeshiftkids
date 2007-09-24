@@ -102,7 +102,7 @@ mechanism, we create a new metric of efficiency: the total deviation
 from the intended reading frame.  This metric
 (\autoref{section:deviation}) then roughly correlates to translational
 efficiency.  Throughout this paper, we use this and other metrics to
-optimize tRNA availabilit`ies in order to distinguish between
+optimize tRNA availabilities in order to distinguish between
 high-efficiency and low-efficiency sequences. We also use our new
 metric to optimize a translationally regulated gene sequence
 regulated for maximum efficiency, and will apply our new metric to
@@ -612,33 +612,33 @@ in the mRNA.
   \end{verbatim}
 \end{cfigure}
 
-In order to verify the model's ability to predict frameshifts, we
-artificially created a sixteen-codon sequence (\autoref{linker})
-designed to frameshift.  The sequence is designed to frameshift into
+To verify our model's predictive ability, we focused on its ability to
+predict programmed frameshifts. We designed a sixteen-codon sequence
+with such a frameshift (\autoref{linker}) in \ecoli\ into
 the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
-angle and initial displacement, in order to demonstrate robustness,
-similar to the \prfB\ sensitivity plot (\autoref{prfB:sens:sub}).
+angle and initial displacement, which is as robust as \prfB\ (\autoref{prfB:sens:sub}).
 
-A BLAST search finds about thirty matches of our sequence within areas of
-bacterial genomes but none from \ecoli. To test the frameshifting capacity of
-this linker sequence, we initiate a biological experiment.
-
-We create a bifunctional fusion protein containing beta-galactosidase (\bgals) 
-and \xylE. \bgals\ levels correlate to
-levels of nitrophenol, which has a yellow color, while \xylE\ expresses
-an enzyme that cleaves catechol.  These two proteins are joined by
-the proposed linker sequence.  Research indicates that even in this
+Next, we performed a BLAST search, which finds no similar sequences in
+\ecoli\ or in general known to possess a frameshift. Instead, we only found only 30
+matches in other bacterial genomes that meet neither of the criteria.
+Then, working with molecular biologists, we helped create a strategy
+to use a bifunctional fusion protein containing beta-galactosidase (\bgals) 
+and \xylE. \bgals\ levels are quantified from the colorless reagent 
+nitrophenol-galactosidase that, when cleaved by \bgals, yields
+nitrophenol, which has a yellow color; \xylE\ goes through a similar
+cleavage and yields catechol.  These two proteins and the
+the proposed linker sequence join to form a fusion protein.  Research indicates that even in this
 fused protein, both \bgals\ and \xylE\ should retain their functionalities.
 As such, if the frameshift were to occur, one should observe both 
-high levels of nitrophenol and low levels of catechol.
+high levels of nitrophenol and low levels of catechol cleavage products.
 
-We passed on these initial parameters to a graduate student with
-microbiological expertise who has constructed a plasmid of an
+Working with a graduate student with
+molecular biology expertise who has constructed a plasmid made of an
 ampicillin gene, the \emph{lacZ} operon, our linker sequence, and the
-catechol enzyme gene \xylE\ in order to measure the protein
+catechol enzyme gene \xylE\ in order to measure the frameshift
 efficiency of our linker sequence in addition to other control
-groups. We expect results in October 2007.
+groups. The experiment is a work in progress.
 
 \section{Discussion}
 \label{section:discussion}
@@ -717,6 +717,6 @@ to its predictive power.
 \end{document}
 
 % This is for ispell. Do not delete. --Hao
-% LocalWords:  abcd abc bcd sp pcZ riboproteins disp aag guu efr ikemura
-% LocalWords:  kane sd xray starmer aa TAV uga NCBI's Genbank lacZ
+% LocalWords:  abcd abc bcd sp pcZ riboproteins disp aag guu efr ikemura jbsb
+% LocalWords:  kane sd xray starmer aa TAV uga NCBI's Genbank lacZ hui UAA
 % LocalWords:  Ecogene schoner
