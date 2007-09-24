@@ -595,43 +595,6 @@ ones; the lower translational efficiency may be attributed to the interaction
 of the primary structure with the ribosome and not to any signal encoded
 in the mRNA.
 
-\subsection{Optimizing Translational Efficiency}
-
-If displacement deviation is in fact a potential metric for biological yield,
-a method for optimizing deviation would be of use of biologists.  As such,
-we wrote an algorithm to minimize deviation for given sequences.
-We tested this algorithm computationally on \rpoS, a gene known to
-be translationally regulated.  Biological experiments will be
-conducted soon.
-
-% I'm colluding deviation and probability yield here, but it's for a
-% good purpose. --Hao.
-
-[Dr. Stomp, we need the notes that you mentioned.]
-\citet{rpoS:process} indicate that \rpoS, which codes for an RNA
-polymerase sigma factor, contains sections of rare codons that disrupt
-ribosomal translation. Our computation model agrees, showing
-relatively high deviation from $x = 0$ in comparison to other
-ribosomal proteins (\autoref{section:riboproteins}). In mass
-production of such a polymerase sigma factor, biologists replace
-sequences of codons with synonymous counterparts known to reduce noise
-and error. However, with a computation model, the process is much
-faster and with this performance we constructed a randomized and greedy
-algorithmic search for such replacements. We first find an
-early trouble spot\footnote{Specifically, places with mistake
-  frameshifts in our model, which correlate to rare codons per above
-  discussion.} of four codons, randomly replacing that sequence with
-synonymous four codons, and running our model against those
-permutations to obtain a locally optimal sequence at that place. We
-then repeat for all trouble spots the first, terminating when we have
-locally optimized the last one. With this algorithm, we reduced our
-standard deviation metric for the \rpoS\ displacement plot from 0.168
-to 0.117 on sample size of 1000 with a replacement of 33 codons. The
-initial correlation between deviation and biological expression
-provides strong anecdotal evidence that, with future biological
-experimentation, our algorithm has indeed increased protein yield
-bypassing a potentially slow biological experimentation process.
-
 \subsection{An Artificial Frameshifter}
 \begin{wrapfigure}{R}{0.5\textwidth}
   \centering
