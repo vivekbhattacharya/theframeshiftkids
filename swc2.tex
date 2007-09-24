@@ -3,14 +3,14 @@
 \usepackage[verbose]{wrapfig}
 \hyphenation{frame-shifts}
 
-\newcommand{\BWFtitle}[1]{A Computational Model for Translational
+\newcommand{\BWFtitle}[2]{A Computational Model for Translational
   Efficiency and Frameshifts in #1{Escherichia coli} Using a Genetic Signal
-  Processing Approach}
+  Processing#2Approach}
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
   R. Vitek}
 
 \usepackage[final, colorlinks=true, linkcolor=BWFBlue,
-  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}},
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}{ }},
   pdfauthor={\BWFauthors}, pdfsubject={Genetics}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,
     genetics,biology,frameshifts,ecoli,prfB,rpoS,bGH,ecoli,translation},
@@ -37,10 +37,9 @@
 \end{singlespace}
 
 \clearpage
-\begin{center}
-\Large
-{\textbf{\BWFtitle{\emph}}}
-\end{center}
+\begin{Large}
+\noindent\textbf{\BWFtitle{\emph}{~}}
+\end{Large}
 \begin{abstract}\begin{normalsize}
   In modern genetics, \ecoli\ is used as an expression system to commercially
   produce proteins.  However, sequence-dependent
@@ -49,8 +48,9 @@
   translational efficiency and predict frameshifting, uniting ideas from biological literature.
   We propose two metrics that bear considerable predictive power toward translational efficiency.
   We then test model on a large sample of sequences from the \ecoli\ genome and
-  found over 90\% of them have predicted high yields, which correlates
-  result that concurs with biological knowledge.  Moreover, it predicts ribosomal proteins
+  found over 90\% of them have predicted high yields, which concurs
+  with biological knowledge.
+  Moreover, it predicts ribosomal proteins
   to translate at even more efficient rates, also experimentally verified.
   Computational results also concur with experiments conducted on translational
   rates of recombinant bovine growth hormone sequences and variations of \prfB, a gene
@@ -68,8 +68,8 @@
 We are part of an ongoing research project
 investigating the application of bioinformatics
 and genetic signal processing to better understand how
-information is encoded and decoded from nucleic acids.  The particular
-focus of the current research ribosomal translation within
+information is encoded to and decoded from nucleic acids.  The particular
+focus of the current research ribosomal translation is within
 bacteria.  Previous researchers~\cite{lalit:mechanics}
 have developed a deterministic model
 of the translational reading frame by studying the
@@ -86,7 +86,7 @@ during protein folding can decrease translational
 efficiency~\cite{kozak05}.  However, scientists do not fully
 understand the specific connections between efficiency and these
 sequence-dependent factors, as even eliminating troublesome factors
-does not always increase efficiency. The goal of our studies is to
+does not always increase efficiency. The goal of our studies is then to
 advance the development of a computational method that can increase
 translational efficiency through mRNA sequence modifications. If
 successful, this work streamlines gene sequence optimization in the
@@ -101,7 +101,7 @@ Earlier, \citet{lalit:jbsb} created a deterministic model of
 frameshifting based on the hybridization between the 16S rRNA tail and
 upstream mRNA nucleotides.  The periodicity of this
 signal~\cite{lalit:jbsb} suggests that the force emerges from the free
-energy during hybridization acts as a correcting mechanism,
+energy during hybridization and acts as a correcting mechanism,
 stabilizing codon choice.  In this manner, early errors in the reading
 frame are rarely propagated.  Some limitations of the deterministic 
 model are discussed in \autoref{stochastic}.
@@ -122,8 +122,8 @@ genome to see if the model is robust over many genes.
 \label{freeenergy}
 
 Hybridization between two RNA sequences changes the free energy in a cell.
-Such hybridization occurs between the small
-ribosomal subunits---especially the 16s rRNA tail---the mRNA, and the tRNA~\cite{starmer}.
+It occurs between the small
+ribosomal subunits---especially the 16S rRNA tail---the mRNA, and the tRNA~\cite{starmer}.
 \citet{sd} observed that the $3'$ end of the 16S rRNA is complementary to a sequence found 
 directly upstream of many prokaryotic mRNAs; they hypothesized that RNA hybridization 
 plays an important role in translation initiation, later
@@ -141,16 +141,11 @@ modeling the hybridization of permutations of RNA \emph{doublets}, pairs of cons
 
 \subsection{Deterministic Model}
 \citet{lalit:mechanics} assumed a sinusoidal model 
-(and verified it with a fast Fourier transform) for
-free energy that projects free energy onto magnitude and
+based on the analysis of the periodogram of free energy. In it,
+free energy projects onto onto magnitude and
 phase through a memory model that stores three values
-in a phasor, a concept from physics. Then,
-they visualize free energy from polar plots where frameshifts
-occur along defined boundaries for a given species.
-
-% Looks almost sinusoidal as you move the codon across; good fit
- 
-\citeauthor{lalit:mechanics} then represent the cumulative energy phasor
+in a phasor, a concept from physics. 
+\citeauthor{lalit:mechanics} represent this cumulative energy phasor
 at codon $k$ as $\bvec{V} = Me^{i\theta}$, where $i$ is the imaginary
 constant, from which they calculate the magnitude and phase, modeled
 on a polar plot, via
@@ -167,7 +162,8 @@ a number of ``wait cycles," a function of the rarity of the
 tRNA, correspond to time the force can
 increment displacement from the current reading frame.  In the
 deterministic model, the force acts for \emph{exactly} the number
-of cycles given a codon. \cite{lalit:mechanics}'s model then simulates hybridization between the
+of cycles given a codon. \citet{lalit:mechanics}'s model then
+simulates hybridization between the
 16S ribosomal subunit and a given mRNA strand: First, the 13-base 16S
 tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
 which includes a 12-base leader sequence, to determine the free energy 
@@ -190,13 +186,11 @@ the free energy for the entire sequence~\cite{starmer}.
   }
 \end{cfigure}
 
-First, \citeauthor{lalit:mechanics} let a displacement of $x = 0$ correspond
+\citeauthor{lalit:mechanics} let a displacement of $x = 0$ correspond
 to the zero reading frame and increments of \emph{two} to represent a
 one-nucleotide change. For example, $x =2$ represents the +1 frame.
 They prove that both $x = 0$ and $x = 2$ are fixed
 (stable) points in displacement in their model, as expected.
-
-% bitzer 5.3, b/c near 0, p(indecision) is large -- > spends more time  
 
 A jump from approximately $x = 0$ to $x = 2$ in a span of only
 base pair is then the first indication of a $+1$ frameshift; it
@@ -223,13 +217,13 @@ must undergo a phase shift of one-third of an entire period
 
 As mentioned, the gene \prfB\ exhibits a programmed frameshift under
 the deterministic model by jumping in displacement to $x=2$.  Certain
-genes, however, demonstrate equivocal, ambiguous behavior near
-$x = \pm 1$~\cite{lalit:mechanics}.  In the deterministic model, we lack the
+genes, however, demonstrate equivocal and ambiguous behavior near
+$x = \pm 1$~\cite{lalit:mechanics}.  In the deterministic model, we lacked the
 sensitivity needed to clearly discern a programmed
 frameshift. Worse, the model may not show these unstable
 behaviors at all. The nondeterministic
 behavior of translation and the presence of noise limits the model's
-ability to better model it. Therefore, we retooled the model to be
+ability to better model it. Therefore, we revamped the model to be
 stochastic the incorporation of sinusoidal probability.\footnote{
   The model, written in Perl and Matlab, is available online with
   documentation, algorithms, and additional tools.
@@ -240,9 +234,10 @@ decision: stay in the current reading
 frame, move to the $\pm 1$ reading frames, or proceed to the next cycle.
 In addition, because the 
 number of wait cycles is inversely proportional to the tRNA availability of 
-the codon in the current reading frame (the A-site), rarer codons force the 
+the codon in the current reading frame (the
+A-site)~\cite{lalit:mechanics, ikemura}, rarer codons force the 
 ribosome to wait longer for the appropriate
-aa-tRNA. \citet{lalit:mechanics}, in turn, calculated tRNA
+aa-tRNA. \citeauthor{lalit:mechanics}, in turn, calculated tRNA
 availability values from existing research~\cite{ikemura} that
 indicates a relationship between it and codon frequency. From this
 body of work, we later created a different algorithm to
@@ -258,7 +253,13 @@ $abc$ decreases.
 We model this behavior using even powers of
 cosine and sine functions for $abc$ and $bcd$, defining
 $\omega$ as the \emph{weight} that is directly proportional to
-the probability.
+the probability. It must meet these criteria:
+If the ribosome lies completely and thus is stable in the
+zero frame, then the probability
+of staying in that frame is one.  Consequently, a ribosome
+fully in the +1 frame ($x=2$) has no chance of going to the zero
+frame, hence the requirement for a period of two base pairs ($x=4$) in
+these functions. Thus, we propose
 \begin{equation}
   \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} =
   \sin^{10}{\frac{x\pi}{4}}.
@@ -266,12 +267,6 @@ the probability.
   \footnote{The cosine and sine functions are taken to the tenth power
     here. These parameters can change.}
 \end{equation}
-If the ribosome lies completely and thus is stable in the
-zero frame, then the probability
-of staying in that frame is one.  Consequently, a ribosome
-fully in the +1 frame ($x=2$) has no chance of going to the zero
-frame, hence the requirement for a period of two base pairs ($x=4$) in
-these functions.
 
 Suppose we are on a wait cycle at codon $abc$ with $N_{abc}$ total
 cycles allocated. Let $P$ be the instantaneous probability of staying
@@ -719,16 +714,22 @@ its importance in the field of genetics.
 \section{Conclusion}
 \label{section:conclusion}
 
-In this paper, we presented a means to predict translational
-efficiency.  More research is needed to accrue experimental data, incorporate
-the idea of chemical interactions inherent in ribosomal translation, and
-improve parameter estimates, especially those of tRNA availability
-values. Despite these
-shortcomings, our model's ability to discern between efficient and
-non-efficient sequences provides shows tentative promise in applications
-in the field of recombinant biotechnology, providing
-a computational method of using \ecoli\ as an expression system
-for commercial proteins.
+In this paper, we presented a method, based on our newly
+developed stochastic model and derived metrics that roughly predicts
+translational efficiency.  More research is needed to
+experimentally validate the model and improve parameter
+estimates, especially those of TAV values. Despite these
+shortcomings, the ability of our model to discern between efficient
+and non-efficient sequences with respect to translational efficiency
+provides great hope that it may have applications in the field of
+recombinant biotechnology in the near future, by providing a
+computational method to be used for gene construct
+design when using E. coli as an expression system.  Future research
+can extend the model to eukaryotic translation systems, such as yeast
+and mammalian cells.  Having a computational model based on biological
+mechanism of translation will further our understanding of the
+translational process and have practical utility for production of
+recombinant proteins at commercially useful scale.
 
 \phantomsection
 \addcontentsline{toc}{section}{References}
