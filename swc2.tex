@@ -334,9 +334,9 @@ simultaneously.
 When studying a
 sequence with a programmed frameshift, \emph{error-free rate} measures the percentage of runs 
 during which the ribosome chooses the correct codon
-at \emph{every} juncture.  For a +1 frameshifting sequence the ribosome must
-stay in the 0 frame, choose the +1 frame at the frameshift codon and stay in the 
-+1 frame until termination in order for the run to be a success.
+at \emph{every} juncture.  For a +1 frameshift, the ribosome must
+choose the +1 frame at the frameshift codon and stay in the 0 frame before
+and the +1 frame after in order for the run to be a success.
 
 \subsubsection{Displacement Deviation}
 \label{section:deviation}
@@ -454,7 +454,7 @@ generations, the algorithm terminates and returns the optimal TAV vector.
 
 This algorithm did not significantly alter the TAV vectors; the average 
 change to each value in the vector was merely 15.99\%.  The new values
-are used throughout the remainder of the paper.
+are used throughout the paper.
 
 \section{Results}
 \subsection{\prfB}
@@ -474,8 +474,8 @@ are used throughout the remainder of the paper.
 
 The gene \prfB, as mentioned, is known
 to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
-\autoref{prfB:disp:sub} shows a displacement plot for
-\prfB, again with a distinctive jump at codon 25.
+\autoref{prfB:disp:sub} shows its displacement plot,
+again with a distinctive jump at codon 25.
 \footnote{Note that the polar plot is the the same as \autoref{prfB:polar:sub}.
 The new model does not alter the polar plot or the free energy calculations.}
 
@@ -498,9 +498,9 @@ robustness of our model (\autoref{section:discussion}).
 
 Next, we used our computational model to determine whether a correlation exists between 
 error-free rate and the yield of a reporter protein, $\beta$-galactosidase (\bgals).  
-\citet{weiss87} investigated element of the mRNA sequence that could change the frequency 
+\citet{weiss87} investigated elements of the mRNA sequence that could change the frequency 
 of frameshifting.  The frameshift site of \prfB\ was fused to the encoding sequence for 
-\bgals\ in such a manner that \bgals\ activity was dependent on the frameshift occurring, 
+\bgals\ so that \bgals\ activity was dependent on the frameshift occurring, 
 thus serving as an indirect measure of frameshift frequency.  
 
 Our metric, error-free rate, showed some ability to divide Weiss's 35 constructs into 
@@ -535,7 +535,7 @@ deviation yields of 4364 genes of \ecoli, encompassing over 80\% of the entire
 genome.  As predicted, 93.45\% of the genes that had deviations in the 0
 to 1 interval, agreeing with the theory of natural efficiency.  The
 average displacement deviation for these \ecoli\ genes is 0.4425 ($\sigma = 0.1537$), 
-under the condition of 500 iterations per gene.
+running 500 iterations per gene.
 
 \subsection{Ribosomal Proteins}
 \label{section:riboproteins}
