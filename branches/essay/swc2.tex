@@ -263,7 +263,7 @@ these functions. Thus, we propose
 \begin{equation}
   \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} =
   \sin^{10}{\frac{x\pi}{4}}.
-  % Foonote
+  % Footnote
   \footnote{The cosine and sine functions are taken to the tenth power
     here. These parameters can change.}
 \end{equation}
@@ -274,13 +274,12 @@ in the current reading frame at the next move, which we know is
 proportional to the weight (above) $\omega_{abc}$. Let $1/n_{abc}$ be
 the constant of proportionality, implying $n =
 \omega_{abc}/P$.\footnote{
-  We can derive $n$ as follows: Suppose the ribosome is at
-  the zero frame exactly without any force pushing it. Then $\omega =
-  cos^{10}(0) = 1$, implying $P = 1/n$. Assume the probability of
+  We can derive $n$ as follows: First drop the subscripts for simplicity. 
+  Then $\omega = cos^{10}(x\pi/4) \le 1$, implying $P \le 1/n$. Assume the probability of
   moving (1/2) is just as likely as the probability of not moving
   (1/2). Suppose there are $N$ wait cycles. Then $1 - (1 - \omega/n)^N
-  = 1/2$, implying $n = \sqrt[N]{2}/(\sqrt[N]{2} - 1)$. We also have
-  $\lim_{N\rightarrow\infty}(n) = N/\ln{2}$. Thus, the
+  = 1/2$, implying $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$. We also have
+  $\lim_{N\rightarrow\infty}\max{n} = N/\ln{2}$. Thus, the
   probability of choosing a codon at a cycle is proportional to its
   TAV because $N$ is proportional to its TAV, which coincides with intuition.
 }
@@ -362,9 +361,10 @@ displacement per \autoref{section:frameshifts}.
 \subsection{\prfB\ and Related Sequences}
 In the first test of our model, we investigated the gene
 \prfB\footnote{\prfB\ encodes protein release factor 2, which enters
-  the A-site and cause protein synthesis to terminate at the stop
-  codons \textsc{UGA} and \textsc{UAA}, which allows it to regulate
-  its own production.}, which has a programmed frameshift.
+  the A-site and causes protein synthesis to terminate at the stop
+  codons \textsc{UGA} and \textsc{UAA}. Since \prfB\ itself requires 
+  translation to continue past a stop codon, this sets up an elegant 
+  autoregulatory mechanism.}, which has a programmed frameshift.
 We downloaded the nucleotide sequence for \prfB\ from
 NCBI's Genbank database.\footnote{\url{http://www.ncbi.nlm.nih.gov/},
   accession number: NC\_000913, \prfB}
@@ -643,7 +643,7 @@ to other control groups. The experiment is a work in progress.
 The purpose of our studies was to extend and improve the deterministic
 model of \citeauthor{lalit:mechanics}, which gave a mechanistic
 perspective of ribosomal movement during translation and a genetic
-signal approach to translating mRNA sequnences. It incorporated a
+signal approach to translating mRNA sequences. It incorporated a
 number of parameters including
 codon bias~\cite{ikemura} and rare codon usage~\cite{kane95} known to
 affect translation. The model also could predict frameshift locations
@@ -651,7 +651,7 @@ in the sequence, of value in sequence annotation i.e. frameshift identification.
 Our studies extended this predictive power to 
 computationally predicting translational efficiency.
 
-The deterministic structure limited the \cite{lalit:mechanics} model.
+The deterministic structure limited the model of \citeauthor{lalit:mechanics}
 We restructured it into a stochastic process where cellular
 environment conditions can affect translation. In essence, the
 stochastic model paints a more realistic picture of the ribosome, a
@@ -665,7 +665,7 @@ provides a measure of an mRNA sequence's propensity to frameshift by
 measuring reading frame change frequency.  Notably, replicating the experiments
 of \citet{weiss87} shows it can roughly separate sequences into
 those with high and low frameshift frequencies. However, the
-resolution provided by the model is not clear and we must turn to
+output provided by the model is not always clear, and we must sometimes turn to
 displacement deviation in these cases.
 
 Displacement deviation (\autoref{section:deviation}),
@@ -702,14 +702,14 @@ frameshift frequency. The
 genetic algorithm (\autoref{section:parameters}) we created thus
 provides an initial method for a coarse estimation. However, we did
 not extensively investigate this idea and thus we limited the
-deviation values computed by \citeauthor{lalit:mechanics}.
+deviation from the values computed by \citeauthor{lalit:mechanics}.
 
 Currently, our model predicts translational efficiency with some
-accuracy and can distinguish between high and low yield sequences. We
-need more experimental verification such as our linker sequence
-(\autoref{section:linker}), currently in progress, we will adjust the
-model to increase its predictive and resolving power and consequently
-its importance in the field of genetics.
+accuracy and can distinguish between high and low yield sequences. 
+Using results from our linker sequence (\autoref{section:linker}), 
+currently in progress, we will adjust the model to increase its 
+predictive power and consequently its importance in the field of 
+genetics.
 
 \section{Conclusion}
 \label{section:conclusion}
