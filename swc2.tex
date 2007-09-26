@@ -602,7 +602,7 @@ in the mRNA.
   \footnotesize
   \caption{Data for the linker sequence}
   \subfloat[Plasmid construct]{
-    \label{bgh:disp}
+    \label{linker:plasmid}
     \includegraphics[width=0.35\textwidth]{linker/plasmid}
   }
   \subfloat[Sensitivity plot]{
@@ -612,29 +612,26 @@ in the mRNA.
 \end{cfigure}
 
 To verify our model's predictive ability, we focused on its ability to
-predict programmed frameshifts. We designed a sixteen-codon sequence
-that should frameshift (\autoref{linker}) in \ecoli\ into
+predict programmed frameshifts. We designed a sixteen-codon sequence (\autoref{linker:plasmid})
+that should frameshift in \ecoli\ into
 the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
 angle and initial displacement, which is as robust as \prfB\ (\autoref{prfB:sens:sub}).
 
 Next, we performed a BLAST search, which found no similar sequences in 
-\ecoli. Then, working with molecular 
-biologists, we helped design a strategy to use a bifunctional fusion 
-protein containing beta-galactosidase (\bgals) and \xylE, with \xylE\ in 
-a +1 reading frame. \bgals\ levels are quantified from the colorless 
-reagent nitrophenol-galactoside that, when cleaved by \bgals, yields 
-nitrophenol, which has a yellow color; \xylE\ cleaves the carbon ring 
-of catechol.  The proposed linker sequence joins these two proteins 
-to form a fusion protein.  Research indicates that even in this fused 
-protein, both \bgals\ and \xylE\ should retain their functionalities.
-As such, if the frameshift were to occur, one should observe high 
-levels of both nitrophenol and catechol cleavage products.
-
-We are working with a graduate student with molecular biology expertise 
-who has constructed a plasmid containing the plasmid construct
-to measure the frameshift efficiency of our linker sequence in addition 
-to other control groups. The experimental work is in progress.
+\ecoli. Then, working with molecular biologists, we helped create a strategy to 
+determine the efficiency of frameshifting using a fusion protein. 
+We will fuse the linker sequence to the $5'$ to the end of \xylE~\cite{fred1},
+which codes for catechol oxidase, which can be monitored with a 
+colorimetric reaction.  A plasmid vector (\autoref{linker:plasmid})
+containing the \xylE\ fusion and \lacZ, a second reporter gene~\cite{fred2}
+will be constructed.  The \lacZ\ and the \xylE\ fusion will be 
+co-transcribed on a polycistronic mRNA, but they will be translated
+separately.  The \lacZ\ gene product, \bgals, will be expressed constituitively,
+but the expression of \xylE\ will necessitate a frameshift in the linker sequence.
+As such, standardizing the catechol oxidase acitivty to the \bgals\ activity
+will serve as a measure of the efficiency of frameshifting.  The experimental
+work is in progress.
 
 \section{Discussion}
 \label{section:discussion}
