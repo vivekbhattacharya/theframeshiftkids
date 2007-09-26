@@ -167,7 +167,7 @@ simulates hybridization between the
 tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
 which includes a 12-base leader sequence, to determine the free energy 
 value of the first nucleotide of the coding sequence. The algorithm then iteratively calculates
-the free energy for the entire sequence~\cite{starmer}.
+the free energy for every codon of the sequence~\cite{starmer}.
 
 \subsection{Frameshifts}
 \label{section:frameshifts}
@@ -197,7 +197,7 @@ suggests the ribosome skips one entire base pair in the mRNA sequence.
 \autoref{prfB:deterministic:sub} shows the displacement plot per this
 deterministic model for \prfB, a gene with a unique programmed $+1$
 frameshift, which exists at codon 25. In conjunction with this
-characteristic plot, a $+1$ frameshift also displays an equally
+characteristic plot, a $+1$ frameshift also displays an 
 characteristic clockwise 120\degree\ phase angle rotation from the
 species angle, the average phase of the free energy signals of a
 number of verified \ecoli\ genes that stay in frame
@@ -227,7 +227,7 @@ stochastic through the incorporation of sinusoidal probability.\footnote{
   documentation, algorithms, and additional tools.
 }
 
-At each wait-cycle in elongation, we propose the ribosome makes a
+At each wait-cycle in elongation, we propose that the ribosome makes a
 decision: stay in the current reading
 frame, move to the $\pm 1$ reading frames, or proceed to the next cycle.
 In addition, because the 
@@ -309,7 +309,7 @@ probability of occupying the A-site in the ribosome. From the probability
 equations, the ribosome increasingly tends to stabilize around
 the +1 frame by accident.  Unlike a programmed frameshift, incorrect codon choice results from
 the slow digression from the true alignment and occurs over a number of codons.
-As the ribosome nears $x = 1$, the values for both the sine 
+As the ribosome nears $x = \pm1$, the values for both the sine 
 and cosine functions drop, thus increasing the chance of increasing
 the time required for translation. This models the physical
 behavior of ribosome's tendency to pause as it stabilizes upon an aa-tRNA in the A-site.
@@ -336,7 +336,7 @@ simultaneously.
 When studying a
 sequence with a programmed frameshift, \emph{error-free rate} measures the percentage of runs 
 during which the ribosome chooses the correct codon
-at \emph{every} juncture.  In the case of a +1 frameshift, the ribosome must
+at \emph{every} juncture.  In the case of a known +1 frameshift, the ribosome must
 choose the +1 frame at the frameshift codon and stay in the 0 frame before
 and the +1 frame thereafter for the run to be error-free.
 
@@ -351,7 +351,7 @@ where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
 the displacement at codon $i$, and $N$ is the total number of codons
 as a measure of the deviation of the sequence from the expected
 reading frame.  Usually $\beta_i = 0$ unless a programmed frameshift
-exists as it does for \prfB.  For example, for \prfB\ $\beta_i = 2$
+exists as in \prfB.  For example, for \prfB\ $\beta_i = 2$
 for all $i \geq 25$ because \prfB\ frameshifts at codon 25
 \textsc{uga} and the model represents a frameshift with +2
 displacement per \autoref{section:frameshifts}.
@@ -368,7 +368,7 @@ In the first test of our model, we investigated the gene
   number NC\_000913.
 }, which has a programmed frameshift.
 \citet{weiss87} conducted a number of experiments regarding
-\prfB\ to test how mutations in the sequence affects the rate of
+\prfB\ to test how mutations in the sequence affect the rate of
 frameshifting.  They present a total of 35 sequences in their paper,
 along with measures of translational efficiency.  We hypothesize that
 genes found to frameshift at high rates by
@@ -385,8 +385,8 @@ We base this hypothesis on the idea that if, at each wait cycle, the
 ribosome fails to stabilize in a period of indecision, the probability
 that it will change reading frames increases. The translational
 process resolves this indecision either by stabilizing around the
-incorrect +1 or $-1$ reading frame or pausing. The former synthesizes an
-incorrect primary structure or causes premature truncation due to an encounter of an
+incorrect reading frame or pausing. The former synthesizes an
+incorrect primary structure or causes premature truncation due to a
 out-of-frame stop codon further downstream while the latter preserves fidelity at the
 expense of speed. That is, while a single run may produce
 a working primary structure of the protein, the gene in question
@@ -411,7 +411,7 @@ expression~\cite{rpoS:process}. For this set we predicted lower, on average,
 deviation than those of the \ecoli\ gene sample.
 	
 \subsection{Bovine Growth Hormone}
-Our final test involved the analysis a set of sequences known to 
+Our final test involved the analysis of a set of sequences known to 
 be translationally regulated.  \citet{schoner:bgh} created a set 
 of eight sequences in an empirical effort to increase the yield 
 of recombinant bovine growth hormone (bGH) synthesized in an 
@@ -715,13 +715,13 @@ translational efficiency.  More research is needed to
 experimentally validate the model and improve parameter
 estimates, especially those of TAV values. Despite these
 shortcomings, the ability of our model to discern between efficient
-and non-efficient sequences with respect to translational efficiency
+and non-efficient sequences with respect to translation 
 provides great hope that it may have applications in the field of
 recombinant biotechnology in the near future, providing a
 computational, cost-effective method for gene construct
-design when using \ecoli\ as an expression system.  Future research
-can extend the model to eukaryotic translation systems, such as yeast
-and mammalian cells.  Having a computational model based on biological
+design when using \ecoli\ as an expression system.  In addition, 
+we may be able to extend our model to other prokaryotic species with 
+similar ribosomes.  Having a computational model based on biological
 mechanism of translation will further our understanding of the
 translational process and have practical utility for production of
 recombinant proteins at commercially useful scale.
