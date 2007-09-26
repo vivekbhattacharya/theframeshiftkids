@@ -485,8 +485,8 @@ The new model does not alter the polar plot or the free energy calculations.}
 Notably, the displacement plot does not reach $x=2$ over the span of
 one codon, as the previous deterministic model predicted.  Rather, due to randomness, the
 ribosome stabilizes the codon of the $+1$ frame in the A-site before actually reaching
-a displacement of exactly 2.  The propensity to approach and stabilize at $x=2$,
-however, concurs with experimental evidence indicating the ribosome
+a displacement of exactly 2.  The propensity to approach and stabilize at $x=2$
+concurs with experimental evidence indicating the ribosome
 stays in frame after the \prfB\ frameshift to produce full-length RF2.
   
 \autoref{prfB:sens:sub} shows the error-free rate of \prfB\ as a function
@@ -499,7 +499,7 @@ robustness of our model (\autoref{section:discussion}).
   \includegraphics[width=0.5\textwidth]{histograms/weissbox}
 \end{wrapfigure}
 
-Next, we used our computational model to determine whether a correlation exists between 
+We used our computational model to determine whether a correlation exists between 
 error-free rate and the yield of a reporter protein, $\beta$-galactosidase (\bgals).  
 \citet{weiss87} investigated elements of the mRNA sequence that could change the frequency 
 of frameshifting.  The frameshift site of \prfB\ was fused to the encoding sequence for 
@@ -603,20 +603,20 @@ in the mRNA.
   \caption{Data for the linker sequence}
   \subfloat[Plasmid construct]{
     \label{linker:plasmid}
-    \includegraphics[width=0.35\textwidth]{linker/plasmid}
+    \includegraphics[width=0.33\textwidth]{linker/plasmid}
   }
   \subfloat[Sensitivity plot]{
     \label{linker:sens}
-    \includegraphics[width=0.45\textwidth]{linker/sensitivity}
+    \includegraphics[width=0.40\textwidth]{linker/sensitivity}
   }
 \end{cfigure}
 
 To verify our model's predictive ability, we focused on its ability to
-predict programmed frameshifts. We designed a sixteen-codon sequence (\autoref{linker:plasmid})
+predict programmed frameshifts. We designed a sixteen-codon sequence
 that should frameshift in \ecoli\ into
 the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
 shows the error-free rate of the linker sequence as a function of species
-angle and initial displacement, which is as robust as \prfB\ (\autoref{prfB:sens:sub}).
+angle and initial displacement, which is as robust as \prfB.
 
 Next, we performed a BLAST search, which found no similar sequences in 
 \ecoli. Then, working with molecular biologists, we helped create a strategy to 
@@ -624,7 +624,7 @@ determine the efficiency of frameshifting using a fusion protein.
 We will fuse the linker sequence to the $5'$ to the end of \xylE~\cite{fred1},
 which codes for catechol oxidase, which can be monitored with a 
 colorimetric reaction.  A plasmid vector (\autoref{linker:plasmid})
-containing the \xylE\ fusion and \lacZ, a second reporter gene~\cite{fred2}
+containing the \xylE\ fusion and \lacZ, a second reporter gene~\cite{fred2},
 will be constructed.  The \lacZ\ and the \xylE\ fusion will be 
 co-transcribed on a polycistronic mRNA, but they will be translated
 separately.  The \lacZ\ gene product, \bgals, will be expressed constituitively,
