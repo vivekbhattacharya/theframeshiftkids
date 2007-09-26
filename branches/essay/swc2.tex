@@ -591,20 +591,24 @@ in the mRNA.
 
 \subsection{An Artificial Frameshifter}
 \label{section:linker}
-\begin{wrapfigure}{R}{0.5\textwidth}
-  \centering
-  \caption{Artificial linker sequence sensitivity plot}
-  \label{linker:sens}
-  \includegraphics[width=0.45\textwidth]{linker/sensitivity}
-\end{wrapfigure}
+%\begin{wrapfigure}{R}{0.5\textwidth}
+%  \centering
+%  \caption{Artificial linker sequence sensitivity plot}
+%  \label{linker:sens}
+%  \includegraphics[width=0.45\textwidth]{linker/sensitivity}
+%\end{wrapfigure}
 
 \begin{cfigure}
-  \caption{Artificial linker sequence with a 12-base leader sequence
-    in brackets}
-  \label{linker}
-  \begin{verbatim}
-    [aga aau cag acc] aug gag gcu ggc acc agg ggg uac agu  u  aag caa acg
-  \end{verbatim}
+  \footnotesize
+  \caption{Data for the linker sequence}
+  \subfloat[Plasmid construct]{
+    \label{bgh:disp}
+    \includegraphics[width=0.35\textwidth]{linker/plasmid}
+  }
+  \subfloat[Sensitivity plot]{
+    \label{linker:sens}
+    \includegraphics[width=0.45\textwidth]{linker/sensitivity}
+  }
 \end{cfigure}
 
 To verify our model's predictive ability, we focused on its ability to
@@ -721,7 +725,7 @@ recombinant biotechnology in the near future, providing a
 computational, cost-effective method for gene construct
 design when using \ecoli\ as an expression system.  In addition, 
 we may be able to extend our model to other prokaryotic species with 
-similar ribosomes.  Having a computational model based on biological
+similar ribosomes.  Having a computational model based on the biological
 mechanism of translation will further our understanding of the
 translational process and be practical for the production of
 recombinant proteins at a commercially useful scale.
