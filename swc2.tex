@@ -1,7 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{candor, setspace}
 \usepackage[verbose]{wrapfig}
-\hyphenation{frame-shifts}
+\hyphenation{frame-shifts gen-bank da-ta-base}
 
 \newcommand{\BWFtitle}[2]{A Computational Model for Translational
   Efficiency and Frameshifts in #1{Escherichia coli} Using a Genetic Signal
@@ -56,9 +56,8 @@ high or low levels of translation for seven of them.  We then examined variation
 \prfB, a gene with a programmed frameshift, and the model grouped these sequences 
 into two general categories of high and low yield, in a manner consistent 
 with experimental results.  Successful development of a computational model and 
-associated metrics for translational efficiency would prove useful in optimizing 
-recombinant protein yield in multiple venues, including commercial synthesis of 
-therapeutic proteins.
+metrics for translational efficiency implicates itself in optimizing 
+recombinant protein yield in multiple fields, including commercial protein synthesis.
 \end{normalsize}\end{abstract}  
   
 \clearpage
@@ -105,15 +104,18 @@ energy of hybridization and acts as a mechanism to
 stabilize reading frame.  Some limitations of the deterministic 
 model are discussed in \autoref{stochastic}.
 
-We assume that at each cycle of ribosome translocation, environmental noise will result in imprecise alignment of the ribosomal decoding center with the next codon to be translated.  To capture this idea, we create a new metric of efficiency: the total 
-deviation from the intended reading frame.  We found this metric
+We assume that at each cycle of ribosome translation, environmental
+noise will result in imprecise alignment of the ribosomal decoding
+center with the next codon to be translated.  To capture this idea, we
+create a new metric of efficiency: the total deviation from the
+intended reading frame.  We found this metric
 (\autoref{section:deviation}) to roughly correlate with translational
 efficiency.  Throughout this paper, we use this and other metrics to
 optimize tRNA availabilities in order to distinguish between
 high-efficiency and low-efficiency sequences. We also use our new
-metric to optimize the efficiency of a translationally regulated gene, 
-and apply our new metric to ribosomal proteins and the entire \ecoli\ 
-genome to see if the model is robust over many genes.
+metric to optimize the efficiency of a translationally regulated gene,
+and apply our new metric to ribosomal proteins and the entire
+\ecoli\ genome to see if the model is robust over many genes.
 
 \section{Prior Model}
 \subsection{Free Energy}
@@ -270,8 +272,8 @@ in the current reading frame at the next move, which we know is
 proportional to the weight (above) $\omega_{abc}$. Let $1/n_{abc}$ be
 the constant of proportionality, implying $n =
 \omega_{abc}/P$.\footnote{
-  We can derive $n$ as follows: First drop the subscripts for simplicity. 
-  Then $\omega = cos^{10}(x\pi/4) \le 1$, implying $P \le 1/n$. Assume the probability of
+  We can derive $n$ as follows:
+  We know $\omega = cos^{10}(x\pi/4) \le 1$, implying $P \le 1/n$. Assume the probability of
   moving (1/2) is just as likely as the probability of not moving
   (1/2). Suppose there are $N$ wait cycles. Then $1 - (1 - \omega/n)^N
   = 1/2$, implying $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$. We also have
@@ -356,15 +358,15 @@ displacement per \autoref{section:frameshifts}.
 
 \subsection{\prfB\ and Related Sequences}
 In the first test of our model, we investigated the gene
-\prfB\footnote{\prfB\ encodes protein release factor 2, which enters
+\prfB\footnote{
+  \prfB\ encodes protein release factor 2, which enters
   the A-site and causes protein synthesis to terminate at the stop
   codons \textsc{UGA} and \textsc{UAA}. Since \prfB\ itself requires 
   translation to continue past a stop codon, this sets up an elegant 
-  autoregulatory mechanism.}, which has a programmed frameshift.
-We downloaded the nucleotide sequence for \prfB\ from
-NCBI's Genbank database.\footnote{\url{http://www.ncbi.nlm.nih.gov/},
-  accession number: NC\_000913, \prfB}
-
+  autoregulatory mechanism. We obtained \prfB's nucleotide sequence from
+  NCBI's Genbank database at \url{http://www.ncbi.nlm.nih.gov/}, accession
+  number NC\_000913.
+}, which has a programmed frameshift.
 \citet{weiss87} conducted a number of experiments regarding
 \prfB\ to test how mutations in the sequence affects the rate of
 frameshifting.  They present a total of 35 sequences in their paper,
@@ -465,7 +467,7 @@ are used throughout the paper.
   \label{prfB:stochplots}
   \subfloat[Displacement Plot]{
     \label{prfB:disp:sub}
-    \includegraphics[width=0.4\textwidth]{prfB/disp}
+    \includegraphics[width=0.45\textwidth]{prfB/disp}
   }
   \subfloat[Sensitivity plot]{
     \label{prfB:sens:sub}
@@ -504,7 +506,7 @@ of frameshifting.  The frameshift site of \prfB\ was fused to the encoding seque
 \bgals\ so that \bgals\ activity was dependent on the frameshift occurring, 
 thus serving as an indirect measure of frameshift frequency.  
 
-Our metric, error-free rate, showed some ability to divide Weiss'Â’s 35 constructs into 
+Our metric, error-free rate, showed some ability to divide \citeauthor{weiss87}'s 35 constructs into 
 two general categories: those with \bgals\ activity over 1650 whole-cell units and those with a 
 lower activity.  This number is in relation to the original, unmodified \prfB\ sequence, 
 which exhibited an activity of 6600 units.  These computations results suggest that 
@@ -690,7 +692,7 @@ proposed linker sequence suggest our model is robust with respect to species ang
 and initial displacement, but proper estimation of tRNA availability
 poses a problem. \citet{lalit:mechanics} based these values solely on 
 codon usage, but research~\cite{phelps} also suggests that tRNA shape
-also determintes overall stability and is known to affect
+also determines overall stability and is known to affect
 frameshift frequency. The
 genetic algorithm (\autoref{section:parameters}) we created thus
 provides an initial method for a coarse estimation. However, we did
