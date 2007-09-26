@@ -87,7 +87,7 @@ understand the specific connections between efficiency and these
 sequence-dependent factors, as even eliminating troublesome factors
 does not always increase efficiency. The goal of our studies is then to
 advance the development of a computational method that identifies mRNA
-sequences changes to improve efficiency. If
+sequence changes to improve efficiency. If
 successful, this work streamlines gene sequence optimization in the
 production of high-yield, recombinant proteins. Creating cell lines
 that synthesize proteins at commercially viable yields in fields ranging from
@@ -141,7 +141,7 @@ modeling the hybridization of permutations of RNA \emph{doublets}, pairs of cons
 \subsection{Deterministic Model}
 \citet{lalit:mechanics} assumed a sinusoidal model 
 based on the analysis of the periodogram of free energy. In it,
-free energy projects onto onto magnitude and
+free energy projects onto magnitude and
 phase through a memory model that stores three values
 in a phasor, a concept from physics. 
 \citeauthor{lalit:mechanics} represent this cumulative energy phasor
@@ -151,13 +151,13 @@ on a polar plot, via
 trigonometry. Differentiating the energy phasor
 with respect to distance along the mRNA strand gives 
 vector $\bvec{D}$, the force~\cite{lalit:mechanics}
-that acts on the ribosome that keeps the mRNA in the reading frame.
+that acts on the ribosome to keep the mRNA in the reading frame.
  
 The time that the force acts on the ribosome depends upon
 the tRNA availability associated with the codon at the A-site 
 and interactions between said tRNA and the ribosome. [Dr. Stomp, references please!]
 \citeauthor{lalit:mechanics} represent this with a deterministic model: For each codon,
-a number of ``wait cycles," a function of the rarity of the
+the number of ``wait cycles," a function of the rarity of the
 tRNA, corresponds to the time the force can
 increment displacement from the current reading frame.  In the
 deterministic model, the force acts for \emph{exactly} this number
@@ -167,7 +167,7 @@ simulates hybridization between the
 tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
 which includes a 12-base leader sequence, to determine the free energy 
 value of the first nucleotide of the coding sequence. The algorithm then iteratively calculates
-the free energy for every codon of the sequence~\cite{starmer}.
+the free energy for every nucleotide of the sequence~\cite{starmer}.
 
 \subsection{Frameshifts}
 \label{section:frameshifts}
@@ -197,14 +197,14 @@ suggests the ribosome skips one entire base pair in the mRNA sequence.
 \autoref{prfB:deterministic:sub} shows the displacement plot per this
 deterministic model for \prfB, a gene with a unique programmed $+1$
 frameshift, which exists at codon 25. In conjunction with this
-characteristic plot, a $+1$ frameshift also displays an 
+characteristic plot, a $+1$ frameshift also displays a 
 characteristic clockwise 120\degree\ phase angle rotation from the
 species angle, the average phase of the free energy signals of a
 number of verified \ecoli\ genes that stay in frame
 \cite{lalit:mechanics}.  We interpret the free energy signal's
 alignment with the sudden jump in displacement as a sustained
 frameshift. Since the free energy signal has a period of one
-codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy signal
+codon~\cite{lalit:mechanics}, for a $+1$ frameshift the free energy signal
 must undergo a phase shift of one-third of an entire period
 (\autoref{prfB:polar:sub}).
 
@@ -351,7 +351,7 @@ where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
 the displacement at codon $i$, and $N$ is the total number of codons
 as a measure of the deviation of the sequence from the expected
 reading frame.  Usually $\beta_i = 0$ unless a programmed frameshift
-exists as in \prfB.  For example, for \prfB\ $\beta_i = 2$
+exists as in \prfB.  For example, for \prfB, $\beta_i = 2$
 for all $i \geq 25$ because \prfB\ frameshifts at codon 25
 \textsc{uga} and the model represents a frameshift with +2
 displacement per \autoref{section:frameshifts}.
@@ -387,7 +387,7 @@ that it will change reading frames increases. The translational
 process resolves this indecision either by stabilizing around the
 incorrect reading frame or pausing. The former synthesizes an
 incorrect primary structure or causes premature truncation due to a
-out-of-frame stop codon further downstream while the latter preserves fidelity at the
+out-of-frame stop codon further downstream, while the latter preserves fidelity at the
 expense of speed. That is, while a single run may produce
 a working primary structure of the protein, the gene in question
 ultimately is less efficient than a synonymous gene with lower
