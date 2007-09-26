@@ -447,8 +447,8 @@ high-yield and low-yield sequences. First, we generate a list of
 randomly modified TAV vectors and calculate the ratio of the 
 displacement deviation (\autoref{section:deviation}) for the four 
 high-yield sequences to that of the other four. From there, we sort the 
-modified TAV vectors by to this ratio and discard the worst half of the 
-vectors. We then choose two of the remaining vectors, with the chance 
+modified TAV vectors by this ratio and discard the worst half of the 
+vectors. We choose two of the remaining vectors, with the chance 
 of each vector being proportional to its rank.  We then take a weighted 
 average of the two vectors and spawn a new vector.  After creating the 
 next generation according to a constant ``gene pool'' size, we delete 
@@ -534,7 +534,7 @@ of \bgals\ activity as a measure of frameshift frequency.
 \autoref{ecoli:hist}\footnote{We truncate the histogram at three, excluding
   the outliers and less than 1\% of the sample.} is a histogram of the
 deviation yields of 4364 genes of \ecoli, encompassing over 80\% of the entire
-genome.  As predicted, 93.45\% of the genes have deviations in the 0
+genome.  As predicted, 93.45\% of the genes had deviations in the 0
 to 1 interval, agreeing with the assumption of natural efficiency.  The
 average displacement deviation for these \ecoli\ genes is 0.4425 ($\sigma = 0.1537$), 
 running 500 iterations per gene.
@@ -674,8 +674,8 @@ experimental data; one sequence proved to be an outlier.
 Since the model is preliminary, we must note these outliers.  In the
 bGH, \citeauthor{schoner:bgh} experimentally determined pcZ108 to be
 of low yield, but the model computationally predicts high yield.
-Likewise, in the set of constructs used by \citet{weiss87}, where one
-set gave of low yield, the model again predicted differently.  One
+Likewise, in the set of constructs used by \citet{weiss87}, one
+set of sequences had low experimental yields, but the model predicted high translational efficiency.  One
 possible explanation of these discrepancies relates to the chemical
 structures of the mRNA sequences and the polypeptides they
 encode.  In both cases, \citeauthor{weiss87} and
@@ -723,7 +723,7 @@ design when using \ecoli\ as an expression system.  In addition,
 we may be able to extend our model to other prokaryotic species with 
 similar ribosomes.  Having a computational model based on biological
 mechanism of translation will further our understanding of the
-translational process and be practical for production of
+translational process and be practical for the production of
 recombinant proteins at commercially useful scale.
 
 \phantomsection
