@@ -72,8 +72,8 @@ F.~Repoila, N.~Majdalani, and S.~Gottesman.
   \emph{Escherichia coli}: the \emph{rpoS} paradigm}.
 \newblock \emph{Mol. Microbiol.}, 48:\penalty0 855--61, May 2003.
 
-\bibitem[Sambrook et~al.(1989)Sambrook, E.F., and Maniatis]{fred2}
-J.~Sambrook, F.~E.F., and T.~Maniatis.
+\bibitem[Sambrook et~al.(1989)Sambrook, Fritsch, and Maniatis]{fred2}
+J.~Sambrook, E.~Fritsch, and T.~Maniatis.
 \newblock \emph{{Molecular Cloning: A Laboratory Manual}}.
 \newblock {CSH Laboratory Press}, 1989.
 
@@ -115,13 +115,13 @@ G.~Yusupova, L.~Jenner, B.~Rees, D.~Moras, and M.~Yusupova.
 \newblock {Structural basis for messenger RNA movement on the ribosome}.
 \newblock \emph{Nature}, 444\penalty0 (7117):\penalty0 391--394, 2006.
 
-\bibitem[Zukowski et~al.(19843)Zukowski, Gaffney, Speck, Kauffmann, Findeli,
+\bibitem[Zukowski et~al.(1984)Zukowski, Gaffney, Speck, Kauffmann, Findeli,
   Wisecup, and Lecocq]{fred1}
 M.~Zukowski, D.~Gaffney, D.~Speck, M.~Kauffmann, A.~Findeli, A.~Wisecup, and
   J.-P. Lecocq.
 \newblock {Chromogenic identification of genetic regulatory signals in
   \emph{Bacillus subtilis} based on expression of a cloned Pseudomonas gene}.
 \newblock \emph{Proc. Nat. Acad. Sci. USA}, 80:\penalty0 1101--1105, Sept.
-  19843.
+  1984.
 
 \end{thebibliography}

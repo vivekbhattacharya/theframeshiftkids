@@ -9,12 +9,12 @@
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
   R. Vitek}
 
-\usepackage[final, colorlinks=true, linkcolor=BWFBlue,
+\usepackage[draft, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}{ }},
   pdfauthor={\BWFauthors}, pdfsubject={Genetics}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,
     genetics,biology,frameshifts,ecoli,prfB,rpoS,bGH,ecoli,translation},
-  pdfstartview={FitH}, backref]{hyperref}
+  pdfstartview={FitH}]{hyperref}
 
 \linespread 2
 
@@ -33,7 +33,7 @@
 % Title, table of contents, and abstract start things off.
 \pagenumbering{roman}
 \begin{singlespace}
-  \tableofcontents
+%  \tableofcontents
 \end{singlespace}
 
 \clearpage
@@ -140,8 +140,9 @@ X-ray crystallography data.
 modeling the hybridization of permutations of pairs of consecutive RNA nucleotides.
 
 \subsection{Deterministic Model}
-\citet{lalit:mechanics} assumed a sinusoidal model 
-based on the analysis of the periodogram of free energy. In it,
+\citet{lalit:mechanics} assumed a sinusoidal model of free energy against base-pair position 
+because a Fourier transform of free energy indicated a strong component with a period of one codon.  
+In their model,
 free energy projects onto magnitude and
 phase through a memory model that stores three values
 in a phasor, a concept from physics. 
@@ -151,8 +152,8 @@ constant, from which they calculate the magnitude and phase, modeled
 on a polar plot, via
 trigonometry. Differentiating the energy phasor
 with respect to distance along the mRNA strand gives 
-vector $\bvec{D}$, the force~\cite{lalit:mechanics}
-that acts on the ribosome to keep the mRNA in the reading frame.
+vector $\bvec{D}$, the force assumed by the model~\cite{lalit:mechanics}
+to act on the ribosome to keep the mRNA in the reading frame.
  
 The time that the force acts on the ribosome depends upon
 the tRNA availability associated with the codon at the A-site 
@@ -224,7 +225,7 @@ behaviors at all. The nondeterministic
 behavior of translation and the presence of noise limits the model's
 ability to achieve better resolution. Therefore, we revamped the model to be
 stochastic through the incorporation of sinusoidal probability.\footnote{
-  The model's code is available online with documentation.
+  The model's code is available online with detailed documentation.
 }
 
 At each wait-cycle in elongation, we propose the ribosome makes a
@@ -365,13 +366,13 @@ In the first test of our model, we investigated the gene
 \citet{weiss87} conducted a number of experiments regarding
 \prfB\ to test how mutations in the sequence affect the rate of
 frameshifting.  They present a total of 35 sequences in their paper,
-along with measures of translational efficiency.  We hypothesize that
+along with measures of translational efficiency.  We hypothesized that
 genes found to frameshift at high rates by
 \citeauthor{weiss87} should also show high error-free rates under
 our model.
 
 \subsection{The \ecoli\ Genome and Ribosomal Proteins}
-We also hypothesize that displacement deviation
+We also hypothesized that displacement deviation
 provides a suitable metric for translational efficiency: A lower
 deviation should correspond to a more efficient sequence.
 This is because if, at each wait cycle, the
@@ -410,7 +411,7 @@ of eight sequences in an empirical effort to increase the yield
 of recombinant bovine growth hormone (bGH) synthesized in an 
 \ecoli\ expression system. They
 showed that four sequences were expressed 
-at significantly higher levels than the others. We predict that 
+at significantly higher levels than the others. We predicted that 
 these should have lower displacement deviations than others.
 
 \subsection{Parameters}
@@ -501,7 +502,7 @@ error-free rate could be used to predict protein yield, although it lacks resolu
 
 Notably, \citeauthor{weiss87} did not maintain the amino acid structure of the polypeptides.  
 This discrepancy could impact protein folding and half-life.  Although they
-present no evidence evaluating this idea, such a phenomenon would confound the interpretation 
+presented no evidence evaluating this idea, such a phenomenon would confound the interpretation 
 of \bgals\ activity as a measure of frameshift frequency.
 
 \subsection{\ecoli\ Genes}
@@ -585,6 +586,13 @@ in the mRNA.
 %  \includegraphics[width=0.45\textwidth]{linker/sensitivity}
 %\end{wrapfigure}
 
+To verify our model's predictive ability, we focused on its ability to
+predict programmed frameshifts. We designed a sixteen-codon sequence
+that should frameshift in \ecoli\ into
+the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
+shows the error-free rate of the linker sequence as a function of species
+angle and initial displacement, which is as robust as \prfB.
+
 \begin{cfigure}
   \footnotesize
   \caption{Data for the linker sequence}
@@ -597,13 +605,6 @@ in the mRNA.
     \includegraphics[width=0.40\textwidth]{linker/sensitivity}
   }
 \end{cfigure}
-
-To verify our model's predictive ability, we focused on its ability to
-predict programmed frameshifts. We designed a sixteen-codon sequence
-that should frameshift in \ecoli\ into
-the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
-shows the error-free rate of the linker sequence as a function of species
-angle and initial displacement, which is as robust as \prfB.
 
 Next, we performed a BLAST search, which found no similar sequences in 
 \ecoli. Then, working with molecular biologists, we helped create a strategy to 
@@ -627,8 +628,8 @@ The purpose of our studies was to extend and improve the deterministic
 model of \citeauthor{lalit:mechanics}, which gave a mechanistic
 perspective of ribosomal movement during translation and a genetic
 signal approach to translating mRNA sequences. It incorporated a
-number of parameters including
-codon bias~\cite{ikemura} and rare codon usage~\cite{kane95} known to
+number of parameters, including
+codon bias~\cite{ikemura} and rare codon usage~\cite{kane95}, known to
 affect translation. The model also could predict frameshift locations
 in the sequence, of value in sequence annotation (frameshift identification).
 Our studies extended this predictive power to 
@@ -655,13 +656,13 @@ displacement deviation in these cases.
 Displacement deviation (\autoref{section:deviation}),
 when calculated for a large sample of \ecoli\ genes assumed to be translationally efficient,
 correlated with over 90\% of the  experimental data, predicting
-these genes to be efficient.  Moreover, the results predict that ribosomal proteins should
-be more efficient than average. Also, displacement deviations for seven of eight bGH
-sequences~\cite{schoner:bgh} roughly correlate with further
+these genes to be efficient.  Moreover, the results predicted that ribosomal proteins should
+be more efficient than average, in accordance with experimental knowledge. Also, displacement deviations for seven of eight bGH
+sequences~\cite{schoner:bgh} roughly correlated with further
 experimental data; one sequence was an outlier.
 
 Since the model is preliminary, we must note these outliers.  In the
-bGH, \citeauthor{schoner:bgh} experimentally determined pcZ108 to be
+case of bGH, \citeauthor{schoner:bgh} experimentally determined pcZ108 to be
 of low yield, but the model computationally predicts high yield.
 Likewise, in the set of constructs used by \citeauthor{weiss87}, one
 set of sequences had low experimental yields, but the model predicted high translational efficiency.  One
@@ -686,7 +687,7 @@ frameshift frequency. The
 genetic algorithm (\autoref{section:parameters}) we created thus
 provides an initial method for a coarse estimation. However, we did
 not extensively investigate the effect of tRNA shape and thus we limited the
-difference of our values to those computed by \citeauthor{lalit:mechanics}.
+difference between our values and those computed by \citeauthor{lalit:mechanics}.
 
 Currently, our model predicts translational efficiency with some
 accuracy and can distinguish between high and low yield sequences. 
