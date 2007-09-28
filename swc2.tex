@@ -1,7 +1,6 @@
-\documentclass[11pt]{article}
-\usepackage{candor, setspace}
-\usepackage[verbose]{wrapfig}
-\hyphenation{frame-shifts gen-bank da-ta-base}
+\documentclass[twocolumn]{article}
+\usepackage{candor, setspace, abstract}
+\hyphenation{frame-shifts gen-bank da-ta-base hy-bri-di-za-tion}
 
 \newcommand{\BWFtitle}[2]{A Computational Model for Translational
   Efficiency and Frameshifts in #1{Escherichia coli} Using a Genetic Signal
@@ -9,7 +8,7 @@
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
   R. Vitek}
 
-\usepackage[final, colorlinks=true, linkcolor=BWFBlue,
+\usepackage[draft, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}{ }},
   pdfauthor={\BWFauthors}, pdfsubject={Genetics}, pdfcreator={The
     Frameshift Kids}, pdfkeywords={bioinformatics,
@@ -19,9 +18,9 @@
 \usepackage{titlesec}
 \titleformat{\section}{\bfseries}{\thesection.}{.5em}{\MakeUppercase}
 \titleformat{\subsection}{\bfseries}{\thesubsection.}{.5em}{\normalsize}
-\titlespacing{\section}{0pt}{0.5\baselineskip}{*0}
-\titlespacing{\subsection}{0pt}{0.5\baselineskip}{*0}
-\titlespacing{\subsubsection}{0pt}{0.5\baselineskip}{*0}
+\titlespacing*{\section}{0pt}{\baselineskip}{*0}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{*0}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{*0}
 
 \author{\sc{\BWFauthors}}
 \date{{\sc \today}}
@@ -30,17 +29,14 @@
 \linespread{1.3}
 \begin{document}
 % Title, table of contents, and abstract start things off.
-\maketitle
-\pagenumbering{roman}
-\begin{singlespace}
-  \tableofcontents
-\end{singlespace}
 
 % SWC only
 % \begin{Large}
 % \noindent\textbf{\BWFtitle{\emph}{~}}
 % \end{Large}
-\begin{abstract}\begin{normalsize}
+\twocolumn[
+\maketitle
+\begin{onecolabstract}
 In modern genetics, \ecoli\ is used as an expression system to commercially 
 produce proteins.  However, sequence-dependent features, such as rare codons 
 and codon bias, have large effects on translational efficiency.  To tackle 
@@ -58,11 +54,9 @@ into two general categories of high and low yield, consistent
 with experimental results.  Successful development of a computational model and 
 metrics for translational efficiency implicates itself in optimizing 
 recombinant protein yield in multiple fields, including commercial protein synthesis.
-\end{normalsize}\end{abstract}  
+\end{onecolabstract}
+]
   
-\clearpage
-\pagenumbering{arabic}
-
 \section{Purpose}
 We are part of an ongoing research project
 investigating the application of bioinformatics
@@ -175,16 +169,15 @@ the free energy for every nucleotide of the sequence~\cite{starmer}.
 \label{section:frameshifts}
 
 \begin{cfigure}
-  \caption{Plots of~\prfB}
-  \label{prfB:detplots}
-  \subfloat[Deterministic displacement]{
-    \label{prfB:deterministic:sub}
-    \includegraphics[width=0.5\textwidth]{prfB/deterministic}
-  }
-  \subfloat[Polar plot]{
-    \label{prfB:polar:sub}
-    \includegraphics[width=0.4\textwidth]{prfB/polar}
-  }
+  \caption{Plots of~\prfB: Deterministic displacement}
+  \label{prfB:deterministic:sub}
+  \includegraphics[width=\linewidth]{prfB/deterministic}
+\end{cfigure}
+
+\begin{cfigure}
+  \caption{Plots of~\prfB: Polar plot}
+  \label{prfB:polar:sub}
+  \includegraphics[width=\linewidth]{prfB/polar}
 \end{cfigure}
 
 \citeauthor{lalit:mechanics} let a displacement of $x = 0$ correspond
@@ -371,7 +364,7 @@ genes found to frameshift at high rates by
 \citeauthor{weiss87} should also show high error-free rates under
 our model.
 
-\subsection{The \ecoli\ Genome and Ribosomal Proteins}
+\subsection{Ribosomal \mbox{Proteins}}
 We also hypothesized that displacement deviation
 provides a suitable metric for translational efficiency: A lower
 deviation should correspond to a more efficient sequence.
@@ -452,16 +445,15 @@ throughout the paper.
 \subsection{\prfB}
 
 \begin{cfigure}
-  \caption{Plots of \prfB\ in a stochastic model}
-  \label{prfB:stochplots}
-  \subfloat[Displacement Plot]{
-    \label{prfB:disp:sub}
-    \includegraphics[width=0.45\textwidth]{prfB/disp}
-  }
-  \subfloat[Sensitivity plot]{
-    \label{prfB:sens:sub}
-    \includegraphics[width=0.5\textwidth]{prfB/sensitivity}
-  }
+  \caption{Plots of \prfB\ in a stochastic model: Displacement plot}
+  \label{prfB:disp:sub}
+  \includegraphics[width=\linewidth]{prfB/disp}
+\end{cfigure}
+
+\begin{cfigure}
+  \caption{Plots of \prfB\ in a stochastic model: Sensitivity plot}
+  \label{prfB:sens:sub}
+  \includegraphics[width=\linewidth]{prfB/sensitivity}
 \end{cfigure}
 
 The gene \prfB, as mentioned, is known
@@ -481,11 +473,11 @@ stays in frame after the \prfB\ frameshift to produce full-length RF2.
 of species angle and initial displacement and demonstrates the
 robustness of our model (\autoref{section:discussion}).
 
-\begin{wrapfigure}{R}{0.5\textwidth}
+\begin{cfigure}
   \caption{Comparison of experimental yield and error-free rate, 500 iterations}
   \label{weissboxplot}
-  \includegraphics[width=0.5\textwidth]{histograms/weissbox}
-\end{wrapfigure}
+  \includegraphics[width=\linewidth]{histograms/weissbox}
+\end{cfigure}
 
 We used our computational model to determine whether a correlation exists between 
 error-free rate and the yield of a reporter protein, $\beta$-galactosidase (\bgals).  
@@ -507,16 +499,16 @@ of \bgals\ activity as a measure of frameshift frequency.
 
 \subsection{\ecoli\ Genes}
 \begin{cfigure}
-  \caption{Investigating a large sample of \ecoli\ genes}
-  \subfloat[Displacement deviations]{
-    \label{ecoli:hist}
-    \includegraphics[width=0.4\textwidth]{histograms/everything}
-  }
-  \quad
-  \subfloat[Comparison to ribosomal proteins]{
-    \label{ribosomal:comp}
-    \includegraphics[width=0.5\textwidth]{histograms/ribosomal}
-  }
+  \caption{Investigating a large sample of \ecoli\ genes: Displacement deviations}
+  \label{ecoli:hist}
+  \includegraphics[width=\linewidth]{histograms/everything}
+\end{cfigure}
+
+\begin{cfigure}
+  \caption{Investigating a large sample of \ecoli\ genes: Comparison
+    to ribosomal proteins}
+  \label{ribosomal:comp}
+  \includegraphics[width=\linewidth]{histograms/ribosomal}
 \end{cfigure}
 
 \autoref{ecoli:hist}\footnote{We truncate the histogram at three, excluding
@@ -541,17 +533,17 @@ large sample of \ecoli\ genes, which is significantly higher with a $p$-value of
 \label{section:bgh}
 
 \begin{cfigure}
-  \footnotesize
-  \caption{Data for bGH}
-  \subfloat[Displacement plot]{
-    \label{bgh:disp}
-    \includegraphics[width=0.45\textwidth]{bgh/all}
-  }
-  \subfloat[Deviations with Sample Size~500]{
-    \label{bgh:deviation}
-    \input{bgh/deviations.tex}
-  }
+  \caption{bGH: Displacement plot}
+  \label{bgh:disp}
+  \includegraphics[width=\linewidth]{bgh/all}
 \end{cfigure}
+
+\begin{table*}
+  \centering
+  \caption{bGH: Deviations with sample size~500}
+  \label{bgh:deviation}
+  \input{bgh/deviations.tex}
+\end{table*}
 
 We investigated the concept of displacement deviation as a predictive parameter
 for experimental yield using published expression data~\cite{schoner:bgh} for bovine growth hormone (bGH).
@@ -583,7 +575,7 @@ in the mRNA.
 %  \centering
 %  \caption{Artificial linker sequence sensitivity plot}
 %  \label{linker:sens}
-%  \includegraphics[width=0.45\textwidth]{linker/sensitivity}
+%  \includegraphics[width=\linewidth]{linker/sensitivity}
 %\end{wrapfigure}
 
 To verify our model's predictive ability, we focused on its ability to
@@ -594,16 +586,15 @@ shows the error-free rate of the linker sequence as a function of species
 angle and initial displacement, which is as robust as \prfB.
 
 \begin{cfigure}
-  \footnotesize
-  \caption{Data for the linker sequence}
-  \subfloat[Plasmid construct]{
-    \label{linker:plasmid}
-    \includegraphics[width=0.33\textwidth]{linker/plasmid}
-  }
-  \subfloat[Sensitivity plot]{
-    \label{linker:sens}
-    \includegraphics[width=0.40\textwidth]{linker/sensitivity}
-  }
+  \caption{Linker sequence: Plasmid construct}
+  \label{linker:plasmid}
+  \includegraphics[width=\linewidth]{linker/plasmid}
+\end{cfigure}
+
+\begin{cfigure}
+  \caption{Linker sequence: Sensitivity plot}
+  \label{linker:sens}
+  \includegraphics[width=\linewidth]{linker/sensitivity}
 \end{cfigure}
 
 Next, we performed a BLAST search, which found no similar sequences in 
