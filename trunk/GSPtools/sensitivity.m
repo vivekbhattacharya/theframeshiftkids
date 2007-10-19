@@ -6,9 +6,8 @@ function sensitivity(folder, limit)
          [x y yields] = grope(displacement, file, limit);
 
          h = figure(1); set(h, 'Visible', 'off');
-         plot3(x, y, yields);
-         title(file);
-         grid;
+         mesh(x, y, yields);
+         title(file); grid;
          xlabel('Initial displacement');
          ylabel('Phase angle');
          zlabel('Error-free rate');
@@ -18,15 +17,15 @@ end
 
 function [x y yields] = grope(d, file, limit)
     yields = [];
-    x = -0.5:0.05:1.5;
-    y = -180:5:90;
+    x = -0.5:0.1:1.5;
+    y = -180:10:90;
     myi = 0;
 
     global shoals sands Config;
-    for i = -0.5:0.05:1.5
+    for i = -0.5:0.1:1.5
         myj = 0;
         myi = myi + 1;
-        for k = -180:5:90
+        for k = -180:10:90
             myj = myj + 1;
             shoals = 0; sands = 0;
             Config.phi_sp = k*pi/180;
@@ -40,5 +39,4 @@ function [x y yields] = grope(d, file, limit)
             disp(' ');
         end
     end
-    %plot(-0.2:0.05:1.5, yields);
 end
