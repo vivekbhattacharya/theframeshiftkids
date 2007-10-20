@@ -36,11 +36,6 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     end
 
     clear globals;
-    global Travel Names optimal;
-    load Codons.mat;
-    load banana52.mat;
-    Travel = get_travel(Names, optimal);
-    
-%     global Travel;
-%     if isempty(Travel), load Travel.mat; end
+    global Travel Names;
+    if isempty(Travel), load Travel2.mat; end
 end

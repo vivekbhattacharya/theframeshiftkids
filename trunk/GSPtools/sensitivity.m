@@ -1,3 +1,8 @@
+% I take a work folder and a sample size as arguments and spit out 3D
+% sensitivity plots into a "sensitivity" subdirectory in the work
+% folder along the lines of jejunity and opportunity.
+%
+% sensitivity('c:\weiss', 20)
 function sensitivity(folder, limit)
      classify(folder, 'sensitivity', @helper);
          
@@ -18,26 +23,27 @@ function sensitivity(folder, limit)
 end
 
 function [x y yields] = grope(d, file, limit)
-    yields = [];
-    x = -0.5:0.1:1.5;
-    y = -180:10:90;
-    myi = 0;
+    init_disps = -0.5:0.1:1.5;
+    angles = -180:10:90;
+    yields = zeros(length(init_disps), length(angles));
 
     global shoals sands Config;
-    for i = -0.5:0.1:1.5
-        myj = 0;
-        myi = myi + 1;
-        for k = -180:10:90
-            myj = myj + 1;
-            shoals = 0; sands = 0;
-            Config.phi_sp = k*pi/180;
-            Config.init_disp = i;
-            for j = 1:limit, d([25]); end
 
-            yields(myi,myj) = shoals/sands;
+    for i = 1:length(init_disps)
+        Config.init_disp = i;
+        init_disp = init_disps(i);
+        
+        for k = 1:length(angles)
+            Config.phi_sp = k*pi/180;
+            angle = angles(k);
+
+            shoals = 0; sands = 0;
+            for j = 1:limit, d([25]); end
+            yields(i, j) = shoals/sands;
+
             disp(['  Yield: ' num2str(shoals/sands)]);
-            disp(['  phi_sp: ' num2str(k)]);
-            disp(['  c2: ' num2str(i)]);
+            disp(['  phi_sp: ' num2str(angle)]);
+            disp(['  init_disp: ' num2str(init_disp)]);
             disp(' ');
         end
     end
