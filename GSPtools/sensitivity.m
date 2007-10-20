@@ -6,12 +6,14 @@ function sensitivity(folder, limit)
          [x y yields] = grope(displacement, file, limit);
 
          h = figure(1); set(h, 'Visible', 'off');
-         mesh(x, y, yields);
+         mesh(x, y, yields');
          title(file); grid;
-         xlabel('Initial displacement');
-         ylabel('Phase angle');
-         zlabel('Error-free rate');
+         xlabel('Initial Displacement');
+         ylabel('Species Angle (Degrees)');
+         zlabel('Error-Free Rate');
          saveas(h, image, 'png');
+         directory = fileparts(image); 
+         save(fullfile(directory, [file '.mat']), 'x', 'y', 'yields');
      end
 end
 
