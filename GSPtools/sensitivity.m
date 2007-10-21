@@ -26,7 +26,7 @@ function sensitivity(folder, limit)
 end
 
 function [init_disps angles yields] = grope(d, file, limit)
-    init_disps = [0:0.001:0.01];
+    init_disps = [-0.2:0.05:1.5];
     angles = [-125:10:50];
     %    init_disps = [-0.02:0.0025:0.005];
     %    angles = [50:10:230];
