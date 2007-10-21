@@ -9,7 +9,6 @@ function sensitivity(folder, limit)
      function helper(displacement, n, file, image)
          disp(file);
          [x y yields] = grope(displacement, file, limit);
-         size(yields)
 
          h = figure(1); set(h, 'Visible', 'off');
          return;
@@ -27,7 +26,7 @@ end
 function [init_disps angles yields] = grope(d, file, limit)
 %    init_disps = -0.5:0.1:1.5;
 %    angles = -180:10:90;
-    init_disps = [0:0.001:2];
+    init_disps = [0:0.001:0.02];
     angles = [-35:1:-30];
     yields = zeros(length(init_disps), length(angles));
 
