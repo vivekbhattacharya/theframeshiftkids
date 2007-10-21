@@ -25,11 +25,11 @@ function [x, waits] = displacement(seq, Dvec, fs)
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
         switch overaged
           case 1
-            % fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
-            % break;
+            fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
+            break;
           case -1
-            % fprintf('%s at %g found a stop codon\n', seq(index+1:index+3), k);
-            % break;
+            fprintf('%s at %g found a stop codon\n', seq(index+1:index+3), k);
+            break;
           case 3
             if Config.dire, break; end;
           case 4
@@ -99,16 +99,15 @@ function [dead] = is_stopper(codon)
     end
 end
 
-function [overaged] = loop(fragment, k, diff)
+function [overaged] = loop(piece, k, diff)
     % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
     % for meanings and derivations. C1 chosen specifically to
     % make prfB work, cf. Lalit et al.
-    overaged = 0;
-    age_limit = 1000; power = 10;
+    overaged = 0; age_limit = 1000; power = 10;
     
     % [back_fail, here_fail, there_fail]
     fails = [1 1 1]; wt = 0;
-    back_codon = fragment(1:3); codon = fragment(2:4); there_codon = fragment(3:5);
+    back_codon = piece(1:3); codon = piece(2:4); there_codon = piece(3:5);
     loops = real_loops(back_codon, codon, there_codon);
     
     global store ants anthill termites Config;
@@ -122,23 +121,31 @@ function [overaged] = loop(fragment, k, diff)
         reloop = 1 - sum(probs);
         back = probs(1); here = probs(2); there = probs(3);
         r = rand;
+        % Config checks are here to minimize function call overhead.
         if (reloop < here) || (reloop < there) || (reloop < back)
             if r < here
-                if is_stopper(codon), overaged = -1; end;
+                if Config.detect_stops
+                    if is_stopper(codon), overaged = -1; end;
+                end
                 break;
             elseif r < here + there
                 store.shift = store.shift + 1;
                 anthill(end+1) = k;
                 ants{end+1} = codon;
                 
-                if is_stopper(there_codon), overaged = -1; end;
-                overaged = 4;
+                if Config.detect_stops
+                    if is_stopper(there_codon), overaged = -1; end;
+                end
+                if Config.dire, overaged = 4; end;
                 break;
             elseif r < here + there + back
                 store.shift = store.shift - 1;
                 termites{end+1} = [codon ',' num2str(k)];
-                if is_stopper(back_codon), overaged = -1; end;
-                overaged = 3;
+
+                if Config.detect_stops
+                    if is_stopper(back_codon), overaged = -1; end;
+                end
+                if Config.dire, overaged = 3; end;
                 break;
             end
         end
@@ -149,7 +156,9 @@ function [overaged] = loop(fragment, k, diff)
         dx = -Config.init_disp * diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + dx;
     end
-    if (wt > age_limit), overaged = true; end;
+    if Config.detect_pauses
+        if (wt > age_limit), overaged = 1; end;
+    end
     store.x(k+1) = x0;
     store.wts(k-1) = wt;
 end
