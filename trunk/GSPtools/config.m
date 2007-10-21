@@ -6,5 +6,8 @@ function config
     Config.yield = 1;
     
     Config.phi_sp = -30 * pi / 180;
-    Config.init_disp = 0.005;
+    Config.init_disp = 0.004;
+    
+    % Normally, don't abort displacement at the first sign of trouble.
+    Config.dire = 0;
 end
