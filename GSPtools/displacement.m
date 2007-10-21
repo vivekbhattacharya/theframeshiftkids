@@ -23,12 +23,19 @@ function [x, waits] = displacement(seq, Dvec, fs)
         
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
-        if (overaged == 1)
+        switch overaged
+          case 1
             % fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
             % break;
-        elseif (overaged == -1)
+          case -1
             % fprintf('%s at %g found a stop codon\n', seq(index+1:index+3), k);
-            break;
+            % break;
+          case 3
+            if Config.dire, break; end;
+          case 4
+            if Config.dire
+                if anthill(end) ~= fs(1), break; end;
+            end
         end
         
         if ~no_frameshifting
@@ -120,11 +127,13 @@ function [overaged] = loop(fragment, k, diff)
                 ants{end+1} = codon;
                 
                 if is_stopper(there_codon), overaged = -1; end;
+                overaged = 4;
                 break;
             elseif r < here + there + back
                 store.shift = store.shift - 1;
                 termites{end+1} = [codon ',' num2str(k)];
                 if is_stopper(back_codon), overaged = -1; end;
+                overaged = 3;
                 break;
             end
         end
