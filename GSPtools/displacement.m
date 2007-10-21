@@ -37,6 +37,11 @@ function [x, waits] = displacement(seq, Dvec, fs)
                 if anthill(end) ~= fs(1), break; end;
             end
         end
+        if Config.dire
+            if k > fs(1)
+                if length(anthill) == 0, break; end;
+            end
+        end
         
         if ~no_frameshifting
             away = away + (store.x(k+1) - criticals(k))^2;

@@ -25,8 +25,8 @@ end
 function [init_disps angles yields] = grope(d, file, limit)
 %    init_disps = -0.5:0.1:1.5;
 %    angles = -180:10:90;
-    init_disps = [0:0.005:0.1];
-    angles = [-35:3:-20];
+    init_disps = [-0.03:0.0025:0.02];
+    angles = [-450:20:450];
     yields = zeros(length(init_disps), length(angles));
 
     global shoals sands Config;
