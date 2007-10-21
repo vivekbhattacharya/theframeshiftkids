@@ -30,8 +30,8 @@ function [x y yields] = grope(d, file, limit)
     global shoals sands Config;
 
     for i = 1:length(init_disps)
-        Config.init_disp = i;
         init_disp = init_disps(i);
+        Config.init_disp = init_disp;
         
         for k = 1:length(angles)
             Config.phi_sp = k*pi/180;
