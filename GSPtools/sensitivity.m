@@ -15,20 +15,21 @@ function sensitivity(folder, limit)
          
          h = figure(1); %set(h, 'Visible', 'off');
          mesh(x, y, yields');
-         title(file); grid;
+         title(file);
          xlabel('Initial Displacement');
          ylabel('Species Angle (Degrees)');
          zlabel('Error-Free Rate');
+         axis([xlim ylim 0 2]);
          saveas(h, image, 'png');
          saveas(h, [proprietary '.fig'], 'fig');
      end
 end
 
 function [init_disps angles yields] = grope(d, file, limit)
-%    init_disps = -0.5:0.1:1.5;
-%    angles = -180:10:90;
-    init_disps = [-0.02:0.0025:0.005];
-    angles = [50:10:230];
+    init_disps = [0:0.001:0.01];
+    angles = [-125:10:50];
+    %    init_disps = [-0.02:0.0025:0.005];
+    %    angles = [50:10:230];
     yields = zeros(length(init_disps), length(angles));
 
     global shoals sands Config;
