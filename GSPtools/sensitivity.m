@@ -11,7 +11,7 @@ function sensitivity(folder, limit)
          [x y yields] = grope(displacement, file, limit);
 
          h = figure(1); set(h, 'Visible', 'off');
-         mesh(x, y, yields);
+         mesh(x, y, yields');
          title(file); grid;
          xlabel('Initial Displacement');
          ylabel('Species Angle (Degrees)');
