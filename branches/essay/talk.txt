@@ -1,0 +1,66 @@
+Hello, ladies and women. We're going to talk today about a computational model 
+we developed in a year-long effort to refine a model of translational efficiency 
+and frameshifts in Escherichia coli.
+ 
+Using a synthesis of molecular cell biology and the physics of free energy, our 
+model can predict, potentially accurately, the protein yield of a given gene 
+sequence for a protein sequence in E. coli. Therefore, our model can be immensely 
+useful in the industry of mass protein production, which touches the spheres of 
+medicine, agriculture, and industry. For example, we investigated bovine growth 
+hormone in the course of correlating experimental results with our model's predictions.
+ 
+First, we'd like to briefly review ribosomal translation. The ribosomal rRNA subunits 
+binds to the mRNA strand, copied previously during transcription. As it moves down the 
+strand--potentially frameshifting [CADENCE OF DANGER]--transfer RNAs that match the codon 
+in the previous, current, and next frames (the E, P, and A frames) bring amino acids to 
+the ribosome, creating the protein strand. From the binding--the hybridization--between 
+the mRNA and the rRNA strands, free energy arises, modelled by Joshua Starmer and measured 
+by Susan Freier. Starmer recognized a periodicity of the free energy signal in constructing 
+a periodogram of it.
+ 
+Surprisingly, the periodicity occurs at 1/3 cycles or three nucleotides, implying the period 
+of the free energy signal is exactly one codon. Therefore, free energy can serve as a 
+correcting mechanism for mistakes made by the ribosome, which occur inside a busy cell 
+environment. Taking the derivative of the energy signal with respect to codon distance
+ along the mRNA strand, we arrive at the force that guides the ribosome during translation.
+ 
+Therefore, Starmer chose to model it with a sinusoidal function, which Ponnala used
+ to model displacement from the normal reading frame--the zero frame.
+ 
+In order to test the extent to which our model and metrics correlate with experimental data,
+we conducted a series of investigations, using data collected from previous research.
+
+Our first investigation involves a look a large portion of the genes present naturally
+in E coli.  Most biologists contend that translation in prokaryotes is an efficient process;
+therefore, it would make sense that the vast majority of proteins in E coli should
+exhibit low displacement deviations.  We thus selected a sample of 4364 sequences,
+from a list given by the Ecogene database, and calculated their displacement deviations,
+running 500 iterations on each gene.  This histogram tabulates the results.  As you can
+see, over 90% of proteins have a deviation less than 1.  The mean deviation is 0.47.
+
+Another accepted theory on prokaryotes is that translation of ribosomal proteins
+is especially fast, since prokaryotes are riddled with ribosomes.  As such, we
+hypothesized that ribosomal proteins should exhibit even lower displacement deviations.
+As this boxplot indicates, computational data verified this hypothesis.
+
+We then validated our model against experiments conducted on recombinant bovine 
+growth hormone--the ones we mentioned briefly at the beginning of our presentation.
+In 1984, Schoner created a set of 8 sequences designed to produce bGH.  Four of
+them had high yields, while four of them had relatively low yields.  In his paper,
+Schoner mentioned that these sequences were, in fact, translationally regulated.
+As such, we hypothesized that the sequences that had high yields should have
+relatively low displacement deviations.  This displacement plot shows all eight
+sequences plotted on the same set of axes.  As you can see, there exists a noticeable
+difference between these sequences [point to ones at top] and the ones at the bottom.
+In fact, the sequences that remain close to the horizontal axis are the ones that
+Schoner found to have high yield.  With the exception of one sequence, the low yield
+proteins stray from the zero axis.
+
+Finally, we tested our model's ability to predict frameshifts in sequences.
+In 1987, Robert Weiss designed a set of about forty constructs--variation of prfB.
+Using beta-galactosidase activity as an indirect measure of frameshifting rate,
+he analyzed each one of these sequences.  We decided to correlate the results of
+our model, using our error-free rate metric, with those of Weiss.  As this boxplot
+indicates, our model can separate Weiss's constructs into those with low and
+those with high yields, although with a few stray sequences that require additional
+analysis.
