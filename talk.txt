@@ -3,28 +3,28 @@ we developed in a year-long effort to refine a model of translational efficiency
 and frameshifts in Escherichia coli.
  
 Using a synthesis of molecular cell biology and the physics of free energy, our 
-model can predict, potentially accurately, the protein yield of a given gene 
-sequence for a protein sequence in E. coli. Therefore, our model can be immensely 
+model can predict quite accurately the protein yield of a given gene 
+sequence for a protein sequence in E. coli. Therefore, our model could be immensely 
 useful in the industry of mass protein production, which touches the spheres of 
 medicine, agriculture, and industry. For example, we investigated bovine growth 
 hormone in the course of correlating experimental results with our model's predictions.
  
-First, we'd like to briefly review ribosomal translation. The ribosomal rRNA subunits 
-binds to the mRNA strand, copied previously during transcription. As it moves down the 
+First, we'd like to briefly review ribosomal translation. The ribosome organelle 
+binds to the mRNA strand, copied from DNA previously during transcription. As it moves down the 
 strand--potentially frameshifting [CADENCE OF DANGER]--transfer RNAs that match the codon 
-in the previous, current, and next frames (the E, P, and A frames) bring amino acids to 
-the ribosome, creating the protein strand. From the binding--the hybridization--between 
-the mRNA and the rRNA strands, free energy arises, modelled by Joshua Starmer and measured 
+in the previous, current, and next frames (the A, P, and E frames, respectively) bring amino acids to 
+the ribosome, creating the polypeptide strand. From the hybridization between 
+the mRNA and a certain rRNA strand, free energy arises, modelled by Joshua Starmer and measured 
 by Susan Freier. Starmer recognized a periodicity of the free energy signal in constructing 
-a periodogram of it.
+a periodogram of it based on a Fourier transform of said signal.
  
 Surprisingly, the periodicity occurs at 1/3 cycles or three nucleotides, implying the period 
 of the free energy signal is exactly one codon. Therefore, free energy can serve as a 
-correcting mechanism for mistakes made by the ribosome, which occur inside a busy cell 
+correcting mechanism for mistakes made by the ribosome, which will undoubtedly occur inside a busy cell 
 environment. Taking the derivative of the energy signal with respect to codon distance
  along the mRNA strand, we arrive at the force that guides the ribosome during translation.
  
-Therefore, Starmer chose to model it with a sinusoidal function, which Ponnala used
+Due to the periodicity of the signal, Starmer chose to model it with a sinusoidal function, which Ponnala used
  to model displacement from the normal reading frame--the zero frame.
  
 In order to test the extent to which our model and metrics correlate with experimental data,
