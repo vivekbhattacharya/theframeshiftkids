@@ -115,8 +115,8 @@ function [overaged] = loop(piece, k, diff)
     x0 = store.x(k);
     for wt=1:age_limit + 1
         a = x0 - 2*store.shift; % Window function
-        weights = realpow([exsinb(a), excos(a), exsinf(a)], power);
-        fails = fails .* (1 - weights ./ loops);
+        w = realpow(weights(a), power);
+        fails = fails .* (1 - w ./ loops);
         probs = 1 - fails;
         
         reloop = 1 - sum(probs);
@@ -167,12 +167,9 @@ end
 % Calculates Nloops per <http://code.google.com/p/
 % theframeshiftkids/wiki/MathBehindTheModel> for
 % the given codon.
-function [loops] = real_loops(varargin)
+function [loops] = real_loops(a, b, c)
     global Travel;
-    loops = zeros(1, nargin);
-    for i = 1:nargin
-        loops(i) = Travel.(varargin{i});
-    end
+    loops = [Travel.(a) Travel.(b) Travel.(c)];
     loops = 2 .^ (1 ./ ceil(loops));
     loops = loops ./ (loops - 1);
 end
