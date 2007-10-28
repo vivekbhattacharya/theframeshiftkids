@@ -9,13 +9,12 @@ function disp_shifts()
     
     fprintf('> ');
     for i = 1:length(anthill)
-        fprintf([ ants{i} ',' num2str(anthill(i)) '; ' ]);
+        fprintf('%s %g; ', ants{i}, anthill(i));
     end
-    fprintf('\n');
-    
-    fprintf('< ');
+
+    fprintf('\n< ');
     for i = 1:length(termites)
-        fprintf([ termites{i} '; ' ]);
+        fprintf('%s; ', termites{i});
     end
     fprintf('\n');
 end

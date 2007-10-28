@@ -100,10 +100,11 @@ function [dead] = is_stopper(codon)
     end
 end
 
+% Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
+% for meanings and derivations. C1 chosen specifically to
+% make prfB work, cf. Lalit et al. This is a heavily optimized
+% function. Do not refer to it for the math.
 function [overaged] = loop(piece, k, diff)
-    % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
-    % for meanings and derivations. C1 chosen specifically to
-    % make prfB work, cf. Lalit et al.
     overaged = 0; age_limit = 1000; power = 10;
     
     % [back_fail, here_fail, there_fail]
@@ -114,8 +115,8 @@ function [overaged] = loop(piece, k, diff)
     global store ants anthill termites Config;
     x0 = store.x(k);
     for wt=1:age_limit + 1
-        a = x0 - 2*store.shift; % Window function
-        w = realpow(weights(a), power);
+        % Window function
+        w = realpow(weights(x0 - 2*store.shift), power);
         fails = fails .* (1 - w ./ loops);
         probs = 1 - fails;
         
@@ -141,7 +142,7 @@ function [overaged] = loop(piece, k, diff)
                 break;
             elseif r < here + there + back
                 store.shift = store.shift - 1;
-                termites{end+1} = [codon ',' num2str(k)];
+                termites{end+1} = [codon ' ' num2str(k)];
 
                 if Config.detect_stops
                     if is_stopper(back_codon), overaged = -1; end;

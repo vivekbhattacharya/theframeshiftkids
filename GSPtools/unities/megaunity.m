@@ -26,18 +26,14 @@ if x >= 1, fshifts = varargin{1}; end;
 if x >= 2, limit = varargin{2}; end;
 if x >= 3, quiet = 0; end;
 
-i = 0;
-while i < limit
-    i = i + 1;
-    
+for i = 1:limit
     x = displacement(fshifts);
     disp_shifts;
-    disp(sprintf('Yield so far: %g (%g)', shoals/sands, sands));
-    fprintf('\n');
+    fprintf('Yield: %g (%g)\n\n', shoals/sands, sands);
 
     if quiet, continue; end;
-    h = figure(1); set(h, 'Renderer', 'OpenGL');
-        plot(0,0); plot(1:length(x), x);
-        axis([1 length(x) min(0,min(x)) max(3,max(x))]);
-        grid; xlabel('Codon Number'); ylabel('x(k)');    
+    h = figure(1);
+        plot(1:length(x), x);
+        axis([xlim min(0, min(x)) max(3, max(x))]);
+        grid; xlabel('Codon'); ylabel('Displacement');    
 end
