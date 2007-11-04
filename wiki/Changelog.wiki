@@ -3,11 +3,12 @@
 
 == What's New in Version Four (r212) ==
 
-=== 4.66 ===
+=== 4.66 (r524) ===
   * God 2.0: It's our new genetic algorithm that attempts to find the best TAV matrix given a yield criteria. In our case, we used it to find the optimal TAV values in an attempt to calibrate them according to bovine growth hormone biological data.
   * Performance increases across the board as we vector-parallelize many time-intensive tasks in GSPtools proper.
   * Config.detect_stops and Config.detect_pauses let you control the detection of stop codons and long wait times.
   * sensitivity.m creates sensitivity plots, mainly used for Weiss genes.
+  * Travel2.mat replaces the old Travel.mat if you want the new values outputted from God 2.0.
 
 === 4.6 (r325) ===
 
