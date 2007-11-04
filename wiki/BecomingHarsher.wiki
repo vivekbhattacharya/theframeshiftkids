@@ -4,3 +4,5 @@
 The condition that the probability of continuing has to be greater than the probability of relooping provided basically a safeguard for sequences.  It would limit the effect of a fully stochastic model, as the ribosome would often wait for long periods at a given codon junction.  Removing the outer `if` statement (with `reloop`) puts greater emphasis on probability.  For example, a frameshifter like prfB might jump too early, causing problems later in the sequence--a drastic change from the older model, that had prfB jumping almost all the time.
 
 The variable `sofar` in the earlier versions uses the idea of cumulative probability.  We have doubts about whether this probability model is accurate.  If the decision has been taken, there is no need to log the probabilities.
+
+[Changelog Epilogue: We reversed this change in version 4.6 (r325).]
