@@ -24,6 +24,6 @@ x = displacement(fshifts);
 disp_shifts;
 disp(sprintf('Yield: %g', shoals));
 
-figure(1); plot(0,0); plot(1:length(x), x);
+figure(1); plot(1:length(x), x, 'LineWidth', 2);
     axis([1 length(x) min(0, min(x)) max(3, max(x))]);
-    grid; xlabel('Codon Number'); ylabel('x(k)');
+    grid; xlabel('Codon Number'); ylabel('Displacement');

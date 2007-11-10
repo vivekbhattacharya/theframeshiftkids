@@ -14,7 +14,7 @@ sub align_factory {
     $opt_t ||= 37 + 273.15;
     
     my $o = $opt_p ?
-        eval "require $opt_p; $opt_p->new($opt_t)" :
+      eval "require $opt_p; $opt_p->new($opt_t)" :
         Kidnap::Freier->new($opt_t);
     die $@ if $@;
 	
@@ -24,27 +24,27 @@ sub align_factory {
 if ($0 eq __FILE__) {
     Smooth::helpcheck();
 	
-	my $align = align_factory();
-	local @_ = @ARGV;
-	my $rna = shift or die 'scan_brightly: No RNA binding sequence given';
+    my $align = align_factory();
+    local @_ = @ARGV;
+    my $rna = shift or die 'scan_brightly: No RNA binding sequence given';
     my $seq = shift or die 'scan_brightly: No sequence file given';
     
-	$rna = uc Util::dna2rna($rna);
+    $rna = uc Util::dna2rna($rna);
     $seq = uc Util::dna2rna(Smooth::getseq $seq);
 	
-	my $n_rna = length $rna;
-	my $n_seq = length $seq;
+    my $n_rna = length $rna;
+    my $n_seq = length $seq;
 
-	for my $i (0 .. $n_seq - $n_rna) {
-		my $toys = substr($seq, $i, $n_rna);
+    for my $i (0 .. $n_seq - $n_rna) {
+        my $toys = substr($seq, $i, $n_rna);
 		
-		# Free energy values greater than zero represent binding
-		# that cannot take place without added energy,
-		# equivalent to as if no binding had taken place
+        # Free energy values greater than zero represent binding
+        # that cannot take place without added energy,
+        # equivalent to as if no binding had taken place
         my $free_energy = $align->bind($toys, $rna);
-		$free_energy = 0 if $free_energy > 0;
-		print $free_energy, $/;
-	}
+        $free_energy = 0 if $free_energy > 0;
+        print $free_energy, $/;
+    }
 }
 1;
 

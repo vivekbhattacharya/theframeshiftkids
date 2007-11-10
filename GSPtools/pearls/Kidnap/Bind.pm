@@ -4,13 +4,13 @@ use File::Basename;
 use lib dirname(__FILE__);
 
 sub new {
-	my $self = {};
+    my $self = {};
     my ($class, $doublet) = @_;
-	
+
     # Parameters module (pluggable)
     $self->{Doublet} = $doublet;
-	
-	bless($self, $class);
+
+    bless($self, $class);
 }
 
 use Strand;
@@ -18,54 +18,56 @@ sub bind {
     my ($self, $seq, $rna) = @_;    
     my $doublet = $self->{Doublet};
 
-	# I need at least two bases in each sequence in order to form
-	# a structure between them.
+    # I need at least two bases in each sequence in order to form a
+    # structure between them.
     my $length = length $seq;
     if ($length != length $rna) {
-		die 'Bind#bind: Unequal sequence lengths';
-    } if ($length < 2) {
-		die 'Bind#bind: Sequences are too short';
+        die 'Bind#bind: Unequal sequence lengths';
+    }
+    if ($length < 2) {
+        die 'Bind#bind: Sequences are too short';
     }
 
     my $best_score = my $score = 0;
     my $helix_end = 0;
-    
+
     my $x = Strand->new($seq, $length);
     my $y = Strand->new($rna, $length);
     for my $i (0 .. $length-2) {
         $x->update($i); $y->update($i);
-		
-		# Start each helix structure with a terminal doublet.
-		if ($score == 0) {
-			$score = $doublet->terminal($x->all, $y->all, 1);
-		} else {
-			# Some internal "doublets" need more context to
-			# be scored correctly.  See the scoring for GU
-			# in XiaMathews#internal for more details.	
-			$score += $doublet->internal($x->all, $y->all, $x->context, $y->context);
-		}
-		
-		if ($score > 0) { $score = 0 }
-        elsif ($score < $best_score) {
-			$best_score = $score;
-			$helix_end = $i;
-		}
+
+        # Start each helix structure with a terminal doublet.
+        if ($score == 0) {
+            $score = $doublet->terminal($x->all, $y->all, 1);
+        } else {
+            # Some internal "doublets" need more context to be scored
+            # correctly. See the scoring for GU in XiaMathews#internal
+            # for more details.
+            $score += $doublet->internal($x->all, $y->all, $x->context, $y->context);
+        }
+
+        if ($score > 0) {
+            $score = 0;
+        } elsif ($score < $best_score) {
+            $best_score = $score;
+            $helix_end = $i;
+        }
     }
 
-	# Swap out the last internal for a terminal doublet score
-	# so that the helix starts and ends with a terminal doublet.
-	# We have to do this now because we cannot know in advance
-	# where this terminal doublet is going to be.
+    # Swap out the last internal for a terminal doublet score so that
+    # the helix starts and ends with a terminal doublet. We have to do
+    # this now because we cannot know in advance where this terminal
+    # doublet is going to be.
     if ($best_score < 0) {
-		$x->update($helix_end); $y->update($helix_end);
-		
-		my $internal_score = $doublet->internal($x->all, $y->all);
-		my $terminal_score = $doublet->terminal($x->all, $y->all, !1);
-		$best_score -= $internal_score - $terminal_score;
-	
-        # We should check for "self symmetry." With the force_bind,
-        # we are assuming that the strands are stretched out, and thus
-        # not stuck to themselves forming their own hairpin loop. The 
+        $x->update($helix_end); $y->update($helix_end);
+
+        my $internal_score = $doublet->internal($x->all, $y->all);
+        my $terminal_score = $doublet->terminal($x->all, $y->all, !1);
+        $best_score -= $internal_score - $terminal_score;
+
+        # We should check for "self symmetry." With the force_bind, we
+        # are assuming that the strands are stretched out, and thus
+        # not stuck to themselves forming their own hairpin loop. The
         # "self symmetry" penalty arises from the individual strands
         # being stuck together in their own hairpins.
     }
@@ -93,8 +95,9 @@ Kidnap::Bind
 
 =head1 DESCRIPTION
 
-Kidnap::Bind calculates free energy by forcing an alignment
-between rRNA and mRNA and scoring RNA residues.
+Kidnap::Bind calculates free energy by forcing an alignment between
+rRNA and mRNA and scoring RNA residues. We think it outputs them in
+kilocalories.
 
 =head1 TERMINOLOGY
 

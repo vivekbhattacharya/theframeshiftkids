@@ -30,7 +30,7 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     if length(varargin) > 0
         if strcmp(varargin{1}, 'polar')
             figure(2); title('Cumulative phase');
-            plot(0,0); polar(theta, mag);
+            polar(theta, mag);
             xlabel('Codon'); ylabel('Phase angle (deg)');
         end
     end
