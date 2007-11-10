@@ -10,9 +10,10 @@
 %       WALRUS SURPRISE.
 %
 % Arguments: A file of genes
-% Returns: Those genes, how many there were, and
-%   a vector of differences
-function [fantastic, n] = walrus_surprise(file, varargin)
+% Returns: Function that yields displacement,
+% function that creates a polar plot, and the
+% number of nucleotides.
+function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
     clear global sands shoals Config;
     config();
     
@@ -27,13 +28,20 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     fantastic = @helper;
 
     % Must be figure(2) for alopeciaunity to work
-    if length(varargin) > 0
-        if strcmp(varargin{1}, 'polar')
-            figure(2); title('Cumulative phase');
-            polar(theta, mag);
-            xlabel('Codon'); ylabel('Phase angle (deg)');
+    function draw_polar(fs)
+        figure(2);
+        polar(theta, mag);
+        if fs
+            hold on;
+            x = polar(theta(fs(1)), mag(fs(1)), 'ro');
+            set(x, 'MarkerSize', 15);
+            hold off;
         end
+
+        title('Cumulative phase');
+        xlabel('Codon'); ylabel('Phase angle (deg)');
     end
+    colon_spastic = @draw_polar;
 
     clear globals;
     global Travel Names;
