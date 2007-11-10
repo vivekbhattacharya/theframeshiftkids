@@ -14,11 +14,12 @@ function unity(file, varargin)
 %        that includes the leader
 % --------------------------------------------------------------
 
-displacement = walrus_surprise(file, 'polar');
+[displacement, poplar] = walrus_surprise(file);
 global shoals;
 
 fshifts = [];
 if length(varargin) > 0, fshifts = varargin{1}; end
+poplar(fshifts);
 x = displacement(fshifts);
 
 disp_shifts;

@@ -7,11 +7,13 @@ function alopeciaunity(folder)
     classify(folder, 'alopeciaunity', @helper, 'preparation');
     function helper(path, filename, image)
         disp(filename);
-        h = figure(2); set(h, 'Renderer', 'OpenGL');
-            set(h, 'Visible', 'off');
-            walrus_surprise(path, 'polar');
-            title(filename);
-            set(h, 'Visible', 'off');
+        
+        h = figure(2);
+        set(h, 'Visible', 'off');
+        [d, p] = walrus_surprise(path);
+        p([]);
+        title(filename);
+        set(h, 'Visible', 'off');
         saveas(h, image, 'png');
     end
     disp(' ');

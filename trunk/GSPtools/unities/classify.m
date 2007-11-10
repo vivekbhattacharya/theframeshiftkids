@@ -1,3 +1,4 @@
+% Meta-meta-meta-metafunction for unities.
 function classify(folder, subfolder, crusade, varargin)
     helper = @campbag;
     if length(varargin) > 0, helper = @preparation; end
@@ -24,7 +25,10 @@ function classify(folder, subfolder, crusade, varargin)
             file = fullfile(folder, d(i).name);
             helper(file);
         end
-    else helper(which(folder));end;
+    else helper(which(folder)); end;
+    
+% What follows are two alternative routes for classify to go: polar
+% plots only or the process of calculating displacement.
     
     % Polar plots, mostly
     function preparation(path)
@@ -37,7 +41,7 @@ function classify(folder, subfolder, crusade, varargin)
     % Everybody else gets a free displacement with
     % magical folder structure management.
     function campbag(path)
-        [displacement, n] = walrus_surprise(path);
+        [displacement, p, n] = walrus_surprise(path);
         [folder, file, ext] = fileparts(path);
         
         image = fullfile(subdir, [file '.png']);
