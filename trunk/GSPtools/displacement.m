@@ -29,7 +29,7 @@ function [x, waits] = displacement(seq, Dvec, fs)
             fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
             break;
           case -1
-            fprintf('%s at %g found a stop codon\n', seq(index+1:index+3), k);
+            fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
           case 3
             if Config.dire, break; end;
