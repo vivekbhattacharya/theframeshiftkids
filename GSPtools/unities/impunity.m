@@ -1,4 +1,3 @@
-% ----------------------------------------------------------------
 % Impunity.m calculates the yield for all the genes in a given
 % work folder, storing those results to a results.txt file in the
 % Matlab workspace and also printing them to the standard output.
@@ -6,7 +5,6 @@
 % and also a sample size.
 %
 % Usage: impunity('c:\work folder', [25], 100)
-% ----------------------------------------------------------------
 function impunity(folder, fshifts, limit)
     classify(folder, 'impunity', @helper);
     function helper(displacement, n, file, image)
