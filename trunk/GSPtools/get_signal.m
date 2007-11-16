@@ -24,7 +24,9 @@ Include = fileparts(which('Smooth.pm'));
 % Simulate load() on a string instead of a file.
 Signal = str2num(raw_signal);
 Signal = Signal';
-Signal = [0 0 0 Signal];
+
+global Config;
+Signal = [Config.signal_shift Signal];
 if(isempty(Signal))
     ensure = 'I cannot pull signals. Ensure `perl` is outputting the rite stuff.';
     ensure = [ensure sprintf('\n') 'Also, ensure Perl is of version 5.6 or above.'];
