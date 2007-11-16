@@ -39,7 +39,7 @@ function [x, waits] = displacement(seq, Dvec, fs)
             end
         end
         if Config.dire
-            if k > fs(1)
+            if (length(fs) > 0) && (k > fs(1))
                 if length(anthill) == 0, break; end;
             end
         end
@@ -63,9 +63,10 @@ function [x, waits] = displacement(seq, Dvec, fs)
     if Config.yield == 0
         shoals = shoals + sqrt(away/upper);
     elseif Config.yield == 1
-        if size(fs) == size(anthill)
-            if isempty(fs), shoals = shoals + 1; end;
-            if fs == anthill, shoals = shoals + 1; end;
+        if length(termites) > 0, return;
+        elseif size(fs) == size(anthill)
+            if isempty(fs), shoals = shoals + 1;
+            elseif fs == anthill, shoals = shoals + 1; end;
         end
     end
 end
@@ -79,7 +80,7 @@ function [get] = find_criticals(f)
 
     % Embodies the simple logic needed to read a value
     % from the array `find_criticals` returns. Take the
-    % end because shifts cascade.
+     % end because shifts cascade.
     function [delta] = helper(k)
         if k > length(c), delta = c(end);
         else delta = c(k);
@@ -138,6 +139,7 @@ function [overaged] = loop(piece, k, diff)
                 if Config.detect_stops
                     if is_stopper(there_codon), overaged = -1; end;
                 end
+                % If there's a frameshift, check if it's the wrong one under dire.
                 if Config.dire, overaged = 4; end;
                 break;
             elseif r < here + there + back
@@ -147,6 +149,7 @@ function [overaged] = loop(piece, k, diff)
                 if Config.detect_stops
                     if is_stopper(back_codon), overaged = -1; end;
                 end
+                % There's a backframeshift, so stop automatically.
                 if Config.dire, overaged = 3; end;
                 break;
             end
