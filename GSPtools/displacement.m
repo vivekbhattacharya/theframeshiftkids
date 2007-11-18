@@ -34,7 +34,7 @@ function [x, waits] = displacement(seq, Dvec, fs)
           case 3
             if Config.dire, break; end;
           case 4
-            if Config.dire
+            if Config.dire && (length(fs) > 0)
                 if anthill(end) ~= fs(1), break; end;
             end
         end
