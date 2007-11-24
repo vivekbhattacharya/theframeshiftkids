@@ -15,15 +15,14 @@ function [x, waits] = displacement(seq, Dvec, fs)
     store = struct('x', [0 Config.init_disp], 'shift', 0, 'wts', zeros(1, upper-2));
     
     % For the common case of no actual frameshifts,
-    % avoid computing the actual shift ever.
+    % avoid computing displacement deviation.
     away = 0; no_frameshifting = isempty(fs);
     if ~no_frameshifting, criticals = find_criticals(fs); end
     for k = 2:upper
-        % Take the codon and calculate nloop
         index = 3*k + store.shift;
-        
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, Dvec(k, :));
+
         switch overaged
           case 1
             fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
@@ -31,17 +30,15 @@ function [x, waits] = displacement(seq, Dvec, fs)
           case -1
             fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
-          case 3
-            if Config.dire, break; end;
-          case 4
-            if Config.dire && (length(fs) > 0)
-                if anthill(end) ~= fs(1), break; end;
-            end
+          % These imply Config.dire.
+          case 3, break; % Backframeshift => automatic error
+          case 4 % Frameshift => check if valid
+            if anthill(end) ~= fs(1), break; end;
         end
+
+        % Check if frameshift occurred too late.
         if Config.dire
-            if (length(fs) > 0) && (k > fs(1))
-                if length(anthill) == 0, break; end;
-            end
+            if (length(fs) > 0) && (k > fs(1)) && (length(anthill) == 0), break; end;
         end
         
         if ~no_frameshifting
@@ -51,22 +48,19 @@ function [x, waits] = displacement(seq, Dvec, fs)
     x = store.x;
     waits = store.wts;
      
-    % Tally the number of times the gene sequence
-    % correctly frameshifted (foals) in addition to the
-    % total number of displacement.m calls (sands) in
-    % addition to the total deviation (coals).
+    % Tally times displacement called. shoals can be the total deviation
+    % or times antill == fs.
     global sands shoals;
     if isempty(sands), sands = 0; end;
     if isempty(shoals), shoals = 0; end;
     
     sands = sands + 1;
-    if Config.yield == 0
-        shoals = shoals + sqrt(away/upper);
+    if Config.yield == 0, shoals = shoals + sqrt(away/upper);
+    % Barring no backframeshifts, check for antill-fs equality.
     elseif Config.yield == 1
         if length(termites) > 0, return;
         elseif size(fs) == size(anthill)
-            if isempty(fs), shoals = shoals + 1;
-            elseif fs == anthill, shoals = shoals + 1; end;
+            if isempty(fs) || all(fs == anthill), shoals = shoals + 1; end;
         end
     end
 end
@@ -75,8 +69,7 @@ end
 % shift given a codon number.
 function [get] = find_criticals(f)
     % Use vectorized assignment. Cascade the shifts.
-    c(f) = 2;
-    c = cumsum(c);
+    c(f) = 2; c = cumsum(c);
 
     % Embodies the simple logic needed to read a value
     % from the array `find_criticals` returns. Take the
@@ -86,12 +79,11 @@ function [get] = find_criticals(f)
         else delta = c(k);
         end
     end
-    
     get = @helper;
 end
 
 function [dead] = is_stopper(codon)
-    global Travel ants termites;
+    global Travel termites;
     dead = false;
     
     % termites doubles as a disp_shifts flag for now.
@@ -102,9 +94,8 @@ function [dead] = is_stopper(codon)
 end
 
 % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
-% for meanings and derivations. C1 chosen specifically to
-% make prfB work, cf. Lalit et al. This is a heavily optimized
-% function. Do not refer to it for the math.
+% Config.phi_sp chosen specifically to make prfB work, cf. Lalit et
+% al. This is heavily optimized. Do not refer to it for the math.
 function [overaged] = loop(piece, k, diff)
     overaged = 0; age_limit = 1000; power = 10;
     
@@ -155,7 +146,7 @@ function [overaged] = loop(piece, k, diff)
             end
         end
         
-        % This follows from phi_signal(1,k) = Dvec(k,2)
+        % This follows from phi_signal(1,k) = Dvec(k,2); see
         % "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
         phi_dx = ((pi/3)*x0) - Config.phi_sp;
         dx = -0.005 * diff(1) * sin(diff(2) + phi_dx);
@@ -168,9 +159,7 @@ function [overaged] = loop(piece, k, diff)
     store.wts(k-1) = wt;
 end
 
-% Calculates Nloops per <http://code.google.com/p/
-% theframeshiftkids/wiki/MathBehindTheModel> for
-% the given codon.
+% Calculate normalized wait cycles.
 function [loops] = real_loops(a, b, c)
     global Travel;
     loops = [Travel.(a) Travel.(b) Travel.(c)];
