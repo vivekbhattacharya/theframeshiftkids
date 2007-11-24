@@ -1,3 +1,5 @@
+% Given the folder for bGH sequences and a matrix of TAVs, I sort the
+% TAVs by optimal separation between the 101 and the 105 yields.
 function paradiselost(folder, tavs)
     [rows cols] = size(tavs);
     yields = zeros(rows, 2);

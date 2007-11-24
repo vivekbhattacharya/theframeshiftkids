@@ -1,11 +1,9 @@
-% ------------------------------------------------
 % Superimposes N iterations of the displacement
 % plot for gene.txt, saving that file to
 % opportunity\gene.png in the work folder for
 % each gene (txt or FASTA) in the work folder.
 % 
 % Usage: opportunity('C:\work folder', N)
-% ------------------------------------------------
 function opportunity(folder, limit)
     classify(folder, 'opportunity', @helper);
     

@@ -11,7 +11,7 @@ function tavs = generation_zero(init, times)
         changes = rand_int(L, N);
         % Mutate within interval [0.5, 2].
         r = -1 + 2 * rand(1, N);
-		r = 2.^r;
+        r = 2.^r;
         tavs(row, changes) = tavs(row, changes) .* r;
     end
 end
