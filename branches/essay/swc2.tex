@@ -350,10 +350,10 @@ In the first test of our model, we investigated the gene
 \prfB\footnote{
   \prfB\ encodes protein release factor 2, which enters
   the A-site and causes protein synthesis to terminate at the stop
-  codons \textsc{UGA} and \textsc{UAA}. Since \prfB\ itself requires 
+  codons \textsc{uga} and \textsc{uaa}. Since \prfB\ itself requires 
   translation to continue past a stop codon, this sets up an elegant 
   autoregulatory mechanism. We obtained \prfB's nucleotide sequence from
-  NCBI's Genbank database at \url{http://www.ncbi.nlm.nih.gov/}, accession
+  NCBI's Genbank database at \url{http://www.ncbi.nlm.nih.gov/} with accession
   number NC\_000913.
 }, which has a programmed frameshift.
 \citet{weiss87} conducted a number of experiments regarding
@@ -364,14 +364,14 @@ genes found to frameshift at high rates by
 \citeauthor{weiss87} should also show high error-free rates under
 our model.
 
-\subsection{Ribosomal \mbox{Proteins}}
+\subsection{Ribosomal Proteins}
 We also hypothesized that displacement deviation
 provides a suitable metric for translational efficiency: A lower
 deviation should correspond to a more efficient sequence.
 This is because if, at each wait cycle, the
 ribosome fails to stabilize in a period of indecision, the probability
 that it will change reading frames increases. The translational
-process resolves this indecision either by stabilizing around the
+process resolves this indecision by either stabilizing around the
 incorrect reading frame or pausing. The former synthesizes an
 incorrect primary structure or causes premature truncation due to a
 out-of-frame stop codon further downstream; latter preserves fidelity at the
@@ -396,7 +396,7 @@ for high translational efficiency. In another
 test, we looked at ribosomal proteins, known to have high levels of
 expression~\cite{rpoS:process}. For this set we predicted lower mean
 deviation than those of the \ecoli\ gene sample.
-	
+
 \subsection{Bovine Growth Hormone}
 Our final test involved the analysis of a set of sequences known to 
 be translationally regulated.  \citet{schoner:bgh} created a set 
@@ -425,7 +425,7 @@ designing a genetic algorithm to improve these values based on
 bGH sequences while remaining close 
 to the already determined values.
 
-\subsubsection{Obtaining tRNA Availability Values}
+\subsubsection{Obtaining the tRNA Availability Vector}
 We optimize the separation between the displacement deviations of the 
 high-yield and low-yield sequences. First, we generate a list of 
 randomly modified TAVs and calculate the ratio of the 
@@ -460,7 +460,7 @@ The gene \prfB, as mentioned, is known
 to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
 \autoref{prfB:disp:sub} shows its displacement plot,
 again with a distinctive jump at codon 25.
-\footnote{Note that the polar plot is the the same as \autoref{prfB:polar:sub}.
+\footnote{Note that the polar plot is the same as \autoref{prfB:polar:sub}.
 The new model does not alter the polar plot or the free energy calculations.}
 
 Notably, the displacement plot does not reach $x=2$ over the span of
@@ -521,7 +521,7 @@ running 500 iterations per gene.
 
 \subsection{Ribosomal Proteins}
 \label{section:riboproteins}
-To further test our idea that genes that translate efficiently should exhibit
+To test further our idea that genes that translate efficiently should exhibit
 low displacement deviations, we tested our model on ribosomal proteins, which
 are known to be expressed at especially high levels.
 The displacement deviation from $x=0$ for ribosomal proteins
@@ -562,7 +562,7 @@ outlier because \citeauthor{schoner:bgh} reported low protein
 yield whereas our model reports low deviation, indicative of 
 high protein yield.
 
-Once again, it must be noted that, like \citeauthor{weiss87}, they
+Like \citeauthor{weiss87}, they
 did not maintain the amino acid sequence while modifying the nucleotide sequences of the bGH constructs.
 The sequence pcZ108 encodes a different amino acid sequence than do the other constructs.
 The lower translational efficiency could be attributed to the interaction
@@ -571,13 +571,6 @@ in the mRNA.
 
 \subsection{An Artificial Frameshifter}
 \label{section:linker}
-%\begin{wrapfigure}{R}{0.5\textwidth}
-%  \centering
-%  \caption{Artificial linker sequence sensitivity plot}
-%  \label{linker:sens}
-%  \includegraphics[width=\linewidth]{linker/sensitivity}
-%\end{wrapfigure}
-
 To verify our model's predictive ability, we focused on its ability to
 predict programmed frameshifts. We designed a sixteen-codon sequence
 that should frameshift in \ecoli\ into
