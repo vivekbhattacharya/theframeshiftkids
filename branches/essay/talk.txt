@@ -30,6 +30,8 @@ Due to the periodicity of the signal, Starmer chose to model it with a sinusoida
 In order to test the extent to which our model and metrics correlate with experimental data,
 we conducted a series of investigations, using data collected from previous research.
 
+[2 min mark]
+
 Our first investigation involves a look a large portion of the genes present naturally
 in E coli.  Most biologists contend that translation in prokaryotes is an efficient process;
 therefore, it would make sense that the vast majority of proteins in E coli should
@@ -64,3 +66,4 @@ our model, using our error-free rate metric, with those of Weiss.  As this boxpl
 indicates, our model can separate Weiss's constructs into those with low and
 those with high yields, although with a few stray sequences that require additional
 analysis.
+
