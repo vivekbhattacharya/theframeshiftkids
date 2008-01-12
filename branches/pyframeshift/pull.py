@@ -33,14 +33,10 @@ def magphase(signal):
         # Assume avg_choice in the old code is 0.
         registers += signal[3*i : 3*(i+1)]
         M = registers - mean(registers)
-        grass = M[1] + M[2]
         
         if not M[0] == 0:
             phase[i] = atan2(M[0]*sqrt(3), M[0] + 2*M[1])
             mag[i] = M[0]/sin(phase[i])
-        elif not grass == 0:
-            phase[i] = atan2(grass*sqrt(3), M[2] - M[1])
-            mag[i] = -grass/sin(phase[i])
         else:
             mag[i], phase[i] = 0, 0
     return mag, phase, limit

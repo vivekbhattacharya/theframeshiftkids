@@ -28,16 +28,14 @@ class Bind(object):
             x.update(i); y.update(i)
             
             # Start each helix structure with a terminal doublet.
-            if score == 0:
-                score = dt(x.all, y.all, True)
+            if score == 0: score = dt(x.all, y.all, True)
             else:
                 # Some internal "doublets" need more context to
                 # be scored correctly.  See the scoring for GU
                 # in XiaMathews#internal_doublet for more details.
                 score += di(x.all, y.all, x.context, y.context)
             
-            if score > 0:
-                score = 0
+            if score > 0: score = 0
             elif score < best_score:
                 best_score = score
                 helix_end = i
