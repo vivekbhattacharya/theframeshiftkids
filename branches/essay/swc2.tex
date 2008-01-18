@@ -81,7 +81,7 @@ for translational efficiency. We ran our model on 4364 sequences from the
 moreover, the model predicts ribosomal proteins to translate at even higher rates---both 
 results that concur with experimental evidence.  We investigated a set of eight 
 sequences of recombinant bovine growth hormone, and the model correctly determined 
-high or low levels of translation for seven of them.  We then examined variations of
+high or low levels of translation for seven out of eight.  We then examined variations of
 \prfB, a gene with a programmed frameshift, and the model grouped these sequences 
 into two general categories of high and low yield, consistent 
 with experimental results.  Successful development of a computational model and 
@@ -596,24 +596,25 @@ for experimental yield using published expression data~\cite{schoner:bgh} for bo
 The focus of this research was to modify the bGH mRNA sequence to optimize
 yield of the protein in an \ecoli\ expression system.
 
-\citet{schoner:bgh} created a number of constructs, primarily modifying the initial codons of a
-bovine growth hormone sequence.  The research found that sequences pcZ101,
-pcZ105, pcZ112, and pcZ115 have high protein yields
-in comparison to the four other sequences. We found these four sequences  to have the least
-displacement deviation from $x = 0$
+\citet{schoner:bgh} created a number of constructs, primarily
+modifying the initial codons of a bovine growth hormone sequence. The
+research found that sequences pcZ101, pcZ105, pcZ112, and pcZ115 have
+high protein yields in comparison to the four other sequences. We
+found these aforementioned four sequences in addition to pcZ108 to
+have the least displacement deviation from $x = 0$
 (\autoref{bgh:deviation}). \autoref{bgh:disp} shows the displacement
-plots of all the bGH sequences on the same set of axes. 
-Despite running the genetic algorithm to improve tRNA availability vectors, pcZ108 remains an
-outlier because \citeauthor{schoner:bgh} reported low protein
-yield whereas our model reports low deviation, indicative of 
-high protein yield.
+plots of all the bGH sequences on the same set of axes.
 
-Like \citeauthor{weiss87}, they
-did not maintain the amino acid sequence while modifying the nucleotide sequences of the bGH constructs.
-The sequence pcZ108 encodes a different amino acid sequence than do the other constructs.
-The lower translational efficiency could be attributed to the interaction
-of the primary structure with the ribosome or to protein stability and not to any signal encoded
-in the mRNA.
+Therefore, pcZ108 exists as an outlier. \citeauthor{schoner:bgh}
+postulates pcZ108 to have erroneously a low protein yield, attributing
+it to an experimental error due to its similarity to pcZ114. Excluding
+this outlier from our data, we find that our data
+(\autoref{bgh:deviation}) fully agrees with hers. In addition and like
+\citeauthor{weiss87}, they changed the sequence to encode a different
+amino acid sequence than the other constructs. We can then attribute
+the low translational efficiency to the interaction of the primary
+structure with the ribosome or to protein stability, subjects beyond
+the scope of our model.
 
 \subsection{An Artificial Frameshifter}
 \label{section:linker}
@@ -685,13 +686,15 @@ those with high and low frameshift frequencies. However, the
 output is not always clear, and we turn to
 displacement deviation in these cases.
 
-Displacement deviation (\autoref{section:deviation}),
-when calculated for a large sample of \ecoli\ genes assumed to be translationally efficient,
-correlated with over 90\% of the  experimental data, predicting
-these genes to be efficient.  Moreover, the results predicted that ribosomal proteins should
-be more efficient than average, in accordance with experimental knowledge. Also, displacement deviations for seven of eight bGH
-sequences~\cite{schoner:bgh} roughly correlated with further
-experimental data; one sequence was an outlier.
+Displacement deviation (\autoref{section:deviation}), when calculated
+for a large sample of \ecoli\ genes assumed to be translationally
+efficient, correlated with over 90\% of the experimental data,
+predicting these genes to be efficient. Moreover, the results
+predicted that ribosomal proteins should be more efficient than
+average, in accordance with experimental knowledge. Also, displacement
+deviations for seven of eight bGH sequences~\cite{schoner:bgh}
+correlated with further experimental data; one sequence was an outlier
+explained in Schoner's research.
 
 Since the model is preliminary, we must note these outliers.  In the
 case of bGH, \citeauthor{schoner:bgh} experimentally determined pcZ108 to be
