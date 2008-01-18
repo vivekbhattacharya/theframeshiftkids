@@ -69,24 +69,25 @@ Mentors: Dr. Donald Bitzer, Dr. Anne-Marie Stomp, and Dr. Mladen Vouk
 \end{center}
 \begin{onecolabstract}
 
-
-In modern genetics, \ecoli\ is used as an expression system to commercially 
-produce proteins.  However, sequence-dependent features, such as rare codons 
-and codon bias, have large effects on translational efficiency.  To tackle 
-this problem, we proposed a stochastic model to computationally estimate 
-translational efficiency and predict frameshifting, uniting ideas from biological 
-literature and developing two metrics with considerable predictive power 
-for translational efficiency. We ran our model on 4364 sequences from the 
-\ecoli\ genome and found over 90\% of them to have predicted high yields; 
-moreover, the model predicts ribosomal proteins to translate at even higher rates---both 
-results that concur with experimental evidence.  We investigated a set of eight 
-sequences of recombinant bovine growth hormone, and the model correctly determined 
-high or low levels of translation for seven out of eight.  We then examined variations of
-\prfB, a gene with a programmed frameshift, and the model grouped these sequences 
-into two general categories of high and low yield, consistent 
-with experimental results.  Successful development of a computational model and 
-metrics for translational efficiency implicates itself in optimizing 
-recombinant protein yield in multiple fields, including commercial protein synthesis.
+In genetics, \ecoli\ is used as an expression system to commercially
+produce proteins. However, sequence-dependent features, such as rare
+codons and codon biases, affect translational efficiency. To tackle
+this problem, we proposed a stochastic model to computationally
+estimate translational efficiency and predict frameshifting, uniting
+ideas from biological literature and developing two predictive
+metrics. We ran our model on 4364 sequences from the \ecoli\ genome
+and found over 90\% of them to have predicted high yields; moreover,
+the model predicts ribosomal proteins to translate at even higher
+rates---both results that concur with experimental evidence. We
+investigated a set of eight sequences of bovine growth hormone, and
+the model correctly determined the translation efficiency for seven.
+We then examined variations of \prfB, a gene with a programmed
+frameshift; the model grouped these sequences into two general
+categories of high and low yield, consistent with experimental
+results. Successful development of a computational model for
+translational efficiency implicates itself in optimizing recombinant
+protein yield in multiple fields, including commercial protein
+synthesis.
 \end{onecolabstract}
 \newpage
 
@@ -606,18 +607,18 @@ have the least displacement deviation from $x = 0$
 plots of all the bGH sequences on the same set of axes.
 
 Therefore, pcZ108 exists as an outlier. \citeauthor{schoner:bgh}
-postulates pcZ108 to have erroneously a low protein yield, attributing
-it to an experimental error due to its similarity to pcZ114. In short,
-they believe that the low protein yield for pcZ108 is not due to
-translational effects, a hypothesis that possibly explains why our
-model predicts a relatively high translation rate for pcZ108.  Excluding
-this outlier from our data, we find that our data
-(\autoref{bgh:deviation}) fully agrees with hers. In addition, and like
-\citeauthor{weiss87}, \citeauthor{schoner:bgh} changed the sequence to encode a different
-amino acid sequence than the other constructs. We can then possibly attribute
-the low translational efficiency to the interaction of the primary
-structure with the ribosome or to protein stability, subjects beyond
-the scope of our model.
+postulates it to have erroneously a low protein yield, attributing it
+to an experimental error due to its similarity to pcZ114. They believe
+that the low protein yield is not due to translational effects, a
+hypothesis that could explain why our model predicts a relatively high
+translation rate. Excluding this outlier from our data, we find that
+our data (\autoref{bgh:deviation}) fully agrees with hers. In
+addition---and like \citeauthor{weiss87}---\citeauthor{schoner:bgh}
+changed the sequence to encode a different amino acid sequence than
+the other constructs. We can then attribute the low translational
+efficiency to the interaction of the primary structure with the
+ribosome or to protein stability, subjects beyond the scope of our
+model.
 
 \subsection{An Artificial Frameshifter}
 \label{section:linker}
