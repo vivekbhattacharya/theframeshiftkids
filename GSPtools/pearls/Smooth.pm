@@ -14,7 +14,7 @@ BEGIN {
 # is NOT a reference.
 sub mooch {
     my $file = shift;
-    
+
     my @lines = ();
     if ($file =~ m|^http://|) {
         my $contents = get $file;
