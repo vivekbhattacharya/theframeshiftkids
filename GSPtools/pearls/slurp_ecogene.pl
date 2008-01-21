@@ -16,9 +16,14 @@ sub extraction {
 }
 
 mkdir('genes'); mkdir('confused');
-my %points;
 Smooth::webopen $points_file, sub {
+    chomp;
     my ($gene, $start, $end, $desc) = split "\t";
+    my $complement = 0;
+    if ($start < 0) {
+        $start = -$start;
+        $complement = 1;
+    }
 
     my $seq = extraction($start, $end);
     my $leader = '';
@@ -28,7 +33,7 @@ Smooth::webopen $points_file, sub {
         $leader = extraction($start - 12, $start - 1);
     }
     else {
-        if ($seq =~ /(cau|cac)$/) {
+        if ($complement or $seq =~ /(cau|cac)$/) {
             # What the hell? 3' to 5'?
             $leader = extraction($end + 1, $end + 12);
             $seq = scalar reverse $seq;
