@@ -1,0 +1,72 @@
+\begin{thebibliography}{9}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Freier et~al.(1986)Freier, Kierzek, Jaeger, Sugimoto, Caruthers,
+  Nielson, and II]{freier}
+S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
+  T.~Nielson, and D.~H.~T. II.
+\newblock Improved free-energy parameters for predictions of {RNA} duplex
+  stability.
+\newblock In \emph{Biochemistry}, volume~83, pages 9373--9377. National Academy
+  of Sciences, Dec 1986.
+
+\bibitem[Ikemura(1985)]{ikemura}
+T.~Ikemura.
+\newblock Codon usage and trna content in unicellular and multicellular
+  organisms.
+\newblock \emph{Molecular Biology and Evoluion}, 2\penalty0 (1):\penalty0
+  13--34, 1985.
+
+\bibitem[Ponnala et~al.(2006{\natexlab{a}})Ponnala, Bitzer, Stomp, and
+  Vouk]{lalit:embs}
+L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
+\newblock A computational model for reading frame maintenance.
+\newblock In \emph{EMBS Annual International Conference}, pages 4540--4543.
+  Institute of Electrical and Electronics Engineers, Aug. 2006{\natexlab{a}}.
+
+\bibitem[Ponnala et~al.(2006{\natexlab{b}})Ponnala, Bitzer, Stomp, and
+  Vouk]{lalit:mechanics}
+L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
+\newblock A model for +1 frameshifts in eubacteria.
+\newblock \emph{Bioinformatics}, 2006{\natexlab{b}}.
+
+\bibitem[Repoila et~al.(2003)Repoila, Majdalani, and Gottesman]{rpoS:process}
+F.~Repoila, N.~Majdalani, and S.~Gottesman.
+\newblock Small non-coding {RNAs}, coordinators of adaptation processes in
+  {Escherichia coli}: the {rpoS} paradigm.
+\newblock \emph{Molecular Microbiology}, 48:\penalty0 855--61, May 2003.
+
+\bibitem[Schoner et~al.(1984)Schoner, Hsuiung, Belagaje, Mayne, and
+  Schoner]{schoner:bgh}
+B.~E. Schoner, H.~M. Hsuiung, R.~M. Belagaje, N.~G. Mayne, and R.~G. Schoner.
+\newblock Role of {mRNA} translational efficiency in bovine growth hormone
+  expression in {Escherichia coli}.
+\newblock In \emph{Biochemistry}, volume~81, pages 5403--5407. National Academy
+  of Sciences, U.S.A., Sept. 1984.
+
+\bibitem[Starmer(2006)]{starmer}
+J.~Starmer.
+\newblock \emph{What can {RNA} hybrids tell us about translation?}
+\newblock PhD thesis, North Carolina State University, 2006.
+
+\bibitem[Weiss et~al.(1987)Weiss, Munn, Atkins, and Gesteland]{weiss87}
+R.~B. Weiss, D.~M. Munn, J.~F. Atkins, and R.~F. Gesteland.
+\newblock Slippery runs, shifty stops, backward steps, and forward hops: -2,
+  -1, +1, +2, +5, and +6 ribosomal frameshifting.
+\newblock \emph{Cold Spring Harbor Symposium on Quantatative Biology},
+  52:\penalty0 687--693, 1987.
+
+\bibitem[Weiss et~al.(1988)Weiss, Dunn, Dahlberg, Atkins, and
+  Gesteland]{weiss88}
+R.~B. Weiss, D.~M. Dunn, A.~E. Dahlberg, J.~F. Atkins, and R.~F. Gesteland.
+\newblock Reading frame switch caused by base-pair formation between the $3'$
+  end of 16s {rRNA} and the {mRNA} during elongation of protein synthesis in
+  {Escherichia coli}.
+\newblock \emph{European Molecular Biology Organization}, 7\penalty0
+  (5):\penalty0 1503--1507, 1988.
+
+\end{thebibliography}

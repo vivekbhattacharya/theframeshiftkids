@@ -1,0 +1,127 @@
+\begin{thebibliography}{18}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Freier et~al.(1986)Freier, Kierzek, Jaeger, Sugimoto, Caruthers,
+  Nielson, and II]{freier}
+S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
+  T.~Nielson, and D.~H.~T. II.
+\newblock Improved free-energy parameters for predictions of {RNA} duplex
+  stability.
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 83:\penalty0 9373--9377, Dec 1986.
+
+\bibitem[Hui and de~Boer(1987)]{hui}
+A.~Hui and H.~de~Boer.
+\newblock {Specialized ribosome system: Preferential translation of a single
+  mRNA species by a subpopulation of mutated ribosomes in \emph{Escherichia
+  coli.}}
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 84:\penalty0 4762--4766, 1987.
+
+\bibitem[Ikemura(1985)]{ikemura}
+T.~Ikemura.
+\newblock {Codon usage and tRNA content in unicellular and multicellular
+  organisms}.
+\newblock \emph{Mol. Biol. and Evol.}, 2\penalty0 (1):\penalty0 13--34, 1985.
+
+\bibitem[Jacob et~al.(1987)Jacob, Santer, and Dahlberg]{jacob}
+W.~Jacob, M.~Santer, and A.~Dahlberg.
+\newblock {A single base change in the Shine-Dalgarno region of 16S rRNA of
+  \emph{Escherichia coli} affects translation of many proteins.}
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 84:\penalty0 4757--4761, 1987.
+
+\bibitem[Kane(1995)]{kane95}
+J.~F. Kane.
+\newblock Effects of rare codon clusters on high-level expression of
+  heterologous proteins in \emph{Escherichia coli}.
+\newblock \emph{Curr. Opin. in Biotech.}, 6:\penalty0 494--500, 1995.
+
+\bibitem[Kozak(2005)]{kozak05}
+M.~Kozak.
+\newblock {Regulation of translation via mRNA structure in prokaryotes and
+  eukaryotes}.
+\newblock \emph{Gene}, 361:\penalty0 13--37, 2005.
+
+\bibitem[Phelps et~al.(2006)Phelps, Gaudin, Yoshizawa, Benitez, Foumy, and
+  Joseph]{phelps}
+S.~Phelps, C.~Gaudin, S.~Yoshizawa, C.~Benitez, D.~Foumy, and S.~Joseph.
+\newblock {Translocation of a tRNA with an extended anticodon through the
+  ribosome}.
+\newblock \emph{J. of Mol. Biol.}, 360\penalty0 (3):\penalty0 610--622, 2006.
+
+\bibitem[Ponnala et~al.(2006{\natexlab{a}})Ponnala, Bitzer, Stomp, and
+  Vouk]{lalit:mechanics}
+L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
+\newblock A model for +1 frameshifts in eubacteria.
+\newblock \emph{Bioinformatics}, 2006{\natexlab{a}}.
+
+\bibitem[Ponnala et~al.(2006{\natexlab{b}})Ponnala, Stomp, Bitzer, and
+  Vouk]{lalit:jbsb}
+L.~Ponnala, A.-M. Stomp, D.~L. Bitzer, and M.~A. Vouk.
+\newblock {Analysis of free energy signals arising from nucleotide
+  hybridization between rRNA and mRNA sequences during translation in
+  Eubacteria}.
+\newblock \emph{J. on Bioinformatics and Systems Biol.}, pages 1--9,
+  2006{\natexlab{b}}.
+
+\bibitem[Repoila et~al.(2003)Repoila, Majdalani, and Gottesman]{rpoS:process}
+F.~Repoila, N.~Majdalani, and S.~Gottesman.
+\newblock {Small non-coding RNAs, coordinators of adaptation processes in
+  \emph{Escherichia coli}: the \emph{rpoS} paradigm}.
+\newblock \emph{Mol. Microbiol.}, 48:\penalty0 855--61, May 2003.
+
+\bibitem[Sambrook et~al.(1989)Sambrook, Fritsch, and Maniatis]{fred2}
+J.~Sambrook, E.~Fritsch, and T.~Maniatis.
+\newblock \emph{{Molecular Cloning: A Laboratory Manual}}.
+\newblock {CSH Laboratory Press}, 1989.
+
+\bibitem[Schoner et~al.(1984)Schoner, Hsuiung, Belagaje, Mayne, and
+  Schoner]{schoner:bgh}
+B.~E. Schoner, H.~M. Hsuiung, R.~M. Belagaje, N.~G. Mayne, and R.~G. Schoner.
+\newblock {Role of mRNA translational efficiency in bovine growth hormone
+  expression in \emph{Escherichia coli}}.
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 81:\penalty0 5403--5407, Sept.
+  1984.
+
+\bibitem[Shine and Dalgarno(1974)]{sd}
+J.~Shine and L.~Dalgarno.
+\newblock {The $3'$-terminal sequence of \emph{Escherichia coli} 16S ribosomal
+  RNA: Complementarity to nonsense triplets and ribosome binding sites}.
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 71\penalty0 (4):\penalty0
+  1342--1346, 1974.
+
+\bibitem[S{\o}rensen and Mortensen(2005)]{sorensen05}
+H.~P. S{\o}rensen and K.~K. Mortensen.
+\newblock Advanced genetic strategies for recombinant protein expression in
+  \emph{Escherichia coli}.
+\newblock \emph{J. of Biotech.}, 115:\penalty0 113--128, 2005.
+
+\bibitem[Starmer(2006)]{starmer}
+J.~Starmer.
+\newblock \emph{What can {RNA} hybrids tell us about translation?}
+\newblock PhD thesis, North Carolina State University, 2006.
+
+\bibitem[Weiss et~al.(1987)Weiss, Dunn, Atkins, and Gesteland]{weiss87}
+R.~B. Weiss, D.~M. Dunn, J.~F. Atkins, and R.~F. Gesteland.
+\newblock Slippery runs, shifty stops, backward steps, and forward hops: -2,
+  -1, +1, +2, +5, and +6 ribosomal frameshifting.
+\newblock \emph{CSH Sym. on Quant. Biol.}, 52:\penalty0 687--693, 1987.
+
+\bibitem[Yusupova et~al.(2006)Yusupova, Jenner, Rees, Moras, and
+  Yusupova]{xray}
+G.~Yusupova, L.~Jenner, B.~Rees, D.~Moras, and M.~Yusupova.
+\newblock {Structural basis for messenger RNA movement on the ribosome}.
+\newblock \emph{Nature}, 444\penalty0 (7117):\penalty0 391--394, 2006.
+
+\bibitem[Zukowski et~al.(1984)Zukowski, Gaffney, Speck, Kauffmann, Findeli,
+  Wisecup, and Lecocq]{fred1}
+M.~Zukowski, D.~Gaffney, D.~Speck, M.~Kauffmann, A.~Findeli, A.~Wisecup, and
+  J.-P. Lecocq.
+\newblock {Chromogenic identification of genetic regulatory signals in
+  \emph{Bacillus subtilis} based on expression of a cloned Pseudomonas gene}.
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 80:\penalty0 1101--1105, Sept.
+  1984.
+
+\end{thebibliography}

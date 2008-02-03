@@ -1,0 +1,52 @@
+\documentclass[12pt,titlepage,draft]{article}
+
+\usepackage{fullpage, amsmath, vector}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A note to all for now.  I am just putting down ideas on paper. %
+% The citations are done very informally, and we will definitely %
+% have to look up more stuff to cite some of the ideas I mention %
+% in this paper.  Daniel, this is also mainly your job!!         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\hj}{\textbf{(cite)}}
+\numberwithin{equation}{section}
+
+\linespread{2}
+
+\begin{document}
+
+\section{Introduction}
+\label{sec:intro}
+
+Recombinant DNA technology holds promise as a means of creating proteins in large quantities for a variety of reasons---ranging from artificial proteins, like insulin \hj, to green enzymes for paper bleaching.
+    Yet, this technology has yet to revolutionize society in an ideal manner.
+    The prime explanation for this unfortunate situation implicates the idea of cross-species translation.
+    ``Lab rats'' like \emph{Escherichia coli} \hj often poorly translate genes that express highly in other species, for example \emph{Homo sapiens}.
+    For this reason, many years of trial-and-error are necessary to modify a gene sequence to the scale of mass production in \emph{E. coli} and other such bacteria.
+
+In this paper, we propose a theoretical model to predict the translational efficiency of a gene in an organism.  We also provide an algorithm that automatically modifies a given gene sequence to improve translational efficiency called ThrushBaby, which provides a solid basis for furthering the use of recombinant DNA technology in numerous medical and scientific applications.
+
+\subsection{Protein Translation}
+\label{sec:translation}
+
+Protein translation refers to the latter step in this process in which the cell converts mRNA to proteins. 
+    Messenger RNA carries the message encoded in DNA to the ribosomes in the cytoplasm or the rough endoplasmic reticulum, where the process actually occurs.
+
+In a very simplified model, the 30S and 50S subunits of the ribosome bind together such that the start codon AUG of the mRNA sequence lies at the P-site.  Transfer RNA bring amino acids to the ribosome, specifically matching the codon in the A-site.
+    Once an amino acid does arrive at the ribosome, a peptide bond forms between the new amino acid and the existing polypeptide attached to the tRNA at the P-site.  Through a series of mechanisms, including GTP hydrolysis and use of Tu elongation factor, the mRNA moves by one codon along the ribosome.  The tRNA in the P-site enters the E-site and is ejected from the ribosome, transferring the polypeptide to the new tRNA at the P-site.
+    A common mnemonic to memorize this process is ``EPA'' or Environmental Procrastination Association.
+
+Since the process of protein translation occurs at a submicroscopic level, many details are still unclear.
+    However, substantial research suggests that the 3' tail of the 16S subunit of the ribosome plays a distinct role in translation.  Specifically, Weiss et al.\ showed that the 16S tail is involved in the frameshift of the {\emph{prfB}} gene \hj.  Scientists also hypothesize that RNA hybridization plays a role in the interaction of the tail with the messenger \hj.
+
+\subsection{Free Energy}
+\label{sec:freeenergy}
+
+Much research has been done on methods of calculating free energy upon Watson-Crick hybridization of RNA strands \hj.  Notably, the nearest neighbor (NN) model, described in Freier et al. \hj, calculates energy based on the idea that the stability of a given base pair depends its neighbors.
+    The total free energy is a sum of the helix initiation energy of the first base pair, propogation energies for subsequent base pairs, and a correction for self-complimentary sequences \hj.  Various scientists have calculated values for free energy values in base pairing \hj.
+
+The idea of free energy and complimentarity bears special significance to translation because of the potential role of the 16S tail.  Research shows that the tail contains sections very similar to certain sequences in the mRNA of \emph{E. coli}.  Specifically, the Shine-Dalgarno region is of interest because of its role in initiating translation \hj. (<== Add to this, but I'm not sure how.)
+
+Work by Ponnala et al. \hj show that, as the tail moves down the mRNA, the free energy signals exhibit a distinct sinusoidal pattern with a period of one codon, whence $f = \frac{1}{3}$.
+\end{document}
