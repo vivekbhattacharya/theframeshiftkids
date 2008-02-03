@@ -1,0 +1,765 @@
+\documentclass[11pt]{article}
+\usepackage{candor, setspace, abstract, times, verbatim}
+\hyphenation{frame-shifts gen-bank da-ta-base hy-bri-di-za-tion}
+
+\newcommand{\BWFtitle}[2]{A Computational Model for Translational
+  Efficiency and Frameshifts in #1{Escherichia coli} Using a Genetic Signal
+  Processing#2Approach}
+\newcommand{\BWFauthors}{Vivek Bhattacharya, Hao Lian, and Daniel
+  R. Vitek}
+
+\usepackage[draft, colorlinks=true, linkcolor=BWFBlue,
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}{ }},
+  pdfauthor={\BWFauthors}, pdfsubject={Genetics}, pdfcreator={The
+    Frameshift Kids}, pdfkeywords={bioinformatics,
+    genetics,biology,frameshifts,ecoli,prfB,bGH,ecoli,translation},
+  pdfstartview={FitH}]{hyperref}
+
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries}{\thesection.}{.5em}{\MakeUppercase}
+\titleformat{\subsection}{\bfseries}{\thesubsection.}{.5em}{\normalsize}
+\titlespacing*{\section}{0pt}{\baselineskip}{*0}
+\titlespacing*{\subsection}{0pt}{\baselineskip}{*0}
+\titlespacing*{\subsubsection}{0pt}{\baselineskip}{*0}
+
+\author{\sc{\BWFauthors}\\
+William G. Enloe High School\\
+Raleigh, NC}
+\date{{\sc \today}}
+\title{\bf{\BWFtitle{\emph}{ }}}
+
+\linespread{2}
+\begin{document}
+\maketitle
+
+\newpage
+\section*{Acknowledgments}
+We would like to thank our mentors, Dr. Donald L. Bitzer,
+Distinguished University Research Professor; Dr. Mladen A. 
+Vouk, Head of the Computer Science Department; and Dr. Anne-Marie
+Stomp, Associate Professor of Forestry, for their advice, suggestions,
+and support.  We offer our gratitude to North Carolina State University
+for offering us use of their computational and laboratory facilities.  
+Thank you to Dr. Fred Breidt and Robert Snyder for helping us design
+and run experiments to test our predictions.  Thanks to Dr. Lalit
+Ponnala for guiding us through his research, which formed the basis
+of our work.  Thanks to Scott Vu for using our model for his work and offering
+us his own comments as well.  In addition, thanks to our parents for their
+support throughout this process.
+
+% Title, table of contents, and abstract start things off.
+
+\newpage
+\begin{onehalfspace}
+\tableofcontents
+\end{onehalfspace}
+\newpage
+
+\begin{center}
+\noindent\BWFtitle{\emph}{~}
+
+Vivek Bhattacharya, Hao Lian, and Daniel Vitek
+
+William G. Enloe High School, Raleigh, NC
+
+Teacher Coordinator: Mr. Brian Wood
+
+Mentors: Dr. Donald Bitzer, Dr. Anne-Marie Stomp, and Dr. Mladen Vouk
+\end{center}
+\begin{onecolabstract}
+
+In genetics, \ecoli\ is used as an expression system to commercially
+produce proteins. However, sequence-dependent features, such as rare
+codons and codon biases, affect translational efficiency. To tackle
+this problem, we proposed a stochastic model to computationally
+estimate translational efficiency and predict frameshifting, uniting
+ideas from biological literature and developing two predictive
+metrics. We ran our model on 4364 sequences from the \ecoli\ genome
+and found over 90\% of them to have predicted high yields; moreover,
+the model predicts ribosomal proteins to translate at even higher
+rates---both results that concur with experimental evidence. We
+investigated a set of eight sequences of bovine growth hormone, and
+the model correctly determined the translational efficiency for seven.
+We then examined variations of \prfB, a gene with a programmed
+frameshift; the model grouped these sequences into two general
+categories of high and low yield, consistent with experimental
+results. Successful development of a computational model for
+translational efficiency implicates itself in optimizing recombinant
+protein yield in multiple fields, including commercial protein
+synthesis.
+\end{onecolabstract}
+\newpage
+
+\section{Introduction}
+We are part of an ongoing research project
+investigating the application of bioinformatics
+and genetic signal processing to better understand how
+information is encoded to and decoded from nucleic acids.  The particular
+focus of the current research on ribosomal translation is within
+bacteria.  Previous researchers~\cite{lalit:mechanics}
+have developed a deterministic model
+of translational reading frame by studying the
+programmed frameshift present in the \prfB\ gene of \ecoli.  The focus
+of our studies was to improve the model and apply its vatic powers.
+
+\citet{kozak05} and \citet{kane95} studied the impact
+of sequence-dependent features, especially with regard to codon bias 
+and rare codon usage, on translational efficiency.  The importance of 
+these features is especially pronounced in the synthesis of recombinant 
+proteins~\cite{sorensen05}.  In addition, secondary structure problems 
+during protein folding can decrease translational 
+efficiency~\cite{kozak05}.  However, scientists do not fully
+understand the specific connections between efficiency and these
+sequence-dependent factors, as even eliminating troublesome factors
+does not always increase efficiency. The goal of our studies is then to
+advance the development of a computational method that identifies mRNA
+sequence changes to improve protein yield. If
+successful, this work streamlines gene sequence optimization in the
+production of recombinant proteins. The model also addresses the
+significant challenge of creating cell lines
+that synthesize proteins at commercial yields in fields from
+medicine to agriculture. In addition, a successful model implies a mechanism by
+which molecular biologists test the stable maintenance of
+elongation.
+
+Prior to our work, \citet{lalit:jbsb} created a deterministic model of
+frameshifting based on the hybridization between the 16S rRNA tail and
+mRNA nucleotides.  The periodicity of this
+signal~\cite{lalit:jbsb} suggests that a force emerges from the free
+energy of hybridization and acts as a mechanism to
+stabilize reading frame.  We discuss limitations of a deterministic 
+model in \autoref{stochastic}.
+
+We assume that, at each cycle of ribosome translation, environmental
+noise results in the ribosome's imprecise alignment
+with the next codon to be translated.  To capture this idea, we
+created a new metric of efficiency: the total deviation from the
+intended reading frame.  We found this metric
+roughly correlate with translational
+efficiency (\autoref{section:deviation}).  Throughout this paper, we use this and other metrics to
+optimize tRNA availabilities in order to distinguish between
+high and low efficiency sequences. We also use our new
+metric to optimize the performance of a translationally regulated gene
+and to test the robustness of our model by running  ribosomal proteins and the
+\ecoli\ genome.
+
+\section{Prior Model}
+\subsection{Free Energy}
+\label{freeenergy}
+
+Hybridization between two RNA sequences changes the free energy in a
+cell, occurring between the rRNAs, the mRNA, and the tRNAs~\cite{starmer}.
+\citet{sd} observed that the $3'$ end of the 16S rRNA is complementary to a sequence found 
+directly upstream of the start codon of many prokaryotic mRNAs; they hypothesized that RNA hybridization 
+plays an important role in translation initiation, later
+experimentally confirmed~\cite{hui,jacob}.
+
+\citet{weiss87} subsequently observed that changes in the 16S tail can 
+significantly change the frequency of frameshifting in \prfB, an \ecoli\ gene 
+known to frameshift at the 25$^\textrm{th}$ codon.  These results suggest that 
+the 16S tail is positioned to interact with the mRNA during
+translation and elongation. 
+\citet{xray} supported the spatial accessibility of the 16S tail with the mRNA with 
+X-ray crystallography data.
+
+\citet{freier} proposed a thermodynamic model for calculation of free energy values,
+modeling the hybridization of permutations of pairs of consecutive RNA nucleotides.
+
+\subsection{Deterministic Model}
+\citet{lalit:mechanics} assumed a sinusoidal model of free energy against base-pair position 
+because a Fourier transform of free energy indicated a strong component with a period of one codon.  
+In their model,
+free energy projects onto magnitude and
+phase through a memory model that stores three values
+in a phasor, a concept from physics. 
+\citeauthor{lalit:mechanics} represented this cumulative energy phasor
+at codon $k$ as $\bvec{V} = Me^{i\theta}$, where $i$ is the imaginary
+constant, from which they calculate the magnitude and phase, modeled
+on a polar plot, via
+trigonometry. Differentiating the energy phasor
+with respect to distance along the mRNA strand gives 
+vector $\bvec{D}$, the force assumed by the model~\cite{lalit:mechanics}
+to act on the ribosome to keep the mRNA in the reading frame.
+ 
+The time that the force acts on the ribosome depends upon
+the tRNA availability associated with the codon at the A-site 
+and interactions between said tRNA and the ribosome~\cite{phelps}.
+\citeauthor{lalit:mechanics} represent this with a deterministic model: For each codon,
+the number of ``wait cycles," a function of the rarity of the
+tRNA, corresponds to the time the force can
+increment displacement from the current reading frame.  In the
+deterministic model, the force acts for \emph{exactly} this number
+of cycles for a given codon. The model then
+simulates hybridization between the
+16S ribosomal subunit and a given mRNA strand: First, the 13-base 16S
+tail of \ecoli\ hybridizes with the first 13 bases of a sequence,
+which includes a 12-base leader sequence, to determine the free energy 
+value of the first nucleotide of the coding sequence. The algorithm then iteratively calculates
+the free energy for every nucleotide of the sequence~\cite{starmer}.
+
+\subsection{Frameshifts}
+\label{section:frameshifts}
+
+\begin{cfigure}
+  \parbox{0.4\linewidth}{
+    \caption{Plots of~\prfB: Deterministic displacement}
+    \label{prfB:deterministic:sub}
+    \includegraphics[width=\linewidth]{prfB/deterministic}
+  }
+  \qquad
+  \begin{minipage}{0.4\linewidth}
+    \caption{Plots of~\prfB: Polar plot}
+    \label{prfB:polar:sub}
+    \includegraphics[width=\linewidth]{prfB/polar}
+  \end{minipage}
+\end{cfigure}
+
+\citeauthor{lalit:mechanics} let a displacement of $x = 0$ correspond
+to the zero reading frame and increments of \emph{two} to represent a
+one-nucleotide change. For example, $x =2$ represents the +1 frame.
+They prove that both $x = 0$ and $x = 2$ are
+stable points, as expected.
+
+A jump from approximately $x = 0$ to $x = 2$ in a span of only
+base pair is then the first indication of a $+1$ frameshift; it
+suggests the ribosome skips one entire base pair in the mRNA sequence.
+\autoref{prfB:deterministic:sub} shows the displacement plot per this
+deterministic model for \prfB, a gene with a unique programmed $+1$
+frameshift, which exists at codon 25. In conjunction with this
+characteristic plot, a $+1$ frameshift also displays a 
+characteristic clockwise 120\degree\ phase angle rotation from the
+species angle, the average phase of the free energy signals of a
+number of verified \ecoli\ genes that stay in frame
+\cite{lalit:mechanics}.  We interpret the free energy signal's
+alignment with the sudden jump in displacement as a sustained
+frameshift. Since the free energy signal has a period of one
+codon~\cite{lalit:mechanics}, a $+1$ frameshift the free energy signal
+must undergo a phase shift of a third of an entire period
+(\autoref{prfB:polar:sub}).
+
+\section{Computational Methods}
+
+\subsection{Stochastic Displacement Model}
+\label{stochastic}
+
+As mentioned, the gene \prfB\ exhibits a programmed frameshift
+by jumping in displacement to $x=2$.  Certain
+genes, however, demonstrate ambiguous behavior near
+$x = \pm 1$~\cite{lalit:mechanics}.  In the deterministic model, we lacked the
+sensitivity needed to clearly discern a programmed
+frameshift. Worse, the model may not show these unstable
+behaviors at all. The nondeterministic
+behavior of translation and the presence of noise limits the model's
+ability to achieve better resolution. Therefore, we revamped the model to be
+stochastic through the incorporation of sinusoidal probability.\footnote{
+  The model's code is available online with detailed documentation.
+}
+
+At each wait-cycle in elongation, we propose the ribosome makes a
+decision: stay in the current reading
+frame, move to the $\pm 1$ reading frames, or proceed to the next cycle.
+In addition, because the 
+number of wait cycles is inversely proportional to the tRNA availability of 
+the codon in the current reading frame (the
+A-site)~\cite{lalit:mechanics, ikemura}, rarer codons force the 
+ribosome to wait longer for the appropriate
+aa-tRNA. \citeauthor{lalit:mechanics}, calculated these
+values from existing research~\cite{ikemura}, which
+related them to codon frequency. From this
+body of work, we created a different algorithm to
+calculate them (\autoref{section:parameters}).
+
+Let $abcd$ be a sequence of four nucleotides, with $abc$ in the
+current and $bcd$ in the +1 reading frame, and let $x$ be the
+displacement of the current wait cycle of the ribosome.  As the
+incremental displacement approaches +1, the probability of choosing
+codon $bcd$ increases and the probability of choosing codon
+$abc$ decreases.
+
+We model this behavior using even powers of
+cosine and sine functions for $abc$ and $bcd$, defining
+$\omega$ as the \emph{weight} that is directly proportional to
+the probability. It must meet these criteria:
+If the ribosome lies completely and thus is stable in the
+zero frame, then the probability
+of staying in that frame is one.  Consequently, a ribosome
+fully in the +1 frame has no chance of going to the zero
+frame, hence the requirement for a period of two base pairs ($x=4$) in
+these functions. Thus, we propose
+\begin{equation}
+  \omega_{abc} = \cos^{10}{\frac{x\pi}{4}} \text{ and } \omega_{bcd} =
+  \sin^{10}{\frac{x\pi}{4}}.
+  % Footnote
+  \footnote{The cosine and sine functions are taken to the tenth power
+    here. These parameters can change.}
+\end{equation}
+
+Suppose we are on a wait cycle at codon $abc$ with $N_{abc}$ total
+cycles allocated. Let $P$ be the instantaneous probability of staying
+in the current reading frame at the next move, which we know (above) is
+proportional to the weight $\omega_{abc}$. Let $1/n_{abc}$ be
+the constant of proportionality, implying $n =
+\omega_{abc}/P$.\footnote{We can derive $n$ as follows:
+  We know $\omega = cos^{10}(x\pi/4) \le 1$, implying $P \le 1/n$. Assume the probability of
+  moving (1/2) is just as likely as the probability of not moving
+  (1/2). Suppose there are $N$ wait cycles. Then $1 - (1 - \omega/n)^N
+  = 1/2$, implying $n \le \sqrt[N]{2}/(\sqrt[N]{2} - 1)$. We also have
+  $\lim_{N\rightarrow\infty}\max{n} = N/\ln{2}$. Thus, the
+  probability of choosing a codon at a cycle is proportional to its
+  TAV because $N$ is proportional to its TAV, which coincides with intuition.
+}
+Then the aggregate probability of choosing codon $abc$ after $K$ cycles is
+the probability of \emph{not} failing to change the reading frame ($1 - P$)
+at every cycle for $K$ cycles. Hence, 
+\begin{equation}
+  1 - \prod_{i=1}^K \left( 1 - \frac{\omega_i}{n} \right) \text{ where }
+  \omega_i = \cos^{10}{\frac{x_i\pi}{4}}.
+  % Footnote
+  \footnote{The weight depends upon the frame choice in question.}
+\end{equation}
+
+\subsection{Consequences of the Stochastic Model}
+The stochastic model introduced a concept into the model proposed by
+\citet{lalit:mechanics}: The ribosome has a finite probability of
+``choosing the wrong codon," in
+essence going out-of-frame due to a high tRNA availability. This is definitely not a programmed
+frameshift, which is when the force pushes the ribosome to an unstable
+point and moves it quickly to the +1 reading frame to regain stability.
+Programmed frameshifts take place over the span of just
+one codon; the graph never approaches $x=2$ over multiple codons.
+
+An incorrect codon choice can occur when displacement nears $x = \pm 1$.
+Our model assumes that the 0 and the $\pm 1$ reading frame codons have a finite
+probability of occupying the A-site in the ribosome. From the probability
+equations, the ribosome increasingly tends to stabilize around
+the +1 frame by accident.  Unlike a programmed frameshift, incorrect codon choice results from
+the slow digression from the true alignment and occurs over a number of codons.
+As the ribosome nears $x = \pm1$, the values for both the sine 
+and cosine functions drop, thus increasing the chance of increasing
+the time required for translation. This models the physical
+behavior of ribosome's tendency to pause as it stabilizes upon an aa-tRNA in the A-site.
+
+Choosing the wrong codon is a purely stochastic phenomenon; only through our new
+model can we actually track the actions of the ribosome throughout
+translation. From our physical conceptualization (\autoref{stochastic}),
+we establish the potential to measure translational efficiency below.
+
+\section{Analysis}
+To test our computational model, we ran a number of
+experiments to analyze sequences present or expressed in \ecoli.
+
+\subsection{Measures}
+\label{section:metrics}
+
+As this model is stochastic, multiple runs (the sample size) must be analyzed.
+As such, we propose two sample metrics for analysis.
+
+\subsubsection{Error-Free Rate}
+\label{section:efr}
+When studying a
+sequence with a programmed frameshift, \emph{error-free rate} measures the percentage of runs 
+during which the ribosome chooses the correct codon
+at \emph{every} juncture.  In the case of a known +1 frameshift, the ribosome must
+choose the +1 frame at the frameshift codon and stay in the 0 frame before
+and the +1 frame thereafter for the run to be error-free.
+
+\subsubsection{Displacement Deviation}
+\label{section:deviation}
+
+We define \emph{displacement deviation} to be
+\begin{equation}
+    d = \sqrt{\frac{\sum_i (x_i - \beta_i)^2}{N}},
+\end{equation}
+where $\beta_i$ is the predicted reading frame at codon $i$, $x$ is
+the displacement at codon $i$, and $N$ is the total number of codons
+as a measure of the deviation of the sequence from the expected
+reading frame.  Usually $\beta_i = 0$ unless a programmed frameshift
+exists as in \prfB.  For example, for \prfB, $\beta_i = 2$
+for all $i \geq 25$ because \prfB\ frameshifts at codon 25
+\textsc{uga} and the model represents a frameshift with +2
+displacement per \autoref{section:frameshifts}.
+
+\subsection{\prfB\ and Related Sequences}
+In the first test of our model, we investigated the gene
+\prfB\footnote{
+  \prfB\ encodes protein release factor 2, which enters
+  the A-site and causes protein synthesis to terminate at the stop
+  codons \textsc{uga} and \textsc{uaa}. Since \prfB\ itself requires 
+  translation to continue past a stop codon, this sets up an elegant 
+  autoregulatory mechanism. We obtained \prfB's nucleotide sequence from
+  NCBI's Genbank database at \url{http://www.ncbi.nlm.nih.gov/} with accession
+  number NC\_000913.
+}, which has a programmed frameshift.
+\citet{weiss87} conducted a number of experiments regarding
+\prfB\ to test how mutations in the sequence affect the rate of
+frameshifting.  They present a total of 35 sequences in their paper,
+along with measures of translational efficiency.  We hypothesized that
+genes found to frameshift at high rates by
+\citeauthor{weiss87} should also show high error-free rates under
+our model.
+
+\subsection{Ribosomal Proteins}
+We also hypothesized that displacement deviation
+provides a suitable metric for translational efficiency: A lower
+deviation should correspond to a more efficient sequence.
+This is because if, at each wait cycle, the
+ribosome fails to stabilize in a period of indecision, the probability
+that it will change reading frames increases. The translational
+process resolves this indecision by either stabilizing around the
+incorrect reading frame or pausing. The former synthesizes an
+incorrect primary structure or causes premature truncation due to a
+out-of-frame stop codon further downstream; latter preserves fidelity at the
+expense of speed. That is, while a single run may produce
+a working primary structure of the protein, the sequence in question
+ultimately is less efficient than a synonymous sequence with lower
+aggregate probabilities, whether we measure this as the
+error-free rate (\autoref{section:efr}) or displacement deviation
+(\autoref{section:deviation}). In addition, a greater deviation from
+the zero axis inherently implies a longer time for translation, 
+since proximity to $\pm1$ increases the probability of waiting and not choosing
+either codon. A high value thus reduces translational
+efficiency, again contributing to the probability of
+translational failure.
+
+To this end, we performed two tests. In one test, we ran the model on
+all the 4364 genes provided by the Ecogene database of
+\ecoli\ genes.\footnote{\url{http://ecogene.org/}}
+We predicted the majority to exhibit low
+displacement deviations based on the assumption that evolution would select
+for high translational efficiency. In another
+test, we looked at ribosomal proteins, known to have high levels of
+expression~\cite{rpoS:process}. For this set we predicted lower mean
+deviation than those of the \ecoli\ gene sample.
+
+\subsection{Bovine Growth Hormone}
+Our final test involved the analysis of a set of sequences known to 
+be translationally regulated.  \citet{schoner:bgh} created a set 
+of eight sequences in an empirical effort to increase the yield 
+of recombinant bovine growth hormone (bGH) synthesized in an 
+\ecoli\ expression system. They
+showed that four sequences were expressed 
+at significantly higher levels than the others. We predicted that 
+these should have lower displacement deviations than others.
+
+\subsection{Parameters}
+\label{section:parameters}
+For all computational experiments in this report, we use a species
+angle of $\theta_{\rm{sp}} = -30\degree$ and an initial displacement of 0.1
+in accordance with \citet{lalit:mechanics}.
+We also explore the effects of changing these parameters on the
+error-free rate of \prfB.
+A parameter that is much more difficult to estimate
+is the tRNA availability vector (TAV).
+\citeauthor{lalit:mechanics} estimated TAV by codon usage, 
+surveying genes from \ecoli.
+Although this assumption has experimental basis~\cite{ikemura}, 
+no concrete evidence supports this assumption.
+We chose to calibrate the TAV from existing experimental data, 
+designing a genetic algorithm to improve these values based on 
+bGH sequences while remaining close 
+to the already determined values.
+
+\subsubsection{Obtaining the tRNA Availability Vector}
+We optimize the separation between the displacement deviations of the 
+high-yield and low-yield sequences. First, we generate a list of 
+randomly modified TAVs and calculate the ratio of the 
+displacement deviation (\autoref{section:deviation}) for the four 
+high-yield sequences to that of the other four. From there, we sort the 
+modified vectors by this ratio and discard the worst half.
+We repeated choose two of the remaining vectors based on rank, taking a weighted 
+average to spawn a new vector.  After creating the 
+next generation of a constant ``gene pool'' size, we delete 
+the previous generation and repeat. After a fixed number of 
+generations, the algorithm terminates and returns the most optimal vector.
+This algorithm does not significantly alter the vectors; the average 
+change to each value in the vector was merely 15.99\%. We use the new values
+throughout the paper.
+
+\section{Results}
+\subsection{\prfB}
+
+\begin{cfigure}
+  \parbox{0.4\linewidth}{
+    \caption{Plots of \prfB\ in a stochastic model: Displacement plot}
+    \label{prfB:disp:sub}
+    \includegraphics[width=\linewidth]{prfB/disp}
+  }
+  \qquad
+  \begin{minipage}{0.4\linewidth}
+    \caption{Plots of \prfB\ in a stochastic model: Sensitivity plot}
+    \label{prfB:sens:sub}
+    \includegraphics[width=\linewidth]{prfB/sensitivity}
+  \end{minipage}
+\end{cfigure}
+
+The gene \prfB, as mentioned, is known
+to have a programmed frameshift at the 25$^{\textrm{th}}$ codon.
+\autoref{prfB:disp:sub} shows its displacement plot,
+again with a distinctive jump at codon 25.
+\footnote{Note that the polar plot is the same as \autoref{prfB:polar:sub}.
+The new model does not alter the polar plot or the free energy calculations.}
+
+Notably, the displacement plot does not reach $x=2$ over the span of
+one codon, as the previous deterministic model predicted.  Rather, due to randomness, the
+ribosome stabilizes the codon of the $+1$ frame in the A-site before actually reaching
+a displacement of exactly 2.  The propensity to approach and stabilize at $x=2$
+concurs with experimental evidence indicating the ribosome
+stays in frame after the \prfB\ frameshift to produce full-length RF2.
+\autoref{prfB:sens:sub} shows the error-free rate of \prfB\ as a function
+of species angle and initial displacement and demonstrates the
+robustness of our model (\autoref{section:discussion}).
+
+\begin{cfigure}
+  \caption{Comparison of experimental yield and error-free rate, 500 iterations}
+  \label{weissboxplot}
+  \includegraphics[width=0.5\linewidth]{histograms/weissbox}
+\end{cfigure}
+
+We used our computational model to determine whether a correlation exists between 
+error-free rate and the yield of a reporter protein, $\beta$-galactosidase (\bgals).  
+\citet{weiss87} investigated elements of the mRNA sequence that could change the frequency 
+of frameshifting.  The frameshift site of \prfB\ was fused to the encoding sequence for 
+\bgals\ so that \bgals\ activity was dependent on the frameshift occurring, 
+thus serving as an indirect measure of frameshift frequency.  
+
+Our metric, error-free rate, showed some ability to divide \citeauthor{weiss87}'s 35 constructs into 
+two general categories: those with \bgals\ activity over 1650 whole-cell units and those with a 
+lower activity.  This number is in relation to the original, unmodified \prfB\ sequence, 
+which exhibited an activity of 6600 units.  These computations results suggest that 
+error-free rate could be used to predict protein yield, although it lacks resolution.
+
+Notably, \citeauthor{weiss87} did not maintain the amino acid structure of the polypeptides.  
+This discrepancy could impact protein folding and half-life.  Although they
+presented no evidence evaluating this idea, such a phenomenon would confound the interpretation 
+of \bgals\ activity as a measure of frameshift frequency.
+
+\subsection{\ecoli\ Genes}
+\begin{cfigure}
+  \parbox{0.4\linewidth}{
+    \caption{Investigating a large sample of \ecoli\ genes: Displacement deviations}
+    \label{ecoli:hist}
+    \includegraphics[width=\linewidth]{histograms/everything}
+  }
+  \qquad
+  \begin{minipage}{0.4\linewidth}
+    \caption{Investigating a large sample of \ecoli\ genes: Comparison
+      to ribosomal proteins}
+    \label{ribosomal:comp}
+    \includegraphics[width=\linewidth]{histograms/ribosomal}
+  \end{minipage}
+\end{cfigure}
+
+\begin{cfigure}
+\end{cfigure}
+
+\autoref{ecoli:hist}\footnote{We truncate the histogram at three, excluding
+  the outliers and less than 1\% of the sample.} is a histogram of the
+deviation yields of 4364 genes of \ecoli, encompassing over 80\% of the entire
+genome.  As predicted, 93.45\% of the genes had deviations in the 0
+to 1 interval, agreeing with the assumption of natural efficiency.  The
+average displacement deviation for these \ecoli\ genes is 0.4425 ($\sigma = 0.1537$), 
+running 500 iterations per gene.
+
+\subsection{Ribosomal Proteins}
+\label{section:riboproteins}
+To test further our idea that genes that translate efficiently should exhibit
+low displacement deviations, we tested our model on ribosomal proteins, which
+are known to be expressed at especially high levels.
+The displacement deviation from $x=0$ for ribosomal proteins
+is on average 0.2708 ($\sigma = 0.0884$) in comparison to the average of 0.4425 for our
+large sample of \ecoli\ genes, which is significantly higher with a $p$-value of
+0.0109 when performing a two-sample $t$ test on the means.
+
+\subsection{Bovine Growth Hormone}
+\label{section:bgh}
+
+\begin{cfigure}
+  \parbox{0.4\linewidth}{
+    \caption{bGH: Displacement plot}
+    \label{bgh:disp}
+    \includegraphics[width=\linewidth]{bgh/all}
+  }
+  \qquad
+  \begin{minipage}{0.5\linewidth}
+    \centering
+    \caption{bGH: Deviations with sample size~500}
+    \label{bgh:deviation}
+    \begin{small}
+      \input{bgh/deviations.tex}
+    \end{small}
+  \end{minipage}
+\end{cfigure}
+
+We investigated the concept of displacement deviation as a predictive parameter
+for experimental yield using published expression data~\cite{schoner:bgh} for bovine growth hormone (bGH).
+The focus of this research was to modify the bGH mRNA sequence to optimize
+yield of the protein in an \ecoli\ expression system.
+
+\citet{schoner:bgh} created a number of constructs, primarily
+modifying the initial codons of a bovine growth hormone sequence. The
+research found that sequences pcZ101, pcZ105, pcZ112, and pcZ115 have
+high protein yields in comparison to the four other sequences. We
+found these aforementioned four sequences in addition to pcZ108 to
+have the least displacement deviation from $x = 0$
+(\autoref{bgh:deviation}). \autoref{bgh:disp} shows the displacement
+plots of all the bGH sequences on the same set of axes.
+
+Therefore, pcZ108 exists as an outlier. \citeauthor{schoner:bgh}
+postulates it to have erroneously a low protein yield, attributing it
+to an experimental error due to its similarity to pcZ114. They believe
+that the low protein yield is not due to translational effects, a
+hypothesis that could explain why our model predicts a relatively high
+translation rate. Excluding this outlier from our data, we find that
+our data (\autoref{bgh:deviation}) fully agrees with hers. In
+addition---and like \citeauthor{weiss87}---\citeauthor{schoner:bgh}
+changed the sequence to encode a different amino acid sequence than
+the other constructs. We can then attribute the low translational
+efficiency to the interaction of the primary structure with the
+ribosome or to protein stability, subjects beyond the scope of our
+model.
+
+\subsection{An Artificial Frameshifter}
+\label{section:linker}
+To verify our model's predictive ability, we focused on its ability to
+predict programmed frameshifts. We designed a sixteen-codon sequence
+that should frameshift in \ecoli\ into
+the \textsc{aag} frame after crossing the sole uracil.  Figure~\ref{linker:sens}
+shows the error-free rate of the linker sequence as a function of species
+angle and initial displacement, which is as robust as \prfB.
+
+\begin{cfigure}
+  \parbox{0.4\linewidth}{
+    \caption{Linker sequence: Plasmid construct}
+    \label{linker:plasmid}
+    \includegraphics[width=\linewidth]{linker/plasmid}
+  }
+  \qquad
+  \begin{minipage}{0.4\linewidth}
+    \caption{Linker sequence: Sensitivity plot}
+    \label{linker:sens}
+    \includegraphics[width=\linewidth]{linker/sensitivity}
+  \end{minipage}
+\end{cfigure}
+
+Next, we performed a BLAST search, which found no similar sequences in 
+\ecoli. Then, working with molecular biologists, we helped create a strategy to 
+determine the efficiency of frameshifting using a fusion protein. 
+Biologists will fuse the linker sequence to the $5'$ to the end of \xylE~\cite{fred1},
+which codes for catechol oxidase, monitored with a 
+colorimetric reaction.  A plasmid vector (\autoref{linker:plasmid})
+containing the \xylE\ fusion and \lacZ, a second reporter, genes~\cite{fred2}
+will be constructed.  The \lacZ\ and the \xylE\ fusion will be 
+co-transcribed on a polycistronic mRNA, but translated
+separately.  The \lacZ\ gene product, \bgals, will be expressed constitutively,
+but the expression of \xylE\ will necessitate a frameshift in the linker sequence.
+As such, standardizing the catechol oxidase to the \bgals\ activity
+will serve as a measure of the  efficiency. The experimental
+work is in progress.
+
+\section{Discussion}
+\label{section:discussion}
+
+The purpose of our studies was to extend and improve the deterministic
+model of \citeauthor{lalit:mechanics}, which gave a mechanistic
+perspective of ribosomal movement during translation and a genetic
+signal approach to translating mRNA sequences. It incorporated a
+number of parameters, including
+codon bias~\cite{ikemura} and rare codon usage~\cite{kane95}, known to
+affect translation. The model also could predict frameshift locations
+in the sequence, of value in sequence annotation (frameshift identification).
+Our studies extended this predictive power to 
+computationally predict translational efficiency.
+
+The deterministic structure limited the model of
+\citeauthor{lalit:mechanics} (\autoref{stochastic}).
+We restructured it into a stochastic process to better reflect cellular
+environment conditions that can affect translation. In essence, the
+stochastic model paints a more realistic picture of the ribosome, a
+machine that makes choices nondeterministically due to noise from the
+cell environment.
+
+In addition to the stochastic version, we also developed two metrics:
+error-free rate (\autoref{section:efr}) and displacement deviation
+(\autoref{section:deviation}). Error-free rate
+provides a measure of an mRNA sequence's propensity for frameshifting by
+measuring reading frame change frequency.  Investigating the constructs used by
+\citet{weiss87}, our model roughly separated sequences into
+those with high and low frameshift frequencies. However, the
+output is not always clear, and we turn to
+displacement deviation in these cases.
+
+Displacement deviation (\autoref{section:deviation}), when calculated
+for a large sample of \ecoli\ genes assumed to be translationally
+efficient, correlated with over 90\% of the experimental data,
+predicting these genes to be efficient. Moreover, the results
+predicted that ribosomal proteins should be more efficient than
+average, in accordance with experimental knowledge. Also, displacement
+deviations for seven of eight bGH sequences~\cite{schoner:bgh}
+correlated with further experimental data; one sequence was an outlier
+explained in Schoner's research.
+
+Since the model is preliminary, we must note these outliers.  In the
+case of bGH, \citeauthor{schoner:bgh} experimentally determined pcZ108 to be
+of low yield, but the model computationally predicts high yield.
+Likewise, in the set of constructs used by \citeauthor{weiss87}, one
+set of sequences had low experimental yields, but the model predicted high translational efficiency.  One
+possible explanation of these discrepancies relates to the chemical
+structures of the mRNA sequences and the polypeptides they
+encode.  In both cases, \citeauthor{weiss87} and
+\citeauthor{schoner:bgh} did not maintain the amino
+acid structure while designing the sequences. If a protein-ribosome
+interaction or post-translational instability resulted from these
+changes, then such a change could significantly impact protein yield, an
+indirect measure of translation. However, these effects on
+translational efficiency are beyond the scope of our model.
+
+We also plan to explore parameter estimation in future studies.
+Analysis of \prfB\ and the
+proposed linker sequence suggest our model is robust with respect to species angle
+and initial displacement, but proper estimation of tRNA availability
+poses a problem. \citet{lalit:mechanics} based these values solely on 
+codon usage, but research~\cite{phelps} also suggests that tRNA shape
+also determines overall stability and is known to affect
+frameshift frequency. The
+genetic algorithm (\autoref{section:parameters}) we created thus
+provides an initial method for a coarse estimation. However, we did
+not extensively investigate the effect of tRNA shape and thus we limited the
+difference between our values and those computed by \citeauthor{lalit:mechanics}.
+
+Currently, our model predicts translational efficiency with some
+accuracy and can distinguish between high and low yield sequences. 
+Using results from our linker sequence (\autoref{section:linker}), 
+currently in progress, we will adjust the model to increase its 
+predictive power and consequently its importance in the field of 
+genetics.
+
+\section{Conclusion}
+\label{section:conclusion}
+
+In this paper, we presented a method, based on our newly
+developed stochastic model and derived metrics that roughly predicts
+translational efficiency.  More research is needed to
+experimentally validate the model and improve parameter
+estimates, especially those of TAV values. Despite these
+shortcomings, the ability of our model to discern between efficient
+and non-efficient sequences with respect to translation 
+indicates future potential in the field of
+recombinant biotechnology in the near future, providing a
+computational, cost-effective method for gene construct
+design when using \ecoli\ as an expression system.  In addition, 
+we may be able to extend our model to other prokaryotic species with 
+similar ribosomes.  Having a computational model based on the biological
+mechanism of translation will further our understanding of the
+translational process and be practical for the production of
+recombinant proteins at a commercially useful scale.
+
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\begin{singlespace} \bibliography{wizards} \end{singlespace}
+\end{document}
+
+% This is for ispell. Do not delete. --Hao
+% LocalWords:  abcd abc bcd sp pcZ riboproteins disp aag guu efr ikemura jbsb
+% LocalWords:  kane sd xray starmer aa TAV uga NCBI's Genbank lacZ hui UAA TAVs
+% LocalWords:  Ecogene schoner kozak
+

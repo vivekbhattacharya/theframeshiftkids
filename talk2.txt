@@ -1,0 +1,208 @@
+Good morning.  Today, we would like to spend a few minutes talking
+about a method for modelling translational efficiency and programmed
+frameshifts in ecoli.  Before we begin, we would like to tell you a
+little story.  Insulin was sequenced in 1949.  Sanger won the Nobel
+prize for his work in 1959.  Yet, it was not until 1979 that one
+company, after 30 years of trial and error, managed to come up with
+a sequence that could produce insulin a commerically viable rates.
+Now of course, insulin is a "tricky" protein for multiple reasons--many
+of which are beyond the scope of this presentation, but it is often
+true that useful proteins that express highly in humans and other organisms
+just don't want to work in ecoli.
+
+Our model may help tackle this issue.  We propose that it can predict
+translational efficiency, serving as a preliminary alternative for 
+biological testing, thus greatly reducing the time and money necessary 
+to develop useful sequences.  This model has applications to medicine, 
+like the insulin example we mentioned, agriculture--bovine growth hormone,
+and industry in general.
+
+Before we begin, we would like to briefly review ribosomal
+translation. Two ribosomal subunits bind to the messenger RNA strand,
+forming part of the initiation complex. The ribosomal RNA moves down
+the mRNA strand, synthesizing the protein. At each group of three
+nucleotides--a codon--a transfer RNA molecule brings a specific amino
+acid matching those three letters. Through peptide bonds, the amino
+acids form a protein.
+
+During translation, the 16S rRNA tail in the 30S complex--these are
+part of the subunits--hybridizes with the mRNA strand according to
+Weiss, a researcher. Through this, free energy arises that drive the
+motion of the ribosome along the mRNA as explained by Starmer and
+later Ponnala. Using the thermodynamic model developed by Starmer, our
+model can plot the instantaneous free energy at each binding of the
+16S tail to 12 nucleotides of the mRNA strand. Ponnala noticed a
+periodicity of 1/3 cycles in the free energy signal, corresponding to
+a period of one codon. From this, he hypothesized that the free energy
+plays a crucial role in the movement of the ribosome, forming the
+basis of his computational model.
+
+We can calculate the force of acting upon the ribosome that determines
+its displacement from the correct reading frame by differentiating the
+potential energy with respect to distance along the mRNA strand. Other
+factors that affect the force include tRNA availability and
+displacement from the current reading frame. [elaborate]
+
+In our stochastic model, probability becomes prescient at each juncture
+of translation when the ribosome must choose a codon. We propose that the
+probability of choosing a codon in a certain reading frame is positively 
+correlated with the exposureof the ribosome to the reading frame.  We 
+model this correlation by asserting that the probability is proportional
+to a sinusoidal function of the displacement.  In essence, as the ribosome
+moves farther away from the reading frame, the probability of choosing
+the codon in that reading frame should decrease, as the cosine function
+indicated.  The sin function indicates that moving towards the +1 reading
+frame should increase the probability of choosing the codon in that 
+frame.  The tenth power in our model is another parameter--it can be
+any even number; we just use 10.
+
+Also, the probability of choosing a codon should be inversely proportional
+to its tRNA avaliability in the cell.  The constant n reflects this notion.
+We model each phase of elongation as divided into "wait cycles."  Ponnala
+introduced this concept, assigning to each codon a specific number of wait
+cycles.  Our constant is derived from the normalization assumption that
+after Ponnala's number of cycles, the probability of having selected that
+codon should be 1/2.
+
+This diagram summarizes our model.  At each wait cycle, we calculate probabilites,
+move the ribosome a little bit, and randomly decide either to choose a codon
+or a wait for another cycle, recalculating probabilities and moving the
+ribosome a bit more.
+
+We developed an animation to explain our model.  The box on the top represents
+the position of the ribosome.  Note that the sine curve on the bottom is
+determined from the phase of the free energy signal.  The ribosome (the box) moves
+according to its position on the sine curve, following the force.
+After selecting the codon, the sine curve changes a bit, depending on 
+the new phase calculated from the new binding energy.
+
+We can summarize these findings in two plots.  This plot shows the displacement
+of the ribosome (the box) as a function of codon number.  As you can see, 
+there is some variation, although the plot remains close to the horizontal axis. 
+
+This plot
+shows the phase of the free energy--in other words, how much the sine curve
+changed.  Note that the curve remains near the -30 degree mark.  This angle
+is referred to as the species angle, since it is the average angle to which
+the free energy plots of genes in ecoli tend.  
+This protein, if you were interested, is aspS, which is a tRNA synthetase.
+
+Now, there are a few proteins that are especially interesting.  Look at this
+animation, for the protein prfB, a protein release factor in ecoli.
+Notice that the ribosome moves one entire nucleotide in displacement.  This
+phenomenon is known as a frameshift--when one entire nucleotide is skipped
+during translation.  The ribosome enters the +1 reading frame.
+
+The displacement plot of the frameshifter shows a distinct jump towards the
+x = 2 mark, indicating the biologically verified shift to the +1 frame.  The
+polar plot indicates a strange counterclockwise curve, representing the 
+unstable point through which the ribosome passes.  If we zoom out on the polar
+plot, we see that it tends not to -30 degrees, but to -150 degrees--precisely
+120 degrees past the species angle.  Recall the fact that the period of the free
+energy was one codon.  Thus, 120 degrees corresponds to a shift in one nucleotide.
+
+We have just touched on the few basic capabilities of the stochastic model.
+This model represents an improvement from Ponnala's deterministic model because
+it considers the borderline cases; it actually accounts for the situations in which
+the ribosome hovers in the plus or minus 1 regions--in the middle of two reading
+frames.  It is a more realistic model of the ribosome, as it offers a distinct,
+albeit similar, displacement plot every time.  
+
+Yet, we believe that the true power of this stochastic model lies in its ability
+to predict translational efficiency--to determine whether a given sequence will
+cause signal-encoded problems in translation.  In addition, it also allows for
+better parameter estimation.  In fact, we used the outcome of the stochastic 
+model to create a genetic algorithm that modified tRNA availiability values
+based on a sample set of sequences.
+
+To estimate efficiency, we developed two metrics.  The first one is displacement
+deviation, and it is the root mean square distance of the displacement plot
+from the horizontal axis.  As the ribosome hovers away
+from a reading frame, it will spend more time during translation and have
+a greater chance of accidentally picking up the incorrect codon.  Therefore,
+low deviation should correspond to higher translational efficiency.
+
+The error-free rate is a metric that measures the number of times the ribosome
+selected every codon correctly over the total number of times the simulation is
+run.  Obviously, a rate near 1 corresponds to higher translational efficiency.
+
+To measure the efficacy of our model and the utility of these metrics, we ran
+a series of investigations.  The first one consisted of using one metric to actually
+measure the robustness of the model with respect to intial parameters.  For the
+remaining tests, we selected one metric and measured it on a sample set of either
+naturally occurring or artificially constructed sequences.
+
+We varied the two most important initial parameters--species angle and initial
+displacement--to study the robustness of our model; the metric we used was
+error-free rate on prfB over 500 iterations per point.  This plot indicates that
+prfB had efr near 1 over a very large range, indicating that our model is not
+very sensitive to small fluctuations in the initial parameters.
+
+Our first investigation involves a look a large portion of the genes present naturally
+in E coli.  Most biologists contend that translation in prokaryotes is an efficient process;
+therefore, it would make sense that the vast majority of proteins in E coli should
+exhibit low displacement deviations.  We thus selected a sample of 4364 sequences,
+from a list given by the Ecogene database, and calculated their displacement deviations,
+running 500 iterations on each gene.  This histogram tabulates the results.  As you can
+see, over 90% of proteins have a deviation less than 1.  The mean deviation is 0.47.
+
+Another accepted theory on prokaryotes is that translation of ribosomal proteins
+is especially fast, since prokaryotes are riddled with ribosomes.  As such, we
+hypothesized that ribosomal proteins should exhibit even lower displacement deviations.
+As this boxplot indicates, computational data verified this hypothesis.
+
+We then validated our model against experiments conducted on recombinant bovine 
+growth hormone--the ones we mentioned briefly at the beginning of our presentation.
+In 1984, Schoner created a set of 8 sequences designed to produce bGH.  Four of
+them had high yields, while four of them had relatively low yields.  In his paper,
+Schoner mentioned that these sequences were, in fact, translationally regulated.
+As such, we hypothesized that the sequences that had high yields should have
+relatively low displacement deviations.  This displacement plot shows all eight
+sequences plotted on the same set of axes.  As you can see, there exists a noticeable
+difference between these sequences [point to ones at top] and the ones at the bottom.
+In fact, the sequences that remain close to the horizontal axis are the ones that
+Schoner found to have high yield.  With the exception of one sequence, the low yield
+proteins stray from the zero axis.
+
+Finally, we tested our model's ability to predict frameshifts in sequences.
+In 1987, Robert Weiss designed a set of about forty constructs--variation of prfB.
+Using beta-galactosidase activity as an indirect measure of frameshifting rate,
+he analyzed each one of these sequences.  We decided to correlate the results of
+our model, using our error-free rate metric, with those of Weiss.  As this boxplot
+indicates, our model can separate Weiss's constructs into those with low and
+those with high yields, although with a few stray sequences that require additional
+analysis.
+
+Of course, there is an urgent need to conduct more studies on this model.  During
+the last few weeks of our research, we designed a short sequence that we predict
+will frameshift.  With the help of Mr. Robert Snyder, a graduate student responsible
+for the lab work, we have designed a construct that will allow us to measure
+the frameshifting frequency of this sequence.  We are happy to note that in the
+past few weeks, the lab work has been well under way.
+
+The further the development of this model, we need to study the outliers in the bGH
+and Weiss experiments.  Studying reasons for why they did not follow the predictions
+may lead us to study better methods of parameter estimation--beyond the genetic
+algorithm we developed.  In addition, recent research done in the Agris lab suggests
+that the shape of the tRNA molecule may affect its binding to the ribosome, a
+finding that has direct impact in the probability calculations in our model.  Also,
+it may prove beneficial to go beyond Starmer's work and consider hybridization
+that does not follow the Watson-Crick rules.
+
+In summary, we have synthesized biological concepts, the fundamental principles of physics,
+and probability theory to develop a stochastic model that promises to be useful in predicting
+translational efficiency.  We have tested the model on a number of data sets, including
+ecoli genes and artifically created ones.  We have created a genetic algorithm that may
+aid in parameter estimation--a branch of our model that will become increasingly important
+as more data is collected.  All of the work we did can be easily reproduced,
+since all our Perl and Matlab code is freely avaliable on the internet, with detailed
+documentation.
+
+We envision that this model, with necessary improvements, will offer a very efficient
+and very cost-effective method for designing constructs to produce useful proteins on a commercial
+scale.
+
+We would like to thank Dr. Bitzer and Dr. Stomp of NCSU for their constant support.
+Dr. Breidt and Robert for helping us with lab work.  Dr. Ponnala for explaining his 
+initial model to us, on which we built ours.  Dr. Vouk for Matlab access.  Thank you
+for your time and patience.
