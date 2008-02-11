@@ -4,8 +4,8 @@
 %
 % sensitivity('c:\weiss', 20)
 function sensitivity(folder, limit)
-     init_disps = [-1:0.4:1.8];
-     angles = [-175:5:-125];
+     init_disps = [-1:0.2:1.8];
+     angles = [-120:5:60];
      classify(folder, 'sensitivity', @helper);
          
      function helper(displacement, n, file, image)
@@ -15,7 +15,7 @@ function sensitivity(folder, limit)
          proprietary = fullfile(fileparts(image), file);
          save([proprietary '.mat'], 'init_disps', 'angles', 'yields');
          
-         h = figure(1); %set(h, 'Visible', 'off');
+         h = figure(1); set(h, 'Visible', 'off');
          mesh(init_disps, angles, yields');
          title(file);
          xlabel('Initial Displacement');
@@ -35,6 +35,7 @@ function [yields] = grope(init_disps, angles, d, file, limit)
     Config.dire = 1;
     for i = 1:length(init_disps)
         Config.init_disp = init_disps(i);
+        disp(['  init_disp: ' num2str(init_disps(i))]);
         
         for k = 1:length(angles)
             angle = angles(k);
@@ -43,11 +44,8 @@ function [yields] = grope(init_disps, angles, d, file, limit)
             shoals = 0; sands = 0;
             for j = 1:limit, d([25]); end
             yields(i, k) = shoals/sands;
-
-            disp(['  Yield: ' num2str(shoals/sands)]);
-            disp(['  phi_sp: ' num2str(angle)]);
-            disp(['  init_disp: ' num2str(Config.init_disp)]);
-            disp(' ');
         end
+        disp([angles; yields(i, 1:length(angles))]);
+        disp ' ';
     end
 end
