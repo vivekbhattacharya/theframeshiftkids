@@ -3,7 +3,7 @@ function config
     Config = struct();
     
     % 0: Deviation. 1: Probability.
-    Config.yield = 0;
+    Config.yield = 1;
     
     Config.init_disp = 0.1;
     Config.phi_sp = -30 * pi/180;
