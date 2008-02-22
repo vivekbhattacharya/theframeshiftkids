@@ -2,4 +2,4 @@
 % Linear regression the 5th grade way.
 % This assumes L = 3
 function [m] = fakeslope(y)
-m = (y(end) - y(1))/2; % 3 - 1 = 2
+m = (y(end) - y(1))/1; % 2 - 1 = 1

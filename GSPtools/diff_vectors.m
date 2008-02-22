@@ -4,7 +4,7 @@ L = 3; upper = length(Mag);
 for k=1:upper
     x = min(max(1,k-1),upper-2);
     
-    index = [x:x+2];
+    index = [x:x+1];
     a = fakeslope(Mag(index));
     b = fakeslope(Phase(index));
     
@@ -15,5 +15,5 @@ for k=1:upper
 end
 
 for k=1:length(Phase)
-    if Phase(k)<0; Phase(k)=Phase(k)+(2*pi); end
+    if Phase(k) < 0; Phase(k) = Phase(k) + 2*pi; end
 end
