@@ -22,21 +22,6 @@ function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
     [dvec, theta] = diff_vectors(mag, theta);
     n = length(dvec) - 1;
     
-    figure(10);
-    mag2 = dvec(:, 1);
-    mag2 = mag2(1:30);
-    subplot(2, 1, 1);
-    plot(1:length(mag2), mag2);
-    xlabel('Codon');
-    ylabel('Magnitude');
-    
-    subplot(2, 1, 2);
-    phase = dvec(:, 2);
-    phase = phase(1:30);
-    plot(1:length(phase), phase);
-    xlabel('Codon');
-    ylabel('Phase');
-    
     function [x, waits] = helper(fs)
         [x, waits] = displacement(seq(13:end), dvec, fs);
     end

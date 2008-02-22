@@ -38,8 +38,7 @@ function [yields] = grope(init_disps, angles, d, file, limit)
         disp(['  init_disp: ' num2str(init_disps(i))]);
         
         for k = 1:length(angles)
-            angle = angles(k);
-            Config.phi_sp = angle*pi/180;
+            Config.phi_sp = angles(k)*pi/180;
 
             shoals = 0; sands = 0;
             for j = 1:limit, d([25]); end
