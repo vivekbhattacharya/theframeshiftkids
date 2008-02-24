@@ -3,14 +3,9 @@
 function cleanpath(folder)
     addpath(genpath(folder));
     s = matlabpath;
-    p = 1;
-
-    while true
-        t = strtok(s(p:end), pathsep);
-        if findstr(t, '.svn')
-            rmpath(t);
-        end
-        p = p + length(t) + 1;
-        if isempty(strfind(s(p:end),';')) break, end;
+    indices = [0 strfind(s, pathsep)];
+    for i = 1:length(indices)-1
+        t = s(indices(i)+1:indices(i+1)-1);
+        if findstr(t, '.svn'); rmpath(t); end
     end
 end
