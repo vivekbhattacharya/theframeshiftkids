@@ -4,18 +4,19 @@
 %
 % sensitivity('c:\weiss', 20)
 function sensitivity(folder, limit)
-     init_disps = [-1:0.2:1.8];
-     angles = [-100:10:100];
+     init_disps = [-1.6:0.2:1.6];
+     angles = [0:20:400];
      classify(folder, 'sensitivity', @helper);
-         
+
      function helper(displacement, n, file, image)
          disp(file);
-         [yields] = grope(init_disps, angles, displacement, file, limit);
+         [a, b] = fileparts(image);
+         prefix = fullfile(a, b);
 
-         proprietary = fullfile(fileparts(image), file);
-         save([proprietary '.mat'], 'init_disps', 'angles', 'yields');
-         
-         h = figure(1); set(h, 'Visible', 'off');
+         [yields] = grope(init_disps, angles, displacement, file, limit);
+         save([prefix '.mat'], 'init_disps', 'angles', 'yields');
+
+         h = figure(1); % set(h, 'Visible', 'off');
          mesh(init_disps, angles, yields');
          title(file);
          xlabel('Initial Displacement');
@@ -23,7 +24,7 @@ function sensitivity(folder, limit)
          zlabel('Error-Free Rate');
          axis([xlim ylim 0 2]);
          saveas(h, image, 'png');
-         saveas(h, [proprietary '.fig'], 'fig');
+         saveas(h, [prefix '.fig'], 'fig');
      end
 end
 
@@ -36,7 +37,7 @@ function [yields] = grope(init_disps, angles, d, file, limit)
     for i = 1:length(init_disps)
         Config.init_disp = init_disps(i);
         disp(['  init_disp: ' num2str(init_disps(i))]);
-        
+
         for k = 1:length(angles)
             Config.phi_sp = angles(k)*pi/180;
 
