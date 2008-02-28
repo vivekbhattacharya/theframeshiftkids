@@ -1,0 +1,52 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Freier et~al.(1986)Freier, Kierzek, Jaeger, Sugimoto, Caruthers,
+  Nielson, and II]{freier}
+S.~M. Freier, R.~Kierzek, J.~A. Jaeger, N.~Sugimoto, M.~H. Caruthers,
+  T.~Nielson, and D.~H.~T. II.
+\newblock Improved free-energy parameters for predictions of {RNA} duplex
+  stability.
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 83:\penalty0 9373--9377, Dec. 1986.
+
+\bibitem[Ikemura(1985)]{ikemura}
+T.~Ikemura.
+\newblock {Codon usage and tRNA content in unicellular and multicellular
+  organisms}.
+\newblock \emph{Mol. Biol. and Evol.}, 2\penalty0 (1):\penalty0 13--34, 1985.
+
+\bibitem[Ponnala et~al.(2006)Ponnala, Bitzer, Stomp, and Vouk]{lalit:mechanics}
+L.~Ponnala, D.~L. Bitzer, A.-M. Stomp, and M.~A. Vouk.
+\newblock A model for +1 frameshifts in eubacteria.
+\newblock \emph{Bioinformatics}, 2006.
+
+\bibitem[Repoila et~al.(2003)Repoila, Majdalani, and Gottesman]{rpoS:process}
+F.~Repoila, N.~Majdalani, and S.~Gottesman.
+\newblock {Small non-coding RNAs, coordinators of adaptation processes in
+  \emph{Escherichia coli}: the \emph{rpoS} paradigm}.
+\newblock \emph{Mol. Microbiol.}, 48:\penalty0 855--61, May 2003.
+
+\bibitem[Schoner et~al.(1984)Schoner, Hsuiung, Belagaje, Mayne, and
+  Schoner]{schoner:bgh}
+B.~E. Schoner, H.~M. Hsuiung, R.~M. Belagaje, N.~G. Mayne, and R.~G. Schoner.
+\newblock {Role of mRNA translational efficiency in bovine growth hormone
+  expression in \emph{Escherichia coli}}.
+\newblock \emph{Proc. Nat. Acad. Sci. USA}, 81:\penalty0 5403--5407, Sept.
+  1984.
+
+\bibitem[Starmer(2006)]{starmer}
+J.~Starmer.
+\newblock \emph{What can {RNA} hybrids tell us about translation?}
+\newblock PhD thesis, North Carolina State University, 2006.
+
+\bibitem[Weiss et~al.(1987)Weiss, Dunn, Atkins, and Gesteland]{weiss87}
+R.~B. Weiss, D.~M. Dunn, J.~F. Atkins, and R.~F. Gesteland.
+\newblock Slippery runs, shifty stops, backward steps, and forward hops: -2,
+  -1, +1, +2, +5, and +6 ribosomal frameshifting.
+\newblock \emph{CSH Sym. on Quant. Biol.}, 52:\penalty0 687--693, 1987.
+
+\end{thebibliography}
