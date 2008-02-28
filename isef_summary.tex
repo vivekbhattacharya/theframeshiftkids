@@ -1,0 +1,52 @@
+\documentclass[twocolumn, article, oneside]{memoir}
+\usepackage{candor, verbatim, abstract}
+\usepackage[charter]{mathdesign}
+\renewcommand{\abstractname}{}
+% Suppress memoir's fancy headings.
+\pagestyle{plain}
+\linespread{1.2}
+
+\hyphenation{frame-shifts gen-bank da-ta-base hy-bri-di-za-tion}
+
+\newcommand{\BWFtitle}[1]{A Computational Model for Translational
+  Efficiency and Frameshifts in #1{Escherichia coli} Using a Genetic Signal
+  Processing Approach}
+\newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
+  R. Vitek}
+
+\usepackage[final, colorlinks=true, linkcolor=BWFBlue,
+  citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}},
+  pdfauthor={\BWFauthors}, pdfcreator={The Frameshift Kids},
+  pdfstartview={FitH}]{hyperref}
+
+\author{\BWFauthors}
+\title{\BWFtitle{\emph}}
+\renewcommand{\maketitle}{%
+  \Large \textbf{\thetitle} \par \theauthor \par
+}
+
+\begin{document}
+\section{Question}
+To what extent can we successfully model ribosomal translation within
+\ecoli\ computationally and how can that model help predict
+translational efficiency and frameshifts, both programmed and
+accidental?
+
+\section{Hypothesis, Problem, Goals}
+
+\section{Procedures}
+We used Matlab and Perl to extend a previous computational model. We
+collected all the data through the Matlab graphical user interface,
+which represented the output from the Matlab and Perl programs.
+
+\subsection{Analysis}
+
+\phantomsection
+\addcontentsline{toc}{section}{Bibliography}
+\bibliography{wizards}
+\end{document}
+
+% This is for ispell. Do not delete. --Hao
+% LocalWords:  abcd abc bcd sp pcZ riboproteins disp aag guu efr ikemura jbsb
+% LocalWords:  kane sd xray starmer aa TAV uga NCBI's Genbank lacZ hui UAA TAVs
+% LocalWords:  Ecogene schoner kozak
