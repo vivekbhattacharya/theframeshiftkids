@@ -1,10 +1,11 @@
 \documentclass[twocolumn, article, oneside]{memoir}
-\usepackage{candor, verbatim, abstract, charter}
+\usepackage{candor, verbatim, abstract}
+\usepackage[charter]{mathdesign}
 \renewcommand{\abstractname}{}
 % Suppress memoir's fancy headings.
 \pagestyle{plain}
+\linespread{1.2}
 
-\linespread{1.3}
 \hyphenation{frame-shifts gen-bank da-ta-base hy-bri-di-za-tion}
 
 \newcommand{\BWFtitle}[1]{A Computational Model for Translational
@@ -13,7 +14,7 @@
 \newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
   R. Vitek}
 
-\usepackage[draft, colorlinks=true, linkcolor=BWFBlue,
+\usepackage[final, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}},
   pdfauthor={\BWFauthors}, pdfcreator={The Frameshift Kids},
   pdfstartview={FitH}]{hyperref}
@@ -105,16 +106,15 @@ stabilize reading frame.  We discuss limitations of a deterministic
 model in \autoref{stochastic}.
 
 We assume that, at each cycle of ribosome translation, environmental
-noise results in the ribosome's imprecise alignment
-with the next codon to be translated.  To capture this idea, we
-created a new metric of efficiency: the total deviation from the
-intended reading frame.  We found this metric
-roughly correlate with translational
-efficiency (\autoref{section:deviation}).  Throughout this paper, we use this and other metrics to
-optimize tRNA availabilities in order to distinguish between
-high and low efficiency sequences. We also use our new
-metric to optimize the performance of a translationally regulated gene
-and to test the robustness of our model by running  ribosomal proteins and the
+noise results in the ribosome's imprecise alignment with the next
+codon to be translated. To capture this idea, we created a new metric
+of efficiency: the total deviation from the intended reading frame. We
+found this metric roughly correlate with translational efficiency
+(\autoref{section:deviation}). Throughout this paper, we use this and
+other metrics to optimize tRNA availabilities in order to distinguish
+between high and low efficiency sequences. We also use our new metric
+to optimize the performance of a translationally regulated gene and to
+test the robustness of our model by running ribosomal proteins and the
 \ecoli\ genome.
 
 \section{Prior Model}
