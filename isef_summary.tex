@@ -71,9 +71,43 @@ experimental papers.  Test sequences are also proposed.
 \section{Procedures}
 We used Matlab and Perl to extend a previous computational model. We
 collected all the data through the Matlab graphical user interface,
-which represented the output from the Matlab and Perl programs.
+which represented the output from the Matlab and Perl programs. We
+personally undertook neither biological nor ``wet lab'' experiments as
+part of the research.
+
+Our model first calculates hybridization energies based on the work of
+\citet{freier} and \citet{starmer}. From these hybridization energies,
+it calculates a phasor that models the force on the ribosome's reading
+frame, again from previous work \cite{lalit:mechanics}. Finally, we
+compute displacement but stochastically varying the probabilities
+based on simulated tRNA availability and wait time, both previously
+calculated \cite{ikemura, lalit:mechanics}, of the ribosome deviating
+from the zero reading frame.
+
+From the model's displacement data, we use Matlab's graphic
+capabilities to plot displacement in addition to the change in the
+phasor as represented by a polar plot. We can also run samples to
+determine the probability a gene frameshifts or the extent of its
+deviation from the correct (usually zero) reading frame.
+
+We then went through a series of biological confirmations, including
+correlating our model's behavior with that of \prfB, a gene with a
+programmed frameshift at codon 25 and extensively documented
+\cite{weiss87}. We also explored the properties of bovine growth
+hormone \cite{schoner:bgh} and ribosomal proteins \cite{rpoS:process},
+two areas of biotechnology with potential in commercial applications.
 
 \subsection{Analysis}
+We first mathematically defined the probability of frameshifting,
+which we deemed the \emph{error-free rate}, and the deviation from the
+correct reading frame. For \prfB, we correlated the error-free rate to
+protein yield as calculated by \citet{weiss87} using a statistical
+test on the linear regression between the two to determine the extent
+of the correlation. We then performed a two-sample $z$-test on the
+means for ribosomal proteins to again find a correlation between that
+metric and their higher protein yield relative to other \ecoli\ genes.
+We then qualitatively analyzed the bovine growth hormone, finding an
+outlier in our results.
 
 \phantomsection
 \addcontentsline{toc}{section}{Bibliography}
