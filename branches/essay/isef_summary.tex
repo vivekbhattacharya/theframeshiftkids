@@ -1,4 +1,4 @@
-\documentclass[twocolumn, article, oneside]{memoir}
+\documentclass[article, oneside]{memoir}
 \usepackage{candor, verbatim, abstract}
 \usepackage[charter]{mathdesign}
 \renewcommand{\abstractname}{}
@@ -11,21 +11,20 @@
 \newcommand{\BWFtitle}[1]{A Computational Model for Translational
   Efficiency and Frameshifts in #1{Escherichia coli} Using a Genetic Signal
   Processing Approach}
-\newcommand{\BWFauthors}{Hao Lian, Vivek Bhattacharya, and Daniel
+\newcommand{\BWFauthors}{Vivek Bhattacharya, Hao Lian, and Daniel
   R. Vitek}
 
-\usepackage[final, colorlinks=true, linkcolor=BWFBlue,
+\usepackage[draft, colorlinks=true, linkcolor=BWFBlue,
   citecolor=BWFGreen, urlcolor=BWFRed, pdftitle={\BWFtitle{}},
   pdfauthor={\BWFauthors}, pdfcreator={The Frameshift Kids},
   pdfstartview={FitH}]{hyperref}
 
 \author{\BWFauthors}
-\title{\BWFtitle{\emph}}
-\renewcommand{\maketitle}{%
-  \Large \textbf{\thetitle} \par \theauthor \par
-}
+\title{Research Plan}
 
 \begin{document}
+% \nocite{*}
+\maketitle
 \section{Question}
 To what extent can we successfully model ribosomal translation within
 \ecoli\ computationally and how can that model help predict
