@@ -1,7 +1,7 @@
 function quasiforce(folder)
     config();
     global Travel;
-    if isempty(Travel), load Travel2.mat; end
+    Travel = load_travel();
 
     classify(folder, 'sourcefource!', @helper, 'preparation');
     function helper(path, filename, image)

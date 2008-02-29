@@ -45,5 +45,5 @@ function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
 
     clear globals;
     global Travel Names;
-    if isempty(Travel), load Travel2.mat; end
+    Travel = load_travel();
 end

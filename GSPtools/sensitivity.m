@@ -4,8 +4,8 @@
 %
 % sensitivity('c:\weiss', 20)
 function sensitivity(folder, limit)
-     init_disps = [-1.6:0.2:1.6];
-     angles = [0:20:400];
+     init_disps = [-1:0.2:1.8];
+     angles = [-100:10:260];
      classify(folder, 'sensitivity', @helper);
 
      function helper(displacement, n, file, image)
