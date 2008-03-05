@@ -5,9 +5,15 @@ function travel = get_travel(codons, TAV)
     
     max_hund = max(TAV);
     min_hund = min(TAV(find(TAV)));
+    
+    % nloopcalc vectorized: convert TAV values to abundance ratios.
+    a = find(TAV == 0);
+    b = find(TAV ~= 0);
+    TAV(a) = 1000;
+    TAV(b) = max_hund/min_hund - floor(TAV(b)/min_hund);
+
     for i = 1:limit
-        k = nloopcalc(i, TAV, max_hund, min_hund);
-        str = [str sprintf('''%s'', %g,', codons{i}, k)];
+        str = [str sprintf('''%s'', %g,', codons{i}, TAV(i))];
     end
     
     % Delete trailing comma.
