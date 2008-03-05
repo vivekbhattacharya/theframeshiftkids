@@ -1,3 +1,6 @@
+% Look for the limit on modifying Travel.uua until we see a difference
+% between 4p2003 (which should not frameshift properly but does anyway
+% right now) and prfB (which is our golden boy).
 function befriend_weiss(folder, limit)
      multipliers = [9.7:0.01:9.9];
      classify(folder, 'befriend_weiss', @helper);
