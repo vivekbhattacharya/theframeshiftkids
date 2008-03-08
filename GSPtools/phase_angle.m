@@ -10,17 +10,18 @@ function phase_angle(file)
     [mag, theta] = cumm_mag_phase(signal);
     [dvec, theta] = diff_vectors(mag, theta);
 
-    figure(10);
-    mag = dvec(1, :);
-    mag = mag(1:30);
-    phase = dvec(2, :);
-    phase = phase(1:30);
+    max = 31;
 
-    index = 1:29;
+    figure(10);
+    mag = dvec(1, 1:max);
+    phase = dvec(2, 1:max);
+
+    % Polar vector derivative of the energy to produce force.
+    index = 1:(max-1);
     dx = mag(index+1) .* cos(phase(index+1)) - mag(index) .* cos(phase(index));
     dy = mag(index+1) .* sin(phase(index+1)) - mag(index) .* sin(phase(index));
     dmag = sqrt(dx .^ 2 + dy .^ 2);
-    dphase = atan2(dy, dx);
+    dphase = atan2(dy, dx) * 180/pi;
 
     subplot(2, 1, 1);
     plot(1:length(dmag), dmag);
