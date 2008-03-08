@@ -2,7 +2,14 @@
 % magnitude as documented in the mechanics paper by Ponnala, et al.
 % Takes the vector from diff_vector as the only argument. Returns 1000
 % words.
-function phase_angle(dvec)
+function phase_angle(file)
+    clear global Config;
+    config();
+    
+    [signal, seq] = get_signal(file);
+    [mag, theta] = cumm_mag_phase(signal);
+    [dvec, theta] = diff_vectors(mag, theta);
+    
     figure(10);
     mag = dvec(:, 1);
     mag = mag(1:30);
