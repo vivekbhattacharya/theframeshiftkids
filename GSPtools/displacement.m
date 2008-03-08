@@ -21,19 +21,9 @@ function [disp, waits] = displacement(seq, dvec, fs)
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, dvec(:, k));
 
-        switch overaged
-          case 1
-            fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
-            break;
-          case -1
-            fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
-            break;
-
-          % These imply Config.dire.
-          case 3, break; % Backframeshift => automatic error
-          case 4 % Frameshift => check if valid
-            if anthill(end) ~= fs(1), break; end;
-        end
+        if overaged ~= 0,
+            if handle_aging(overaged, anthill, fs) == 1, break; end;
+        end;
 
         % Check if frameshift occurred too late.
         if Config.dire
@@ -65,21 +55,21 @@ function [disp, waits] = displacement(seq, dvec, fs)
     end
 end
 
-% Returns a function that retrieves the actual
-% shift given a codon number.
-function [get] = find_criticals(f)
-    % Use vectorized assignment. Cascade the shifts.
-    c(f) = 2; c = cumsum(c);
+function [break_p] = handle_aging(code, anthill, fs)
+    break_p = 0;
+    switch code
+      case 1
+        fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
+        break_p = 1;
+      case -1
+        fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
+        break_p = 1;
 
-    % Embodies the simple logic needed to read a value
-    % from the array `find_criticals` returns. Take the
-     % end because shifts cascade.
-    function [delta] = helper(k)
-        if k > length(c), delta = c(end);
-        else delta = c(k);
-        end
+      % These imply Config.dire.
+      case 3, break_p = 1; % Backframeshift => automatic error
+      case 4 % Frameshift => check if valid
+        if anthill(end) ~= fs(1), break_p = 1; end;
     end
-    get = @helper;
 end
 
 function [dead] = is_stopper(codon)
