@@ -11,10 +11,10 @@ function phase_angle(file)
     [dvec, theta] = diff_vectors(mag, theta);
     
     figure(10);
-    mag = dvec(:, 1);
+    mag = dvec(1, :);
     mag = mag(1:30);
-    phase = dvec(:, 2);
-    phase = phase(1:30);
+    phase = dvec(2, :);
+    phase = phase(1:30) * 180/pi;
 
     subplot(2, 1, 1);
     plot(1:length(mag), mag);
