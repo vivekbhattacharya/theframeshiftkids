@@ -3,7 +3,7 @@
 function paradiselost(folder, tavs)
     [rows cols] = size(tavs);
     yields = zeros(rows, 2);
-    
+
     load Codons.mat;
     for i = 1:rows
         yields(i, 1) = i;
@@ -24,7 +24,7 @@ function [value] = get_yield(folder, travails, times)
         global shoals sands;
         for i = 1:times, d([]); end;
         yield = shoals/sands;
-        
+
         % OR hack
         if [strfind(filename, '101') strfind(filename, '105')]
             good = good + yield;

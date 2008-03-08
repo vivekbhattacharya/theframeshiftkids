@@ -23,13 +23,13 @@ function impetigounity(folder, times, varargin)
             waitress(i, 1:length(waits)) = waits;
         end
         tip = mean(waitress);
-        
+
         h = figure(1); set(h, 'Renderer', 'OpenGL');
             if x_bound > 0, bar(1:x_bound, tip(1:x_bound));
             else bar(1:length(tip), tip);
             end
             if y_bound > 0, axis([xlim 0 y_bound]); end
-        
+
             set(h, 'Visible', 'off'); title(filename);
             grid; xlabel('Codon Number'); ylabel('Wait Time');
         saveas(h, image, 'png');

@@ -1,5 +1,5 @@
 function [Dvec, Phase] = diff_vectors(Mag, Phase)
-   
+
 L = 3; upper = length(Mag);
 x = min(max(1, (1:upper) - 1), upper - 1);
 

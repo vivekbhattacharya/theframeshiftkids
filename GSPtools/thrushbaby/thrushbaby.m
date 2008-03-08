@@ -3,10 +3,10 @@
 % Arguments: file, work folder, number of iterations
 function thrushbaby(file, work_folder, times)
     codon = '_';
-    
+
     disp(['I''m about to obliterate ' work_folder '. Proceed?']); pause;
     preparedir(work_folder);
-    
+
     folder = fullfile(work_folder, '0'); preparedir(folder);
     copyfile(which(file), folder);
     current = 0;
@@ -16,7 +16,7 @@ function thrushbaby(file, work_folder, times)
         if current == -1, disp('Finished'); break; end;
         disp(['Best yield: ' num2str(yield)]);
         disp(['Next codon target: ' num2str(current) sprintf('\n')]);
-        
+
         disp(['Now running Perl on: ' file]);
         pearl('starling.pl', sprintf('"%s" "%s" %g', file, work_folder, current));
     end
@@ -26,7 +26,7 @@ end
 function [best_yield, best_name, next] = runner(folder, times, codon, last)
     best_yield = 300;
     classify(folder, '', @helper);
-    
+
     function helper(displacement, n, title, image)
         for i = 1:times, displacement([]); end;
         global shoals sands;
@@ -44,4 +44,4 @@ function [best_yield, best_name, next] = runner(folder, times, codon, last)
     for i = last+1:length(railyard)
         if railyard(i) > 0.138, next = i; break; end;
     end
-end 
+end

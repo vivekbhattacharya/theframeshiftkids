@@ -2,10 +2,10 @@
 function travel = get_travel(codons, TAV)
     limit = length(codons);
     str = 'struct(';
-    
+
     max_hund = max(TAV);
     min_hund = min(TAV(find(TAV)));
-    
+
     % nloopcalc vectorized: convert TAV values to abundance ratios.
     a = find(TAV == 0);
     b = find(TAV ~= 0);
@@ -15,7 +15,7 @@ function travel = get_travel(codons, TAV)
     for i = 1:limit
         str = [str sprintf('''%s'', %g,', codons{i}, TAV(i))];
     end
-    
+
     % Delete trailing comma.
     str(end) = [];
     travel = eval([str ');']);
