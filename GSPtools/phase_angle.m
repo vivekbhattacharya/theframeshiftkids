@@ -16,13 +16,19 @@ function phase_angle(file)
     phase = dvec(2, :);
     phase = phase(1:30) * 180/pi;
 
+    index = 1:29;
+    dx = mag(index+1) .* cos(phase(index+1)) - mag(index) .* cos(phase(index));
+    dy = mag(index+1) .* sin(phase(index+1)) - mag(index) .* sin(phase(index));
+    dmag = sqrt(dx .^ 2 + dy .^ 2);
+    dphase = atan2(dy, dx);
+
     subplot(2, 1, 1);
-    plot(1:length(mag), mag);
+    plot(1:length(dmag), dmag);
     xlabel('Codon');
     ylabel('Magnitude');
 
     subplot(2, 1, 2);
-    plot(1:length(phase), phase);
+    plot(1:length(dphase), dphase);
     xlabel('Codon');
     ylabel('Phase');
 end
