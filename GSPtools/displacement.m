@@ -2,7 +2,7 @@
 % sequence), the number of codons, the differential vector
 % from `diff_vector`, two lists of +1/-1 frameshifts against
 % which to match.
-function [x, waits] = displacement(seq, dvec, fs)
+function [disp, waits] = displacement(seq, dvec, fs)
     global Travel Config;
     
     % ants: List of +1 frameshifts encountered.
@@ -12,13 +12,11 @@ function [x, waits] = displacement(seq, dvec, fs)
 
     upper = length(dvec) - 1;
     % Fudging factor: initial displacement
-    store = struct('x', [0 Config.init_disp], 'shift', 0, 'wts', zeros(1, upper-2));
+    store = struct('x', [Config.init_disp], 'shift', 0, 'wts', zeros(1, upper-2));
     
     % For the common case of no actual frameshifts,
     % avoid computing displacement deviation.
-    away = 0; no_frameshifting = isempty(fs);
-    if ~no_frameshifting, criticals = find_criticals(fs); end
-    for k = 2:upper
+    for k = 1:upper
         index = 3*k + store.shift;
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, dvec(:, k));
@@ -30,6 +28,7 @@ function [x, waits] = displacement(seq, dvec, fs)
           case -1
             fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
             break;
+
           % These imply Config.dire.
           case 3, break; % Backframeshift => automatic error
           case 4 % Frameshift => check if valid
@@ -40,14 +39,10 @@ function [x, waits] = displacement(seq, dvec, fs)
         if Config.dire
             if (length(fs) > 0) && (k > fs(1)) && (length(anthill) == 0), break; end;
         end
-        
-        if ~no_frameshifting
-            away = away + (store.x(k+1) - criticals(k))^2;
-        else, away = away + store.x(k+1)^2; end;
     end
-    x = store.x;
+    disp = store.x;
     waits = store.wts;
-     
+    
     % Tally times displacement called. shoals can be the total deviation
     % or times antill == fs.
     global sands shoals;
@@ -55,7 +50,12 @@ function [x, waits] = displacement(seq, dvec, fs)
     if isempty(shoals), shoals = 0; end;
     
     sands = sands + 1;
-    if Config.yield == 0, shoals = shoals + sqrt(away/upper);
+    if Config.yield == 0
+        criticals = zeros(1, length(disp));
+        criticals(fs+1) = 2;
+        criticals = cumsum(criticals);
+        deviation = mean((disp - criticals) .^ 2);
+        shoals = shoals + sqrt(deviation);
     % Barring no backframeshifts, check for antill-fs equality.
     elseif Config.yield == 1
         if length(termites) > 0, return;
@@ -156,7 +156,7 @@ function [overaged] = loop(piece, k, diff)
         if (wt > age_limit), overaged = 1; end;
     end
     store.x(k+1) = x0;
-    store.wts(k-1) = wt;
+    store.wts(k) = wt;
 end
 
 % Calculate normalized wait cycles.
