@@ -7,14 +7,15 @@ function disp_shifts()
         if termites{end} == 0, return; end;
     end
     
-    fprintf('> ');
+    acc = '> ';
     for i = 1:length(anthill)
-        fprintf('%s %g; ', ants{i}, anthill(i));
+        acc = [acc sprintf('%s %g; ', ants{i}, anthill(i))];
     end
 
-    fprintf('\n< ');
+    acc = [acc sprintf('\n< ')];
     for i = 1:length(termites)
-        fprintf('%s; ', termites{i});
+        acc = [acc sprintf('%s; ', termites{i})];
     end
-    fprintf('\n');
+    acc = [acc sprintf('\n')];
+    disp(acc);
 end
