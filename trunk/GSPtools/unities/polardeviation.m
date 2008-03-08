@@ -6,10 +6,10 @@ function polardeviation(folder)
     clear Config;
     config();
     global Config;
-    
+
     % `mod` ensures 0 < phi_sp < 2*pi
     phi_sp = mod(Config.phi_sp, 2*pi);
-    
+
     classify(folder, '', @helper, 'preparation');
     function helper(path, filename, image)
         theta = sowseal_surprise(path);

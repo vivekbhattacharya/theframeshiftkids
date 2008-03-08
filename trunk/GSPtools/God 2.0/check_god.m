@@ -5,11 +5,11 @@ function check_god(folder);
     norm_TAV = TAV ./ sum(TAV);
 
     disp('Looping through TAV vectors');
-    
+
     d = dir([folder '/*.mat']);
     for i = 1:length(d)
         file = fullfile(folder, d(i).name);
-        
+
         % file contains an `optimal` variable.
         load(file);
         optimal = optimal(nonzeros);

@@ -14,7 +14,7 @@ function [gen] = pokegod(folder)
     times = 100;
     sample_n = 50;
     radiation_n = 6;
-    
+
     % Save optimal row because we won't have it after the for loop
     % completes looping.
     gen = generation_zero(TAV, pool_n);
@@ -27,18 +27,18 @@ function [gen] = pokegod(folder)
             yields(row_n) = get_yield(folder, taz, sample_n);
             fprintf(': Created person %g with yield %g\n', row_n, yields(row_n));
         end
-        
+
         % Use yields as weights to determine who lives in the next
         % generation and who dies.
         [gen, yields] = sort_and_kill(gen, yields);
         optimal = gen(1, :);
-        
+
         % Spawn the next generation.
         tmp = zeros(pool_n, 64);
         for row_n = 1:pool_n
             tmp(row_n, :) = spawn(gen, yields, radiation_n);
         end
-        
+
         % Throw away the parents.
         gen = tmp;
         % Let Ctrl-C work.
@@ -57,7 +57,7 @@ function [value] = get_yield(folder, travails, times)
         global shoals sands;
         for i = 1:times, d([]); end;
         yield = shoals/sands;
-        
+
         % OR hack
         if [strfind(filename, '101') strfind(filename, '105') strfind(filename, '112') strfind(filename, '115')]
             good = good + yield;

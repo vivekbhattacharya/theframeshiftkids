@@ -6,7 +6,7 @@ function disp_shifts()
     if length(termites)
         if termites{end} == 0, return; end;
     end
-    
+
     acc = '> ';
     for i = 1:length(anthill)
         acc = [acc sprintf('%s %g; ', ants{i}, anthill(i))];

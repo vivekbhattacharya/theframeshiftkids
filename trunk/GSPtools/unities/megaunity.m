@@ -11,7 +11,7 @@ function megaunity(file, varargin)
 %   megaunity('prfB.txt', {'uga,25'});
 %   % 300 iterations
 %   megaunity('prfB.txt', {'uga,25'}, 300);
-%   
+%
 %   % Display the graph each time.
 %   megaunity('prfB.txt', {'uga,25'}, 300, 'graph');
 % --------------------------------------------------------------
@@ -35,5 +35,5 @@ for i = 1:limit
     h = figure(1);
         plot(1:length(x), x);
         axis([xlim min(0, min(x)) max(3, max(x))]);
-        grid; xlabel('Codon'); ylabel('Displacement');    
+        grid; xlabel('Codon'); ylabel('Displacement');
 end

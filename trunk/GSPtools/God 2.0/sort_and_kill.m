@@ -1,4 +1,4 @@
-% Kill half the population and sort the rest by weights.                                                                     
+% Kill half the population and sort the rest by weights.
 function [tav, weights] = sort_and_kill(tav, weights);
     [rows cols] = size(tav);
     weight_col = cols + 1;

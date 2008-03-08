@@ -2,7 +2,7 @@ function unity(file, varargin)
 % --------------------------------------------------------------
 % This function is used to unify the elements in this toolbox so
 % that an mRNA sequence in a text file with a 12-character
-% leader sequence as a string can output a displacement plot 
+% leader sequence as a string can output a displacement plot
 % and a polar plot using calcmpx.
 %
 % It was created by The Frameshift Kids to complement Dr. Lalit

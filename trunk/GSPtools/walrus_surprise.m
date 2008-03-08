@@ -16,12 +16,12 @@
 function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
     clear global sands shoals Config;
     config();
-    
+
     [signal, seq] = get_signal(file);
     [mag, theta] = cumm_mag_phase(signal);
     [dvec, theta] = diff_vectors(mag, theta);
     n = length(dvec) - 1;
-    
+
     function [x, waits] = helper(fs)
         [x, waits] = displacement(seq(13:end), dvec, fs);
     end

@@ -13,7 +13,7 @@ function [child] = spawn(tavmatrix, weights, mutt_n)
     toplimit = rows*(rows+1)/2;
     r1 = selectnum(ceil(toplimit * rand));
     r2 = selectnum(ceil(toplimit * rand));
-    
+
     % Start by assuming tav1 has the lower yield.  If not, fix
     % accordingly. (r1 has a lower yield than r2 iff r1 > r2 because
     % we sorted in descending order.)
@@ -24,7 +24,7 @@ function [child] = spawn(tavmatrix, weights, mutt_n)
     tav2 = tavmatrix(r2,:);
     % Weighted mean
     child = C * tav1 + (1 - C) * tav2;
-    
+
     % See generation_zero. Mutate within interval [0.75, 1.25] =
     % 0.75 + 0.5*[0, 1].
     changes = rand_int(columns, mutt_n);

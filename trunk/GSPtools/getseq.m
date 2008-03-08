@@ -1,5 +1,5 @@
 % Usage: S = getseq(file, fasta)
-% 
+%
 % File may contain a FASTA header or spaces. It may either be
 % DNA or RNA. Function returns the sequence in mRNA format,
 % lowercase and otherwise sanitized perfection. In addition,
