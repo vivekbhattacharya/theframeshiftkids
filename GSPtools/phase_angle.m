@@ -14,7 +14,7 @@ function phase_angle(file)
     mag = dvec(1, :);
     mag = mag(1:30);
     phase = dvec(2, :);
-    phase = phase(1:30) * 180/pi;
+    phase = phase(1:30);
 
     index = 1:29;
     dx = mag(index+1) .* cos(phase(index+1)) - mag(index) .* cos(phase(index));
