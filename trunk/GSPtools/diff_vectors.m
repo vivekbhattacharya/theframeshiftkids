@@ -1,19 +1,12 @@
 function [Dvec, Phase] = diff_vectors(Mag, Phase)
    
 L = 3; upper = length(Mag);
-for k=1:upper
-    x = min(max(1,k-1),upper-2);
-    
-    index = [x:x+1];
-    a = fakeslope(Mag(index));
-    b = fakeslope(Phase(index));
-    
-    D = exp(j*Phase(k))*(a + j*Mag(k)*b);
-    
-    Dvec(k,1) = abs(D); 
-    Dvec(k,2) = angle(D);
-end
+x = min(max(1, (1:upper) - 1), upper - 1);
 
-for k=1:length(Phase)
-    if Phase(k) < 0; Phase(k) = Phase(k) + 2*pi; end
-end
+a = fakeslope([Mag(x); Mag(x+1)]);
+b = fakeslope([Phase(x); Phase(x+1)]);
+D = exp(j*Phase) .* (a + j*b.*Mag);
+Dvec = [abs(D); angle(D)];
+
+cond = find(Phase < 0);
+Phase(cond) = Phase(cond) + 2*pi;

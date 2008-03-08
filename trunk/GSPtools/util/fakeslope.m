@@ -1,5 +1,5 @@
-% Assumptions: x and y are monotone increasing.
-% Linear regression the 5th grade way.
-% This assumes L = 3
-function [m] = fakeslope(y)
-m = (y(end) - y(1))/1; % 2 - 1 = 1
+% Linear regression the 5th grade way, assuming the matrix is a filled
+% with two points and I have to calculate the slope of the line
+% connecting them.
+function [m] = fakeslope(ys)
+m = ys(2, :) - ys(1, :);

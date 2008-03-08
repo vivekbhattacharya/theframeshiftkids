@@ -2,7 +2,7 @@
 % sequence), the number of codons, the differential vector
 % from `diff_vector`, two lists of +1/-1 frameshifts against
 % which to match.
-function [x, waits] = displacement(seq, Dvec, fs)
+function [x, waits] = displacement(seq, dvec, fs)
     global Travel Config;
     
     % ants: List of +1 frameshifts encountered.
@@ -10,7 +10,7 @@ function [x, waits] = displacement(seq, Dvec, fs)
     global ants anthill termites store;
     ants = {}; termites = {}; anthill = [];
 
-    upper = length(Dvec) - 1;
+    upper = length(dvec) - 1;
     % Fudging factor: initial displacement
     store = struct('x', [0 Config.init_disp], 'shift', 0, 'wts', zeros(1, upper-2));
     
@@ -21,7 +21,7 @@ function [x, waits] = displacement(seq, Dvec, fs)
     for k = 2:upper
         index = 3*k + store.shift;
         if(index + 4 > length(seq)), break; end;
-        overaged = loop(seq(index:index+4), k, Dvec(k, :));
+        overaged = loop(seq(index:index+4), k, dvec(:, k));
 
         switch overaged
           case 1
@@ -146,7 +146,7 @@ function [overaged] = loop(piece, k, diff)
             end
         end
         
-        % This follows from phi_signal(1,k) = Dvec(k,2); see
+        % This follows from phi_signal(1,k) = dvec(2, k); see
         % "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
         phi_dx = ((pi/3)*x0) - Config.phi_sp;
         dx = -0.005 * diff(1) * sin(diff(2) + phi_dx);
