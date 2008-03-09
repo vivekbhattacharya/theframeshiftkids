@@ -4,7 +4,7 @@
 % USAGE:
 %   [mag, phase] = cumm_energy(signal)
 %   signal is an array of free energy values from Kidnap
-%   phase is in radians
+%   phase is in radians, adjusted to be greater than zero.
 
 function [mag, phase] = cumm_energy(signal)
     % Round signal off to a codon multiple
