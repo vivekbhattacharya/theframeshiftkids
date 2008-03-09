@@ -19,9 +19,8 @@ function polardeviation(folder)
     fprintf('\n');
 
     function [theta] = sowseal_surprise(file)
-        [signal, seq] = get_signal(file);
-        [mag, theta] = cumm_mag_phase(signal);
-        [dvec, theta] = diff_vectors(mag, theta);
-        theta = theta(20:100);
+        signal = get_signal(file);
+        energy = cumm_energy(signal);
+        theta = energy(2, 20:100);
     end
 end

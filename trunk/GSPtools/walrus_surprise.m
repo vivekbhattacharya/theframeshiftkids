@@ -18,8 +18,8 @@ function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
     config();
 
     [signal, seq] = get_signal(file);
-    [mag, theta] = cumm_mag_phase(signal);
-    [dvec, theta] = diff_vectors(mag, theta);
+    [mag, phase] = cumm_energy(signal);
+    dvec = inst_energy(mag, phase);
     n = length(dvec) - 1;
 
     function [x, waits] = helper(fs)
@@ -30,10 +30,10 @@ function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
     % Must be figure(2) for alopeciaunity to work
     function draw_polar(fs)
         figure(2);
-        polar(theta, mag);
+        polar(phase, mag);
         if fs
             hold on;
-            x = polar(theta(fs(1)), mag(fs(1)), 'ro');
+            x = polar(phase(fs(1)), mag(fs(1)), 'ro');
             set(x, 'MarkerSize', 15);
             hold off;
         end

@@ -6,9 +6,9 @@ function phase_angle(file)
     clear global Config;
     config();
 
-    [signal, seq] = get_signal(file);
-    [mag, theta] = cumm_mag_phase(signal);
-    [dvec, theta] = diff_vectors(mag, theta);
+    signal = get_signal(file);
+    [a, b] = cumm_energy(signal);
+    dvec = inst_energy(a, b);
 
     max = 31;
 
