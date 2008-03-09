@@ -2,11 +2,11 @@
 % and phase of the input signal.
 %
 % USAGE:
-%   [Mag, Phase, numcodons] = cumm_mag_phase(x)
-%   x is a row vector that contains the free energy values
-%   Phase is in radians
+%   [mag, phase] = cumm_energy(signal)
+%   signal is an array of free energy values from Kidnap
+%   phase is in radians
 
-function [mag, phase] = cumm_mag_phase(signal)
+function [mag, phase] = cumm_energy(signal)
     % Round signal off to a codon multiple
     L = length(signal);
 
@@ -37,4 +37,7 @@ function [mag, phase] = cumm_mag_phase(signal)
         else mag(i) = 0; phase(i) = 0;
         end
     end
+
+    cond = find(phase < 0);
+    phase(cond) = phase(cond) + 2*pi;
 end

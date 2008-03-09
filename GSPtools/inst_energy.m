@@ -1,12 +1,11 @@
-function [Dvec, Phase] = diff_vectors(Mag, Phase)
+function [dvec] = inst_energy(mag, phase)
+    % Takes cumm_energy.m phasor and returns it in addition to a modified
+    % phase.
+    L = 3; upper = length(mag);
+    x = min(max(1, (1:upper) - 1), upper - 1);
 
-L = 3; upper = length(Mag);
-x = min(max(1, (1:upper) - 1), upper - 1);
-
-a = fakeslope([Mag(x); Mag(x+1)]);
-b = fakeslope([Phase(x); Phase(x+1)]);
-D = exp(j*Phase) .* (a + j*b.*Mag);
-Dvec = [abs(D); angle(D)];
-
-cond = find(Phase < 0);
-Phase(cond) = Phase(cond) + 2*pi;
+    a = fakeslope([mag(x); mag(x+1)]);
+    b = fakeslope([phase(x); phase(x+1)]);
+    D = exp(j*phase) .* (a + j*b.*mag);
+    dvec = [abs(D); angle(D)];
+end

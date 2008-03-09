@@ -16,11 +16,11 @@ end
 
 function [h] = graph(file)
     [signal, seq] = get_signal(file);
-    [mag, theta] = cumm_mag_phase(signal);
-    [dvec, theta] = diff_vectors(mag, theta);
+    [mag, phase] = cumm_energy(signal);
+    dvec = inst_energy(mag, phase);
     [x, wts] = displacement(seq(13:end), dvec, [25]);
 
-    theta = theta * 180/pi;
+    theta = phase * 180/pi;
     h = figure(1);
     % displacement uses theta in a way to make an entire codon's worth of
     % thetas disappear.
