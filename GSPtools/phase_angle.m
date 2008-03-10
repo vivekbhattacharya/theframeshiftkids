@@ -4,6 +4,7 @@
 % words.
 function phase_angle(file)
     clear global Config;
+    global Config;
     config();
 
     signal = get_signal(file);
@@ -15,6 +16,7 @@ function phase_angle(file)
     figure(10);
     mag = dvec(1, 1:max);
     phase = dvec(2, 1:max);
+    phase = phase - Config.phi_sp;
 
     % Polar vector derivative of the energy to produce force.
     index = 1:(max-1);
