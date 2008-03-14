@@ -37,7 +37,4 @@ function [mag, phase] = cumm_energy(signal)
         else mag(i) = 0; phase(i) = 0;
         end
     end
-
-    cond = find(phase < 0);
-    phase(cond) = phase(cond) + 2*pi;
 end
