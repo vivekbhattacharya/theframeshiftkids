@@ -29,8 +29,7 @@ function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
 
     % Must be figure(2) for alopeciaunity to work
     function draw_polar(fs)
-        figure(2);
-        polar(phase, mag);
+        figure(2); polar(phase, mag);
         if fs
             hold on;
             x = polar(phase(fs(1)), mag(fs(1)), 'ro');
