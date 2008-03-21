@@ -3,9 +3,14 @@
 function [dvec] = inst_energy(mag, phase)
     L = 1; upper = length(mag);
     x = min(max(1, (1:upper) - L), upper - L);
+    y = [x(2:end) x(end)];
 
-    a = (mag(x + L) - mag(x))/L;
-    b = (phase(x + L) - phase(x))/L;
-    d = exp(j*phase) .* (a + j*b.*mag);
-    dvec = [abs(d); angle(d)];
+    dvec = diffvec(mag(x), mag(y), phase(x), phase(y));
+end
+
+function [dvec] = diffvec(m1,m2,p1,p2)
+    % m1, p1 is the first vector in polar; m2, p2 the second
+    dx = m2 .* cos(p2) - m1 .* cos(p1);
+    dy = m2 .* sin(p2) - m1 .* sin(p1);
+    dvec = [sqrt(dx .^ 2 + dy .^ 2); atan2(dy, dx)];
 end
