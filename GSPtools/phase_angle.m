@@ -5,11 +5,11 @@
 function phase_angle(file)
     clear global Config;
     config();
-    
+
     signal = get_signal(file);
     [mag, theta] = cumm_energy(signal);
     dvec = inst_energy(mag, theta);
-    
+
     figure(10);
     mag = dvec(1, :);
     phase = dvec(2, :);
@@ -21,7 +21,7 @@ function phase_angle(file)
     plot(1:length(mag), mag);
     xlabel('Codon');
     ylabel('Magnitude');
-    
+
     subplot(2, 1, 2);
     plot(1:length(phase), phase);
     xlabel('Codon');
