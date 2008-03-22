@@ -1,9 +1,9 @@
 % Takes cumm_energy.m phasor and returns it in addition to a modified
 % phase.
 function [dvec] = inst_energy(mag, phase)
-    L = 1; upper = length(mag);
-    x = min(max(1, (1:upper) - L), upper - L);
-    y = [x(2:end) x(end)];
+    upper = length(mag);
+    x = max(1, (1:upper) - 1);
+    y = x([2:end end]);
 
     dvec = diffvec(mag(x), mag(y), phase(x), phase(y));
 end
