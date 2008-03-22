@@ -17,10 +17,7 @@ s = pearl('getseq.pl', ['"' file '"']);
 signal = pearl('scan_brightly.pl', sprintf('auuccuccacuag "%s"', file));
 
 % Simulate load() on a string instead of a file.
-global Config;
 signal = str2num(signal);
-signal = [Config.signal_shift signal'];
-
 if isempty(signal)
     ensure = sprintf('I cannot pull signals. Ensure `perl -v` shows Perl is of version 5.6 or higher.\n');
     ensure = [ensure sprintf('Remember to run cleanpath(''path/to/BWFtools''); savepath.\n')];
@@ -28,3 +25,6 @@ if isempty(signal)
     ensure = [ensure sprintf('Perl said for signal: %s\n', signal)];
     error(ensure);
 end
+
+global Config;
+signal = [Config.signal_shift signal'];
