@@ -1,4 +1,7 @@
 % I, given a file, call Kidnap for you.
+%
+% USAGE:
+%     [signal, sequence] = get_signal('gene.txt')
 function [signal, s] = get_signal(f)
 
 file = which(f);
