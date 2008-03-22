@@ -72,17 +72,6 @@ function [break_p] = handle_aging(code, anthill, fs)
     end
 end
 
-function [dead] = is_stopper(codon)
-    global Travel termites;
-    dead = false;
-
-    % termites doubles as a disp_shifts flag for now.
-    if (Travel.(codon) == 1000)
-        termites{end+1} = 0;
-        dead = true;
-    end
-end
-
 % Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
 % Config.phi_sp chosen specifically to make prfB work, cf. Lalit et
 % al. This is heavily optimized. Do not refer to it for the math.
