@@ -3,15 +3,23 @@
 
 == What's New in Version Four (r212) ==
 
+=== 4.669 (unreleased) ===
+  * We renamed `cumm_mag_phase` and `diff_vectors` to `cumm_energy` and `inst_energy` to reflect their actual use.
+    * Both have been fully vectorized for small performance gains.
+  * We removed stop detection due to its being obsolete.
+  * We buffered `disp_shifts`, which should produce noticeable performance gains. It used to be an I/O bottleneck.
+  * We now compute `inst_energy` with actual vector subtraction rather than converting between phase-magnitude and complex numbers.
+  * `quasiforce` plots the wait times of a sequence. Don't ask me why.
+  * `Config.dire` controls quick-exit probability calculations. It's useful in speeding up things one-hundred fold in `sensitivity` and `quasiforce`.
+
 === 4.66 (r524) ===
   * God 2.0: It's our new genetic algorithm that attempts to find the best TAV matrix given a yield criteria. In our case, we used it to find the optimal TAV values in an attempt to calibrate them according to bovine growth hormone biological data.
-  * Performance increases across the board as we vector-parallelize many time-intensive tasks in GSPtools proper.
-  * Config.detect_stops and Config.detect_pauses let you control the detection of stop codons and long wait times.
+  * Performance increases across the board as we vectorize GSPtools.
+  * Config.detect_stops and Config.detect_pauses controls the detection of stop codons and long wait times.
   * sensitivity.m creates sensitivity plots, mainly used for Weiss genes.
   * Travel2.mat replaces the old Travel.mat if you want the new values outputted from God 2.0.
 
 === 4.6 (r325) ===
-
   * [BecomingHarsher The harsher yield model] is now gone, but in its place comes [Deviation]. You can switch back to probability via `config.m`.
   * Extensive documentation for the `Kidnap` module (Issue 3)
   * Optional arguments for `megaunity` and `unity` (Issue 1); for usage, see in-file documentation.
