@@ -1,0 +1,9 @@
+#summary Journey through the model
+#labels docs,overviews,code
+
+* Kidnap::Freier outputs free energy values by simulating hybridization with the 16S rRNA tail per Freier and Starmer's works.
+* `cumm_energy` accumulates these energy values in a three-register memory model. It then normalizes the memory and constructs a phasor based on a sinusoidal representation of the energy.
+* `inst_energy` differentiates the `cumm_energy` to arrive at energy available at each codon.
+* `displacement` can the deterministic changes in displacement from converting the energy phasor into a sine wave and accumulating them.
+* The above three steps are based on Ponnala's work, outlined best by his JBSB paper that is available from Downloads.
+* Our stochastic model adds sinusoidal probability curves that affects the simulated ribosome's choice of codon at any given juncture.
