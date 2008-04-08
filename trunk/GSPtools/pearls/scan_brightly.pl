@@ -7,31 +7,37 @@ use lib dirname(__FILE__);
 use Getopt::Std;
 use Kidnap::Bind;
 use Smooth;
+use Cache;
 
-require Kidnap::Freier;
 sub align_factory {
     our ($opt_p, $opt_t); getopts('p:t:');
     $opt_t ||= 37 + 273.15;
-    
+
     my $o = $opt_p ?
       eval "require $opt_p; $opt_p->new($opt_t)" :
         Kidnap::Freier->new($opt_t);
     die $@ if $@;
-	
+
     Kidnap::Bind->new($o);
 }
 
 if ($0 eq __FILE__) {
     Smooth::helpcheck();
-	
-    my $align = align_factory();
+
     local @_ = @ARGV;
     my $rna = shift or die 'scan_brightly: No RNA binding sequence given';
     my $seq = shift or die 'scan_brightly: No sequence file given';
-    
+
+    $seq = Smooth::getseq $seq;
+    my $cache = Cache->init('scan_brightly_cache');
+    $cache->maybe_print_and_exit($rna, $seq);
+
+    # If we're here, it's not cached.
+    require Kidnap::Freier;
     $rna = uc Util::dna2rna($rna);
-    $seq = uc Util::dna2rna(Smooth::getseq $seq);
-	
+    $seq = uc Util::dna2rna($seq);
+
+    my $align = align_factory();
     my $n_rna = length $rna;
     my $n_seq = length $seq;
 
