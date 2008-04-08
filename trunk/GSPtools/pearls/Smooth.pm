@@ -22,6 +22,7 @@ sub mooch {
     } else {
         open(my $handle, $file) or die "webget: Cannot open file `$file`";
         @lines = <$handle>;
+        close($handle);
     }
     # Handle Windows line endings.
     map { s/\r|\n//g } @lines;
