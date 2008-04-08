@@ -35,16 +35,22 @@ if ($0 eq __FILE__) {
     my $n_rna = length $rna;
     my $n_seq = length $seq;
 
+    my @energies;
     for my $i (0 .. $n_seq - $n_rna) {
         my $toys = substr($seq, $i, $n_rna);
-		
-        # Free energy values greater than zero represent binding
-        # that cannot take place without added energy,
-        # equivalent to as if no binding had taken place
-        my $free_energy = $align->bind($toys, $rna);
-        $free_energy = 0 if $free_energy > 0;
-        print $free_energy, $/;
+
+        # Free energy values greater than zero represent binding that
+        # cannot take place without added energy, equivalent to as if
+        # no binding had taken place
+        my $energy = $align->bind($toys, $rna);
+        $energy = 0 if $energy > 0;
+        push @energies, $energy;
     }
+    my $str = join ' ', @energies;
+    print $str;
+
+    # Since it's not cached, cache it.
+    $cache->new_store($str);
 }
 1;
 
@@ -68,7 +74,7 @@ scan_brightly.pl
 
 =head1 DESCRIPTION
 
-scan_brightly takes an RNA binding sequence (like the 3 prime tail on the 16s 
+scan_brightly takes an RNA binding sequence (like the 3 prime tail on the 16s
 rRNA) and calculates the free energy signals that determine how well it
 will bind to the sequence (DNA or RNA) at every point, outputting it.
 Each signal is separated by a newline, allowing Matlab to store the result
