@@ -1,9 +1,10 @@
 #summary The three-pronged arrow of times.
-#labels Featured,changes
+#labels Featured,changes,docs
 
 == What's New in Version Four (r212) ==
 
-=== 4.669 (unreleased) ===
+=== 4.669 (r621) ===
+  * Faster than ever thanks because Kidnap now intelligently caches free energy results.
   * We renamed `cumm_mag_phase` and `diff_vectors` to `cumm_energy` and `inst_energy` to reflect their actual use.
     * Both have been fully vectorized for small performance gains.
   * We removed stop detection due to its being obsolete.
