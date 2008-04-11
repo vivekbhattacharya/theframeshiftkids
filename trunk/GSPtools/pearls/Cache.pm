@@ -11,11 +11,16 @@ sub init {
     my ($class, $dir) = @_;
     $self->{cache_dir} = $dir;
     bless($self, $class);
+
+    $self->make_cache_dir;
+    return $self;
 }
 
 sub make_cache_dir {
-    return if -d $temp_dir;
-    mkpath $temp_dir;
+    my $self = shift;
+    my $dir = File::Spec->catdir($temp_dir, $self->{cache_dir});
+    return if -d $dir;
+    mkpath $dir;
 }
 
 sub maybe_print_and_exit {
