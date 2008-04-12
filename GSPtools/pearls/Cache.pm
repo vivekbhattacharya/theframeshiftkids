@@ -42,8 +42,9 @@ sub new_store {
     my $self = shift;
     my $str = shift;
     my $file = $self->{cache_file};
-    open(my $h, ">$file")
-      or die 'Cache.pm: Unable to write to store.';
+
+    # We'll just silently fail for now.
+    open(my $h, ">$file") or return;
     print $h $str;
     close($h);
 }
