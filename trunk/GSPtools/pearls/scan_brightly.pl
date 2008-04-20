@@ -30,7 +30,7 @@ if ($0 eq __FILE__) {
 
     $seq = Smooth::getseq $seq;
     my $cache = Cache->init('scan_brightly_cache');
-    $cache->maybe_print_and_exit($rna, $seq);
+    $cache->maybe_print_and_exit($rna, $seq, $opt_t, $opt_p);
 
     # If we're here, it's not cached.
     require Kidnap::Freier;
