@@ -4,11 +4,11 @@ use Test::Simple tests => 2;
 
 sub check {
     my ($seq, $p, $standard) = @_;
-    
+
     my $candy = `perl ..\\scan_brightly.pl -p $p auuccuccacuag $seq`;
-    local $/;
     open(my $handle, $standard);
     my $cavities = <$handle>;
+    $cavities =~ s/\n//;
     ok($candy eq $cavities, "$seq with $p");
 }
 
