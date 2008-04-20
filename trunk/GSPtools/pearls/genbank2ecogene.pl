@@ -9,11 +9,12 @@ sub infer {
 
     # Lucky for us, the next line is always the /gene. Then we'll
     # grope around in the dark and try to find /product.
-    my ($gene) = $lines[++$i] =~ /gene="(.*?)"/;
-    $i++ until $lines[$i] =~ /product=/;
+    $i++ until $lines[$i] =~ /gene=/;
+    my ($gene) = $lines[$i] =~ /gene="(.*?)"/;
 
     # Some products span more than one line. We'll need to remove
     # initial whitespace and newlines before extracting $desc.
+    $i++ until $lines[$i] =~ /product=/;
     my $desc;
     for (join '::', @lines[$i .. $i+3]) {
         s/::\s+//g; s/(\r|\n)/ /g;
