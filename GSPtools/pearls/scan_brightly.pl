@@ -10,9 +10,7 @@ use Smooth;
 use Cache;
 
 sub align_factory {
-    our ($opt_p, $opt_t); getopts('p:t:');
-    $opt_t ||= 37 + 273.15;
-
+    my ($opt_p, $opt_t) = @_;
     my $o = $opt_p ?
       eval "require $opt_p; $opt_p->new($opt_t)" :
         Kidnap::Freier->new($opt_t);
@@ -23,6 +21,8 @@ sub align_factory {
 
 if ($0 eq __FILE__) {
     Smooth::helpcheck();
+    our ($opt_p, $opt_t); getopts('p:t:');
+    $opt_t ||= 37 + 273.15;
 
     local @_ = @ARGV;
     my $rna = shift or die 'scan_brightly: No RNA binding sequence given';
@@ -37,7 +37,7 @@ if ($0 eq __FILE__) {
     $rna = uc Util::dna2rna($rna);
     $seq = uc Util::dna2rna($seq);
 
-    my $align = align_factory();
+    my $align = align_factory($opt_p, $opt_t);
     my $n_rna = length $rna;
     my $n_seq = length $seq;
 
