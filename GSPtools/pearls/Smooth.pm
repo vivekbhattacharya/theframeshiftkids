@@ -65,7 +65,7 @@ sub sanitize {
 # Cf. page 43-6 of _Programming Perl for Bioinformatics_
 # by James D. Tisdall
 sub reverse_complement {
-    for(shift) { tr/atcg/uagc/; return scalar reverse; }
+    for(shift) { tr/autcg/uaagc/; return scalar reverse; }
 }
 
 # http://en.wikipedia.org/wiki/List_of_standard_amino_acids
