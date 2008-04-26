@@ -20,7 +20,7 @@ signal_arg = '';
 if Config.should_cache
     signal_arg = sprintf('auuccuccacuag "%s"', file);
 else
-    signal_arg = sprintf('auuccuccacuag "%s"', file);
+    signal_arg = sprintf('-n auuccuccacuag "%s"', file);
 end
 
 output = pearl('scan_brightly.pl', signal_arg);
