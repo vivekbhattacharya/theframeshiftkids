@@ -23,6 +23,7 @@ if ($0 eq __FILE__) {
     Smooth::helpcheck();
     our ($opt_p, $opt_t, $opt_n); getopts('np:t:');
     $opt_t ||= 37 + 273.15;
+    $opt_p ||= 0;
 
     local @_ = @ARGV;
     my $rna = shift or die 'scan_brightly: No RNA binding sequence given';
