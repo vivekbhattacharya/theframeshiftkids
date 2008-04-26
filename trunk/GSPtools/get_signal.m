@@ -26,12 +26,12 @@ end
 output = pearl('scan_brightly.pl', signal_arg);
 
 % Simulate load() on a string instead of a file.
-signal = sscanf(signal, '%f');
+signal = sscanf(output, '%f');
 if isempty(signal)
     ensure = sprintf('I cannot pull signals. Ensure `perl -v` shows Perl is of version 5.6 or higher.\n');
     ensure = [ensure sprintf('Remember to run cleanpath(''path/to/BWFtools''); savepath.\n')];
     ensure = [ensure sprintf('Perl said for sequence: %s\n', s)];
-    ensure = [ensure sprintf('Perl said for signal: %s\n', signal)];
+    ensure = [ensure sprintf('Perl said for signal: %s\n', output)];
     error(ensure);
 end
 
