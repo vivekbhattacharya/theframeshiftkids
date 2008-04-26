@@ -58,7 +58,7 @@ sub seq2codons {
 
 # Convert all gene sequences to this normalized form.
 sub sanitize {
-    $_ = shift;
+    local $_ = shift;
     s/[\s0-9]//g; $_ = lc $_; tr/t/u/; chomp; $_;
 }
 
