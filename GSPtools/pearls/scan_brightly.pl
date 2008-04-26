@@ -21,7 +21,7 @@ sub align_factory {
 
 if ($0 eq __FILE__) {
     Smooth::helpcheck();
-    our ($opt_p, $opt_t); getopts('p:t:');
+    our ($opt_p, $opt_t, $opt_n); getopts('np:t:');
     $opt_t ||= 37 + 273.15;
 
     local @_ = @ARGV;
@@ -56,7 +56,7 @@ if ($0 eq __FILE__) {
     print $str;
 
     # Since it's not cached, cache it.
-    $cache->new_store($str);
+    $cache->new_store($str) unless $opt_n;
 }
 1;
 

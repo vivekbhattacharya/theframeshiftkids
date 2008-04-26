@@ -11,6 +11,7 @@ function config
 
     % Normally, don't abort displacement at the first sign of trouble.
     Config.dire = 0;
+    Config.should_cache = 0;
 
     Config.detect_pauses = 0;
 end

@@ -3,6 +3,7 @@
 % USAGE:
 %     [signal, sequence] = get_signal('gene.txt')
 function [signal, s] = get_signal(f)
+global Config;
 
 file = which(f);
 if isempty(file)
@@ -14,7 +15,15 @@ if isempty(file)
 end
 
 s = pearl('getseq.pl', ['"' file '"']);
-signal = pearl('scan_brightly.pl', sprintf('auuccuccacuag "%s"', file));
+
+signal_arg = '';
+if Config.should_cache
+    signal_arg = sprintf('auuccuccacuag "%s"', file);
+else
+    signal_arg = sprintf('auuccuccacuag "%s"', file);
+end
+
+output = pearl('scan_brightly.pl', signal_arg);
 
 % Simulate load() on a string instead of a file.
 signal = sscanf(signal, '%f');
@@ -26,5 +35,4 @@ if isempty(signal)
     error(ensure);
 end
 
-global Config;
 signal = [Config.signal_shift signal'];
