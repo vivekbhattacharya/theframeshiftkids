@@ -80,10 +80,9 @@ foreach my $i (0 .. $#lines) {
 
     # I extract the integers into an array by removing everything that
     # isn't. Splitting creates empty strings, which I remove.
-    $locs =~ s/[^\d]/:/g;
-    my @locs = grep {$_} split /:+/, $locs;
+    my @locs = grep {$_} split /[^\d]+/, $locs;
 
-    my $start = $parser->{complemented} ? max @locs : min @locs - 12;
+    my $start = $parser->{complemented} ? max @locs : min(@locs) - 12;
     my $leader = substr($genome, $start, 12);
     $leader = $parser->complement($leader) if $parser->{complemented};
 
