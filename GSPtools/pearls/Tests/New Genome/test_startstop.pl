@@ -1,16 +1,16 @@
 use strict;
 use warnings;
-use lib '../..';
+use File::Basename;
+use lib dirname(__FILE__) . '/../..';
 use Smooth qw(getseq);
 
-chdir('genes');
+chdir(shift @ARGV);
 foreach (glob('*.txt')) {
     my $a = Smooth::getseq $_;
     $a = substr($a, 12);
     if ($a =~ /^(gug|aug)/) {next;}
-    else {print '$_ does not have a start codon';}
+    else {print "$_ does not have a start codon\n";}
 
     if ($a =~ /(uag|uga|uaa)$/) {next;}
-    else {print '$_ does not have a stop codon';}
-    print "\n";
+    else {print "$_ does not have a stop codon\n";}
 }
