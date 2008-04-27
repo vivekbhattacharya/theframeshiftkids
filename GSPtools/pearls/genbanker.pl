@@ -84,7 +84,7 @@ foreach my $i (0 .. $#lines) {
 
     my $start = $parser->{complemented} ? max @locs : min(@locs) - 12;
     my $leader = substr($genome, $start, 12);
-    $leader = $parser->complement($leader) if $parser->{complemented};
+    $leader = Smooth::reverse_complement($leader) if $parser->{complemented};
 
     open(my $seq_h, '>' . File::Spec->catfile($dir, "$gene.txt"));
     print $seq_h "> $desc$/";
