@@ -20,7 +20,7 @@ foreach (qw/a b c/) {
 use Data::Dumper;
 
 # Be careful! hexdigest destroys the state of $sha1!
-if ($sha1->hexdigest eq 'c205849564a51bfc54b8da7d793f46f411146b49') {
+if ($sha1->hexdigest eq 'b9a33728740ad6ca9051d331b2381aba797d6398') {
     print 'ok 1', $/;
 }
 else {
