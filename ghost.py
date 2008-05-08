@@ -15,7 +15,7 @@ def fxsin(x):
     period = 4
     magic = 2*pi/period
     phase = pi/2 - magic
-    
+
     if x > 4 - period and x < 4 + period:
         return sin(x*magic/2 + phase)
     return 0.0
@@ -36,7 +36,7 @@ def bxsin(x):
     period = 4
     magic = 2*pi/period
     phase = pi/2 + magic
-    
+
     if x > -4 - period and x < -4 + period:
         return sin(x*magic/2 + phase)
     return 0.0
