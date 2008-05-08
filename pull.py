@@ -101,7 +101,9 @@ def displacement(seq, diffs, fs):
         diff = diffs[:, k]
 
         codons = [b(seq[i:i+3], bxsin), b(seq[i+1:i+4], xcos), b(seq[i+2:i+5], fxsin)]
-        x.append(x[k]); diff = diffs.next()
+
+        # Initialize new slot in displacement values.
+        x.append(x[k])
         for persian in xrange(1, 1000):
             # Window function: two units of shift equals on frameshift
             back, here, there = [nudge(c, x[k+1] - 2*shift) for c in codons]
@@ -124,14 +126,14 @@ def displacement(seq, diffs, fs):
             phi_dx = (pi/3)*x[k+1] - species + diff[1]
             x[k+1] += -0.005 * diff[0] * sin(phi_dx)
 
-    # Calculate deviation yield (by parts if necessary)
     x = numpy.array(x)
+    # Calculate deviation yield (by parts if necessary)
     away = 0
-    if not fs == []:
-        # fs, the cumulative actuary, stops early in its tabulation of
-        # the predicted shifts e.g. [0 0 0 ... 2] vs. [0 0 0 ... 2 2 2 ...]
-        away = sum((x[0:len(fs)] - fs)**2) + sum((x[len(fs):] - fs[-1])**2)
-    else: away  = sum((x - 0)**2)
+    if fs:
+        away = numpy.zeros(len(x))
+        away[fs] = 2
+        away = numpy.cumsum(away)
+    away = sqrt(numpy.mean((x - away) ** 2))
 
     print ants
     print termites
