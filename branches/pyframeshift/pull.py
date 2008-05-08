@@ -135,9 +135,9 @@ def displacement(seq, diffs, fs):
         away = numpy.cumsum(away)
     away = sqrt(numpy.mean((x - away) ** 2))
 
-    print ants
-    print termites
-    print sqrt(away / (maximus//3))
+    print '> %s' % '; '.join(ants)
+    print '> %s' % '; '.join(termites)
+    print away
     return x
 
 if __name__ == '__main__':
