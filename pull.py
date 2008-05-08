@@ -44,20 +44,16 @@ def magphase(signal):
 from ghost import fakeslope
 from cmath import exp, log
 def diff_vectors(mag, phase, count):
-    vec = []
-    for i in xrange(0, count):
-        # We want (x-1, x+1) to be (0, 2), (0, 2), (1, 3),
-        # (2, 4), ..., (n-4, n-2), (n-3, n-1). Therefore, we
-        # need x to be 1, 1, 2, 3, ..., n-3, n-2.
-        x = min(max(1, i), count-2)
+    upper = len(mag)
+    r = numpy.arange(0, upper) - 1
+    x = numpy.where(0 > r, 0, r)
+    y = numpy.r_[x[1:], x[-1:]] # Skip first, repeat last.
+    return diffvec(mag[x], mag[y], phase[x], phase[y])
 
-        # Find the codon, remembering that
-        # the array index starts at zero.
-        magic, phaser = [fakeslope(data[x-1], data[x+1]) for data in (mag, phase)]
-        D = exp(1j*phase[i]) * (magic + 1j*mag[i]*phaser)
-
-        # angle(z) is equivalent to log(z).imag
-        yield [abs(D), log(D).imag]
+def diffvec(m1, m2, p1, p2):
+    dx = m2 * numpy.cos(p2) - m1 * numpy.cos(p1)
+    dy = m2 * numpy.sin(p2) - m1 * numpy.sin(p1)
+    return numpy.array([numpy.sqrt(dx ** 2 + dy ** 2), numpy.arctan2(dy, dx)])
 
 #################################################################
 
@@ -96,12 +92,13 @@ def displacement(seq, diffs, fs = []):
     x = [0.0, 0.1]
     away = 0
 
-    shift = 0; maximus = len(seq); diffs.next()
+    shift = 0; maximus = len(seq)
     for k in xrange(1, maximus//3):
         # 3(k+1) + shift - 1 expanded because i+1:i+4
         # must be the +0 codon, starting with the THIRD.
         i = 3*k + shift + 2
         if i + 5 > maximus: break
+        diff = diffs[:, k]
 
         codons = [b(seq[i:i+3], bxsin), b(seq[i+1:i+4], xcos), b(seq[i+2:i+5], fxsin)]
         x.append(x[k]); diff = diffs.next()
