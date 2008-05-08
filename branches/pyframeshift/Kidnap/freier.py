@@ -15,7 +15,7 @@ class Freier(object):
     def internal(self, top, bottom, *args):
         t5, t3, b3, b5 = top + bottom
         if not(valid_pair(t5, b3) and valid_pair(t3, b5)): return BIGNUM
-        
+
         scores = {
             'au': {
                 # Watson-Crick matches and G/U mismatches
@@ -38,13 +38,13 @@ class Freier(object):
                 'gu': -0.6, 'ug': -0.5,
             },
         }
-        
+
         return scores[t5 + b3][t3 + b5]
-    
+
     def terminal(self, top, bottom, left_side):
         t5, t3, b3, b5 = top + bottom
         if left_side: (t5, b5) = (b5, t5); (t3, b3) = (b3, t3)
-        
+
         if not wc_pair(t5, b3): return BIGNUM
         scores = {
             'au': {
@@ -75,5 +75,5 @@ class Freier(object):
                 'uc': -0.8, 'cu': -0.5,
             },
         }
-        
+
         return scores[t5 + b3][t3 + b5]
