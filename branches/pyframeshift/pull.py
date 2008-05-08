@@ -82,7 +82,7 @@ def nudge(self, weight):
 from ghost import fxsin, xcos, bxsin
 from random import random
 from math import sin, pi
-def displacement(seq, diffs, fs = []):
+def displacement(seq, diffs, fs):
     """ Uses differential vectors to stochastically generate a displacement
         plot, detecting frameshifts, reloops, stop codons, and pausing """
     def cheese(self, *args): self.append('%s,%s' % args)
