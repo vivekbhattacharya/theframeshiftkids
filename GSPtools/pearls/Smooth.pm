@@ -9,42 +9,34 @@ BEGIN {
     our @EXPORT_OK = qw(prot2codon codon2prot getseq);
 }
 
-# Yields an array of lines from $file to $func,
-# be it on the Internet or not. The array
-# is NOT a reference.
-sub mooch {
-    my $file = shift;
-
-    my @lines = ();
-    if ($file =~ m|^http://|) {
-        my $contents = get $file;
-        @lines = split($/, $contents);
-    } else {
-        open(my $handle, $file) or die "webget: Cannot open file `$file`";
-        @lines = <$handle>;
-        close($handle);
-    }
-    # Handle Windows line endings.
-    map { s/\r|\n//g } @lines;
-    @lines;
-}
-
-# Maps $func to the lines of the $file,
-# be it on the Internet or not.
+# Maps $func to the lines of the $file, be it on the Internet or not.
+# Obscure trivia: Like map, it returns the resulting array but nobody
+# uses it except getseq.
 sub webopen {
     my ($file, $func) = @_;
-    # The following rates 9/10 on the Awesome Scale.
-    map { $func->($_) } mooch($file);
+    if ($file =~ m|^http://|) {
+        my @lines = split($/, get $file);
+        map { $func->($_) } @lines;
+    } else {
+        open(my $handle, $file) or die "webopen: Cannot open file `$file`";
+        $func->($_) while <$handle>;
+    }
 }
 
 # Read the file/url and return the contents.
 sub webslurp {
-    return join('', mooch shift);
+    my ($file) = @_;
+    if ($file =~ m|^http://|) {
+        return get $file;
+    } else {
+        open(my $handle, $file) or die "webslurp: Cannot open file `$file`";
+        local $/; return <$file>;
+    }
 }
 
 sub getseq {
     # FASTA files are so annoying.
-    my @lines = grep !/^>/, mooch shift;
+    my @lines = webopen shift, sub { $_ unless /^>/ };
     sanitize(join '', @lines);
 }
 
