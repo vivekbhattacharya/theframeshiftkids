@@ -20,10 +20,10 @@ sub print_check {
     my ($truth, $given, $actual) = @_;
     # Output results with strings for eye comparison
     # since wdiff is out of the question.
-    if ($truth) { print "$/# They are equal. Congratulations.$/" }
-    else { print "$/# They are not equal.$/" }    
-    print " Given: $given$/$/";
-    print "Actual: $actual$/";
+    if ($truth) { print "$/They are equal. Congratulations.$/$/" }
+    else { print "$/# They are not equal.$/" }
+    print "Given:$/$given$/$/";
+    print "Actual:$/$actual$/";
 }
 
 # Returns a fabulous list of randomly selected codons
@@ -59,7 +59,7 @@ sub check {
 
     $actual = Smooth::webslurp($actual);
     $actual =~ s/[^A-Z]//g;
-    
+
     return (1,$proteins,$actual) if $actual eq $proteins;
     (0,$proteins,$actual);
 }
@@ -74,10 +74,9 @@ sub seq2proteins {
 # Converts two codon sequences into their respective
 # protein sequences and returns a truth value.
 sub rcheck {
-    my ($left, $right) =
-        (seq2proteins(shift), seq2proteins(shift));
-    return (1,$left,$right) if $left eq $right;
-    return (0,$left,$right);
+    my ($left, $right) = map {seq2proteins $_ } @_;
+    return (1, $left, $right) if $left eq $right;
+    return (0, $left, $right);
 }
 
 if ($0 eq __FILE__) {
