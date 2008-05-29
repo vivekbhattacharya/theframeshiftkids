@@ -19,11 +19,11 @@ sub webopen {
         map { $func->($_) } @lines;
     } else {
         open(my $handle, $file) or die "webopen: Cannot open file `$file`";
-        $func->($_) while <$handle>;
+        map { $func->($_) } <$handle>;
     }
 }
 
-# Read the file/url and return the contents.
+# Read the file/URL and return the contents.
 sub webslurp {
     my ($file) = @_;
     if ($file =~ m|^http://|) {
