@@ -1,8 +1,4 @@
 # For testing:
-# Codon sequence (rpoS): http://shadytrees.pastebin.ca/raw/594753
-# Alternative: http://shadytrees.pastebin.ca/raw/594746
-# Protein sequence: http://shadytrees.pastebin.ca/raw/595330
-
 use warnings; use strict;
 package Dysentery;
 use Smooth qw(prot2codon codon2prot getseq);
@@ -84,29 +80,71 @@ sub rcheck {
     return (0,$left,$right);
 }
 
-our $help = <<END;
-NAME
-    dysentery.pl
-    (web-enabled)
-    
-USAGE
-    1) Convert protein sequence (1-letter abbreviation standard) to codons.
-        `perl dysentery.pl --run [path to protein sequence] "[leader sequence]"`
-    2) Check if a codon sequence produces a protein sequence.
-        `perl dysentery.pl --check [path to codons] [path to proteins]`
-    3) Check if two codon sequences produce the same protein sequence.
-        `perl dysentery.pl --rcheck [path to codons] [path to codons]`
-END
 if ($0 eq __FILE__) {
-    if (!@ARGV or $ARGV[0] eq '--help') { print $help; }
-    elsif ($ARGV[0] eq '--check') {
-        print_check check($ARGV[1], $ARGV[2]);
+    my %table = (
+                 '--help' => \&Smooth::helpcheck,
+                 '--check' => sub { print_check check(@ARGV[1..2]) },
+                 '--rcheck' => sub { print_check rcheck(@ARGV[1..2]) },
+                 '--run' => sub { print_run run($ARGV[1]) }
+                 );
+    if (@ARGV > 0 and defined $table{$ARGV[0]}) {
+        $table{$ARGV[0]}->();
     }
-    elsif ($ARGV[0] eq '--rcheck') {
-        print_check rcheck($ARGV[1], $ARGV[2]);
-    }
-    elsif ($ARGV[0] eq '--run') {
-        print_run run($ARGV[1]);
+    else {
+        Smooth::helpcheck();
     }
 }
 1;
+
+__END__
+
+=head1 NAME
+
+dysentery.pl (web-enabled)
+
+=head1 SYNOPSIS
+
+dysentery.pl --run protein-sequence.txt "leader"
+
+dysentery.pl --check codons.txt protein-sequence.txt
+
+dysentery.pl --rcheck codons1.txt codons2.txt
+
+=over 20
+
+=item B<--run>
+
+Converts a protein sequence using the standard 1-letter abbreviations
+to codons
+
+=item B<--check>
+
+Checks if a codon sequence matches the protein sequence
+
+=item B<--rcheck>
+
+Checks if two codon sequences produces the same protein sequences
+
+=back
+
+=head1 URLs
+
+These will help you test this program.
+
+=over 20
+
+=item rpoS codon sequence
+
+http://shadytrees.pastebin.ca/raw/594753
+
+=item Alternative rpoS codon sequence
+
+http://shadytrees.pastebin.ca/raw/594746
+
+=item Protein sequence
+
+http://shadytrees.pastebin.ca/raw/595330
+
+=back
+
+=cut
