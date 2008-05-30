@@ -1,17 +1,18 @@
 #summary The three-pronged arrow of times.
 #labels Featured,changes,docs
 
-== What's New in Version Four (r212) ==
+== What's New in Version Four ==
 
-=== 4.669 (r621) ===
-  * Faster than ever thanks because Kidnap now intelligently caches free energy results.
-  * We renamed `cumm_mag_phase` and `diff_vectors` to `cumm_energy` and `inst_energy` to reflect their actual use.
-    * Both have been fully vectorized for small performance gains.
-  * We removed stop detection due to its being obsolete.
-  * We buffered `disp_shifts`, which should produce noticeable performance gains. It used to be an I/O bottleneck.
+=== 4.6692 ===
+  * It can now single-handedly extract all E. coli genes from Genbank data.
+
+=== 4.669 (r643) ===
   * We now compute `inst_energy` with actual vector subtraction rather than converting between phase-magnitude and complex numbers.
+  * It's faster than ever thanks because Kidnap now caches free energy results.
+  * We renamed `cumm_mag_phase` and `diff_vectors` to `cumm_energy` and `inst_energy` to reflect their actual use.
+  * We removed stop detection due to its being obsolete.
+  * Performance increases as we continue vectorization and after buffering `disp_shifts.m` and implementing quick-fail `Config.dire`.
   * `quasiforce` plots the wait times of a sequence. Don't ask me why.
-  * `Config.dire` controls quick-exit probability calculations. It's useful in speeding up things one-hundred fold in `sensitivity` and `quasiforce`.
 
 === 4.66 (r524) ===
   * God 2.0: It's our new genetic algorithm that attempts to find the best TAV matrix given a yield criteria. In our case, we used it to find the optimal TAV values in an attempt to calibrate them according to bovine growth hormone biological data.
@@ -27,9 +28,8 @@
   * Model now detects stop codons and unusually long wait times (`displacement.m`) that we call ribosomal hyperpauses for short
   * `alopeciaunity.m` saves polar plots in batches, similar to what `opportunity.m` and `jejunity.m` do for overlay and error bar plots
     * `impunity.m` handles single files in addition to folders now. Try it out with `impunity('prfb.txt', {'uga,25'}, {}, 100)`.
-  * Performance increases in `cumm_mag_phase.m` and Kidnap
 
-=== 4 ===
+=== 4 (r212) ===
   * reloop and sofar gone, q.v. BecomingHarsher
   * The ThrushBaby algorithm
 
