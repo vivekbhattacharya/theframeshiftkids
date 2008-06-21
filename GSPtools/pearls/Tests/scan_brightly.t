@@ -6,9 +6,11 @@ sub check {
     my ($seq, $p, $standard) = @_;
 
     my $candy = `perl ..\\scan_brightly.pl -p $p auuccuccacuag $seq`;
+
     open(my $handle, $standard);
     my $cavities = <$handle>;
-    $cavities =~ s/\n//;
+    $cavities =~ s/\n//g;
+    $candy =~ s/\n//g;
     ok($candy eq $cavities, "$seq with $p");
 }
 
