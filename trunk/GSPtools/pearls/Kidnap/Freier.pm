@@ -129,7 +129,7 @@ current values, they are the only ones that work with GSPtools for now
 due to all the work built upon them.
 
 This module implements the API needed for a free energy module in
-Kidnap. 
+Kidnap.
 
 =head1 METHODS
 
@@ -138,7 +138,7 @@ Kidnap.
 =item $o->init_penalty()
 
 Initial penalty in free energy, tacked on to the sum total in
-Kidnap::Bind 
+Kidnap::Bind
 
 =item $o->terminal_doublet()
 
