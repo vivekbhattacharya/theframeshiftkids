@@ -12,7 +12,8 @@ my $script = shift @ARGV;
 
 my $sha1 = Digest::SHA1->new;
 foreach (qw/a b c/) {
-    open(my $h, "$temp/$_.txt");
+    my $file = "$temp/$_.txt";
+    open(my $h, $file) or die "Could not open $file";
     $sha1->addfile($h);
     close($h);
 }
