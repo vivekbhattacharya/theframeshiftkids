@@ -23,6 +23,9 @@ else
     signal_arg = sprintf('-n auuccuccacuag "%s"', file);
 end
 
+% Now to tag on the temperature and choice of values
+signal_arg = ['-t ' num2str(Config.temp) ' -p Kidnap::' Config.values ' ' signal_arg];
+
 output = pearl('scan_brightly.pl', signal_arg);
 
 % Simulate load() on a string instead of a file.

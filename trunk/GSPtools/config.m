@@ -14,4 +14,8 @@ function config
     Config.should_cache = 1;
 
     Config.detect_pauses = 0;
+    
+    % Set the temperature and the values to use
+    Config.temp = 37;
+    Config.values = 'Freier';
 end
