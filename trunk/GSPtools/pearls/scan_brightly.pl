@@ -106,8 +106,8 @@ double-colon syntax, such as C<Kidnap::XiaMathews>.
 
 =item -t NUM
 
-This specifies the temperature, in Kelvin, at which the binding occurs.
-The default value is 37 + 273.15, human body temperature.
+This specifies the temperature, in Celsius, at which the binding occurs.
+The default value is 37, human body temperature, for whatever reason.
 
 =item -n
 
