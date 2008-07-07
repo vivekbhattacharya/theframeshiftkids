@@ -15,7 +15,7 @@ function config
 
     Config.detect_pauses = 0;
     
-    % Set the temperature (Celsius) and the values to use
+    % Set the temperature (Celsius) and the values to use ('Freier' or 'XiaMathews')
     Config.temp = 37;
     Config.values = 'XiaMathews';
 end
