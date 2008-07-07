@@ -8,7 +8,7 @@ my @files = glob('*.txt');
 
 my $url = 'http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?db=nucleotide&val=%s&sendto=t';
 foreach my $file (@files) {
-    my $accn = substr($file, 0, -n4);
+    my $accn = substr($file, 0, -4);
     my $dir = File::Spec->catdir($genomelist, $accn);
 
     mkpath $dir if !-d $dir;
