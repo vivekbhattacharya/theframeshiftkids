@@ -6,7 +6,7 @@ function config
     Config.yield = 1;
 
     Config.init_disp = 0.1;
-    Config.phi_sp = -30 * pi/180;
+    Config.phi_sp = 3 * pi/180;
     Config.signal_shift = [];
 
     % Normally, don't abort displacement at the first sign of trouble.
@@ -17,5 +17,5 @@ function config
     
     % Set the temperature (Celsius) and the values to use ('Freier' or 'XiaMathews')
     Config.temp = 37;
-    Config.values = 'XiaMathews';
+    Config.values = 'Freier';
 end

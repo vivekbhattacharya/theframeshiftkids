@@ -24,7 +24,7 @@ else
 end
 
 % Now to tag on the temperature and choice of values
-kelvin_temp = Config.temp + 273.15 % To account for Hao's idiotic idea to ask for the temperature in Kelvin instead of Celsius
+kelvin_temp = Config.temp + 273.15; % To account for Hao's idiotic idea to ask for the temperature in Kelvin instead of Celsius
 signal_arg = ['-t ' num2str(kelvin_temp) ' -p Kidnap::' Config.values ' ' signal_arg];
 
 output = pearl('scan_brightly.pl', signal_arg);
