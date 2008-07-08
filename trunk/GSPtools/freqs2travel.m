@@ -5,7 +5,7 @@
 %
 % Names: From the original, the sexy, the one-and-only Codons.mat. I
 %   use it to order the final TAV.
-function [final_tav] = freqs2tav(freqs_file, Names)
+function [travel] = freqs2tav(freqs_file, Names)
     freqs_file = fopen(freqs_file);
     results = textscan(freqs_file, '%s %f');
     fclose(freqs_file);
@@ -79,8 +79,13 @@ function [final_tav] = freqs2tav(freqs_file, Names)
         tav.(line{1}) = freq.(line{2}) + freq.(line{3});
     end
 
+    % Stop codons set to 0. get_travel will set it to 1000.
+    tav.uga = 0; tav.uag = 0; tav.uaa = 0;
+
     final_tav = zeros(1, length(tav));
     for i = 1:length(Names)
         final_tav(i) = tav.(Names{i});
     end
+
+    travel = get_travel(Names, final_tav);
 end
