@@ -12,13 +12,7 @@ function travel = get_travel(codons, TAV)
     TAV(a) = 1000;
     TAV(b) = max_hund/min_hund - floor(TAV(b)/min_hund);
 
-    for i = 1:limit
-        str = [str sprintf('''%s'', %g,', codons{i}, TAV(i))];
-    end
-
-    % Delete trailing comma.
-    str(end) = [];
-    travel = eval([str ');']);
+    travel = cell2struct(num2cell(TAV), codons, 2);
 end
 
 function N = nloopcalc(index, TAV, max, min)
