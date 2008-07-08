@@ -113,7 +113,7 @@ sub codon2prot {
 use Pod::Usage;
 sub helpcheck {
     if (!@ARGV or $ARGV[0] eq '--help') {
-        pod2usage(-verbose => 3); exit;
+        pod2usage(-verbose => 3, -noperldoc => 1); exit;
     }
 }
 1;
