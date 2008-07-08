@@ -23,4 +23,4 @@ The files within the `God 2.0` and the `thrushbaby` directories are part of now-
 
 Free as in C memory, not free as in you burnt your thighs with our coffee and now we have a settlement. The primary Perl program exposed to users is the `scan_brightly.pl` file, which is an interface to our `Kidnap` Perl module. The command is simple: `scan_brightly.pl prfB.txt` and a list of free energies at each codon spills into your command prompt. Usually you will never have to type this because the list is useless without the Matlab portion of our model. However, let this not mislead you to believe that it's not important. Our entire model rests upon these free energies. They are our cornerstone and, most importantly, our friends.
 
-For a more in-depth treatment of all the pearls, see [Manuals/Pearls the Pearls section of the manual].
+For a more in-depth treatment of all the pearls, see [ManualsPearls the Pearls section of the manual].
