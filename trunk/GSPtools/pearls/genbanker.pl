@@ -14,7 +14,7 @@ use List::Util qw(max min);
 sub infer {
     my ($i, $lines) = @_;
 
-    $i++ until $lines->[$i] =~ /gene="(.*?)"/;
+    $i++ until $lines->[$i] =~ /(?:gene|locus_tag)="(.*?)"/;
     my ($gene, $gene_line) = ($1, $i);
 
     # Genes can have a /product= xor a /pseudo line.
