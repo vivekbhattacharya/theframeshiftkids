@@ -78,7 +78,7 @@ sub parse {
 
     my $i = 0;
     return sub {
-        until ($lines[$i] =~ /^\s+CDS/) {
+        until ($lines[$i] =~ /^\s+CDS/ and $lines[$i] =~ /\d/) {
             $i += 1;
             return if $i == $#lines;
         }
