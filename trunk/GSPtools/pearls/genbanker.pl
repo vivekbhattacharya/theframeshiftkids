@@ -20,26 +20,23 @@ sub infer {
     $max++ until $max == $#{$big_lines} or $big_lines->[$max] =~ /^\s+CDS/;
     my @lines = @{$big_lines}[$i .. $max];
 
-    my ($gene, $gene_line, $desc);
-    for (my $j = 0; $j < @lines; $j++) {
-        if ($lines[$j] =~ /(?:gene|locus_tag)="(.*?)"/) {
-            ($gene, $gene_line) = ($1, $j);
-        }
-        elsif ($lines[$j] =~ /(product=|pseudo)/) {
-            # Genes can have a /product= xor a /pseudo line.
-            if ($1 eq 'pseudo') {$desc = '/pseudo';}
-            else {
-                for (join '::', @lines) {
-                    s/::\s+//g; s/(\r|\n)/ /g;
-                    ($desc) = /product="(.*?)"/;
-                }
-            }
-        }
-    }
-    die "No gene or locus tag found starting from line $i" unless $gene;
-    $desc = 'No description found' unless $desc;
+    for (join ' ', @lines) {
+        s/(\r|\n)/::/g; s/(\s+|::)/ /g;
+        my ($locs) = /CDS\s+(.*?)\//;
+        my ($gene) = /(?:gene|locus_tag)="(.*?)"/;
+        my ($desc) = /product="(.*?)"/;
 
-    return ($gene_line + $i, $gene, $desc);
+        if (!$desc) {
+            $desc = 'No description found';
+            if (/pseudo/) {$desc = '/pseudo';}
+        }
+
+        # Not sure why there's a '<' in front of some genes.
+        if ($locs =~ /^<(.*)/) {$locs = $1;}
+
+        die "No gene or locus tag found starting from line $i" unless $gene;
+        return ($gene, $desc, $locs);
+    }
 }
 
 sub genome {
@@ -64,24 +61,6 @@ sub genome {
     return $genome;
 }
 
-sub locs {
-    # CDS locations span more than one line at times, and it's up to
-    # me to join them back together. Avert your eyes. Precondition: $i
-    # marks the beginning of a CDS line.
-    my ($i, $gene_line, $lines) = @_;
-    my $expr = join ' ', @{$lines}[$i .. $gene_line - 1];
-    $expr =~ s/\s+//g;
-    my @tokens = split m{/}, $expr;
-
-    $expr = $tokens[0];
-    $expr =~ /CDS(.*?)$/;
-
-    unless ($1) {
-        die "No locus found within the lines [$i, $gene_line]";
-    }
-    return $1;
-}
-
 sub parse {
     my ($genbank_file, $genome_file) = @_;
     my $genome = genome $genome_file;
@@ -94,15 +73,15 @@ sub parse {
 
     my $i = 0;
     return sub {
-        until ($lines[$i] =~ /^\s+CDS/ and $lines[$i] =~ /\d/) {
+        # Bad hack: Some amino acid lines have 'CDS'. Testing for a
+        # digit should produce the correct result.
+        until ($lines[$i] =~ /^\s+CDS.*?\d/) {
             $i += 1;
             return if $i == $#lines;
         }
 
-        my ($gene_line, $gene, $desc) = infer($i, \@lines);
-        my $locs = locs($i, $gene_line, \@lines);
-        my $seq = $parser->parse($locs) or
-          say "Unable to obtain $gene";
+        my ($gene, $desc, $locs) = infer($i, \@lines);
+        my $seq = $parser->parse($locs) or say "Unable to obtain $gene";
 
         # I extract the integers into an array by removing everything that
         # isn't. Splitting creates empty strings, which I remove.
