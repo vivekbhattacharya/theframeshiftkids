@@ -6,7 +6,7 @@ my $url = "http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?list_uids=%s&dopt=fast
 my $dir = $ARGV[0];
 if (!-d $dir) {
     mkpath($dir);
-    say "$dir created";
+    say "$dir directory created";
 }
 chdir($ARGV[0] or die 'No folder given.') or die 'Non-existent directory.';
 
