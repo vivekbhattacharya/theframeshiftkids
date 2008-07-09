@@ -13,6 +13,7 @@ chdir($ARGV[0] or die 'No folder given.') or die 'Non-existent directory.';
 while (<stdin>) {
     chomp;
     my $s = get sprintf($url, $_);
+    die "Empty genome $_" unless $s =~ /\S/;
     open(my $h, ">$_.txt") or die "Could not download $_.";
     print $h $s;
     close($h);
