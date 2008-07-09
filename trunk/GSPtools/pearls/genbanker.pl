@@ -107,11 +107,21 @@ if ($0 eq __FILE__) {
     }
 
     my $it = parse $genbank_file, $genome_file;
+    chdir($dir);
+
+    my %already = ();
     while (my ($gene, $desc, $leader, $seq) = $it->()) {
-        open(my $h, '>', File::Spec->catfile($dir, "$gene.txt"));
-        say $h "> $desc";
-        say $h $leader;
-        say $h $seq;
+        # Loop until we find a unique filename. -f won't work because
+        # it's possible the output directory is dirty from the last
+        # genbanker.pl run.
+        while (1) {
+            if (!$already{$gene}) {
+                $already{$gene} = 1; last;
+            }
+            $gene .= '-again';
+        }
+        open(my $h, '>', "$gene.txt");
+        say $h "> $desc\n$leader\n$seq";
     }
 }
 1;
