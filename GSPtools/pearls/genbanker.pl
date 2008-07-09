@@ -70,8 +70,15 @@ sub locs {
     # marks the beginning of a CDS line.
     my ($i, $gene_line, $lines) = @_;
     my $expr = join ' ', @{$lines}[$i .. $gene_line - 1];
-    $expr =~ s/\r?\n\s+//g;
-    $expr =~ /CDS\s+(.*?)$/;
+    $expr =~ s/\s+//g;
+    my @tokens = split m{/}, $expr;
+
+    $expr = $tokens[0];
+    $expr =~ /CDS(.*?)$/;
+
+    unless ($1) {
+        die "No locus found within the lines [$i, $gene_line]";
+    }
     return $1;
 }
 
