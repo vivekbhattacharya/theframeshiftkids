@@ -43,7 +43,7 @@ sub genome {
     my ($genome_file) = @_;
     my $genome = lc do {
         local $/;
-        open(my $genome_h, $genome_file)
+        open(my $genome_h, '<', $genome_file)
           or die 'Unable to open genome.';
         <$genome_h>;
     };
@@ -53,7 +53,7 @@ sub genome {
     $genome =~ tr/t/u/; # Convert to mRNA.
 
     # Write back a sanitized version for faster future runs.
-    open(my $h, ">$genome_file")
+    open(my $h, '>', $genome_file)
       or die 'Unable to open genome for writing.';
     print $h $genome;
     close($h);
@@ -67,7 +67,7 @@ sub parse {
     my $parser = new ParseGenbank($genome);
     my @lines = do {
         open(my $h, $genbank_file)
-          or die "Could not open $genbank_file";
+          or die "Could not open Genbank Nucleotide file $genbank_file";
         <$h>;
     };
 
