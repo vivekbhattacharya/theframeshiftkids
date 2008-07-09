@@ -12,25 +12,34 @@ use File::Spec;
 use List::Util qw(max min);
 
 sub infer {
-    my ($i, $lines) = @_;
+    my ($i, $big_lines) = @_;
 
-    $i++ until $lines->[$i] =~ /(?:gene|locus_tag)="(.*?)"/;
-    my ($gene, $gene_line) = ($1, $i);
+    # Because of so many errors, we're going to place well-defined
+    # bounds on how `infer` searches.
+    my $max = $i + 1;
+    $max++ until $max == $#{$big_lines} or $big_lines->[$max] =~ /^\s+CDS/;
+    my @lines = @{$big_lines}[$i .. $max];
 
-    # Genes can have a /product= xor a /pseudo line.
-    $i++ until $lines->[$i] =~ /(product=|pseudo)/;
-
-    my $desc;
-    # Some products span more than one line. We'll need to remove
-    # initial whitespace and newlines before extracting $desc.
-    if ($1 eq 'pseudo') {$desc = '/pseudo';}
-    else {
-        for (join '::', @{$lines}[$i .. $i+3]) {
-            s/::\s+//g; s/(\r|\n)/ /g;
-            ($desc) = /product="(.*?)"/;
+    my ($gene, $gene_line, $desc);
+    for (my $j = 0; $j < @lines; $j++) {
+        if ($lines[$j] =~ /(?:gene|locus_tag)="(.*?)"/) {
+            ($gene, $gene_line) = ($1, $j);
+        }
+        elsif ($lines[$j] =~ /(product=|pseudo)/) {
+            # Genes can have a /product= xor a /pseudo line.
+            if ($1 eq 'pseudo') {$desc = '/pseudo';}
+            else {
+                for (join '::', @lines) {
+                    s/::\s+//g; s/(\r|\n)/ /g;
+                    ($desc) = /product="(.*?)"/;
+                }
+            }
         }
     }
-    return ($gene_line, $gene, $desc);
+    die "No gene or locus tag found starting from line $i" unless $gene;
+    $desc = 'No description found' unless $desc;
+
+    return ($gene_line + $i, $gene, $desc);
 }
 
 sub genome {
