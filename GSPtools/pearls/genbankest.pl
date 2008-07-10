@@ -1,12 +1,14 @@
 use LWP::Simple qw(get);
-use File::Path; use 5.010;
+use File::Path qw(mkpath);
+use File::Basename;
 use File::Spec;
-use strict; use warnings;
+use strict; use warnings; use 5.010;
 
 chdir($ARGV[0]);
 my @files = glob('*.txt');
 
 my $url = 'http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?db=nucleotide&list_uids=%s&dopt=gbwithparts&sendto=t&fmt_mask=295416';
+my $genbank = File::Spec->catfile(dirname(__FILE__), 'genbanker.pl');
 foreach my $file (@files) {
     next if $file =~ /-genbankest\.txt/;
 
@@ -20,7 +22,7 @@ foreach my $file (@files) {
     open(my $h, '>', "$accn-genbankest.txt") or die "Could not download $accn";
     print $h $s;
 
-    my $cmd = sprintf('perl "C:\up\tools\pearls\genbanker.pl" %s-genbankest.txt %s "%s"', $accn, $file, $dir);
+    my $cmd = qq{perl "$genbank" "$accn-genbankest.txt" "$file" "$dir"};
     say $cmd;
     system($cmd);
 }
