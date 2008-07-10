@@ -29,6 +29,7 @@ sub infer {
         if (!$desc) {
             $desc = 'No description found';
             if (/pseudo/) {$desc = '/pseudo';}
+            if (/note="(.*?)"/) {$desc = "/note = $1";}
         }
 
         # Not sure why there's a '<' in front of some genes.
