@@ -1,0 +1,19 @@
+#labels manual,documentation,pearls,genbanking
+Besides free energies with `scan_brightly.pl`, you can do a smorgasbord of other bioinformatics-y things with the pearls including, but not limited to,
+
+  * Have a `scan_brightly.pl` sleepover (not documented here)
+  * Most importantly, download all the genes from another genome
+  * Convert a string of amino acids, written in the one-letter abbreviation form to an mRNA sequence
+  * Test the pearls
+
+== Downloading genes ==
+
+Ingredients required: You'll need Internet access, specifically access to [http://www.ncbi.nlm.nih.gov/ Genbank's website.] You'll also need the accession number for your organism. For example, _E. coli_'s K12 strain corresponds to NC_000913. You can do a quick search of Genbank's website and hope that the weird algorithm they use proffers you right one. An alternative is to search "Genbank _organism name_" on Google, which yields better results. Let's assume your accession number is A1821.
+
+To pull the genome, open a command prompt to the `pearls` folder and type `echo A1821|perl pull_genome.pl my_genomes`. This will save a `A1821.txt` file to the `my_genomes` folder. Now type `genbankest.pl my_genomes`. Genbankest downloads the Nucleotide file for `A1821.txt` and saves it to `A1821-genbankest.txt` for internal use by `genbanker.pl`. Afterward, you should see all the available genes in the `my_genomes/A1821` directory.
+
+To pull multiple genomes, open a text file and type each one on a new line. Save it to the `pearls` folder. Let's assume you saved it as `my_genomes.txt`. At the command line, type `type my_genomes.txt | perl pull_genome.pl my_genomes`. `genbankest.pl my_genomes` works the same. The genes for each genome will be saved to a different director in `my_genomes`.
+
+Genbank's Nucleotide files are, I surmise, designed by a somewhat-intelligent marshmallow; they are notoriously difficult to parse. `genbanker.pl`, which is the subsystem for `genbankest.pl`, is  friendly and verbose in reporting when it cannot pull a certain gene at which point you can send us (and by us, we mean shadytrees) an email with the accession number and gene. (The flip side is that `genbanker.pl` might not catch the error and _everything_ will go haywire.)
+
+Nucleotide files also sometimes give loci the same gene name. For example, there might be two loci (say, 100..200 and 200..300) with the gene name "H" because they both produce "H-protein," and somebody thought it'd be super-clever to have the end-user work through this edge case. We deal with it by saving the first one to `H.txt` and the second one to `H-again.txt`. If there's a third one, `H-again-again.txt`. And so forth.
