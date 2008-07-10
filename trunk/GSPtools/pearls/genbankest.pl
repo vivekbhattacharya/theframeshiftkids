@@ -6,7 +6,7 @@ use strict; use warnings;
 chdir($ARGV[0]);
 my @files = glob('*.txt');
 
-my $url = 'http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?db=nucleotide&val=%s&sendto=t';
+my $url = 'http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?db=nucleotide&list_uids=%s&dopt=gbwithparts&sendto=t&fmt_mask=295416';
 foreach my $file (@files) {
     next if $file =~ /-genbankest\.txt/;
 
@@ -15,7 +15,7 @@ foreach my $file (@files) {
     mkpath $dir if -d $dir;
 
     my $s = get sprintf($url, $accn);
-    die "Empty genome $file" unless $s =~ /\S/;
+    die "Empty Nucleotide web page for $file" unless $s =~ /\S/;
 
     open(my $h, '>', "$accn-genbankest.txt") or die "Could not download $accn";
     print $h $s;
