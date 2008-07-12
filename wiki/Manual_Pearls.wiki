@@ -1,8 +1,11 @@
+#summary All you need to know about Pearls
 #labels manual,documentation,pearls,genbanking,Travel
+
 Besides free energies with `scan_brightly.pl`, you can do a smorgasbord of other bioinformatics-y things with the pearls including, but not limited to,
 
   * Have a `scan_brightly.pl` sleepover (not documented here)
   * Most importantly, download all the genes from another genome
+  * Create a `Travel.mat` for _any_ organism
   * Convert a string of amino acids, written in the one-letter abbreviation form to an mRNA sequence
   * Test the pearls
 
