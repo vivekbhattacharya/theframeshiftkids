@@ -17,7 +17,7 @@ sub infer {
     # Because of so many errors, we're going to place well-defined
     # bounds on how `infer` searches.
     my $max = $i + 1;
-    $max++ until $max == $#{$big_lines} or $big_lines->[$max] =~ /^\s+CDS/;
+    $max++ until $max == $#{$big_lines} or $big_lines->[$max] =~ /^\s+(CDS|gene)/;
     my @lines = @{$big_lines}[$i .. $max];
 
     for (join ' ', @lines) {
