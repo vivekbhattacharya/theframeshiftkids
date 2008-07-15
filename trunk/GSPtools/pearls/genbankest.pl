@@ -1,3 +1,7 @@
+package Genbanker;
+require 'genbanker.pl';
+
+package Genbankest;
 use LWP::Simple qw(get);
 use File::Path qw(mkpath);
 use File::Basename;
@@ -22,7 +26,6 @@ foreach my $file (@files) {
     open(my $h, '>', "$accn-genbankest.txt") or die "Could not download $accn";
     print $h $s;
 
-    my $cmd = qq{perl "$genbank" "$accn-genbankest.txt" "$file" "$dir"};
-    say $cmd;
-    system($cmd);
+    say "$accn-genbankest.txt, $dir, $file";
+    Genbanker::main("$accn-genbankest.txt", $file, $dir);
 }
