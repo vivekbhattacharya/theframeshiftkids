@@ -76,7 +76,7 @@ end
 % Config.phi_sp chosen specifically to make prfB work, cf. Lalit et
 % al. This is heavily optimized. Do not refer to it for the math.
 function [overaged] = loop(piece, k, diff)
-    overaged = 0; age_limit = 1000; power = 10;
+    overaged = 0; age_limit = 1000; power = 10; c1 = 0.005;
 
     % [back_fail, here_fail, there_fail]
     fails = [1 1 1]; wt = 0;
@@ -119,7 +119,7 @@ function [overaged] = loop(piece, k, diff)
         % This follows from phi_signal(1,k) = dvec(2, k); see
         % "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
         phi_dx = ((pi/3)*x0) - Config.phi_sp;
-        dx = -0.005 * diff(1) * sin(diff(2) + phi_dx);
+        dx = -c1 * diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + dx;
     end
     if Config.detect_pauses
