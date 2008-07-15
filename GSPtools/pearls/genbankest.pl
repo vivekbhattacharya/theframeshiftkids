@@ -15,7 +15,6 @@ chdir($ARGV[0]);
 my @files = glob('*.txt');
 
 my $url = 'http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?db=nucleotide&list_uids=%s&dopt=gbwithparts&sendto=t&fmt_mask=295416';
-my $genbank = File::Spec->catfile(dirname(__FILE__), 'genbanker.pl');
 foreach my $file (@files) {
     next if $file =~ /-genbankest\.txt/;
 
