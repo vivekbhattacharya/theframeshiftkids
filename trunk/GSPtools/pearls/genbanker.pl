@@ -45,7 +45,7 @@ sub genome {
     my $genome = lc do {
         local $/;
         open(my $genome_h, '<', $genome_file)
-          or die 'Unable to open genome.';
+          or die "Unable to open genome $genome_file.";
         <$genome_h>;
     };
 
