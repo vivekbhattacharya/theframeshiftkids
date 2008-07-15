@@ -98,7 +98,7 @@ sub parse {
     }
 }
 
-if ($0 eq __FILE__) {
+sub main {
     my $genbank_file = shift or die 'No Genbank loci file given.';
     my $genome_file = shift or die 'No Genbank genome file given';
     my $dir = shift or die 'No output directory given.';
@@ -125,4 +125,7 @@ if ($0 eq __FILE__) {
         say $h "> $desc\n$leader\n$seq";
     }
 }
+
+main @ARGV if $0 eq __FILE__;
+
 1;
