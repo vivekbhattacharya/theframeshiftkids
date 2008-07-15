@@ -33,9 +33,17 @@ sub infer {
         }
 
         # Not sure why there's a '<' in front of some genes.
-        if ($locs =~ /^<(.*)/) {$locs = $1;}
+        # Addendum: Sometimes, there's a '>'! (NC_005841)
+        $locs =~ s/[<>]//g;
 
-        die "No gene or locus tag found starting from line $i" unless $gene;
+        # Thank you NC_007456's DNA polymerase.
+        unless ($gene) {
+            say "No name found (near line $i, makes $desc), defaulting to \"unknown\"";
+            $gene = "unknown";
+        }
+
+        # Thank you NC_007817 and your A* gene.
+        $gene =~ s/\*/-star/g;
         return ($gene, $desc, $locs);
     }
 }
