@@ -1,10 +1,13 @@
+package Genbankest;
+use File::Basename;
+use lib dirname(__FILE__);
+
 package Genbanker;
 require 'genbanker.pl';
 
 package Genbankest;
 use LWP::Simple qw(get);
 use File::Path qw(mkpath);
-use File::Basename;
 use File::Spec;
 use strict; use warnings; use 5.010;
 
