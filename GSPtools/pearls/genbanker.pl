@@ -126,9 +126,11 @@ sub main {
             if (!$already{$gene}) {
                 $already{$gene} = 1; last;
             }
-            $gene .= '-again';
+            my $x = int(rand(100));
+            $gene .= "-again-$x";
         }
-        open(my $h, '>', File::Spec->catfile($dir, "$gene.txt"));
+        my $file = File::Spec->catfile($dir, "$gene.txt");
+        open(my $h, '>', $file) or die "Unable to write to $file";
         say $h "> $desc\n$leader\n$seq";
     }
 }
