@@ -19,14 +19,16 @@ foreach my $file (@files) {
     next if $file =~ /-genbankest\.txt/;
 
     my $accn = substr($file, 0, -4);
-    my $dir = File::Spec->catdir($ARGV[0], $accn);
+    my $dir = File::Spec->catdir('genbankest', $accn);
     mkpath $dir if -d $dir;
 
     my $s = get sprintf($url, $accn);
     die "Empty Nucleotide web page for $file" unless $s =~ /\S/;
 
-    open(my $h, '>', "$accn-genbankest.txt") or die "Could not download $accn";
-    print $h $s;
+    {
+        open(my $h, '>', "$accn-genbankest.txt") or die "Could not download $accn";
+        print $h $s;
+    }
 
     say "$accn-genbankest.txt, $dir, $file";
     Genbanker::main("$accn-genbankest.txt", $file, $dir);
