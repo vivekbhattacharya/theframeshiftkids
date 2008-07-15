@@ -108,7 +108,6 @@ sub main {
     }
 
     my $it = parse $genbank_file, $genome_file;
-    chdir($dir);
 
     my %already = ();
     while (my ($gene, $desc, $leader, $seq) = $it->()) {
@@ -121,7 +120,7 @@ sub main {
             }
             $gene .= '-again';
         }
-        open(my $h, '>', "$gene.txt");
+        open(my $h, '>', File::Spec->catfile($dir, "$gene.txt"));
         say $h "> $desc\n$leader\n$seq";
     }
 }
