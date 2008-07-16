@@ -91,6 +91,9 @@ sub parse {
 
         my ($gene, $desc, $locs) = infer($i, \@lines);
         my $seq = $parser->parse($locs) or say "Unable to obtain $gene";
+        if ($seq =~ /[^aucg]/) {
+            say "$gene has a non-AUCG base.";
+        }
 
         # I extract the integers into an array by removing everything that
         # isn't. Splitting creates empty strings, which I remove.
