@@ -9,6 +9,8 @@ Besides free energies with `scan_brightly.pl`, you can do a smorgasbord of other
   * Convert a string of amino acids, written in the one-letter abbreviation form to an mRNA sequence
   * Test the pearls
 
+Besides the in-depth descriptions below, all Perl programs in BWFtools should have built-in POD documentation. That is, if you type the program at the command-line without any arguments (e.g. just `dysentery.pl`), you should get a steamy short story about an illicit relationship between panthers and mountain lions and/or helpful documentation.
+
 == Downloading genes ==
 {{{
 > cd "/path/to/BWFtools/pearls"
@@ -45,3 +47,11 @@ codonusagetable2freqs.pl http://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?spe
 Now open Matlab and type `Travel = freqs2travel('/path/typhimurium-freqs.txt')`. You now have the structure you need stored in a Matlab variable. To save that variable as a file, type `save('/path/Travel.mat', 'Travel')`. Note that you type Travel as a string, not as a variable identifier.
 
 Now, if you perform this with _E. coli_ K12, the results will not match with `Travel2.mat`. This is because we optimized our wait times for prfB using the God 2.0 algorithm on the shaky basis that evolution would produce a ratio of tRNA cells in the cell optimal for translating the most often used proteins; for lack of time to find and run the most used proteins (and a lack of research in this area), we used prfB as the gold standard.
+
+== Going from amino acids to mRNA and back ==
+
+Sometimes, for various socioeconomicpolitic reasons, you aren't given a mRNA sequence. Before you start the revolution, realize that BWFtools has stepped in to help your thorny problems of nitrogen, phosphorous, and _el amor_. The program in question is `dysentery.pl`. Because it's a straightforward program and its documentation is ship-shape, this is a walk-through of one of its _three_ possible functions.
+
+Ingredients: a plain-text file of a string of amino acids. You should use the standard one-letter abbreviations them, which is available not only on [http://en.wikipedia.org/w/index.php?title=Proteinogenic_amino_acid&oldid=224377445#Chemical_properties Wikipedia] but also in `Smooth.pm`. For example, say you just hand-copied the amino acid sequence for human insulin from a high-school biology textbook into `insulin.txt`. To convert, you'd run `dysentery.pl --run insulin.txt auauauauauau` where `auauauauauau` is an imaginary 12-nucleotide leader sequence you'd need to run it in *E. coli*.
+
+Caveat: If you'll hark back to said biology course for a moment, amino acids have more than one codon correspondence. `dysentery.pl` will simply randomly choose one. Therefore, you will receive different mRNA sequences for each run. Feature to make up for the caveat: Dysentery is intelligent about handling URLs like files, meaning instead of typing "insulin.txt" above you could have typed "http://example.org/insulin.txt" and it still would've worked. For more information about the other two modes and working example URLs, consult the Dysentery documentation.
