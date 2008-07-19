@@ -12,6 +12,7 @@ Besides free energies with `scan_brightly.pl`, you can do a smorgasbord of other
 == Downloading genes ==
 {{{
 > cd "/path/to/BWFtools/pearls"
+> echo NC_000913| perl pull_genome.pl my_genomes
 > type list_of_genes.txt | perl pull_genome.pl my_genomes
 > genbankest.pl my_genomes
 }}}
@@ -24,7 +25,7 @@ To pull multiple genomes, open a text file and type each one on a new line. Save
 
 Genbank's Nucleotide files are, I surmise, designed by a somewhat-intelligent marshmallow; they are notoriously difficult to parse. `genbanker.pl`, which is the subsystem for `genbankest.pl`, is friendly and verbose in reporting when it cannot pull a certain gene at which point you can send us (and by us, we mean shadytrees) an email with the accession number and gene. (The flip side is that `genbanker.pl` might not catch the error and _everything_ will go haywire.)
 
-Nucleotide files also sometimes give loci the same gene name. For example, there might be two loci (say, 100..200 and 200..300) with the gene name "H" because they both produce "H-protein," and somebody thought it'd be super-clever to have the end-user work through this edge case. We deal with it by saving the first one to `H.txt` and the second one to `H-again.txt`. If there's a third one, `H-again-again.txt`. And so forth.
+Nucleotide files also sometimes give loci the same gene name. For example, there might be two loci (say, 100..200 and 200..300) with the gene name "H" because they both produce "H-protein," and somebody thought it'd be super-clever to have the end-user work through this edge case. We deal with it by saving the first one to `H.txt` and the rest to `H-again-x.txt` where "x" is some random number chosen to prevent conflicts.
 
 == Creating wait times ==
 {{{
