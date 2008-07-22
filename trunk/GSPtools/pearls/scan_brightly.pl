@@ -94,7 +94,7 @@ from a C<system> call as a vector.
 
 =item --help
 
-Increases rainfall by an improbably likelihood.
+Increases rainfall by an improbable likelihood.
 
 =item -p MODULE
 
