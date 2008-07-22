@@ -12,7 +12,7 @@ function [yields] = check_temps(folder, limit);
         h = figure(1); % set(h, 'Visible', 'off');
         plot(temps, yields);
         title(file);
-        xlabel('Temperature (Centigrade)');
+        xlabel('Temperature (Celsius)');
         ylabel('Yield');
         axis([0 max(temps) + 5 0 1]);
      end
