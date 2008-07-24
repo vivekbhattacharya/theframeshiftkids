@@ -1,30 +1,29 @@
 function plot_moving_period(folder, interval)
-    classify(folder, 'plot_moving_period', @helper);
-    
-    function helper(plot_period, n, file, image)
+    config;
+    classify(folder, 'plot_moving_period', @helper, 'preparation');
+
+    function helper(fullpath, file, image)
         disp(file);
+        signal = get_signal(fullpath);
 
-        global Config;
-        config;
-        signal = get_signal(file);
+        max = length(signal) - interval + 1;
+        pvals = zeros(1, max);
 
-        pvals = [];
-
-        max_iter = length(signal) - interval + 1;
-
-        for i = 1:max_iter,
-            [H, pval] = plot_period(file, 0.05, 0, signal(i:i + interval - 1));
-            pvals = [pvals pval];
+        for i = 1:max,
+            pvals(i) = plot_period(signal(i:i + interval - 1), 0);
         end;
 
-        h = figure(1); set(h, 'Renderer', 'OpenGL');
-            set(h, 'Visible', 'Off');
-            plot(-log10(pvals));
-            myylim = ylim;
-            axis([xlim 0 myylim(2)]); grid; title(file);
-            xlabel('Initial Nucleotide Number'); ylabel('Negative Log of p-Value');
+        h = figure(1);
+        set(h, 'Visible', 'Off');
+        grid; title(file);
+        plot(-log10(pvals));
+
+        myylim = ylim;
+        axis([xlim 0 myylim(2)]);
+        xlabel('Initial Nucleotide Number');
+        ylabel('-log10(p-value)');
         saveas(h, image, 'png');
     end
 end
-            
-        
+
+
