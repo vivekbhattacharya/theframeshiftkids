@@ -41,11 +41,7 @@ function classify(folder, subfolder, crusade, varargin)
     % Everybody else gets a free displacement with
     % magical folder structure management.
     function campbag(path)
-        try,
-            [displacement, p, n] = walrus_surprise(path);
-        catch,
-            return;
-        end;
+        [displacement, p, n] = walrus_surprise(path);
         [folder, file, ext] = fileparts(path);
 
         image = fullfile(subdir, [file '.png']);
