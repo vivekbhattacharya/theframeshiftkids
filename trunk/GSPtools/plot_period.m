@@ -3,7 +3,7 @@
 % Usage:  plot_period(signal,display)
 % (display=1): plot periodogram if sinusoid is detected
 
-function plot_period(signal, display)
+function [pvalue] = plot_period(signal, display)
     config;
     if ischar(signal),
         signal = get_signal(signal);
@@ -23,7 +23,8 @@ function plot_period(signal, display)
     % but in Hz * N, so multiply by N too.
     est = mean(power([N/3, 2*N/3]));
     F = (N-3)*est/(dot(signal,signal) - first - (2*est));
-    fprintf('p-value: %g\n\n', 1 - fcdf(F, 2-1, N-2));
+    pvalue = 1 - fcdf(F, 2-1, N-2);
+    fprintf('p-value: %g\n\n', pvalue);
 
     if display,
         % 1+floor(N/2) because the remaining values are redundant. 2 instead
