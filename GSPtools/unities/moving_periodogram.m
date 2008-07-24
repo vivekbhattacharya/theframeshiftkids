@@ -14,9 +14,8 @@ function moving_periodogram(folder, interval)
 
         max = length(signal) - interval + 1;
         pvals = zeros(1, max);
-
         for i = 1:max
-            pvals(i) = plot_period(signal(i:i + interval - 1), 0);
+            pvals(i) = periodogram(signal(i:i + interval - 1), 0);
         end
 
         h = figure(1);
