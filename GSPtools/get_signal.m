@@ -5,15 +5,7 @@
 function [signal, s] = get_signal(f)
 global Config;
 
-file = which(f);
-if isempty(file)
-    if exist(f) == 2, file = f;
-    elseif strfind(f, 'http://'), file = f;
-    else
-        error(sprintf('get_signal cannot find "%s" in the path. Type which(''%s'') to confirm.', f, f));
-    end
-end
-
+file = superwhich(f);
 s = pearl('getseq.pl', ['"' file '"']);
 
 signal_arg = '';
