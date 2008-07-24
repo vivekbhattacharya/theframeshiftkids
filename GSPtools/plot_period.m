@@ -1,69 +1,38 @@
 % period: "Detect f=1/3"
 % Tests for the presence of a sinusoid with frequency 1/3
-% Usage: H = detectf(signal,alpha,display) 
-% alpha = significance level (0.05 typically)
+% Usage:  plot_period(signal,display)
 % (display=1): plot periodogram if sinusoid is detected
-% If H=1, there exists a sinusoid of frequency 1/3
-% If H=0, it does not exist
 
-function [H, remainder] = plot_period(file, alpha, display, varargin)
+function plot_period(signal, display)
+    config;
+    if ischar(signal),
+        signal = get_signal(signal);
+    end
 
-% Get signal
-if length(varargin) == 0,
-    signal = get_signal(file);
-else 
-    signal = varargin{1};
+    % Compute periodogram
+    Y = fft(signal);
+    N = length(Y);
+    power = abs(Y).^2/N;
+
+    % What's so special about the first value anyway?
+    first = power(1);
+    power = power(2:end);
+
+    % We're testing to see if the points at 1/3 Hz and 2/3 Hz are
+    % different from the points everywhere else. Indices are not in Hz
+    % but in Hz * N, so multiply by N too.
+    est = mean(power([N/3, 2*N/3]));
+    F = (N-3)*est/(dot(signal,signal) - first - (2*est));
+    fprintf('p-value: %g\n\n', 1 - fcdf(F, 2-1, N-2));
+
+    if display,
+        % 1+floor(N/2) because the remaining values are redundant. 2 instead
+        % of 1 because a huge spike occurs at power(1) for no reason.
+        % What's weird: we use power(1) in the above calculation.
+        ind = 1:floor(N/2);
+        plot(ind/N, power(ind));
+        grid on;
+        xlabel('Cycles per base')
+        title('Power spectrum(FFT(free energy signal))')
+    end
 end
-
-% Compute periodogram
-Y = fft(signal);
-N = length(Y);
-% If signal length is not a multiple of 3, then f=1/3 will not be a 
-% Fourier frequency!
-if rem(N,3)~=0
-    error('\nSignal length is not a multiple of 3!');
-end
-I = (1/N)*(abs(Y).^2);
-
-% Assign discrete frequencies
-if rem(N,2)==0
-    k = [0, (1:1:floor((N-1)/2)), (N/2), (floor((N-1)/2):-1:1)];
-elseif rem(N,2)==1
-    k = [0, (1:1:(N-1)/2), ((N-1)/2:-1:1)];
-end
-
-I_0 = I(find(k==0));
-I_k = sum(I(find(k==N/3)))/2;
-
-F = ((N-3)*I_k)/((signal*signal')-I_0-(2*I_k));
-total_area = fcdf(F, 2, N-3);
-remainder = 1 - total_area;
-if remainder < alpha
-    H = 1;
-else
-    H = 0;
-end
-
-if display, % Change this to (H==0) if you want the periodogram to be displayed when f=1/3 is not detected
-    if rem(N,2)==0
-        ind = 2:1+(N/2); pgval = I(ind); freq = (1:(N/2))/N;
-    elseif rem(N,2)==1
-        ind = 2:1+((N-1)/2); pgval = I(ind); freq = (1:((N-1)/2))/N;
-    end    
-    plot(freq,pgval), grid on
-    xlabel('cycles/base')
-    title('Periodogram')
-end
-
-% % ----- OLD CODE -----
-% if (H==1)&(display==1)
-%     % Plot periodogram
-%     Y(1) = [];
-%     power = (1/N)*abs(Y(1:floor(N/2))).^2;
-%     nyquist = 1/2;
-%     freq = (1:N/2)/(N/2)*nyquist;
-%     plot(freq,power), grid on
-%     xlabel('cycles/base')
-%     title('Periodogram')
-%     pause(1)
-% end
