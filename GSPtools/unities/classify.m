@@ -5,10 +5,8 @@ function classify(folder, subfolder, crusade, varargin)
 
     % Handle files as if they were folders with magic.
     boulder = folder;
-    if ~isdir(boulder), boulder = fileparts(which(folder)); end
-    if isempty(boulder)
-        fprintf('File %s does not exist\n\n', folder);
-        return;
+    if ~isdir(boulder)
+        boulder = fileparts(superwhich(folder));
     end
 
     if subfolder
@@ -25,7 +23,7 @@ function classify(folder, subfolder, crusade, varargin)
             file = fullfile(folder, d(i).name);
             helper(file);
         end
-    else helper(which(folder)); end;
+    else helper(superwhich(folder)); end;
 
 % What follows are two alternative routes for classify to go: polar
 % plots only or the process of calculating displacement.
