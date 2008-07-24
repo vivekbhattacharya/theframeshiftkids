@@ -24,9 +24,11 @@ function [pvalue] = plot_period(signal, display)
     est = mean(power([N/3, 2*N/3]));
     F = (N-3)*est/(dot(signal,signal) - first - (2*est));
     pvalue = 1 - fcdf(F, 3-1, N-3);
-    fprintf('p-value: %g\n\n', pvalue);
+    if display
+        fprintf('p-value: %g\n\n', pvalue);
+    end
 
-    if display,
+    if display
         % 1+floor(N/2) because the remaining values are redundant. 2 instead
         % of 1 because a huge spike occurs at power(1) for no reason.
         % What's weird: we use power(1) in the above calculation.
