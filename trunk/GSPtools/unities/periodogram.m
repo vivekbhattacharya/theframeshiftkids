@@ -1,9 +1,13 @@
-% period: "Detect f=1/3"
-% Tests for the presence of a sinusoid with frequency 1/3
-% Usage:  plot_period(signal,display)
-% (display=1): plot periodogram if sinusoid is detected
-
-function [pvalue] = plot_period(signal, display)
+% Plot power spectrum for fft(free energy signal). Pass a non-zero
+% value to display if you want a graph and p-value displayed.
+%
+% Usage:
+% periodogram(signal, display)
+%
+% Returns the p-value from a most likely incorrectly calculated
+% F-statistic. Use moving_periodogram to look at the p-values for a
+% moving window of free energy signal values.
+function [pvalue] = periodogram(signal, display)
     config;
     if ischar(signal),
         signal = get_signal(signal);
@@ -29,9 +33,6 @@ function [pvalue] = plot_period(signal, display)
     end
 
     if display
-        % 1+floor(N/2) because the remaining values are redundant. 2 instead
-        % of 1 because a huge spike occurs at power(1) for no reason.
-        % What's weird: we use power(1) in the above calculation.
         ind = 1:floor(N/2);
         plot(ind/N, power(ind));
         grid on;
