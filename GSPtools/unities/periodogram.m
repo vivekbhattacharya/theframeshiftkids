@@ -12,6 +12,9 @@ function [pvalue] = periodogram(signal, display)
     if ischar(signal),
         signal = get_signal(signal);
     end
+    
+    % To make the length a multiple of 3
+    % signal = signal(1:end-rem(length(signal),3));
 
     % Compute periodogram
     Y = fft(signal);

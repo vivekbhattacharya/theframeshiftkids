@@ -20,13 +20,13 @@ function moving_periodogram(folder, interval)
 
         h = figure(1);
         set(h, 'Visible', 'Off');
-        grid; title(file);
         plot(-log10(pvals));
 
         myylim = ylim;
         axis([xlim 0 myylim(2)]);
         xlabel('Initial Nucleotide Number');
         ylabel('-log10(p-value)');
+        grid; title(file);
         saveas(h, image, 'png');
     end
 end
