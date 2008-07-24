@@ -10,7 +10,6 @@ if isempty(file)
     if exist(f) == 2, file = f;
     elseif strfind(f, 'http://'), file = f;
     else
-        return;
         error(sprintf('get_signal cannot find "%s" in the path. Type which(''%s'') to confirm.', f, f));
     end
 end
