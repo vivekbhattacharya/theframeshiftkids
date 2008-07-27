@@ -4,7 +4,9 @@
 == What's New in Version Four ==
 
 === 4.6692 ===
-  * It can now single-handedly extract all E. coli genes from Genbank data.
+  * It can now single-handedly [Manual_Pearls extract all genes from any genome.]
+  * More vectorization, especially `inst_energy.m` (`diff_vectors`), means more performance
+  * Can convert [http://www.kazusa.or.jp/codon/ Codon Usage Database] entries into `Travel`s (loop times)
 
 === 4.669 (r643) ===
   * We now compute `inst_energy` with actual vector subtraction rather than converting between phase-magnitude and complex numbers.

@@ -38,7 +38,7 @@ M> save('/path/Travel.mat', 'Travel');
 
 Beached Whale Frameshift tools are built to run _E. coli_ mRNA sequences, whose codons have wait times specific to _E. coli_. In addition to changing the species angle and the C1 brownie constant in `displacement.m`, you must also change the wait times (living within `Travel2.mat`) once you work on another organism. For example, _Salmonella typhimurium_. Although [http://www.kazusa.or.jp/codon/ codon usage information] is freely available online, wait times are not. However, `freqs2travel.m` converts codon usage frequencies to a usable `Travel` structure.
 
-Ingredients: URL to a codon usage table. For example, [http://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?species=602 the URL for _S. typhimurium_]. HTML is not a suitable format for `freqs2travel.m`, but you can resolve this mini-criss with
+Ingredients: URL to a codon usage table. For example, [http://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?species=602 the URL for S. typhimurium]. HTML is not a suitable format for `freqs2travel.m`, but you can resolve this mini-crisis with
 
 {{{
 codonusagetable2freqs.pl http://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?species=602 > /path/typhimurium-freqs.txt
