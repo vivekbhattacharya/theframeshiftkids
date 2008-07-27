@@ -17,7 +17,11 @@ sub infer {
     # Because of so many errors, we're going to place well-defined
     # bounds on how `infer` searches.
     my $max = $i + 1;
-    $max++ until $max == $#{$big_lines} or $big_lines->[$max] =~ /^\s+(CDS|gene)/;
+    while (1) {
+        last if $max >= $#{$big_lines};
+        last if $big_lines->[$max] =~ /^\s+(CDS|gene)/;
+        $max++;
+    }
     my @lines = @{$big_lines}[$i .. $max];
 
     for (join ' ', @lines) {
@@ -138,6 +142,85 @@ sub main {
     }
 }
 
-main @ARGV if $0 eq __FILE__;
+if ($0 eq __FILE__) {
+    Smooth::helpcheck();
+    main @ARGV;
+}
 
 1;
+
+__END__
+
+=head1 NAME
+
+genbanker.pl
+
+=head1 SYNOPSIS
+
+genbanker.pl I<Genbank Nucleotide> I<Genbank Genome> I<output
+directory>
+
+=head1 DESCRIPTION
+
+Genbanker extracts all the genes from a Genbank Genome entry given the
+corresponding Genbank Nucleotide entry. To grab a Genome, I recommend
+F<pull_genome.pl>. To grab a Nucleotide and automate the call to
+Genbanker, I recommend F<genbankeset.pl>.
+
+=head1 OPTIONS AND ARGUMENTS
+
+If passed with no arguments, this help text pops up.
+
+=over
+
+=item I<Genbank Nucleotide>
+
+The easiest way to find the Nucleotide file is automatically via
+F<genbankest.pl>. However, you can also search the Nucleotide database
+online. The Genbank website's search engine is subpar, so unless you
+know the accession number for your genome, this might be difficult.
+Once you find it, format it as plain text by clicking "Send to" and
+selecting "Text". Save this somewhere. Pass the location here.
+
+[1]: http://www.ncbi.nlm.nih.gov/entrez?db=nucleotide
+
+=item I<Genbank Genome>
+
+The easiest way to find the Genome file is automatically via
+F<pull_genome.pl>. You can also search Genome database online [1]. For
+an index of genomes, consult the sidebar. For example, the Bacteria
+index [2]. Again, send this to a text file and pass the path to me.
+
+=over
+
+=item [1]: http://www.ncbi.nlm.nih.gov/sites/entrez?db=genome
+
+=item [2]: http://www.ncbi.nlm.nih.gov/genomes/genlist.cgi?taxid=2&type=1&name=Bacteria%20Complete%20Chromosomes
+
+=back
+
+=item I<output directory>
+
+This is where I will save all the genes. I will the create the
+directory if it does not already exist. I save each gene to a FASTA
+file named "gene name.txt" where gene name is the one listed in the
+CDS subsection for that gene in the Nucleotide file. The listing
+occurs in /gene= or /locus_tag=. If neither exists, I spit out a
+message and call it "unknown" instead. The FASTA description is pulled
+from /product= or /pseudo or /note= in that order. Otherwise, it's "No
+description found."
+
+I automatically pull leader sequences and complement mRNA sequences. I
+know to pull leader sequences after complemented genes. I'm just that
+good. Gene names with asterisks in them, like A*, are dealt by
+renaming them to A-star. Duplicate gene names are resolved by
+appending "-again" and then a random integer.
+
+I rarely fail, but when I do make a mistake I do it fabulously. Dance
+like nobody is watching.
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+I'm under BSD. See the License article on the Google Code wiki.
