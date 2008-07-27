@@ -5,7 +5,7 @@
 %
 % Names: From the original, the sexy, the one-and-only Codons.mat. I
 %   use it to order the final TAV.
-function [travel] = freqs2tav(freqs_file, Names)
+function [travel] = freqs2tav(freqs_file)
     freqs_file = fopen(freqs_file);
     results = textscan(freqs_file, '%s %f');
     fclose(freqs_file);
@@ -83,6 +83,13 @@ function [travel] = freqs2tav(freqs_file, Names)
     tav.uga = 0; tav.uag = 0; tav.uaa = 0;
 
     final_tav = zeros(1, length(tav));
+    Names = {'uuu' 'uuc' 'uua' 'uug' 'cuu' 'cuc' 'cua' 'cug' 'auu' ...
+             'auc' 'aua' 'aug' 'guu' 'guc' 'gua' 'gug' 'ucu' 'ucc' ...
+             'uca' 'ucg' 'agu' 'agc' 'ccu' 'ccc' 'cca' 'ccg' 'acu' ...
+             'acc' 'aca' 'acg' 'gcu' 'gcc' 'gca' 'gcg' 'uau' 'uac' ...
+             'uaa' 'uag' 'uga' 'cau' 'cac' 'caa' 'cag' 'aau' 'aac' ...
+             'aaa' 'aag' 'gau' 'gac' 'gaa' 'gag' 'ugu' 'ugc' 'ugg' ...
+             'cgu' 'cgc' 'cga' 'cgg' 'aga' 'agg' 'ggu' 'ggc' 'gga' 'ggg'};
     for i = 1:length(Names)
         final_tav(i) = tav.(Names{i});
     end
