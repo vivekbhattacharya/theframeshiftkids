@@ -7,9 +7,9 @@
 % Returns the p-value from a most likely incorrectly calculated
 % F-statistic. Use moving_periodogram to look at the p-values for a
 % moving window of free energy signal values.
-function [pvalue] = periodogram(signal, display)
+function [pvalue, snr] = periodogram(signal, display)
     config;
-    if ischar(signal),
+    if ischar(signal)
         signal = get_signal(signal);
     end
     
@@ -21,7 +21,9 @@ function [pvalue] = periodogram(signal, display)
     N = length(Y);
     power = abs(Y).^2/N;
 
-    % What's so special about the first value anyway?
+    % What's so special about the first value anyway? It represents the
+    % power of the signal not having a frequency, which is
+    % extraordinary sometimes.
     first = power(1);
     power = power(2:end);
 
@@ -31,8 +33,19 @@ function [pvalue] = periodogram(signal, display)
     est = mean(power([N/3, 2*N/3]));
     F = (N-3)*est/(dot(signal,signal) - first - (2*est));
     pvalue = 1 - fcdf(F, 3-1, N-3);
+
+    % Taken from est_par.
+    x = ones(N, 1);
+    y = (0:N-1)';
+    regressor = [x sin(2*pi*y/3) cos(2*pi*y/3)];
+    [b, b_int, r] = regress(signal', regressor);
+    amp = sqrt((b(2)^2) + (b(3)^2));
+    snr_db = 10*log10((amp^2/2) / var(r));
+
     if display
-        fprintf('p-value: %g\n\n', pvalue);
+        fprintf('p-value: %g\n', pvalue);
+        fprintf('SNR (dB): %g\n', snr_db);
+        fprintf('\n');
     end
 
     if display
