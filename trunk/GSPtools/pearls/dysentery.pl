@@ -1,5 +1,5 @@
 # For testing:
-use warnings; use strict;
+use warnings; use strict; use 5.010;
 package Dysentery;
 use Smooth qw(prot2codon codon2prot getseq);
 
@@ -20,10 +20,10 @@ sub print_check {
     my ($truth, $given, $actual) = @_;
     # Output results with strings for eye comparison
     # since wdiff is out of the question.
-    if ($truth) { print "$/They are equal. Congratulations.$/$/" }
-    else { print "$/# They are not equal.$/" }
-    print "Given:$/$given$/$/";
-    print "Actual:$/$actual$/";
+    if ($truth) { say "# They are equal. Congratulations.$/" }
+    else { say "# They are not equal.$/" }
+    say "Given:\n$given\n";
+    say "Actual:\n$actual";
 }
 
 # Returns a fabulous list of randomly selected codons
@@ -80,17 +80,24 @@ sub rcheck {
 }
 
 if ($0 eq __FILE__) {
-    my %table = (
-                 '--help' => \&Smooth::helpcheck,
-                 '--check' => sub { print_check check(@ARGV[1..2]) },
-                 '--rcheck' => sub { print_check rcheck(@ARGV[1..2]) },
-                 '--run' => sub { print_run run($ARGV[1]) }
-                 );
-    if (@ARGV > 0 and defined $table{$ARGV[0]}) {
-        $table{$ARGV[0]}->();
-    }
-    else {
-        Smooth::helpcheck();
+    use Getopt::Long;
+    my ($mode, $help);
+    GetOptions('mode=s' => \$mode, 'help|?' => \$help) or Smooth::help();
+    Smooth::help() if $help or !$mode;
+
+    given ($mode) {
+        when (/^check/) {
+            die "I need two arguments for --check." unless @ARGV == 2;
+            print_check check(@ARGV);
+        }
+        when (/^rcheck/) {
+            die "I need two arguments for --rcheck." unless @ARGV == 2;
+            print_check rcheck(@ARGV);
+        }
+        when (/^run/) {
+            die "I need one argument for --run." unless @ARGV == 1;
+            print_run run @ARGV;
+        }
     }
 }
 1;
@@ -103,24 +110,24 @@ dysentery.pl (web-enabled)
 
 =head1 SYNOPSIS
 
-dysentery.pl --run protein-sequence.txt "leader"
+dysentery.pl --mode run protein-sequence.txt "leader"
 
-dysentery.pl --check codons.txt protein-sequence.txt
+dysentery.pl --mode check mRNA.txt protein-sequence.txt
 
-dysentery.pl --rcheck codons1.txt codons2.txt
+dysentery.pl --mode rcheck mRNA-1.txt mRNA-2.txt
 
 =over 20
 
-=item B<--run>
+=item B<{--mode, -m} run>
 
 Converts a protein sequence using the standard 1-letter abbreviations
 to codons
 
-=item B<--check>
+=item B<{--mode, -m} check>
 
 Checks if a codon sequence matches the protein sequence
 
-=item B<--rcheck>
+=item B<{--mode, -m} rcheck>
 
 Checks if two codon sequences produces the same protein sequences
 
@@ -134,15 +141,15 @@ These will help you test this program.
 
 =item rpoS codon sequence
 
-http://shadytrees.pastebin.ca/raw/594753
+L<http://shadytrees.pastebin.ca/raw/594753>
 
 =item Alternative rpoS codon sequence
 
-http://shadytrees.pastebin.ca/raw/594746
+L<http://shadytrees.pastebin.ca/raw/594746>
 
 =item Protein sequence
 
-http://shadytrees.pastebin.ca/raw/595330
+L<http://shadytrees.pastebin.ca/raw/595330>
 
 =back
 
