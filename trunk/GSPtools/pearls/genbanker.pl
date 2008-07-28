@@ -40,14 +40,17 @@ sub infer {
         # Addendum: Sometimes, there's a '>'! (NC_005841)
         $locs =~ s/[<>]//g;
 
-        # Thank you NC_007456's DNA polymerase.
+        # Thank you, NC_007456's DNA polymerase.
         unless ($gene) {
             say "No name found (near line $i, makes $desc), defaulting to \"unknown\"";
             $gene = "unknown";
         }
 
-        # Thank you NC_007817 and your A* gene.
+        # Thank you, NC_007817 and your A* gene.
         $gene =~ s/\*/-star/g;
+
+        # Thank you, NC_007204 and your lysS/U genes.
+        $gene =~ s{/}{-}g;
         return ($gene, $desc, $locs);
     }
 }
