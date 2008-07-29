@@ -76,7 +76,8 @@ end
 % Config.phi_sp chosen specifically to make prfB work, cf. Lalit et
 % al. This is heavily optimized. Do not refer to it for the math.
 function [overaged] = loop(piece, k, diff)
-    overaged = 0; age_limit = 1000; power = 10; c1 = 0.005;
+    global Config; config;
+    overaged = 0; age_limit = 1000; power = Config.power; c1 = Config.c1;
 
     % [back_fail, here_fail, there_fail]
     fails = [1 1 1]; wt = 0;
