@@ -21,12 +21,10 @@ function [disp, waits] = displacement(seq, dvec, fs)
         if(index + 4 > length(seq)), break; end;
         overaged = loop(seq(index:index+4), k, dvec(:, k));
 
-        if overaged ~= 0,
-            if handle_aging(overaged, anthill, fs) == 1, break; end;
-        end;
-
         % Check if frameshift occurred too late.
         if Config.dire
+            if handle_aging(overaged, anthill, fs) == 1, break; end;
+            % I expected a frameshift. None occurred. Abort.
             if (length(fs) > 0) && (k > fs(1)) && (length(anthill) == 0), break; end;
         end
     end
@@ -57,15 +55,8 @@ end
 
 function [break_p] = handle_aging(code, anthill, fs)
     break_p = 0;
+    % These imply Config.dire.
     switch code
-      case 1
-        fprintf(': %s at %g found ribosomal hyperpause\n', seq(index+1:index+3), k);
-        break_p = 1;
-      case -1
-        fprintf(': %s at %g found a stop codon\n', seq(index+1:index+3), k);
-        break_p = 1;
-
-      % These imply Config.dire.
       case 3, break_p = 1; % Backframeshift => automatic error
       case 4 % Frameshift => check if valid
         if anthill(end) ~= fs(1), break_p = 1; end;
@@ -77,7 +68,7 @@ end
 % al. This is heavily optimized. Do not refer to it for the math.
 function [overaged] = loop(piece, k, diff)
     global Config; config;
-    overaged = 0; age_limit = 1000; power = Config.power; c1 = Config.c1;
+    overaged = 0; power = Config.power; c1 = Config.c1;
 
     % [back_fail, here_fail, there_fail]
     fails = [1 1 1]; wt = 0;
@@ -86,7 +77,9 @@ function [overaged] = loop(piece, k, diff)
 
     global store ants anthill termites Config;
     x0 = store.x(k);
-    for wt=1:age_limit + 1
+
+    % This is where Nloop used to be.
+    for wt = 1:1000 + 1
         % Window function
         w = realpow(weights(x0 - 2*store.shift), power);
         fails = fails .* (1 - w ./ loops);
@@ -97,22 +90,21 @@ function [overaged] = loop(piece, k, diff)
         r = rand;
         % Config checks are here to minimize function call overhead.
         if (reloop < here) || (reloop < there) || (reloop < back)
-            if r < here
-                break;
+            if r < here, break;
             elseif r < here + there
                 store.shift = store.shift + 1;
                 anthill(end+1) = k;
                 ants{end+1} = codon;
 
                 % If there's a frameshift, check if it's the wrong one under dire.
-                if Config.dire, overaged = 4; end;
+                overaged = 4;
                 break;
             elseif r < here + there + back
                 store.shift = store.shift - 1;
                 termites{end+1} = [codon ' ' num2str(k)];
 
                 % There's a backframeshift, so stop automatically.
-                if Config.dire, overaged = 3; end;
+                overaged = 3;
                 break;
             end
         end
@@ -122,9 +114,6 @@ function [overaged] = loop(piece, k, diff)
         phi_dx = ((pi/3)*x0) - Config.phi_sp;
         dx = -c1 * diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + dx;
-    end
-    if Config.detect_pauses
-        if (wt > age_limit), overaged = 1; end;
     end
     store.x(k+1) = x0;
     store.wts(k) = wt;

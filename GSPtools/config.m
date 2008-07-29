@@ -16,7 +16,7 @@ function config
     Config.should_cache = 1;
 
     Config.detect_pauses = 0;
-    
+
     % Parameters for displacement.m
     Config.c1 = 0.005;
     Config.power = 10;
