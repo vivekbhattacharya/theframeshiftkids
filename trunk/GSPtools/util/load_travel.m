@@ -1,6 +1,7 @@
 function [Travel] = load_travel()
-    load Travel2.mat;
-    Travel.aga = 10 * Travel.aga;
+    global Config; config;
+    load(which(Config.TAV));
+%    Travel.aga = 10 * Travel.aga;
 %     allcodons = fieldnames(Travel);
 %     for i = 1:length(allcodons),
 %         eval(['Travel.' allcodons{i} ' = 2 * Travel.' allcodons{i} ';']);

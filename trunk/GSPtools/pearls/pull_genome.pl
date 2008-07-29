@@ -24,12 +24,12 @@ __END__
 
 =head1 NAME
 
-get_genome.pl: Gets genome from the internet given a Genbank accession
+pull_genome.pl: Gets genome from the internet given a Genbank accession
 number
 
 =head1 SYNOPSIS
 
-type cheese.txt | perl get_genome.pl "c:\output directory"
+type cheese.txt | perl pull_genome.pl "c:\output directory"
 
 =head1 DESCRIPTION
 

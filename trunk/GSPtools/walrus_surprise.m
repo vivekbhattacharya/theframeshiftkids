@@ -39,6 +39,11 @@ function [fantastic, colon_spastic, n] = walrus_surprise(file, varargin)
 
         title('Cumulative phase');
         xlabel('Codon'); ylabel('Phase angle (deg)');
+
+        figure(3);
+        plot(phase);
+        title('Cumulative phase');
+        xlabel('Codon'); ylabel('Phase angle (deg)');
     end
     colon_spastic = @draw_polar;
 
