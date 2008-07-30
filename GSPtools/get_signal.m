@@ -3,23 +3,18 @@
 % USAGE:
 %     [signal, sequence] = get_signal('gene.txt')
 function [signal, s] = get_signal(f)
-global Config; config;
+config; global Config;
 
 file = superwhich(f);
 s = pearl('getseq.pl', ['"' file '"']);
 
-signal_arg = '';
+cache_arg = '';
 if Config.should_cache
-    signal_arg = sprintf('auuccuccacuag "%s"', file);
-else
-    signal_arg = sprintf('-n auuccuccacuag "%s"', file);
+    cache_arg = '-n';
 end
 
-% Now to tag on the temperature and choice of values
-kelvin_temp = Config.temp + 273.15; % To account for Hao's idiotic idea to ask for the temperature in Kelvin instead of Celsius
-signal_arg = ['-t ' num2str(kelvin_temp) ' -p Kidnap::' Config.values ' ' signal_arg];
-
-output = pearl('scan_brightly.pl', signal_arg);
+args = sprintf('-t %g -p "%s" %s %s "%s"', Config.temp, Config.energies, cache_arg, Config.tail, file);
+output = pearl('scan_brightly.pl', args);
 
 % Simulate load() on a string instead of a file.
 signal = sscanf(output, '%f');
@@ -33,8 +28,8 @@ end
 
 signal = signal';
 
-if Config.signal_shift > 0,
+if Config.signal_shift > 0
     signal = [zeros(1, Config.signal_shift) signal];
-elseif Config.signal_shift < 0,
+elseif Config.signal_shift < 0
     signal = [signal(1 - Config.signal_shift:end) zeros(1, -Config.signal_shift)];
-end;
+end

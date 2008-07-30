@@ -2,7 +2,7 @@ function config
     global Config;
     Config = struct();
 
-    Config.TAV = 'Travel2.mat';
+    Config.Travel = 'Travel2.mat';
 
     % 0: Deviation. 1: Probability.
     Config.yield = 0;
@@ -13,7 +13,7 @@ function config
 
     % Normally, don't abort displacement at the first sign of trouble.
     Config.dire = 0;
-    Config.should_cache = 0;
+    Config.should_cache = 1;
 
     Config.detect_pauses = 0;
 
@@ -23,6 +23,6 @@ function config
 
     % Set the temperature (Celsius) and the values to use ('Freier' or 'XiaMathews')
     Config.temp = 37;
-    Config.values = 'Freier';
+    Config.energies = 'Kidnap::Freier';
     Config.tail = 'auuccuccacuag'; % auuccuccacuag for E coli
 end
