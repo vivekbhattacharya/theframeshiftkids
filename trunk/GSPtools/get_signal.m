@@ -3,7 +3,7 @@
 % USAGE:
 %     [signal, sequence] = get_signal('gene.txt')
 function [signal, s] = get_signal(f)
-global Config;
+global Config; config;
 
 file = superwhich(f);
 s = pearl('getseq.pl', ['"' file '"']);
@@ -31,4 +31,10 @@ if isempty(signal)
     error(ensure);
 end
 
-signal = [Config.signal_shift signal'];
+signal = signal';
+
+if Config.signal_shift > 0,
+    signal = [zeros(1, Config.signal_shift) signal];
+elseif Config.signal_shift < 0,
+    signal = [signal(1 - Config.signal_shift:end) zeros(1, -Config.signal_shift)];
+end;
