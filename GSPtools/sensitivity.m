@@ -4,8 +4,8 @@
 %
 % sensitivity('c:\weiss', 20)
 function sensitivity(folder, limit)
-     init_disps = [-1:0.2:1.8];
-     angles = [-100:10:260];
+     powers = [18:2:24];
+     c1s = [0.000425:.000005:0.00049];
      classify(folder, 'sensitivity', @helper);
 
      function helper(displacement, n, file, image)
@@ -13,39 +13,39 @@ function sensitivity(folder, limit)
          [a, b] = fileparts(image);
          prefix = fullfile(a, b);
 
-         [yields] = grope(init_disps, angles, displacement, file, limit);
-         save([prefix '.mat'], 'init_disps', 'angles', 'yields');
+         [yields] = grope(powers, c1s, displacement, file, limit);
+         save([prefix '.mat'], 'powers', 'c1s', 'yields');
 
-         h = figure(1); % set(h, 'Visible', 'off');
-         mesh(init_disps, angles, yields');
-         title(file);
-         xlabel('Initial Displacement');
-         ylabel('Species Angle (Degrees)');
-         zlabel('Error-Free Rate');
-         axis([xlim ylim 0 2]);
-         saveas(h, image, 'png');
-         saveas(h, [prefix '.fig'], 'fig');
+%          h = figure(1); % set(h, 'Visible', 'off');
+%          mesh(powers, c1s, yields');
+%          title(file);
+%          xlabel('Initial Displacement');
+%          ylabel('Species Angle (Degrees)');
+%          zlabel('Error-Free Rate');
+%          axis([xlim ylim 0 2]);
+%          saveas(h, image, 'png');
+%          saveas(h, [prefix '.fig'], 'fig');
      end
 end
 
-function [yields] = grope(init_disps, angles, d, file, limit)
-    yields = zeros(length(init_disps), length(angles));
+function [yields] = grope(powers, c1s, d, file, limit)
+    yields = zeros(length(powers), length(c1s));
     global shoals sands Config;
 
     % Abort displacement fast.
     Config.dire = 1;
-    for i = 1:length(init_disps)
-        Config.init_disp = init_disps(i);
-        disp(['  init_disp: ' num2str(init_disps(i))]);
+    for i = 1:length(powers)
+        Config.power = powers(i);
+        disp(['  Power: ' num2str(powers(i))]);
 
-        for k = 1:length(angles)
-            Config.phi_sp = angles(k)*pi/180;
+        for k = 1:length(c1s)
+            Config.c1 = c1s(k)*pi/180;
 
             shoals = 0; sands = 0;
             for j = 1:limit, d([25]); end
             yields(i, k) = shoals/sands;
         end
-        disp([angles; yields(i, 1:length(angles))]);
+        disp([c1s; yields(i, 1:length(c1s))]);
         disp ' ';
     end
 end
