@@ -5,9 +5,10 @@ function thrushbaby(file, work_folder, times)
     codon = '_';
 
     disp(['I''m about to obliterate ' work_folder '. Proceed?']); pause;
-    preparedir(work_folder);
+    if isdir(work_folder), rmdir(work_folder, 's'); end;
+    mkdir(work_folder);
 
-    folder = fullfile(work_folder, '0'); preparedir(folder);
+    folder = fullfile(work_folder, '0'); mkdir(folder);
     copyfile(which(file), folder);
     current = 0;
     while 1
