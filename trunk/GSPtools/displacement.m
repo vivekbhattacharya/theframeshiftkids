@@ -3,14 +3,13 @@
 % from `diff_vector`, two lists of +1/-1 frameshifts against
 % which to match.
 function [disp, waits] = displacement(seq, dvec, fs)
-    global Travel Config;
+    global Travel Config store;
+
+    upper = length(dvec) - 1;
 
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
-    global store;
-
-    upper = length(dvec) - 1;
-    % Fudging factor: initial displacement
+    % Initial displacement is a fudging factor.
     store = struct('x', [Config.init_disp], 'shift', 0, 'wts', ...
                    zeros(1, upper-2), 'ants', [], 'termites', [], ...
                    'anthill', []);
@@ -24,17 +23,20 @@ function [disp, waits] = displacement(seq, dvec, fs)
 
         % Check if frameshift occurred too late.
         if Config.dire
-            if handle_aging(overaged, store.anthill, fs) == 1, break; end;
+            if handle_aging(overaged, store.anthill, fs), break; end;
             % I expected a frameshift. None occurred. Abort.
             if (length(fs) > 0) && (k > fs(1)) && (length(store.anthill) == 0), break; end;
         end
     end
     disp = store.x;
     waits = store.wts;
+    update_globals(fs, disp);
+end
 
+function update_globals(fs, disp)
     % Tally times displacement called. shoals can be the total deviation
     % or times antill == fs.
-    global sands shoals;
+    global sands shoals store Config;
     if isempty(sands), sands = 0; end;
     if isempty(shoals), shoals = 0; end;
 
@@ -48,7 +50,7 @@ function [disp, waits] = displacement(seq, dvec, fs)
     % Barring no backframeshifts, check for antill-fs equality.
     elseif Config.yield == 1
         if length(store.termites) > 0, return;
-        elseif size(fs) == size(anthill)
+        elseif size(fs) == size(store.anthill)
             if isempty(fs) || all(fs == store.anthill), shoals = shoals + 1; end;
         end
     end
