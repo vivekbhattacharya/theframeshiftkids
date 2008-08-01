@@ -18,11 +18,16 @@ function config
     Config.detect_pauses = 0;
 
     % Parameters for displacement.m
-    Config.c1 = 0.005;
+    Config.c1 = 0.00395;
     Config.power = 10;
 
-    % Set the temperature (Celsius) and the values to use ('Freier' or 'XiaMathews')
+    % Set the temperature (in Celsius) and the values to use
+    % (Kidnap::Freier or Kidnap::XiaMathews). Freier is
+    % temperature-independent because it only works for
+    % room-temperature, cf. the paper.
     Config.temp = 37;
     Config.energies = 'Kidnap::Freier';
-    Config.tail = 'auuccuccacuag'; % auuccuccacuag for E coli
+    % auuccuccacuag for E coli. More species are listed in
+    % scan_brightly.pl's help text.
+    Config.tail = 'auuccuccacuag';
 end
