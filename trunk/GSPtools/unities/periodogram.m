@@ -7,7 +7,7 @@
 % Returns the p-value from a most likely incorrectly calculated
 % F-statistic. Use moving_periodogram to look at the p-values for a
 % moving window of free energy signal values.
-function [pvalue, snr_db] = periodogram(signal, display)
+function [pvalue, snr_db, angle] = periodogram(signal, display)
     config;
     if ischar(signal)
         signal = get_signal(signal);
@@ -41,10 +41,12 @@ function [pvalue, snr_db] = periodogram(signal, display)
     [b, b_int, r] = regress(signal', regressor);
     amp = sqrt((b(2)^2) + (b(3)^2));
     snr_db = 10*log10((amp^2/2) / var(r));
+    angle = 180/pi*atan2(b(3),b(2));
 
     if display
         fprintf('p-value: %g\n', pvalue);
         fprintf('SNR (dB): %g\n', snr_db);
+        fprintf('Phase (Deg): %g\n', angle);
         fprintf('\n');
     end
 
