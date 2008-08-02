@@ -15,10 +15,8 @@ function config
     Config.dire = 0;
     Config.should_cache = 1;
 
-    Config.detect_pauses = 0;
-
     % Parameters for displacement.m
-    Config.c1 = 0.005;
+    Config.c1 = 0.006;
     Config.power = 10;
 
     % Set the temperature (in Celsius) and the values to use

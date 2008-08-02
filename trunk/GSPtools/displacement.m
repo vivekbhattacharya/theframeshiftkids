@@ -103,7 +103,7 @@ function [should_break] = loop(piece, k)
         end
 
         n_base = 3*(k - 1) + 2 + displace/2;
-        n_base_index = floor(n_base);
+        n_base_index = round(n_base);
         % Plus one because force(1) is actually for the "zero" nucleotide just
         % in case.
         dx = store.force(1, n_base_index+1) * n_base + store.force(2, n_base_index+1);
