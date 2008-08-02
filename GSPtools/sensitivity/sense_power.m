@@ -1,8 +1,4 @@
-% I take a work folder and a sample size as arguments and spit out 3D
-% sensitivity plots into a "sensitivity" subdirectory in the work
-% folder along the lines of jejunity and opportunity.
-%
-% sensitivity('c:\weiss', 20)
+% Like sensitivity for power.
 function sensitivity(folder, limit)
      powers = [18:2:24];
      c1s = [0.000425:.000005:0.00049];
@@ -15,16 +11,6 @@ function sensitivity(folder, limit)
 
          [yields] = grope(powers, c1s, displacement, file, limit);
          save([prefix '.mat'], 'powers', 'c1s', 'yields');
-
-%          h = figure(1); % set(h, 'Visible', 'off');
-%          mesh(powers, c1s, yields');
-%          title(file);
-%          xlabel('Initial Displacement');
-%          ylabel('Species Angle (Degrees)');
-%          zlabel('Error-Free Rate');
-%          axis([xlim ylim 0 2]);
-%          saveas(h, image, 'png');
-%          saveas(h, [prefix '.fig'], 'fig');
      end
 end
 
