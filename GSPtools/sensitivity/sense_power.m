@@ -1,5 +1,5 @@
 % Like sensitivity for power.
-function sensitivity(folder, limit)
+function sense_power(folder, limit)
      powers = [18:2:24];
      c1s = [0.000425:.000005:0.00049];
      classify(folder, 'sensitivity', @helper);

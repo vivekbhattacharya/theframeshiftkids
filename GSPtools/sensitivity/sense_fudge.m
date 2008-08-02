@@ -3,7 +3,7 @@
 % folder along the lines of jejunity and opportunity.
 %
 % sensitivity('c:\weiss', 20)
-function sensitivity(folder, limit)
+function sense_fudge(folder, limit)
      init_disps = [-1:0.2:1.8];
      angles = [-100:10:260];
      classify(folder, 'sensitivity', @helper);
