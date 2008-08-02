@@ -12,7 +12,7 @@ function [pvalue, snr_db, angle] = periodogram(signal, display)
     if ischar(signal)
         signal = get_signal(signal);
     end
-    
+
     % To make the length a multiple of 3
     % signal = signal(1:end-rem(length(signal),3));
 
@@ -46,7 +46,7 @@ function [pvalue, snr_db, angle] = periodogram(signal, display)
     if display
         fprintf('p-value: %g\n', pvalue);
         fprintf('SNR (dB): %g\n', snr_db);
-        fprintf('Phase (Deg): %g\n', angle);
+        fprintf('Phase (degrees): %g\n', angle);
         fprintf('\n');
     end
 
