@@ -82,7 +82,6 @@ function [should_break] = loop(piece, k)
 
         r = rand;
         % Config checks are here to minimize function call overhead.
-        if any(sum(probs) > 1 - probs)
             if r < probs(2), break;
             elseif r < probs(2) + probs(3)
                 store.shift = store.shift + 1;
@@ -100,7 +99,6 @@ function [should_break] = loop(piece, k)
                 should_break = 1;
                 break;
             end
-        end
 
         n_base = 3*(k - 1) + 2 + displace/2;
         n_base_index = round(n_base);
