@@ -15,8 +15,11 @@ function config
     Config.dire = 0;
     Config.should_cache = 1;
 
-    % Parameters for displacement.m
-    Config.c1 = 0.006;
+    % Parameters for displacement.m: C1 is the proportionality constant
+    % between force and displacement. Power is the exponent of the
+    % sinusoidal probability model at the heart of the stochastic part
+    % of the model.
+    Config.c1 = 0.003;
     Config.power = 10;
 
     % Set the temperature (in Celsius) and the values to use
