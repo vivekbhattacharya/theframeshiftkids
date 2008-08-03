@@ -2,7 +2,7 @@
 % of slopes and intercepts so you can determine force just by flooring
 % and looking it up.
 function [force] = force(signal)
-    dsignal = dumbdiff(signal);
+    dsignal = -dumbdiff(signal);
 
     % Test length checks
     % dsignal = [1 1 1];
