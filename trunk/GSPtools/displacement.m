@@ -1,7 +1,6 @@
-% The function takes a sequence (without the 12-leader
-% sequence), the number of codons, the differential vector
-% from `diff_vector`, two lists of +1/-1 frameshifts against
-% which to match.
+% The function takes a sequence (without the 12-leader sequence), the
+% number of codons, the force vector from `force`, and a vector of
+% codons indices that should frameshift. (For prfB, this is [25].)
 function [disp, waits] = displacement(seq, force, fs)
     global Travel Config store;
 
