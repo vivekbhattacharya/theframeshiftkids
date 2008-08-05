@@ -1,20 +1,15 @@
-function megaunity(file, varargin)
-% --------------------------------------------------------------
-% This function is used to simulate repeated calls to unity
-% in order to assess the "yield" of a given sequence (file)
-% based on the deviation of the displacement from the predicted
-% frame, which is usually 0.
-%
+% This function repeatedly measures the yield of a given sequence as
+% defined by Config.yield by acting as if unity is being called
+% multiple times.
 %
 % USAGE:
 %   megaunity('rpoS.txt');
-%   megaunity('prfB.txt', {'uga,25'});
+%   megaunity('prfB.txt', [25])
 %   % 300 iterations
-%   megaunity('prfB.txt', {'uga,25'}, 300);
-%
+%   megaunity('prfB.txt', [25], 300);
 %   % Display the graph each time.
-%   megaunity('prfB.txt', {'uga,25'}, 300, 'graph');
-% --------------------------------------------------------------
+%   megaunity('prfB.txt', [25], 300, 'graph');
+function megaunity(file, varargin)
 
 displacement = walrus_surprise(file);
 global shoals sands;
