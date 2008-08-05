@@ -1,6 +1,6 @@
 % Graphically represents the first 30 codons of the phasor's angle and
 % magnitude as documented in the mechanics paper by Ponnala, et al.
-% Takes the vector from diff_vector as the only argument. Returns 1000
+% Takes the vector from inst_energy as the only argument. Returns 1000
 % words.
 function phase_angle(file)
     clear global Config;
