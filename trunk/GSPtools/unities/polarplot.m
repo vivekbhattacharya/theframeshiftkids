@@ -1,10 +1,10 @@
 % Draws a polar plot for each gene in the work folder
-% (txt or FASTA), saving that plot to alopeciaunity\gene.png
+% (txt or FASTA), saving that plot to polarplot\gene.png
 % in the work folder.
 %
-% alopeciaunity('c:\work folder')
-function alopeciaunity(folder)
-    classify(folder, 'alopeciaunity', @helper, 'preparation');
+% polarplot('c:\work folder')
+function polarplot(folder)
+    classify(folder, 'polarplot', @helper, 'preparation');
     function helper(path, filename, image)
         disp(filename);
 
