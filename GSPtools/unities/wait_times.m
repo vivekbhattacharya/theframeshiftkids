@@ -1,5 +1,5 @@
 % Draws a wait time bar plot for each gene in the work folder
-% (txt or FASTA), saving that plot to impetigounity\gene.png
+% (txt or FASTA), saving that plot to wait_times\gene.png
 % in the work folder using a sample size of N.
 %
 % If given, X specifies the upper limit of the horizontal
@@ -7,14 +7,14 @@
 % of the vertical axis (wait time), both with the minimum
 % at zero.
 %
-% impetigo('c:\work folder', N, X, Y)
-function impetigounity(folder, times, varargin)
+% wait_times('c:\work folder', N, X, Y)
+function wait_times(folder, times, varargin)
     l = length(varargin);
     x_bound = 0; y_bound = 0;
     if l >= 1, x_bound = varargin{1}; end;
     if l >= 2, y_bound = varargin{2}; end;
 
-    classify(folder, 'impetigounity', @plot_average);
+    classify(folder, 'wait_times', @plot_average);
     function plot_average(displacement, n, filename, image)
         disp(filename);
         waitress = zeros(times, 0);
