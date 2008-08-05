@@ -81,7 +81,6 @@ function [should_break] = loop(piece, k)
         probs = 1 - fails;
 
         r = rand;
-        % Config checks are here to minimize function call overhead.
             if r < probs(2), break;
             elseif r < probs(2) + probs(3)
                 store.shift = store.shift + 1;
@@ -100,12 +99,21 @@ function [should_break] = loop(piece, k)
                 break;
             end
 
-        n_base = 3*(k - 1) + 2 + displace/2;
+        n_base = 3*k - 0.5 + displace/2;
         n_base_index = round(n_base);
-        % Plus one because force(1) is actually for the "zero" nucleotide just
-        % in case.
-        dx = store.force(1, n_base_index+1) * n_base + store.force(2, n_base_index+1);
-        displace = displace + -Config.c1 * dx;
+
+        previous = store.force(n_base_index - 1);
+        next = store.force(n_base_index);
+
+        % Slope is rise over run, and run is one here. The code condenses the
+        % following three lines into one line.
+
+        % slope = next - previous;
+        % intercept = next - slope * n_base_index;
+        % dx = slope * n_base + intercept;
+
+        dx = (next - previous) * n_base + next - slope * n_base_index;
+        displace = displace + Config.c1 * dx;
     end
     store.x(k+1) = displace;
     store.wts(k) = wt;

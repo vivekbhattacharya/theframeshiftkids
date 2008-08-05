@@ -2,7 +2,8 @@
 % of slopes and intercepts so you can determine force just by flooring
 % and looking it up.
 function [force] = force(signal)
-    dsignal = -dumbdiff(signal);
+    force = -dumbdiff(signal);
+    return;
 
     % Test length checks
     % dsignal = [1 1 1];
@@ -28,7 +29,9 @@ function [force] = smooth(raw_force)
     % here, and the last midpoint.
     midpoints = [0 midpoints];
     slopes = [0 slopes 0];
-    % intercept = y - x * slope
+    % intercept = y - x * slope. For midpoint(1)--if you recall, that's
+    % artificially added above--have the same intercept as
+    % midpoint(2), the first actual midpoint.
     intercepts = [g(1, 1) g(1, :)] - slopes .* midpoints;
 
     % force = [expanded slopes; expanded intercepts].
