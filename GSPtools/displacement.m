@@ -112,7 +112,7 @@ function [should_break] = loop(piece, k)
         % intercept = next - slope * n_base_index;
         % dx = slope * n_base + intercept;
 
-        dx = (next - previous) * n_base + next - slope * n_base_index;
+        dx = (next - previous) * n_base + next - (next - previous) * n_base_index;
         displace = displace + Config.c1 * dx;
     end
     store.x(k+1) = displace;
