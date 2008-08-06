@@ -10,6 +10,7 @@ function config
     Config.init_disp = 0.1;
     Config.phi_sp = -30 * pi/180;
     Config.signal_shift = 0;
+    Config.codon_spacing = 0;
 
     % Normally, don't abort displacement at the first sign of trouble.
     Config.dire = 0;

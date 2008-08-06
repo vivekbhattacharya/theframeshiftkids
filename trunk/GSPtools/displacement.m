@@ -16,7 +16,7 @@ function [disp, waits] = displacement(seq, force, fs)
     % For the common case of no actual frameshifts,
     % avoid computing displacement deviation.
     for k = 1:upper
-        index = 3*k + store.shift;
+        index = 3*k + store.shift + 3*Config.codon_spacing;
         if index + 4 > length(seq), break; end;
         should_break = loop(seq(index:index+4), k);
 
