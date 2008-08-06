@@ -11,7 +11,11 @@
       # Pulling genes and taking names
       # Making wait times and `Travel.mat` for any bacteria
       # Converting between amino acids and mRNA
-  # Unities _currently incubating_
+  # Unities
+    # A review of ribosomal translation
+    # A brief tour of the internals
+    # `unity` and `megaunity`
+    # [Manual_Unities Everything else] _incubating_
   # Loose ends _incubating_
   # Questions that I think are or should be asked frequently, or QAAF _incubating_
 
@@ -38,3 +42,37 @@ The files within the `God 2.0` and the `thrushbaby` directories are part of now-
 Free as in C memory, not free as in you burnt your thighs with our coffee and now we have a settlement. The primary Perl program exposed to users is the `scan_brightly.pl` file, which is an interface to our `Kidnap` Perl module. The command is simple: `scan_brightly.pl prfB.txt` and a list of free energies at each codon spills into your command prompt. Usually you will never have to type this because the list is useless without the Matlab portion of our model. However, let this not mislead you to believe that it's not important. Our entire model rests upon these free energies. They are our cornerstone and, most importantly, our friends.
 
 For a more in-depth treatment of all the pearls, see [Manual_Pearls the Pearls section of the manual].
+
+== Unities ==
+{{{
+M> unity('rpoS.txt');
+M> unity('prfB.txt', [25]);
+M> megaunity('prfB.txt', [25]);
+M> megaunity('prfB.txt', [25], 100);
+M> megaunity('rpos.txt', [], 100, 'graph');
+}}}
+
+=== Ribosomes and me ===
+
+Free energies provide only so much sustenance to an overworked laboratory molecular biologist. By taking a derivative, we arrive at force of the 16S tail acting on the ribosome. I suppose this is as good a time as any to review translation in prokaryotes.
+
+The cell reads DNA, which I'm mandated to say is the genetic code of life, and transcribes it into mRNA. A ribosome latches on to the starting codon of mRNA. tRNAs, little bugs, attempt to pair with the codon the ribosome is latched onto. The first one to be correct wins. (We call the length of time between latching and matching *wait time*.) The ribosome, happy, takes off the amino acid on the tRNA, sticks it to what it already has, kicks the tRNA out, and moves on. This continues until the ribosome sees a stop codon.
+
+From a 1987 Weiss paper, we know the 16S tail can nudge the ribosome into skipping a base pair (frameshifting). When? We calculated the force earlier. If we run the force through the stochastic model, which is described in detail in [http://theframeshiftkids.googlecode.com/files/Siemens%20Paper.pdf our research paper], we get a vector containing all the changes in displacement made at each base. If we sum all those changes, we get total displacement from the zero reading frame at each base. As a side effect, the model also can output where the ribosome frameshifted. For most genes, correctly frameshifting means not doing so at all. For prfB, however, an intentional shift exists at the 25th codon, which is an `uga`.
+
+=== Unity and Megaunity ===
+
+`unity.m` and `megaunity.m` measure the deviation from the zero reading frame or the probability of frameshifting correctly. (Which one it chooses depends on the `Config.yield` assignment in `config.m`.) `unity.m` is the simpler one. You pass it a file and it graphs the displacement as well as outputting the yield and frameshift locations like so:
+{{{
+>> unity('rpoS.txt')
+> guu 76; ucu 89; aaa 103; gcc 105; cgu 111; aag 132; caa 160; acu 163; cgu 165; cga 179; gca 181; uug 184; cau 190; gag 196; gac 222;
+< auu 77; uaa 102; uug 104; gca 109; uag 130; uga 158; gua 162; uuc 164; cga 167; ccg 180; gug 182; ugg 188; aag 195; uag 221;
+
+Yield: 1.48858
+}}}
+
+"> guu 76" means a forward frameshift occurred at codon 76, which is `guu`. "< auu 77" means a backward frameshift occurred at codon 77, which is an `auu`. If you're running prfB or any other gene that has an intentional frameshift, you also pass it a vector telling the model where those occur. For example, `unity('prfB.txt', 25)`. Remember, 25 is the same thing as `[25]` in Matlab. Matlab is genius like that. And one day I'll discover the gene that makes bacteria happy. Maybe that gene will frameshift in three places: `unity('happy.txt', [12, 25, 81])`. Won't that be great?
+
+`megaunity.m` runs exactly as if you ran `unity.m` forever. It averages the yields over the run. So if you just want to run prfB forever, `megaunity('prfB.txt', [25])`. And if you wanted it to stop after 100 times, `megaunity('prfB.txt', [25], 100)`. And if you wanted to look at the graphs, which are hidden by default, `megaunity('prfB.txt', [25], 100, 'graph')`.
+
+For a continued treatment of the Unities, see [Manual_Unities the Unities section of the manual].
