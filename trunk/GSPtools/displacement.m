@@ -108,10 +108,10 @@ function [should_break] = loop(piece, k)
         % following three lines into one line.
 
         % slope = next - previous;
-        % intercept = next - slope * (n_base_index - 0.5);
+        % intercept = next - slope * (n_base_index + 0.5);
         % dx = slope * n_base + intercept;
 
-        dx = (next - previous) * (n_base - n_base_index + 0.5) + next;
+        dx = (next - previous) * (n_base - n_base_index - 0.5) + next;
         displace = displace + Config.c1 * dx;
     end
     store.x(k+1) = displace;
