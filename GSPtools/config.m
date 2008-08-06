@@ -19,7 +19,7 @@ function config
     % between force and displacement. Power is the exponent of the
     % sinusoidal probability model at the heart of the stochastic part
     % of the model.
-    Config.c1 = 0.003;
+    Config.c1 = 0.005;
     Config.power = 10;
 
     % Set the temperature (in Celsius) and the values to use
