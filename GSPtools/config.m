@@ -10,7 +10,7 @@ function config
     Config.init_disp = 0.1;
     Config.phi_sp = -30 * pi/180;
     Config.signal_shift = 0;
-    Config.codon_spacing = 0;
+    Config.codon_spacing = 1;
 
     % Normally, don't abort displacement at the first sign of trouble.
     Config.dire = 0;
@@ -22,14 +22,14 @@ function config
     % of the model.
     Config.c1 = 0.005;
     Config.power = 10;
-    Config.gamma = -0.5;
+    Config.gamma = 1;
 
     % Set the temperature (in Celsius) and the values to use
     % (Kidnap::Freier or Kidnap::XiaMathews). Freier is
     % temperature-independent because it only works for
     % room-temperature, cf. the paper.
     Config.temp = 37;
-    Config.energies = 'Kidnap::XiaMathews';
+    Config.energies = 'Kidnap::Freier';
     % auuccuccacuag for E coli. More species are listed in
     % scan_brightly.pl's help text.
     Config.tail = 'auuccuccacuag';
