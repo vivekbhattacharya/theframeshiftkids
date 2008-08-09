@@ -5,7 +5,7 @@ function config
     Config.Travel = 'Travel2.mat';
 
     % 0: Deviation. 1: Probability.
-    Config.yield = 0;
+    Config.yield = 1;
 
     Config.init_disp = 0.1;
     Config.phi_sp = -30 * pi/180;
@@ -22,13 +22,14 @@ function config
     % of the model.
     Config.c1 = 0.005;
     Config.power = 10;
+    Config.gamma = -0.5;
 
     % Set the temperature (in Celsius) and the values to use
     % (Kidnap::Freier or Kidnap::XiaMathews). Freier is
     % temperature-independent because it only works for
     % room-temperature, cf. the paper.
     Config.temp = 37;
-    Config.energies = 'Kidnap::Freier';
+    Config.energies = 'Kidnap::XiaMathews';
     % auuccuccacuag for E coli. More species are listed in
     % scan_brightly.pl's help text.
     Config.tail = 'auuccuccacuag';

@@ -11,7 +11,7 @@ function [disp, waits] = displacement(seq, force, fs)
     % Initial displacement is a fudging factor.
     store = struct('x', [Config.init_disp], 'shift', 0, 'wts', ...
                    zeros(1, upper-2), 'ants', [], 'termites', [], ...
-                   'anthill', [], 'force', force);
+                   'anthill', [], 'force', force, 'choices', []);
 
     % For the common case of no actual frameshifts,
     % avoid computing displacement deviation.
@@ -80,10 +80,11 @@ function [should_break] = loop(piece, k)
         probs = 1 - fails;
 
         r = rand;
-            if r < probs(2), break;
+            if r < probs(2), store.choices{end + 1} = codon; break;
             elseif r < probs(2) + probs(3)
                 store.shift = store.shift + 1;
                 store.anthill(end+1) = k;
+                store.choices{end + 1} = codon;
                 store.ants{end+1} = codon;
 
                 % Dire Mode: If there's a frameshift, check if it's the wrong one.
@@ -92,17 +93,18 @@ function [should_break] = loop(piece, k)
             elseif r < sum(probs)
                 store.shift = store.shift - 1;
                 store.termites{end+1} = [codon ' ' num2str(k)];
+                store.choices{end+1} = codon;
 
                 % Dire Mode: There's a backframeshift, so stop automatically.
                 should_break = 1;
                 break;
             end
 
-        n_base = 3*k - 0.5 + displace/2;
+        n_base = 3*k - 0.5 + displace/2 + Config.gamma;
         n_base_index = round(n_base);
 
         previous = store.force(n_base_index - 1);
-        next = store.force(n_base_index);
+        current = store.force(n_base_index);
 
         % Slope is rise over run, and run is one here. The code condenses the
         % following three lines into one line.
@@ -110,12 +112,13 @@ function [should_break] = loop(piece, k)
         % slope = next - previous;
         % intercept = next - slope * (n_base_index + 0.5);
         % dx = slope * n_base + intercept;
-
-        dx = (next - previous) * (n_base - n_base_index - 0.5) + next;
+        
+        dx = (current - previous) * (n_base - n_base_index - 0.5) + current;
         displace = displace + Config.c1 * dx;
     end
     store.x(k+1) = displace;
     store.wts(k) = wt;
+    
 end
 
 % Calculate normalized wait cycles.
