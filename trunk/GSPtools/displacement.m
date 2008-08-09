@@ -112,13 +112,12 @@ function [should_break] = loop(piece, k)
         % slope = next - previous;
         % intercept = next - slope * (n_base_index + 0.5);
         % dx = slope * n_base + intercept;
-        
+
         dx = (current - previous) * (n_base - n_base_index - 0.5) + current;
         displace = displace + Config.c1 * dx;
     end
     store.x(k+1) = displace;
     store.wts(k) = wt;
-    
 end
 
 % Calculate normalized wait cycles.
