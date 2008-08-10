@@ -9,7 +9,7 @@ function [disp, waits] = displacement(seq, force, fs)
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
     % Initial displacement is a fudging factor.
-    store = struct('x', [Config.init_disp], 'shift', 0, 'wts', ...
+    store = struct('x', [0 Config.init_disp], 'shift', 0, 'wts', ...
                    zeros(1, upper-2), 'ants', [], 'termites', [], ...
                    'anthill', [], 'force', force, 'choices', []);
 
@@ -18,7 +18,7 @@ function [disp, waits] = displacement(seq, force, fs)
     for k = 1:upper
         index = 3*k + store.shift + 3*Config.codon_spacing;
         if index + 4 > length(seq), break; end;
-        should_break = loop(seq(index:index+4), k);
+        should_break = loop(seq(index:index+4), k+1);
 
         % Check if frameshift occurred too late.
         if Config.dire
