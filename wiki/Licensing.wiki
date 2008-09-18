@@ -3,6 +3,6 @@
 
 Fill in the New BSD License variables with the following:
 
-  * <OWNER> = Hao Lian
+  * <OWNER> = Hao Lian and Vivek Bhattacharya
   * <ORGANIZATION> = (none)
-  * <YEAR> = 2007
+  * <YEAR> = 2007-2008
