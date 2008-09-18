@@ -3,8 +3,8 @@
 
 == Table of Contents ==
 
-  # Introduction
-  # Terminology (Structure)
+  # Introduction (Terminology)
+  # Structure
   # Pearls
     # Getting started with free energy
     # [Manual_Pearls Everything else]
@@ -49,7 +49,7 @@ M> unity('rpoS.txt');
 M> unity('prfB.txt', [25]);
 M> megaunity('prfB.txt', [25]);
 M> megaunity('prfB.txt', [25], 100);
-M> megaunity('rpos.txt', [], 100, 'graph');
+M> megaunity('rpoS.txt', [], 100, 'graph');
 }}}
 
 === Ribosomes and me ===
