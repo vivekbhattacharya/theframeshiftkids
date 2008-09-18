@@ -1,5 +1,5 @@
 #summary Describes the thrushbaby algorithm, which is designed to automatically change codons in a sequence to increase yield.
-#labels thrushbaby,algorithm,frameshift,optimization,Featured
+#labels thrushbaby,algorithm,frameshift,optimization
 
 == Introduction ==
 
