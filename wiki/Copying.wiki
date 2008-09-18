@@ -39,7 +39,7 @@ files (or in a "COPYING" file under the trunk or on a web page, even
 if neither of these two options are kosher).
 
 {{{
-Original code copyright (c) 2007, Hao Lian and Vivek Bhattacharya
+Original BWFtools code copyright (c) 2007, Hao Lian and Vivek Bhattacharya
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
