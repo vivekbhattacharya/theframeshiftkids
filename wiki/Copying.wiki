@@ -1,5 +1,5 @@
 #summary Copying and pasting
-#labels documentation
+#labels documentation,Featured,licensing
 
 The first step is to copy the SVN repository to a different place,
 which will preserve the ancient and beautiful history of our code.
