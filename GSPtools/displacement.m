@@ -1,32 +1,32 @@
-% The function takes a sequence (without the 12-leader sequence), the
-% number of codons, the force vector from `force`, and a vector of
-% codons indices that should frameshift. (For prfB, this is [25].)
-function [disp, waits] = displacement(seq, force, fs)
+% The function takes a sequence (without the 12-leader
+% sequence), the number of codons, the differential vector
+% from `diff_vector`, two lists of +1/-1 frameshifts against
+% which to match.
+function [disp, waits] = displacement(seq, dvec, fs)
     global Travel Config store;
 
-    upper = length(force) - 1;
+    upper = length(dvec) - 1;
 
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
     % Initial displacement is a fudging factor.
-    store = struct('x', [0 Config.init_disp], 'shift', 0, 'wts', ...
-                   zeros(1, upper-2), 'ants', [], 'termites', [], ...
-                   'anthill', [], 'force', force, 'choices', []);
+    store = struct('x', [Config.init_disp], ...
+                   'shift', 0, ...
+                   'wts', zeros(1, upper-2), ...
+                   'ants', [], ...
+                   'termites', [], ...
+                   'anthill', []);
 
     % For the common case of no actual frameshifts,
     % avoid computing displacement deviation.
     for k = 1:upper
-        index = 3*k + store.shift + 3*Config.codon_spacing;
-        if index + 4 > length(seq), break; end;
-        should_break = loop(seq(index:index+4), k+1);
+        index = 3*k + store.shift;
+        if(index + 4 > length(seq)), break; end;
+        overaged = loop(seq(index:index+4), k, dvec(:, k));
 
         % Check if frameshift occurred too late.
         if Config.dire
-            switch should_break
-              case 1, break; % Backframeshift => automatic error
-              case 2 % Frameshift => check if valid
-                if anthill(end) ~= fs(1), break; end;
-            end
+            if handle_aging(overaged, store.anthill, fs), break; end;
             % I expected a frameshift. None occurred. Abort.
             if (length(fs) > 0) && (k > fs(1)) && (length(store.anthill) == 0), break; end;
         end
@@ -59,64 +59,58 @@ function update_globals(fs, disp)
     end
 end
 
-% Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al. This is
-% heavily optimized. Do not refer to it for the math.
-function [should_break] = loop(piece, k)
-    config; global Config store;
-    should_break = 0;
+% Refer to papers published by Dr. Bitzer, Dr. Ponalla, et al.
+% Config.phi_sp chosen specifically to make prfB work, cf. Lalit et
+% al. This is heavily optimized. Do not refer to it for the math.
+function [overaged] = loop(piece, k, diff)
+    config; global Config;
+    overaged = 0;
 
     % [back_fail, here_fail, there_fail]
     fails = [1 1 1];
     back_codon = piece(1:3); codon = piece(2:4); there_codon = piece(3:5);
     loops = real_loops(back_codon, codon, there_codon);
 
-    displace = store.x(k);
-    wt = 0;
+    global store Config;
+    x0 = store.x(k);
+
     % This is where Nloop used to be.
+    wt = 0;
     for wt = 1:1000 + 1
         % Window function
-        w = realpow(weights(displace - 2*store.shift), Config.power);
+        w = realpow(weights(x0 - 2*store.shift), Config.power);
         fails = fails .* (1 - w ./ loops);
         probs = 1 - fails;
 
         r = rand;
-            if r < probs(2), store.choices{end + 1} = codon; break;
+        % Config checks are here to minimize function call overhead.
+        if any(sum(probs) > 1 - probs)
+            if r < probs(2), break;
             elseif r < probs(2) + probs(3)
                 store.shift = store.shift + 1;
                 store.anthill(end+1) = k;
-                store.choices{end + 1} = codon;
                 store.ants{end+1} = codon;
 
-                % Dire Mode: If there's a frameshift, check if it's the wrong one.
-                should_break = 2;
+                % If there's a frameshift, check if it's the wrong one under dire.
+                overaged = 4;
                 break;
             elseif r < sum(probs)
                 store.shift = store.shift - 1;
                 store.termites{end+1} = [codon ' ' num2str(k)];
-                store.choices{end+1} = codon;
 
-                % Dire Mode: There's a backframeshift, so stop automatically.
-                should_break = 1;
+                % There's a backframeshift, so stop automatically.
+                overaged = 3;
                 break;
             end
+        end
 
-        n_base = 3*k - 0.5 + displace/2 + Config.gamma;
-        n_base_index = round(n_base);
-
-        previous = store.force(n_base_index - 1);
-        current = store.force(n_base_index);
-
-        % Slope is rise over run, and run is one here. The code condenses the
-        % following three lines into one line.
-
-        % slope = next - previous;
-        % intercept = next - slope * (n_base_index + 0.5);
-        % dx = slope * n_base + intercept;
-
-        dx = (current - previous) * (n_base - n_base_index - 0.5) + current;
-        displace = displace + Config.c1 * dx;
+        % This follows from phi_signal(1,k) = dvec(2, k); see
+        % "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
+        phi_dx = (pi/3)*x0 - Config.phi_sp;
+        dx = diff(1) * sin(diff(2) + phi_dx);
+        x0 = x0 + -Config.c1 * dx;
     end
-    store.x(k+1) = displace;
+    store.x(k+1) = x0;
     store.wts(k) = wt;
 end
 
