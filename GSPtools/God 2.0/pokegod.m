@@ -10,9 +10,9 @@ function [gen] = pokegod(folder)
     % How many generations should we have?
     % How big of a sample size for deviation?
     % How many nucleotides of a person to mutate per spawn?
-    pool_n = 65;
+    pool_n = 60;
     times = 100;
-    sample_n = 50;
+    sample_n = 65;
     radiation_n = 6;
 
     % Save optimal row because we won't have it after the for loop
@@ -55,11 +55,14 @@ function [value] = get_yield(folder, travails, times)
     classify(folder, '', @helper);
     function helper(d, n, filename, image)
         global shoals sands;
-        for i = 1:times, d([]); end;
+        for i = 1:times, d([25]); end;
+        % h = waitbar(0, filename); for i = 1:times, d([25]); waitbar(i / times); end; close(h);
         yield = shoals/sands;
+        disp(['  ' filename ': ' num2str(yield)]);
 
         % OR hack
-        if [strfind(filename, '101') strfind(filename, '105') strfind(filename, '112') strfind(filename, '115')]
+        % if [strfind(filename, '101') strfind(filename, '105') strfind(filename, '112') strfind(filename, '115')]
+        if strfind(filename, '2001')
             good = good + yield;
         else
             bad = bad + yield;
@@ -68,5 +71,5 @@ function [value] = get_yield(folder, travails, times)
 
     % There are six sequences besides 101 and 105.
     % (good/2) / (bad / 6)
-    value = good/bad;
+    value = good - (bad/5);
 end

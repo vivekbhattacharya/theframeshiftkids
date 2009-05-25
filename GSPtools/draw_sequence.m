@@ -5,7 +5,7 @@ function draw_sequence(index, seq, chunky)
     hold on;
 
     % Number of nucleotides to show minus one.
-    len = 4;
+    len = 6;
     % Where to start the nucleotides on the axis.
     start = -2;
     % Left and right boundaries for text.
@@ -14,7 +14,7 @@ function draw_sequence(index, seq, chunky)
     % y-value to plot the text.
     y = 1;
 
-    axis([-4 4 (y - 1) (y + 1)]);
+    axis([-6 6 (y - 1) (y + 1)]);
     stop = length(seq);
     for i = min:max
         if (i < 1) || (i > stop)
