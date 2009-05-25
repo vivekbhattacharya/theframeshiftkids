@@ -14,3 +14,5 @@ function [dvec] = diffvec(m1,m2,p1,p2)
     dy = m2 .* sin(p2) - m1 .* sin(p1);
     dvec = [sqrt(dx .^ 2 + dy .^ 2); atan2(dy, dx)];
 end
+
+% asin(2/3 pi(t - phase))
