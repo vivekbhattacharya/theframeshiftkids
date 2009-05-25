@@ -3,7 +3,12 @@
 % probabilities of frameshifting. Takes the sequence string without
 % the leader sequence, the vector from inst_energy(), and chunky: the
 % displacement vector from displacement().
-function draw_sine(seq, dvec, chunky)
+function draw_sine(file)
+    [signal, seq] = get_signal(file);
+    [mag, phase] = cumm_energy(signal);
+    dvec = inst_energy(mag, phase);
+    chunky = displacement(seq(13:end), dvec, []);
+
     mag = dvec(1, :);
     phase = dvec(2, :);
     figure(1000);
