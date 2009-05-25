@@ -14,6 +14,7 @@ function draw_sine(file)
     figure(1000);
    
     old_codon_n = 0;
+    wc = 1;
 
     function helper(x0, probs, codon_n)
         num_shift = length(store.anthill) - length(store.termites);
@@ -24,7 +25,10 @@ function draw_sine(file)
 
         subplot(3, 1, 3);
         axis([-6 6 0 1]);
-        rectangle('Position', [1 2 3 4]);
+        codon_text = ['Codon: ' num2str(codon_n)];
+        wc_text = ['Wait: ' num2str(wc)];
+        text(4.1, 0.85, codon_text);
+        text(4.1, 0.65, wc_text);
         line([-2 + 2 * num_shift, -2 + 2 * num_shift], [0, probs(1)], 'LineWidth', 2);
         line([0 + 2 * num_shift, 0 + 2 * num_shift], [0, probs(2)], 'LineWidth', 2);
         line([2 + 2 * num_shift, 2 + 2 * num_shift], [0, probs(3)], 'LineWidth', 2);
@@ -35,10 +39,12 @@ function draw_sine(file)
         if codon_n ~= old_codon_n
             rectangle('Position', [x0 - 3, 0.5, 6, 1.0], 'LineWidth', 2, 'EdgeColor', 'g');
             pause;
+            wc = 0;
         else
             rectangle('Position', [x0 - 3, 0.5, 6, 1.0], 'LineWidth', 2, 'EdgeColor', 'r');
         end
-                
+        
+        wc = wc + 1;
         pause(0.01);
         
         old_codon_n = codon_n;
