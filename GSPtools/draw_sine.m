@@ -8,26 +8,33 @@ function draw_sine(file)
     [signal, seq] = get_signal(file);
     [mag, phase] = cumm_energy(signal);
     dvec = inst_energy(mag, phase);
-    chunky = displacement(seq(13:end), dvec, []);
 
     mag = dvec(1, :);
     phase = dvec(2, :);
     figure(1000);
-    axis([xlim -3 3]);
-    xlabel('Position');
-    ylabel('Magnitude');
-    title('O Spacious Skies');
+   
+    old_codon_n = 0;
 
-    for i = 1:length(mag)
+    function helper(x0, probs, codon_n)
+        if codon_n ~= old_codon_n, pause; end;
+        
         clf;
+        axis([xlim -3 3]);
+        xlabel('Position');
+        ylabel('Magnitude');
+        title(file);
         subplot(2, 1, 1);
-        draw_one_sine(mag(i), phase(i));
+        draw_one_sine(mag(codon_n), phase(codon_n));
 
         subplot(2, 1, 2);
-        draw_sequence((i-1)*3 + 2, seq(13:end), chunky);
-        rectangle('Position', [chunky(i) - 3, 0.5, 6, 1.0]);
-        pause
-    end
+        draw_sequence((codon_n-1)*3 + 2, seq(13:end));
+        rectangle('Position', [x0 - 3, 0.5, 6, 1.0]);
+        pause(0.01);
+        
+        old_codon_n = codon_n;
+    end    
+
+    displacement(seq(13:end), dvec, [], @helper);
 end
 
 % Draws one sine wave like it says.

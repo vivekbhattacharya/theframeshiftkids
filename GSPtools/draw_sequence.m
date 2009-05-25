@@ -1,6 +1,6 @@
 % Draws the codon window given the nucleotide offset, the mRNA string,
 % and chunky: the displacement vector from displacement().
-function draw_sequence(index, seq, chunky)
+function draw_sequence(index, seq)
     % Take me on. Take ... on ... me!
     hold on;
 
