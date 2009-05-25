@@ -24,14 +24,15 @@ function draw_sine(file)
         draw_one_sine(mag(i), phase(i));
 
         subplot(2, 1, 2);
-        draw_sequence((i-1)*3 + 1, seq, chunky);
+        draw_sequence((i-1)*3 + 2, seq(13:end), chunky);
+        rectangle('Position', [chunky(i) - 3, 0.5, 6, 1.0]);
         pause
     end
 end
 
 % Draws one sine wave like it says.
 function draw_one_sine(mag, phase)
-    x = -4:0.1:4;
+    x = -6:0.1:6;
     y = mag*sin((2/3)*pi*(x - phase));
     plot(x, y);
 end
