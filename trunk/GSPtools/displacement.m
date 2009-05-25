@@ -7,7 +7,14 @@ function [disp, waits] = displacement(seq, dvec, fs, varargin)
 
     upper = length(dvec) - 1;
     
-    if nargin > 3, chunky_closure = varargin{1}; end;
+    function do_nothing(x0, probs, k)
+    end
+    
+    if nargin > 3
+        chunky_closure = varargin{1};
+    else
+        chunky_closure = @do_nothing;
+    end
 
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
