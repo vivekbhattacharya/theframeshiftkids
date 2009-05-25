@@ -2,10 +2,12 @@
 % sequence), the number of codons, the differential vector
 % from `diff_vector`, two lists of +1/-1 frameshifts against
 % which to match.
-function [disp, waits] = displacement(seq, dvec, fs)
+function [disp, waits] = displacement(seq, dvec, fs, varargin)
     global Travel Config store;
 
     upper = length(dvec) - 1;
+    
+    if nargin > 3, chunky_closure = varargin{1}; end;
 
     % ants: List of +1 frameshifts encountered.
     % termites: List of -1 frameshifts encountered.
@@ -15,7 +17,8 @@ function [disp, waits] = displacement(seq, dvec, fs)
                    'wts', zeros(1, upper-2), ...
                    'ants', [], ...
                    'termites', [], ...
-                   'anthill', []);
+                   'anthill', [], ...
+                   'chunky_closure', chunky_closure);
 
     % For the common case of no actual frameshifts,
     % avoid computing displacement deviation.
@@ -109,6 +112,8 @@ function [overaged] = loop(piece, k, diff)
         phi_dx = (pi/3)*x0 - Config.phi_sp;
         dx = diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + -Config.c1 * dx;
+        
+        store.chunky_closure(x0, probs, k);
     end
     store.x(k+1) = x0;
     store.wts(k) = wt;
