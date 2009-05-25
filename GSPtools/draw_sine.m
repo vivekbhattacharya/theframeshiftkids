@@ -1,9 +1,10 @@
 % Draws an animation that shows (1) the sine-wave fit done by Ponnala
 % et al.'s research at each codon; (2) the codon window; and (3) the
-% probabilities of frameshifting. Takes the sequence string without
-% the leader sequence, the vector from inst_energy(), and chunky: the
-% displacement vector from displacement().
+% probabilities of frameshifting. Takes the filename of a sequence,
+% like unity!
 function draw_sine(file)
+    global Travel;
+    Travel = load_travel();
     [signal, seq] = get_signal(file);
     [mag, phase] = cumm_energy(signal);
     dvec = inst_energy(mag, phase);
