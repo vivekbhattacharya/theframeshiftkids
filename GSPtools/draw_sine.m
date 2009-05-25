@@ -16,7 +16,6 @@ function draw_sine(file)
     old_codon_n = 0;
 
     function helper(x0, probs, codon_n)
-        probs
         num_shift = length(store.anthill) - length(store.termites);
         
         clf;
