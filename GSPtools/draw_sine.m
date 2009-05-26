@@ -57,9 +57,19 @@ end
 function draw_one_sine(mag, phase, file)
     x = -6:0.1:6;
     y = mag*sin((2/6)*pi*(x - phase));
+    
+    ybig = 3; change_axes = 0;
+    if mag > 3 
+        ybig = ceil(mag); 
+        change_axes = 1; 
+    end
+
     plot(x, y);
-        axis([xlim -3 3]);
+        axis([xlim -ybig ybig]);
         xlabel('Position');
         ylabel('Magnitude');
         title(file);
+        if change_axes
+            text(2.2, 0.80*ybig, 'NOTE: LARGER AXES', 'Color', 'r');
+        end
 end
