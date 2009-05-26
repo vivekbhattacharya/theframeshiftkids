@@ -19,10 +19,12 @@ function draw_sine(file)
     function helper(x0, probs, codon_n)
         num_shift = length(store.anthill) - length(store.termites);
         
-        clf;
+        clf
         subplot(3, 1, 1);
         draw_one_sine(mag(codon_n), phase(codon_n), file);
-
+        ybig = max(3, ceil(mag(codon_n)));
+        line([x0 x0], [mag(codon_n)*sin((2/6)*pi*(x0 - phase(codon_n))), mag(codon_n)*sin((2/6)*pi*(x0 - phase(codon_n))) + 0.4*ybig], 'LineWidth', 2);
+        
         subplot(3, 1, 3);
         axis([-6 6 0 1]);
         codon_text = ['Codon: ' num2str(codon_n)];
@@ -43,7 +45,7 @@ function draw_sine(file)
         else
             rectangle('Position', [x0 - 3, 0.5, 6, 1.0], 'LineWidth', 2, 'EdgeColor', 'r');
         end
-        
+              
         wc = wc + 1;
         pause(0.01);
         
@@ -58,11 +60,8 @@ function draw_one_sine(mag, phase, file)
     x = -6:0.1:6;
     y = mag*sin((2/6)*pi*(x - phase));
     
-    ybig = 3; change_axes = 0;
-    if mag > 3 
-        ybig = ceil(mag); 
-        change_axes = 1; 
-    end
+    ybig = max(3, ceil(mag)); 
+    change_axes = (ybig ~= 3);
 
     plot(x, y);
         axis([xlim -ybig ybig]);
@@ -70,6 +69,6 @@ function draw_one_sine(mag, phase, file)
         ylabel('Magnitude');
         title(file);
         if change_axes
-            text(2.2, 0.80*ybig, 'NOTE: LARGER AXES', 'Color', 'r');
+            text(2.2, 0.76*ybig, 'NOTE: LARGER AXES', 'Color', 'r');
         end
 end
