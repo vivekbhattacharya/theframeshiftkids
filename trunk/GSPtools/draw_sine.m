@@ -12,45 +12,59 @@ function draw_sine(file)
     mag = dvec(1, :);
     phase = dvec(2, :);
     figure(1000);
-   
+
     old_codon_n = 0;
     wc = 1;
 
     function helper(x0, probs, codon_n)
         num_shift = length(store.anthill) - length(store.termites);
-        
-        clf
+        mag_i     = mag(codon_n);
+        phase_i   = phase(codon_n);
+        clf;
+
+        % Draw the signal.
         subplot(3, 1, 1);
-        draw_one_sine(mag(codon_n), phase(codon_n), file);
-        ybig = max(3, ceil(mag(codon_n)));
-        line([x0 x0], [mag(codon_n)*sin((2/6)*pi*(x0 - phase(codon_n))), mag(codon_n)*sin((2/6)*pi*(x0 - phase(codon_n))) + 0.4*ybig], 'LineWidth', 2);
-        
+        hold on;
+        draw_one_sine(mag_i, phase_i, file);
+        ymax = max(3, ceil(mag_i));
+
+        % Position marker.
+        x = mag_i*sin(pi*(x0 - phase_i)/3);
+        h = plot(x0, x, 'ko', ...
+                 'MarkerSize', 5, 'MarkerFaceColor', 'k');
+        hold off;
+
+        % Draw the probabilities.
         subplot(3, 1, 3);
+        hold on;
+        bar([-2 0 2], probs);
         axis([-6 6 0 1]);
-        codon_text = ['Codon: ' num2str(codon_n)];
-        wc_text = ['Wait: ' num2str(wc)];
-        text(4.1, 0.85, codon_text);
-        text(4.1, 0.65, wc_text);
-        line([-2 + 2 * num_shift, -2 + 2 * num_shift], [0, probs(1)], 'LineWidth', 2);
-        line([0 + 2 * num_shift, 0 + 2 * num_shift], [0, probs(2)], 'LineWidth', 2);
-        line([2 + 2 * num_shift, 2 + 2 * num_shift], [0, probs(3)], 'LineWidth', 2);
-        
+        xlabel('Position');
+        ylabel('Probability');
+        text(4.1, 0.85, sprintf('Codon: %g', codon_n));
+        text(4.1, 0.65, sprintf('Wait: %g', wc));
+        hold off;
+
+        % Draw the mRNA sequence window.
         subplot(3, 1, 2);
-        draw_sequence((codon_n-1)*3 + 2, seq(13:end));
-        fuzzy_bunny1 = xlim; fuzzy_bunny2 = ylim;
+        hold on;
+        draw_sequence((codon_n - 1)*3 + 2, seq(13:end));
+        h = rectangle('Position', [x0 - 3, 0.5, 6, 1.0], ...
+                      'LineWidth', 2, 'EdgeColor', 'r');
+
+        hold off;
+
+        % Check to see if we're at a new codon.
         if codon_n ~= old_codon_n
-            rectangle('Position', [x0 - 3, 0.5, 6, 1.0], 'LineWidth', 2, 'EdgeColor', 'g');
-            pause;
+            set(h, 'EdgeColor', 'g');
             wc = 0;
-        else
-            rectangle('Position', [x0 - 3, 0.5, 6, 1.0], 'LineWidth', 2, 'EdgeColor', 'r');
+            pause;
         end
-              
+
         wc = wc + 1;
-        pause(0.01);
-        
         old_codon_n = codon_n;
-    end    
+        pause(0.005);
+    end
 
     displacement(seq(13:end), dvec, [], @helper);
 end
@@ -59,16 +73,45 @@ end
 function draw_one_sine(mag, phase, file)
     x = -6:0.1:6;
     y = mag*sin((2/6)*pi*(x - phase));
-    
-    ybig = max(3, ceil(mag)); 
-    change_axes = (ybig ~= 3);
+    ymax = max(3, ceil(mag));
 
     plot(x, y);
-        axis([xlim -ybig ybig]);
-        xlabel('Position');
-        ylabel('Magnitude');
-        title(file);
-        if change_axes
-            text(2.2, 0.76*ybig, 'NOTE: LARGER AXES', 'Color', 'r');
+    axis([xlim -ymax ymax]);
+    ylabel('Magnitude');
+    title(file);
+    if ymax ~= 3
+        text(2.2, 0.76*ymax, 'NOTE: LARGER AXES', 'Color', 'r');
+    end
+end
+
+% Draws the codon window given the nucleotide offset, the mRNA string,
+% and chunky: the displacement vector from displacement().
+function draw_sequence(index, seq)
+    % Number of nucleotides to show minus one.
+    len = 6;
+    % Where to start the nucleotides on the axis.
+    start = -2;
+    % Left and right boundaries for text.
+    min = index + start;
+    max = min + len;
+    % y-value to plot the text.
+    y = 1;
+
+    axis([-6 6 (y - 1) (y + 1)]);
+    stop = length(seq);
+    for i = min:max
+        if (i < 1) || (i > stop)
+            continue
         end
+
+        % (i - min) shifts the interval to 0:len.
+        % ((i - min) + start) shifts the interval to -2:len-2.
+        % ((i - min) + start)*2 takes into account the idea that 2
+        % spaces = 1 nucleotide.
+        h = text((i - min + start)*2, y, upper(seq(i)));
+        set(h, 'FontWeight', 'bold');
+        set(h, 'FontSize', 14);
+        set(h, 'FontName', 'Consolas');
+        set(h, 'HorizontalAlignment', 'center');
+    end
 end
