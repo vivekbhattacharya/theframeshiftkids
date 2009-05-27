@@ -3,7 +3,7 @@
 % probabilities of frameshifting. Takes the filename of a sequence,
 % like unity!
 function draw_sine(file)
-    global Travel store;
+    global Travel store Config;
     Travel = load_travel();
     [signal, seq] = get_signal(file);
     [mag, phase] = cumm_energy(signal);
@@ -29,7 +29,7 @@ function draw_sine(file)
         ymax = max(3, ceil(mag_i));
 
         % Position marker.
-        x = mag_i*sin(pi*(x0 - phase_i)/3);
+        x = -mag_i*cos((1/3)*pi*x0 + phase_i - Config.phi_sp);
         h = plot(x0, x, 'ko', ...
                  'MarkerSize', 5, 'MarkerFaceColor', 'k');
         hold off;
@@ -71,8 +71,9 @@ end
 
 % Draws one sine wave like it says.
 function draw_one_sine(mag, phase, file)
+    global Config;
     x = -6:0.1:6;
-    y = mag*sin((2/6)*pi*(x - phase));
+    y = -mag*cos((1/3)*pi*x + phase - Config.phi_sp);
     ymax = max(3, ceil(mag));
 
     plot(x, y);
