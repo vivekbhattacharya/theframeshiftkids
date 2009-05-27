@@ -37,7 +37,7 @@ function draw_sine(file)
         % Draw the probabilities.
         subplot(3, 1, 3);
         hold on;
-        bar([-2 0 2], probs);
+        bar([-2 0 2] + 2*num_shift, probs);
         axis([-6 6 0 1]);
         xlabel('Position');
         ylabel('Probability');
