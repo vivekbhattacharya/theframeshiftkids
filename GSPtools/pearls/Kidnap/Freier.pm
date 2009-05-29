@@ -4,7 +4,7 @@ use strict; use warnings;
 use File::Basename;
 use lib dirname(__FILE__);
 
-use Util;
+use Kidnap::Util;
 use constant BIG_NUM => 30000;
 
 sub new {
@@ -16,7 +16,9 @@ sub init_penalty { 3.4 }
 # Freier 1986
 sub internal {
     my ($self, $t5, $t3, $b3, $b5) = @_;
-    return BIG_NUM unless Util::valid_pair($t5, $b3) && Util::valid_pair($t3, $b5);
+    return BIG_NUM unless
+      Kidnap::Util::valid_pair($t5, $b3)
+          and Kidnap::Util::valid_pair($t3, $b5);
 
     my %scores =
         (
@@ -64,7 +66,7 @@ sub terminal {
 
     # We only need the first pair to match, provided it
     # is not a G/U mismatch.
-    return BIG_NUM unless Util::wc_pair($t5, $b3);
+    return BIG_NUM unless Kidnap::Util::wc_pair($t5, $b3);
     my %scores =
         (
          AU => {
