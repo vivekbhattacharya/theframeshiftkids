@@ -1,8 +1,8 @@
 package Cache;
-use strict; use warnings;
+use strict; use warnings; use 5.008;
 use Digest::SHA qw(sha1_hex);
-use File::Spec;
 use File::Path qw(mkpath);
+use File::Spec;
 
 my $temp_dir = File::Spec->tmpdir();
 
@@ -23,19 +23,22 @@ sub make_cache_dir {
     mkpath $dir;
 }
 
-sub maybe_print_and_exit {
+sub try_get {
     my $self = shift;
     my $hash = sha1_hex(@_);
     $self->{cache_file} =
       File::Spec->catfile($temp_dir, $self->{cache_dir}, $hash);
 
     my $file = $self->{cache_file};
-    return if !-e $file;
+    return '' unless -e $file;
 
-    # Oh look, it exists, we can quit.
-    open(my $h, $file);
-    print while <$h>;
-    exit;
+    # Oh look, it exists.
+    {
+        local $/;
+        open(my $h, $file)
+          or die "Cache: unable to open cache \"$file\"";
+        return <$h>;
+    }
 }
 
 sub new_store {

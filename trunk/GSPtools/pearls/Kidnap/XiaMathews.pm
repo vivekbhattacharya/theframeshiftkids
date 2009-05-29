@@ -1,9 +1,12 @@
-# See Xia (1998) (for Watson-Crick pairs) and Mathews (1999) (for G/U mismatches)
-use File::Basename;
-use lib dirname(__FILE__);
-use strict; use warnings; use Util;
+# See Xia (1998) (for Watson-Crick pairs) and Mathews (1999) (for G/U
+# mismatches).
 
 package Kidnap::XiaMathews;
+use strict; use warnings;
+use File::Basename;
+use lib dirname(__FILE__);
+
+use Kidnap::Util;
 use constant BIG_NUM => 30000;
 
 sub new {
@@ -21,9 +24,10 @@ sub init_penalty { shift->{InitPenalty} }
 sub internal {
     my $self = shift;
     my ($t5, $t3, $b3, $b5, $t55, $t33, $b33, $b55) = @_;
-    unless (Util::valid_pair($t5, $b3) && Util::valid_pair($t3, $b5)) {
-		return BIG_NUM;
-    }
+
+    return BIG_NUM unless
+      Kidnap::Util::valid_pair($t5, $b3)
+          and Kidnap::Util::valid_pair($t3, $b5);
 
     my %scores = (
             AU => {

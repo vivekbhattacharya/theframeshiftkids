@@ -6,6 +6,7 @@ use lib dirname(__FILE__);
 
 use Getopt::Std;
 use Kidnap::Bind;
+use Kidnap::Util;
 use Smooth;
 use Cache;
 
@@ -30,13 +31,17 @@ if ($0 eq __FILE__) {
     my $seq = shift or die 'scan_brightly: No sequence file given';
 
     $seq = Smooth::getseq $seq;
-    my $cache = Cache->init('scan_brightly_cache');
-    $cache->maybe_print_and_exit($rna, $seq, $opt_t, $opt_p);
+
+    my $cache;
+    unless ($opt_n) {
+        $cache = Cache->init('scan_brightly_cache');
+        my $x = $cache->try_get($rna, $seq, $opt_t, $opt_p);
+        print $x and exit if $x;
+    }
 
     # If we're here, it's not cached.
-    require Kidnap::Freier;
-    $rna = uc Util::dna2rna($rna);
-    $seq = uc Util::dna2rna($seq);
+    $rna = uc Kidnap::Util::dna2rna($rna);
+    $seq = uc Kidnap::Util::dna2rna($seq);
 
     my $align = align_factory($opt_p, $opt_t);
     my $n_rna = length $rna;

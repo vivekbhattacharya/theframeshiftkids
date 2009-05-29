@@ -60,8 +60,8 @@ sub check {
     $actual = Smooth::webslurp($actual);
     $actual =~ s/[^A-Z]//g;
 
-    return (1,$proteins,$actual) if $actual eq $proteins;
-    (0,$proteins,$actual);
+    return (1, $proteins, $actual) if $actual eq $proteins;
+    (0, $proteins, $actual);
 }
 
 # Returns a list of proteins, converted from
