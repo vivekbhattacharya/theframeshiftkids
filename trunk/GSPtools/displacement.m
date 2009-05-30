@@ -6,10 +6,10 @@ function [disp, waits] = displacement(seq, dvec, fs, varargin)
     global Travel Config store;
 
     upper = length(dvec) - 1;
-    
+
     function do_nothing(x0, probs, k)
     end
-    
+
     if nargin > 3
         chunky_closure = varargin{1};
     else
@@ -95,8 +95,11 @@ function [overaged] = loop(piece, k, diff)
         r = rand;
         % Config checks are here to minimize function call overhead.
         if any(sum(probs) > 1 - probs)
-            if r < probs(2), break;
-            elseif r < probs(2) + probs(3)
+            if r < probs(2)
+                % Stay where we are.
+                break;
+            elseif r < probs(3)
+                % Forward frameshift.
                 store.shift = store.shift + 1;
                 store.anthill(end+1) = k;
                 store.ants{end+1} = codon;
@@ -104,7 +107,8 @@ function [overaged] = loop(piece, k, diff)
                 % If there's a frameshift, check if it's the wrong one under dire.
                 overaged = 4;
                 break;
-            elseif r < sum(probs)
+            elseif r < probs(1)
+                % Backward frameshift.
                 store.shift = store.shift - 1;
                 store.termites{end+1} = [codon ' ' num2str(k)];
 
@@ -119,7 +123,7 @@ function [overaged] = loop(piece, k, diff)
         phi_dx = (pi/3)*x0 - Config.phi_sp;
         dx = diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + -Config.c1 * dx;
-        
+
         store.chunky_closure(x0, probs, k);
     end
     store.x(k+1) = x0;
