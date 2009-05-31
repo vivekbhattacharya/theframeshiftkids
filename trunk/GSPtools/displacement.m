@@ -7,9 +7,7 @@ function [disp, waits] = displacement(seq, dvec, fs, varargin)
 
     upper = length(dvec) - 1;
 
-    function do_nothing(x0, probs, k)
-    end
-
+    function do_nothing(x0, probs, k, diff), end
     if nargin > 3
         chunky_closure = varargin{1};
     else
@@ -30,15 +28,29 @@ function [disp, waits] = displacement(seq, dvec, fs, varargin)
     % For the common case of no actual frameshifts,
     % avoid computing displacement deviation.
     for k = 1:upper
+        frame      = mod(store.shift, 3) + 1;
+        %frame      = 1;
+        x(1, :)    = dvec(frame, :, 1);
+        x(2, :)    = dvec(frame, :, 2);
+        dvec_frame = x;
+
         index = 3*k + store.shift;
-        if(index + 4 > length(seq)), break; end;
-        overaged = loop(seq(index:index+4), k, dvec(:, k));
+        codon = k + floor(store.shift/3);
+        %codon = k;
+
+        if index + 4 > length(seq)
+            break;
+        end
+
+        overaged = loop(seq(index:index+4), k, dvec_frame(:, codon));
 
         % Check if frameshift occurred too late.
         if Config.dire
             if handle_aging(overaged, store.anthill, fs), break; end;
             % I expected a frameshift. None occurred. Abort.
-            if (length(fs) > 0) && (k > fs(1)) && (length(store.anthill) == 0), break; end;
+            if (length(fs) > 0) && (k > fs(1)) && (length(store.anthill) == 0)
+                break;
+            end
         end
     end
     disp = store.x;
@@ -120,11 +132,15 @@ function [overaged] = loop(piece, k, diff)
 
         % This follows from phi_signal(1,k) = dvec(2, k); see
         % "A model for +1 frameshifts in eubacteria" by Ponnala, et al.
-        phi_dx = (pi/3)*x0 - Config.phi_sp;
+
+        % We have to subtract 2*store.shift from the position because
+        % inst_energy now accounts for frameshifts, not us. (It's a
+        % shift in responsibility, you see.)
+        phi_dx = (pi/3)*(x0 - 2*store.shift) - Config.phi_sp;
         dx = diff(1) * sin(diff(2) + phi_dx);
         x0 = x0 + -Config.c1 * dx;
 
-        store.chunky_closure(x0, probs, k);
+        store.chunky_closure(x0 - 2*store.shift, probs, k, diff);
     end
     store.x(k+1) = x0;
     store.wts(k) = wt;

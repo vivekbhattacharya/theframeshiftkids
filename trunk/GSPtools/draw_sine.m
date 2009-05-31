@@ -9,17 +9,15 @@ function draw_sine(file)
     [mag, phase] = cumm_energy(signal);
     dvec = inst_energy(mag, phase);
 
-    mag = dvec(1, :);
-    phase = dvec(2, :);
     figure(1000);
 
     old_codon_n = 0;
     wc = 1;
 
-    function helper(x0, probs, codon_n)
+    function helper(x0, probs, codon_n, diff)
         num_shift = length(store.anthill) - length(store.termites);
-        mag_i     = mag(codon_n);
-        phase_i   = phase(codon_n);
+        mag_i     = diff(1);
+        phase_i   = diff(2);
         clf;
 
         % Draw the signal.
@@ -28,9 +26,14 @@ function draw_sine(file)
         draw_one_sine(mag_i, phase_i, file);
         ymax = max(3, ceil(mag_i));
 
-        % Position marker.
-        x = -mag_i*cos((1/3)*pi*x0 + phase_i - Config.phi_sp);
-        h = plot(x0, x, 'ko', ...
+        % Position marker. x0 is atheistic about frameshifts. x0, like us, is
+        % very confused about the entire subject. However, the
+        % position marker does need to indicate frameshifts, as well
+        % as draw_one_sine. Therefore, we add 2*store.shift here to
+        % move the position marker and we subtract 2*store.shift in
+        % draw_one_sine to shift the curve.
+        y = sinie(mag_i, phase_i, x0 + 2*store.shift);
+        h = plot(x0 + 2*store.shift, y, 'ko', ...
                  'MarkerSize', 5, 'MarkerFaceColor', 'k');
         hold off;
 
@@ -49,7 +52,8 @@ function draw_sine(file)
         subplot(3, 1, 2);
         hold on;
         draw_sequence((codon_n - 1)*3 + 2, seq(13:end));
-        h = rectangle('Position', [x0 - 3, 0.5, 6, 1.0], ...
+        x = x0 - 3 + 2*store.shift;
+        h = rectangle('Position', [x 0.5 6 1.0], ...
                       'LineWidth', 2, 'EdgeColor', 'r');
 
         hold off;
@@ -58,7 +62,7 @@ function draw_sine(file)
         if codon_n ~= old_codon_n
             set(h, 'EdgeColor', 'g');
             wc = 0;
-            pause;
+            pause(0.1);
         end
 
         wc = wc + 1;
@@ -69,11 +73,17 @@ function draw_sine(file)
     displacement(seq(13:end), dvec, [], @helper);
 end
 
+function [y] = sinie(mag, phase, x)
+    global store Config;
+    x = x - 2*store.shift;
+    y = -mag*cos((pi/3)*x + phase - Config.phi_sp);
+end
+
 % Draws one sine wave like it says.
 function draw_one_sine(mag, phase, file)
-    global Config;
+    global store Config;
     x = -6:0.1:6;
-    y = -mag*cos((1/3)*pi*x + phase - Config.phi_sp);
+    y = sinie(mag, phase, x);
     ymax = max(3, ceil(mag));
 
     plot(x, y);
