@@ -2,10 +2,19 @@
 % abstracted above energy calculations.
 function [energy, force] = oldenergy(codon)
     global store Config;
+    global oldenergy_dvec;
+    global oldenergy;
 
-    [mag, phase] = cumm_energy(store.signal);
-    dvec         = inst_energy(mag, phase);
-    energy       = [mag; phase];
+    if length(oldenergy_dvec) == 0
+        [mag, phase]   = cumm_energy(store.signal);
+        dvec           = inst_energy(mag, phase);
+        energy         = [mag; phase];
+        oldenergy_dvec = dvec;
+        oldenergy      = energy;
+    end
+
+    dvec   = oldenergy_dvec;
+    energy = oldenergy;
 
     function [dx, force] = helper(codon, x)
         x      = x - 2*store.shift;
