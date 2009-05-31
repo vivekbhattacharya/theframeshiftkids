@@ -9,6 +9,19 @@
 function [mag, phase] = cumm_energy(signal)
     % Round signal off to a codon multiple
     limit = floor(length(signal)/3);
+    mag   = zeros(3, limit);
+    phase = zeros(3, limit);
+    for i = 1:3
+        % Pad the first element of the signal with zero if cumm_energy_frame
+        % rounds off a codon.
+        s = [signal(i:end) zeros(1, i-1)];
+        [mag(i, :) phase(i, :)] = cumm_energy_frame(s);
+    end
+end
+
+function [mag, phase] = cumm_energy_frame(signal)
+    % Round signal off to a codon multiple
+    limit = floor(length(signal)/3);
     % Get a matrix of [1 2 3; 4 5 6; 7 8 9; et cetera].
     indices = reshape(1:limit*3, 3, limit);
     % mem stands for "memory" as represented by three registers.
