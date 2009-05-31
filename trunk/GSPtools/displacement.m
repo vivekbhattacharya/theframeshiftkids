@@ -3,6 +3,7 @@
 % from `diff_vector`, two lists of +1/-1 frameshifts against
 % which to match.
 function [disp] = displacement(seq, signal, fs, varargin)
+    config;
     global Travel Config store;
 
     function do_nothing(x0, probs, k, force), end
@@ -21,7 +22,8 @@ function [disp] = displacement(seq, signal, fs, varargin)
                    'anthill', [], ...
                    'termites', [], ...
                    'signal', signal, ...
-                   'chunky_closure', chunky_closure);
+                   'chunky_closure', chunky_closure, ...
+                   'force_closure', []);
 
     upper = floor(length(signal)/3);
 
@@ -76,8 +78,6 @@ end
 % Config.phi_sp chosen specifically to make prfB work, cf. Lalit et
 % al. This is heavily optimized. Do not refer to it for the math.
 function loop(piece, k, diff)
-    config; global Config;
-
     % [back_fail, here_fail, there_fail]
     fails       = [1 1 1];
     back_codon  = piece(1:3);
@@ -87,10 +87,9 @@ function loop(piece, k, diff)
 
     global store Config;
     x0 = store.x(k);
-
-    % This is where Nloop used to be.
     wt = 0;
-    [energy, polyforce] = polyenergy(k);
+
+    [energy, polyforce] = Config.energy(k);
     for wt = 1:1000 + 1
         % Window function
         w = realpow(weights(x0 - 2*store.shift), Config.power);
@@ -125,7 +124,7 @@ function loop(piece, k, diff)
         % We have to subtract 2*store.shift from the position because
         % inst_energy now accounts for frameshifts, not us. (It's a
         % shift in responsibility, you see.)
-        [dx, force] = polyforce(x0);
+        [dx, force] = polyforce(k, x0);
         x0 = x0 + Config.c1 * dx;
 
         store.chunky_closure(x0 - 2*store.shift, probs, k, energy);
