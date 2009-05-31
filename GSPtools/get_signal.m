@@ -4,7 +4,8 @@
 % USAGE:
 %     [signal, sequence] = get_signal('gene.txt')
 function [signal, s] = get_signal(f)
-    config; global Config;
+    config;
+    global Config;
 
     file = superwhich(f);
     s = pearl('getseq.pl', ['"' file '"']);
