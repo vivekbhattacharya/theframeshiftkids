@@ -7,13 +7,14 @@ function [energy, polyforce] = polyenergy(codon)
     lower = floor(-power/2);
     upper = floor(power/2);
     x = lower:upper;
+    x = 2*x;
     y = new_signal(center+lower:center+upper);
     energy = polyfit(x, y, power);
 
     function [dx, force] = helper(codon, x)
         force = -energy .* (power:-1:0);
-        force = force(1:4);
-        dx    = polyval(force, x/2 - store.shift);
+        force = force(1:power);
+        dx    = polyval(force, x - 2*store.shift);
     end
     polyforce = @helper;
 end
