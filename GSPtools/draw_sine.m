@@ -6,15 +6,13 @@ function draw_sine(file)
     global Travel store Config;
     Travel = load_travel();
     [signal, seq] = get_signal(file);
-    [mag, phase] = cumm_energy(signal);
-    dvec = inst_energy(mag, phase);
 
     figure(1000);
 
     old_codon_n = 0;
     wc = 1;
 
-    function helper(x0, probs, codon_n, diff)
+    function helper(x0, probs, codon_n, func)
         num_shift = length(store.anthill) - length(store.termites);
         mag_i     = diff(1);
         phase_i   = diff(2);
@@ -23,16 +21,10 @@ function draw_sine(file)
         % Draw the signal.
         subplot(3, 1, 1);
         hold on;
-        draw_one_sine(mag_i, phase_i, file);
+        draw_one_func(func, file);
         ymax = max(3, ceil(mag_i));
 
-        % Position marker. x0 is atheistic about frameshifts. x0, like us, is
-        % very confused about the entire subject. However, the
-        % position marker does need to indicate frameshifts, as well
-        % as draw_one_sine. Therefore, we add 2*store.shift here to
-        % move the position marker and we subtract 2*store.shift in
-        % draw_one_sine to shift the curve.
-        y = sinie(mag_i, phase_i, x0 + 2*store.shift);
+        y = calc_func(func, x0 + 2*store.shift);
         h = plot(x0 + 2*store.shift, y, 'ko', ...
                  'MarkerSize', 5, 'MarkerFaceColor', 'k');
         hold off;
@@ -70,21 +62,21 @@ function draw_sine(file)
         pause(0.005);
     end
 
-    displacement(seq(13:end), dvec, [], @helper);
+    displacement(seq(13:end), signal, [], @helper);
 end
 
-function [y] = sinie(mag, phase, x)
+function [y] = calc_func(func, x)
     global store Config;
     x = x - 2*store.shift;
-    y = -mag*cos((pi/3)*x + phase - Config.phi_sp);
+    y = polyval(func, x);
 end
 
 % Draws one sine wave like it says.
-function draw_one_sine(mag, phase, file)
+function draw_one_func(func, file)
     global store Config;
     x = -6:0.1:6;
-    y = sinie(mag, phase, x);
-    ymax = max(3, ceil(mag));
+    y = calc_func(func, x);
+    ymax = 3;
 
     plot(x, y);
     axis([xlim -ymax ymax]);
