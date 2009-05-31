@@ -1,7 +1,7 @@
 function [energy, polyforce] = polyenergy(codon)
     global store;
     new_signal = [zeros(1, 6) store.signal zeros(1, 6)];
-    center = 3*codon + 5 + store.shift;
+    center = 3*codon + 5 + store.shift - 2;
 
     power = 4;
     lower = floor(-power/2);
