@@ -6,11 +6,11 @@ function config
 
     % 0: Deviation. 1: Probability.
     Config.yield = 1;
-    Config.energy = @polyenergy;
+    Config.energy = @oldenergy;
 
     Config.init_disp = 0.1;
     Config.phi_sp = -30 * pi/180;
-    Config.signal_shift = 2;
+    Config.signal_shift = 0;
 
     % Normally, don't abort displacement at the first sign of trouble.
     Config.dire = 0;
