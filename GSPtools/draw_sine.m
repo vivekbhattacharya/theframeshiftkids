@@ -22,7 +22,6 @@ function draw_sine(file)
         subplot(3, 1, 1);
         hold on;
         draw_one_func(func, file);
-        ymax = max(3, ceil(mag_i));
 
         y = calc_func(func, x0 + 2*store.shift);
         h = plot(x0 + 2*store.shift, y, 'ko', ...
@@ -76,7 +75,7 @@ function draw_one_func(func, file)
     global store Config;
     x = -6:0.1:6;
     y = calc_func(func, x);
-    ymax = 3;
+    ymax = 10;
 
     plot(x, y);
     axis([xlim -ymax ymax]);
