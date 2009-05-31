@@ -2,11 +2,11 @@
 % and function to calculate the force from the codon number and the
 % position
 function [energy, polyforce] = polyenergy(codon)
-    global store Config;
+    global store;
     
     % Pad the signal with zeroes in case we use larger powers.
     new_signal = [zeros(1, 6) store.signal zeros(1, 6)];
-    center = 3*codon + 5 + store.shift - Config.signal_shift;
+    center = 3*codon + 5 + store.shift - 2;
 
     % Defines power, bounds for the codons, and the limits of
     % regression.  Takes into account that a distance of one
