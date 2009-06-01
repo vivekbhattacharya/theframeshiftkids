@@ -11,7 +11,7 @@ function unity(file, varargin)
     m = model(file, shifts);
     [m, x] = displacement(m);
     disp_shifts(m);
-    disp(sprintf('Yield: %g', yield(m, x)));
+    fprintf('Yield: %g\n', yield(m, x));
 
     figure;
     plot(x, 'LineWidth', 2);
