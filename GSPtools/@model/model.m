@@ -1,5 +1,7 @@
-% Constructor for model. Takes a filename and a possible single
-% location of frameshift, usually 25 for some reason.
+% Given an mRNA file and a possible frameshift site (usually 25 for
+% some reason), returns a @model instance. @model uses Dr. Bitzer's
+% fourth(fifth?)-degree on a moving window of free-energy values. See
+% also: @regmodel, @wavemodel.
 function obj = model(file, fs)
     config;
     global Config;
