@@ -23,6 +23,9 @@ function [energy] = energy(self, codon)
         % less than -1 or *slightly* greater than +1, leading Matlab
         % to return pi +/- 0.000[snip]01i for acos. Kludge:
         theta = real(acos(y(2)/M));
+        if abs(y(1) - M * cos(-2*pi/3 + theta)) > 0.01
+            theta = 2*pi - theta;
+        end
     end
     energy = [M theta];
 end
