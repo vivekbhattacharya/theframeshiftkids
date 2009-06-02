@@ -5,7 +5,7 @@
 function draw_energy(file)
     config;
     global Config;
-    m   = Config.model(file, [])
+    m   = Config.model(file, []);
     seq = get(m, 'seq');
 
     figure(1000);
@@ -47,7 +47,7 @@ function draw_energy(file)
         % Draw the mRNA sequence window.
         subplot(3, 1, 2);
         hold on;
-        draw_sequence((codon - 1)*3 + 2, seq(13:end));
+        draw_sequence((codon - 1)*3 + 2, seq);
         x = x0 - 3 + 2*shift;
         h = rectangle('Position', [x 0.5 6 1.0], ...
                       'LineWidth', 2, ...
