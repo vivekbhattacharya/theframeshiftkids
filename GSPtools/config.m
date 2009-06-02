@@ -6,7 +6,7 @@ function config
 
     % 0: Deviation. 1: Probability.
     Config.yield = 1;
-    Config.model = @wavemodel;
+    Config.model = @regmodel;
     Config.energy = @waveenergy;
 
     Config.init_disp = 0.1;
