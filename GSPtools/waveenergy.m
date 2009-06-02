@@ -2,6 +2,7 @@
 % with magnitude and phase, along with a function to calculate the
 % force from the codon number and position
 function [energy, waveforce] = waveenergy(codon)
+    config;
     global store Config;
 
     % Pad the signal with zeroes in accordance with polyenergy.
