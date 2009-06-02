@@ -25,7 +25,7 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     end
     fantastic = @helper;
 
-    clear globals;
+    clear global;
     global Travel Names;
     Travel = load_travel();
 end
