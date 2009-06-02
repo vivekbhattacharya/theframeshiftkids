@@ -5,6 +5,7 @@
 function [disp] = displacement(seq, signal, fs, varargin)
     config;
     global Travel Config store;
+    Travel = load_travel();
 
     function do_nothing(x0, probs, k, force), end
     if nargin > 3

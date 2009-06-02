@@ -1,5 +1,4 @@
 function config
-    clear global;
     global Config;
     Config = struct();
 
