@@ -12,6 +12,8 @@ use Cache;
 
 sub align_factory {
     my ($opt_p, $opt_t) = @_;
+
+    require Kidnap::Freier;
     my $o = $opt_p ?
       eval "require $opt_p; $opt_p->new($opt_t)" :
         Kidnap::Freier->new($opt_t);
