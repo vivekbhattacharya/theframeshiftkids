@@ -19,7 +19,7 @@ if ($0 eq __FILE__) {
     Smooth::helpcheck();
 
     our ($opt_t, $opt_n) = (37, 0);
-    getopts('nt:');
+    getopts('nt:p:');
     # Convert Celsius to Kelvin.
     $opt_t += 273.15;
 
