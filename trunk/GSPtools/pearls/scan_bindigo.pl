@@ -29,6 +29,9 @@ if ($0 eq __FILE__) {
     my $seq  = shift
       or die 'scan_bindigo.pl: No sequence file given';
 
+    # BINDIGO wants 5' to 3'.
+    $rna = scalar reverse $rna;
+
     # 'type:bindigo' will separate the cached files from their
     # scan_brightly counterparts.
     $seq = Smooth::getseq $seq;

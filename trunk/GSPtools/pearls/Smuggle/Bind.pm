@@ -98,7 +98,7 @@ sub bind {
 sub bind_str {
     # Same as pull() except that it returns a MATLAB-friendly string
     # of floats instead of a Perl array.
-    return join(' ', pull(@_));
+    return join(' ', Smuggle::Bind::bind(@_));
 }
 
 1;
