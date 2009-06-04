@@ -1,72 +1,54 @@
 #!/usr/bin/env perl
 
-use warnings; use strict;
+use warnings; use strict; use 5.008;
 use File::Basename;
 use lib dirname(__FILE__);
 
 use Getopt::Std;
-use Kidnap::Bind;
-use Kidnap::Util;
+use Smuggle::Bind;
 use Smooth;
 use Cache;
 
-sub align_factory {
-    my ($opt_p, $opt_t) = @_;
-    my $o = $opt_p ?
-      eval "require $opt_p; $opt_p->new($opt_t)" :
-        Kidnap::Freier->new($opt_t);
-    die $@ if $@;
-
-    Kidnap::Bind->new($o);
+sub dna2rna {
+    my $seq = shift;
+    $seq =~ tr/tT/uU/;
+    return $seq;
 }
 
 if ($0 eq __FILE__) {
     Smooth::helpcheck();
 
-    our ($opt_p, $opt_t, $opt_n) = (0, 37, 0);
-    getopts('np:t:');
+    our ($opt_t, $opt_n) = (37, 0);
+    getopts('nt:');
     # Convert Celsius to Kelvin.
     $opt_t += 273.15;
 
     local @_ = @ARGV;
-    my $rna = shift
-      or die 'scan_brightly: No RNA binding sequence given';
-    my $seq = shift
-      or die 'scan_brightly: No sequence file given';
+    my $rna  = shift
+      or die 'scan_bindigo.pl: No RNA binding sequence given';
+    my $seq  = shift
+      or die 'scan_bindigo.pl: No sequence file given';
 
+    # 'type:bindigo' will separate the cached files from their
+    # scan_brightly counterparts.
     $seq = Smooth::getseq $seq;
 
     my $cache;
     unless ($opt_n) {
         $cache = Cache->init('scan_brightly_cache');
-        my $x = $cache->try_get($rna, $seq, $opt_t, $opt_p);
+        my $x  = $cache->try_get($rna, $seq, $opt_t, 'type:bindigo');
         print $x and exit if $x;
     }
 
     # If we're here, it's not cached.
-    $rna = uc Kidnap::Util::dna2rna($rna);
-    $seq = uc Kidnap::Util::dna2rna($seq);
+    $rna = lc dna2rna($rna);
+    $seq = lc dna2rna($seq);
 
-    my $align = align_factory($opt_p, $opt_t);
-    my $n_rna = length $rna;
-    my $n_seq = length $seq;
-
-    my @energies;
-    for my $i (0 .. $n_seq - $n_rna) {
-        my $toys = substr($seq, $i, $n_rna);
-
-        # Free energy values greater than zero represent binding that
-        # cannot take place without added energy, equivalent to as if
-        # no binding had taken place
-        my $energy = $align->bind($toys, $rna);
-        $energy = 0 if $energy > 0;
-        push @energies, $energy;
-    }
-    my $str = join ' ', @energies;
-    print $str;
+    my $x = Smuggle::Bind::bind_str($rna, $seq);
+    print($x);
 
     # Since it's not cached, cache it.
-    $cache->new_store($str) unless $opt_n;
+    $cache->new_store($x) unless $opt_n;
 }
 1;
 
@@ -74,11 +56,11 @@ __END__
 
 =head1 NAME
 
-scan_brightly.pl
+scan_bindigo.pl
 
 =head1 SYNOPSIS
 
-    scan_brightly.pl -p Kidnap::XiaMathews -t 273.15 auuccuccacuag prfB.fasta
+    scan_bindigo.pl -t 273.15 auuccuccacuag prfB.fasta
 
 =over 20
 
