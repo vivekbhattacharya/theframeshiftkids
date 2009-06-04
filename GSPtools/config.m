@@ -31,6 +31,7 @@ function config
     % room-temperature, cf. the paper.
     Config.temp = 37;
     Config.energies = 'Kidnap::Freier';
+    Config.scanner = 'scan_bindigo.pl';
     % auuccuccacuag for E coli. More species are listed in
     % scan_brightly.pl's help text.
     Config.tail = 'auuccuccacuag';

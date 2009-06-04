@@ -18,7 +18,7 @@ function [signal, s] = get_signal(f)
     args = sprintf('-t %g -p "%s" %s %s "%s"', ...
                    Config.temp, Config.energies, ...
                    cache_arg, Config.tail, file);
-    output = pearl('scan_brightly.pl', args);
+    output = pearl(Config.scanner, args);
 
     % Simulate load() on a string instead of a file.
     signal = sscanf(output, '%f');
