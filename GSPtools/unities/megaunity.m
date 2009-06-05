@@ -10,25 +10,33 @@
 %   % Display the graph each time.
 %   megaunity('prfB.txt', [25], 300, 'graph');
 function megaunity(file, varargin)
+    config;
+    global Config;
 
-displacement = walrus_surprise(file);
-global shoals sands;
+    x = nargin;
+    shift = [];
+    limit = inf;
+    quiet = 1;
 
-x = length(varargin);
-fshifts = []; limit = inf; quiet = 1;
+    if x >= 1, shift = varargin{1}; end;
+    if x >= 2, limit = varargin{2}; end;
+    if x >= 3, quiet = 0; end;
 
-if x >= 1, fshifts = varargin{1}; end;
-if x >= 2, limit = varargin{2}; end;
-if x >= 3, quiet = 0; end;
+    m = Config.model(file, shift);
+    yields = [];
 
-for i = 1:limit
-    x = displacement(fshifts);
-    disp_shifts;
-    fprintf('Yield: %g (%g)\n\n', shoals/sands, sands);
+    for i = 1:limit
+        [bye, x] = displacement(m);
+        yields = [yields yield(bye, x)];
+        disp_shifts(bye);
 
-    if quiet, continue; end;
-    h = figure(1);
-        plot(1:length(x), x);
-        axis([xlim min(0, min(x)) max(3, max(x))]);
-        grid; xlabel('Codon'); ylabel('Displacement');
+        fprintf('Yield: %g (mean:%g) (std:%g) (n:%g)\n\n', ...
+                yields(i), mean(yields), std(yields), i);
+
+        if quiet
+            continue;
+        end
+
+        plot_displacement(x, 2000);
+    end
 end

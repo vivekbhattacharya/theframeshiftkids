@@ -12,8 +12,8 @@ function yields(folder, fshift, limit)
         yields = zeros(1, limit);
 
         for i = 1:limit
-            [model, x]  = displacement(model);
-            yields(i)   = yield(model, x);
+            [model, x] = displacement(model);
+            yields(i)  = yield(model, x);
         end
 
         fprintf('%s: %g (std:%g)\n', file, mean(yields), std(yields));
