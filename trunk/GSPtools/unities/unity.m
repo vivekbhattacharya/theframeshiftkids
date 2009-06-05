@@ -16,10 +16,5 @@ function unity(file, varargin)
     disp_shifts(m);
     fprintf('Yield: %g\n', yield(m, x));
 
-    figure;
-    plot(x, 'LineWidth', 2);
-    axis([1 length(x) min(0, min(x)) max(3, max(x))]);
-    grid;
-    xlabel('Codon Number');
-    ylabel('Displacement');
+    plot_displacement(x);
 end

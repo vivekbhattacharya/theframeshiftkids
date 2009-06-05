@@ -5,8 +5,8 @@ function config
     Config.Travel = 'Travel2.mat';
 
     % 0: Deviation. 1: Probability.
-    Config.yield = 0;
-    Config.model = @wavemodel;
+    Config.yield = 1;
+    Config.model = @regmodel;
     Config.energy = @waveenergy;
 
     Config.init_disp = 0.1;
