@@ -1,48 +1,45 @@
 % Meta-meta-meta-metafunction for unities.
-function classify(folder, subfolder, crusade, varargin)
-    helper = @campbag;
-    if length(varargin) > 0, helper = @preparation; end
+function classify(place, subdir, fs, crusade)
+    config;
+    global Config;
 
     % Handle files as if they were folders with magic.
-    boulder = folder;
-    if ~isdir(boulder)
-        boulder = fileparts(superwhich(folder));
+    if ~isdir(place)
+        if subdir
+            error('classify: no subdir allowed when passed a file');
+        end
+
+        file = superwhich(place);
+        helper(superwhich(file));
+        return;
     end
 
-    if subfolder
-        subdir = fullfile(boulder, subfolder);
+    adir = place;
+
+    % Qualify subdir.
+    if subdir
+        subdir = fullfile(adir, subdir);
         warning off MATLAB:MKDIR:DirectoryExists;
         mkdir(subdir);
-    else
-        subdir = boulder;
     end
 
-    if isdir(folder)
-        d = [dir([folder '/*.txt']); dir([folder '/*.fasta'])];
-        for i = 1:length(d)
-            file = fullfile(folder, d(i).name);
-            helper(file);
-        end
-    else helper(superwhich(folder)); end;
-
-% What follows are two alternative routes for classify to go: polar
-% plots only or the process of calculating displacement.
-
-    % Polar plots, mostly
-    function preparation(path)
-        [folder, file, ext] = fileparts(path);
-
-        image = fullfile(subdir, [file '.png']);
-        crusade(path, [file ext], image);
+    files = [dir([adir '/*.txt']); dir([adir '/*.fasta'])];
+    for i = 1:length(files)
+        file = fullfile(adir, files(i).name);
+        helper(file);
     end
 
     % Everybody else gets a free displacement with
     % magical folder structure management.
-    function campbag(path)
-        [displacement, p, n] = walrus_surprise(path);
+    function helper(path)
+        m = Config.model(path, fs);
         [folder, file, ext] = fileparts(path);
 
-        image = fullfile(subdir, [file '.png']);
-        crusade(displacement, n, [file ext], image);
+        if subdir
+            image = fullfile(subdir, [file '.png']);
+            crusade(m, [file ext], image);
+        else
+            crusade(m, [file ext]);
+        end
     end
 end
