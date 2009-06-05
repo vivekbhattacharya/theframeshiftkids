@@ -20,7 +20,7 @@ function [fantastic, n] = walrus_surprise(file, varargin)
     [signal, seq] = get_signal(file);
     n = floor(length(signal)/3);
 
-    function [x] = helper(fs)
+    function x = helper(fs)
         x = displacement(seq(13:end), signal, fs);
     end
     fantastic = @helper;

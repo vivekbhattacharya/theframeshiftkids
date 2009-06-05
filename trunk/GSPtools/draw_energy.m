@@ -20,11 +20,11 @@ function draw_energy(file)
         % Draw the signal.
         subplot(3, 1, 1);
         hold on;
-        draw_cycle(model, energy, codon, file);
+        draw_cycle(model, energy, file);
 
         % Draw signal marker.
         x = x0 + 2*shift;
-        y = energize(model, energy, codon, x);
+        y = energize(model, energy, x);
         h = plot(x, y, ...
                  'ko', ...
                  'MarkerSize', 5, ...
@@ -71,9 +71,9 @@ function draw_energy(file)
 end
 
 % Draws the energy model at a given wait cycle.
-function draw_cycle(model, energy, codon, file)
+function draw_cycle(model, energy, file)
     x = -6:0.1:6;
-    y = energize(model, energy, codon, x);
+    y = energize(model, energy, x);
     ymax = 3;
 
     plot(x, y);

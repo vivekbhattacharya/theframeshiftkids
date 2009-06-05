@@ -1,7 +1,6 @@
 % A method for the class model, part of the loop() protocol. Returns
-% the force at the given position, given the codon number and energy
-% vector.
-function dx = force(model, energy, codon, x)
+% the force at the given position and energy vector.
+function dx = force(model, shift, energy, x)
     global Config;
     % F = -dU/dx. We need to drop the last element of the force vector
     % after differentiation because Matlab starts the vector with the

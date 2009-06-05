@@ -1,5 +1,7 @@
-% Computes the energy value at displacement x.
-function y = energize(self, energy, codon, x)
+% Computes the energy value at displacement x. Remember, the kludge is
+% that the vector of energy parameters is actually just a codon
+% number.
+function y = energize(self, codon, x)
     global Config;
     shift = get(self, 'shift');
 

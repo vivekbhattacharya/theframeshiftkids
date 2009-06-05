@@ -6,7 +6,7 @@ function config
 
     % 0: Deviation. 1: Probability.
     Config.yield = 1;
-    Config.model = @regmodel;
+    Config.model = @wavemodel;
     Config.energy = @waveenergy;
 
     Config.init_disp = 0.1;
@@ -31,7 +31,7 @@ function config
     % room-temperature, cf. the paper.
     Config.temp = 37;
     Config.energies = 'Kidnap::Freier';
-    Config.scanner = 'scan_bindigo.pl';
+    Config.scanner = 'scan_brightly.pl';
     % auuccuccacuag for E coli. More species are listed in
     % scan_brightly.pl's help text.
     Config.tail = 'auuccuccacuag';
