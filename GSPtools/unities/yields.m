@@ -4,17 +4,18 @@
 % the predicted frameshifts in order to calculate yield and also a
 % sample size.
 %
-% Usage: yields('c:\work folder', [25], 100)
-function yields(folder, fshifts, limit)
-    classify(folder, 'yields', @helper);
-    function helper(displacement, n, file, image)
-        global shoals sands;
+% Usage: yields('c:\work folder', 25, 100)
+function yields(folder, fshift, limit)
+    classify(folder, [], fshift, @helper);
+
+    function helper(model, file)
         yields = zeros(1, limit);
-        for i=1:limit
-            displacement(fshifts);
-            yields(i) = shoals/sands;
-            shoals = 0; sands = 0;
+
+        for i = 1:limit
+            [model, x]  = displacement(model);
+            yields(i)   = yield(model, x);
         end
-        fprintf('%s: %g +/- %g\n', file, mean(yields), std(yields));
+
+        fprintf('%s: %g (std:%g)\n', file, mean(yields), std(yields));
     end
 end
