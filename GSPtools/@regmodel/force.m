@@ -1,9 +1,8 @@
 % A method for the @regmodel class, part of the loop() protocol.
 % Returns the force at the given position, given the codon number and
 % energy vector according to Dr. Ponnala's register model.
-function dx = force(self, energy, codon, x)
+function dx = force(self, shift, codon, x)
     global Config;
-    shift = get(self.model, 'shift');
 
     x      = x - 2*shift;
     phi_dx = (pi/3)*x - Config.phi_sp;

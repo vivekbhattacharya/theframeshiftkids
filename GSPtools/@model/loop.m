@@ -32,12 +32,13 @@ function [model] = loop(model, closure)
         cycles   = wait_cycles(model, base);
         fails    = [1 1 1];
         energies = energy(model, codon);
+        shift    = model.shift;
 
         % Loop over an infinite number of wait cycles.
         for wt = 1:1000 + 1
             % Cumulative probabilities of frameshifting or staying
             % still.
-            w = realpow(weights(x0 - 2*model.shift), power);
+            w = realpow(weights(x0 - 2*shift), power);
             fails = fails .* (1 - w ./ cycles);
             probs = 1 - fails;
 
@@ -47,22 +48,25 @@ function [model] = loop(model, closure)
                 if r < probs(2)
                     break;
                 elseif r < probs(3)
-                    model.shift = model.shift + 1;
+                    shift = shift + 1;
                     codon = model.seq(base + 1:base + 3);
                     model.wal{end+1} = [codon ' ' num2str(i)];
                     model.nut(end+1) = i;
                     break;
                 elseif r < probs(1)
-                    model.shift = model.shift - 1;
+                    shift = shift - 1;
                     codon = model.seq(base + 1:base + 3);
                     model.rus{end+1} = [codon ' ' num2str(i)];
                     break;
                 end
             end
 
-            dx = force(model, energies, i, x0);
+            model.shift = shift;
+            dx = force(model, shift, energies, x0);
             x0 = x0 + c1 * dx;
             closure(model, i, probs, energies, x0);
         end
+
+        model.shift = shift;
     end
 end
