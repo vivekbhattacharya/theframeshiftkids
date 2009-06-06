@@ -3,29 +3,27 @@ function classify(place, subdir, fs, crusade)
     config;
     global Config;
 
-    % Handle files as if they were folders with magic.
+    % Special-case single-file `place`s.
     if ~isdir(place)
+        file   = superwhich(place);
+        place  = fileparts(file);
+
         if subdir
-            error('classify: no subdir allowed when passed a file');
+            subdir = prepare_subdir(place, subdir);
         end
 
-        file = superwhich(place);
         helper(superwhich(file));
         return;
     end
 
-    adir = place;
-
     % Qualify subdir.
     if subdir
-        subdir = fullfile(adir, subdir);
-        warning off MATLAB:MKDIR:DirectoryExists;
-        mkdir(subdir);
+        subdir = prepare_subdir(place, subdir);
     end
 
-    files = [dir([adir '/*.txt']); dir([adir '/*.fasta'])];
+    files = [dir([place '/*.txt']); dir([place '/*.fasta'])];
     for i = 1:length(files)
-        file = fullfile(adir, files(i).name);
+        file = fullfile(place, files(i).name);
         helper(file);
     end
 
@@ -36,10 +34,18 @@ function classify(place, subdir, fs, crusade)
         [folder, file, ext] = fileparts(path);
 
         if subdir
-            image = fullfile(subdir, [file '.png']);
-            crusade(m, [file ext], image);
+            png = fullfile(subdir, [file '.png']);
+            crusade(m, [file ext], png);
         else
             crusade(m, [file ext]);
         end
     end
+end
+
+% Create a subdirectory under a parent directory if necessary. Returns
+% the full path of the subdirectory.
+function subdir = prepare_subdir(dir, subdir)
+    subdir = fullfile(dir, subdir);
+    warning off MATLAB:MKDIR:DirectoryExists;
+    mkdir(subdir);
 end
