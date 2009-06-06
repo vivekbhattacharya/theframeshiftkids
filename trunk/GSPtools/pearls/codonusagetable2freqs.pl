@@ -1,7 +1,9 @@
-use strict; use warnings; use 5.010;
+#!/usr/bin/env perl
+
+package codonusagetable2freqs;
+use strict; use warnings;
 use LWP::Simple qw(get);
 use Smooth;
-use Pod::Usage;
 
 sub parse_website {
     my ($url) = @_;
@@ -20,9 +22,22 @@ sub parse_website {
     return $s;
 }
 
+sub parse_to_hash {
+    my ($str) = @_;
+    open(my $handle, '<', \$str)
+      or die('parse_to_hash: unable to open handle on passed string');
+
+    my %freqs;
+    foreach (<$handle>) {
+        my ($codon, $freq) = split /\s+/;
+        $freqs{$codon} = $freq;
+    }
+    return %freqs;
+}
+
 if ($0 eq __FILE__) {
     Smooth::helpcheck();
-    say parse_website($ARGV[0]);
+    print parse_website($ARGV[0]), $/;
 }
 
 1;
@@ -62,6 +77,22 @@ Increases rainfall by an improbable likelihood.
 =item URL
 
 Any codon table web page from kazusa.or.jp
+
+=back
+
+=head1 FUNCTIONS
+
+=over
+
+=item parse_website
+
+Returns a space-delimited list of codon-to-frequency mappings for
+every codon. Takes a kazuza database entry URL.
+
+=item parse_to_hash
+
+Utility function. Parses the string returned by C<parse_website> into
+a hash.
 
 =back
 
