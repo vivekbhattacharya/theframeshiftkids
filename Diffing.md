@@ -1,0 +1,1 @@
+To find the codon changes between two sequences, use [hansel.pl](http://theframeshiftkids.googlecode.com/svn/branches/backtrack/hansel.pl) from the `backtrack` algorithm branch. Simply type `hansel.pl old-seq.pl new-seq.pl` after you've placed `hansel.pl` in the parent directory of your `GSPtools` installation or repository.
